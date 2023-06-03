@@ -13,10 +13,10 @@ with open("F:\ProjectDante\secret.json") as f:
     weather_key = secrets["weather"]
     
 #Init the api wheather
-BASE_URL = "http://api.openweathermap.org/data/2.5/weather?"
-CITY = "Napoli"
-
-url = BASE_URL + "appid=" + weather_key + "&q=" + CITY
+def url(CITY):
+    BASE_URL = "http://api.openweathermap.org/data/2.5/weather?"
+    url = BASE_URL + "appid=" + weather_key + "&q=" + CITY
+    return url
 
 
 
@@ -25,10 +25,12 @@ def TheWeather(command:str):
         print(Log(" citta scelta corretamente"))
         command=command.split(" a ")[1].strip()
         CITY = command.split(" ")[0]
-        print(CITY)
-        
+        print(Log( "Citta selezionata: " + CITY))
+    else:
+        CITY = "Salerno"    
+        print(Log( "Citta di default selezionata: " + CITY))
     print(Log(" weather function"))
-    response = requests.get(url).json()
+    response = requests.get(url(CITY)).json()
     main = response['weather'][0]['description']
     out=translator.translate(main,dest='it')
     stringa = f"A {CITY} il tempo è {out.text}"
@@ -37,9 +39,18 @@ def TheWeather(command:str):
     
     
     
-def Temp():
+def Temp(command):
     print(Log(" funzione temp"))
-    response = requests.get(url).json()
+    if(' a ' in command):
+        print(Log(" citta scelta corretamente"))
+        command=command.split(" a ")[1].strip()
+        CITY = command.split(" ")[0]
+        print(Log( "Citta selezionata: " + CITY))
+    else:
+        print(Log( "Citta di default selezionata: " + CITY))
+        CITY = "Salerno"    
+    
+    response = requests.get(url(CITY)).json()
     temp = response['main']['temp'] - 273.15
     tempMax= int(response['main']['temp_max']) - 273.15
     tempMin= int(response['main']['temp_min']) - 273.15

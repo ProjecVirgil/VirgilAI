@@ -89,8 +89,7 @@ if __name__ == "__main__":
                             engine.say(res)
                             engine.runAndWait()
                         except RuntimeError:
-                            print(Log("Evita di usare comandi subito dopo il timer"))
-                            engine.say(res)
+                            print(Log(" Evita di usare comandi subito dopo il timer"))
                             engine.runAndWait()
                             
                 else:

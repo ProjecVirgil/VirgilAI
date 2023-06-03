@@ -84,7 +84,7 @@ def command(command:str):
 
     elif((("gradi" in command ) or ("temperatura" in command)) and (("quanti" in command) or ("quanta" in command)) ):
         print(Log(" pre temperature function"))
-        res = WhatsIs.Temp()
+        res = WhatsIs.Temp(command)
         return res
 
 
