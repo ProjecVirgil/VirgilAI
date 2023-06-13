@@ -1,6 +1,7 @@
 # ProjectDant3
 <h1 align="center">
-![Logo Markdown](/docs/Dant3_Project.png)
+  ![Logo Markdown](/docs/Dant3_Project.png)
+  
 </h1>
 
 **Dant3 virtual assistant**
