@@ -3,7 +3,7 @@
 
 **Dant3 virtual assistant**
 
-Created principle with [python3](https://www.python.org/downloads/) e various library like [SpeechRecognition ](https://pypi.org/project/SpeechRecognition/)  and [TTS library](https://github.com/coqui-ai/TTS) 
+Created principle with [python3.11](https://www.python.org/downloads/) e various library like [SpeechRecognition ](https://pypi.org/project/SpeechRecognition/)  and [TTS library](https://github.com/coqui-ai/TTS) 
 
 ---
 
