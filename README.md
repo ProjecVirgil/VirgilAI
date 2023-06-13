@@ -12,18 +12,28 @@ Dant3 is a virtual assistant like Alexa or Google Home but is integrated with an
 
 ## Key Features
 You can ask lots of questions at Dant3, like us:
-- The time
-- The wheather
-- The last news
-- Change the volume
-- The temperature
-- The days of the week
-- Interact with the domotic
-- Timer
-- and ask **whatever you want** like: Dant3 explain quantum mathematics
+- The time ⏲️
+- The wheather 🌧️
+- The last news 🗞️
+- Change the volume 🔉
+- The temperature 🌡️
+- The days of the week 📆
+- Interact with the domotic 💡
+- Timer 🔂
+- and ask **whatever you want** like: Dant3 explain quantum mathematics 🤖
 
 ## Installing
 
 1. The first part of the installation is to download all the files from the repository
 2. After that, open a terminal to the directory and run  `pip install -r requirements.txt`
 3. when/if the installation is go done, just run the file run.bat in the terminal and use the command `run.bat` and the program will start
+
+## How to use
+> Simple run the file bat and tell a command o ask a question and the bot will respond in short time 📃
+
+## IMPORTANT!!
+The project is very young and is in alfa, indeed missing a good code, there are a lots of bugs or problem and the AI work principle in italian expect for the part of AI also the Assistant is personalize only via code (for now)
+
+
+
+## Credit
