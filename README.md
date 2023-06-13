@@ -1,6 +1,6 @@
 # ProjectDant3
 <h1 align="center">
-  ![Logo Markdown](/docs/Dant3_Project.png)
+ <img src="/docs/Dant3_Project.png" alt="Markdownify" width="100%">
   
 </h1>
 
