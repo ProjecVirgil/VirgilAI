@@ -49,7 +49,12 @@ def off():
     try:
         engine.say("Spegnimento in corso...")
         engine.runAndWait()
+        with open("main/command.json", 'w') as comandi:
+            comandi.write()
+        with open("main/res.json", 'w') as res:
+            res.write()
         sys.exit()
+        
     except RuntimeError :
         print(Log(" Spegnimento con eccezione NO WARNING"))
         sys.exit()
