@@ -1,7 +1,8 @@
 # ProjectDant3
-<h1 align="center">
+<p align="center">
  <img src="/docs/Dant3_Project.png" alt="Markdownify" width ="700px" >
- </h1>
+ </p>
+ 
 <h1 align="center">
    <b>   Dant3 virtual assistant </b>
 </h1>
