@@ -1,11 +1,13 @@
 # ProjectDant3
+
+<h1 align="center">
+   <b>   Dant3 virtual assistant </b>
+</h1>
 <p align="center">
  <img src="/docs/Dant3_Project.png" alt="Markdownify" width ="700px" >
  </p>
  
-<h1 align="center">
-   <b>   Dant3 virtual assistant </b>
-</h1>
+
 <p align="center">
   <a href="#key-features">Key Features</a> •
   <a href="#how-to-use">How To Use</a> •
