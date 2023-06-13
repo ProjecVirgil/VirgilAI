@@ -3,7 +3,7 @@
 
 **Dant3 virtual assistant**
 
-  [Features](https://github.com/Retr0100/ProjectDante#keyfeatures)   [Installing](https://github.com/Retr0100/ProjectDante#installing)    [How to use](https://github.com/Retr0100/ProjectDante#howtouse)  [IMPORTANT](https://github.com/Retr0100/ProjectDante#important)  [Credit](https://github.com/Retr0100/ProjectDante#credit)
+  [Features](https://github.com/Retr0100/ProjectDante#keyfeatures)          [Installing](https://github.com/Retr0100/ProjectDante#installing)          [How to use](https://github.com/Retr0100/ProjectDante#howtouse)           [**Important**](https://github.com/Retr0100/ProjectDante#important)          [Credit](https://github.com/Retr0100/ProjectDante#credit)
   
 Created principle with [python3.11](https://www.python.org/downloads/) e various library like [SpeechRecognition ](https://pypi.org/project/SpeechRecognition/)  and [TTS library](https://github.com/coqui-ai/TTS) 
 
