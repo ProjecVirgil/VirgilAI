@@ -14,6 +14,7 @@
   <a href="#installing">Installing</a> •
   <a href="#important">Important!</a> •
 </p>
+
 ---
 
 Created principle with [python3.11](https://www.python.org/downloads/) e various library like [SpeechRecognition ](https://pypi.org/project/SpeechRecognition/)  and [TTS library](https://github.com/coqui-ai/TTS) 
