@@ -3,8 +3,8 @@
  <img src="/docs/Dant3_Project.png" alt="Markdownify" width="100%">
 </h1>
 <h1 align="center">
- <br>
-  Dant3 virtual assistant
+  <br>
+      Dant3 virtual assistant
   <br>
 </h1>
 <p align="center">
