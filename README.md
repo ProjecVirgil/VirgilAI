@@ -2,7 +2,6 @@
  <img src="/docs/Dant3_Project.png" alt="Markdownify" width="100%" align="center">
 <h1 align="center">
    <b>   Dant3 virtual assistant </b>
-  
 </h1>
 <p align="center">
   <a href="#key-features">Key Features</a> •
@@ -43,7 +42,7 @@ You can ask lots of questions at Dant3, like us:
 ## IMPORTANT!!
 The project is very young and is in alfa, indeed missing a good code, there are a lots of bugs or problem and the AI work principle in italian expect for the part of AI also the Assistant is personalize only via code (for now)
 
-## Credit
+## Credits
 Only me 💻
 
 ps: follow me on [instagram](https://www.instagram.com/akiidjk)
