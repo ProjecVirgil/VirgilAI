@@ -2,15 +2,11 @@
 <h1 align="center">
  <img src="/docs/Dant3_Project.png" alt="Markdownify" width="100%">
 </h1>
-
 <h1 align="center">
  <br>
   Dant3 virtual assistant
   <br>
-  
 </h1>
-
-
 <p align="center">
   <a href="#key-features">Key Features</a> •
   <a href="#how-to-use">How To Use</a> •
@@ -18,9 +14,6 @@
   <a href="#installing">Installing</a> •
   <a href="#important">Important!</a> •
 </p>
-
-
-[Features](https://github.com/Retr0100/ProjectDante#keyfeatures)          [Installing](https://github.com/Retr0100/ProjectDante#installing)          [How to use](https://github.com/Retr0100/ProjectDante#howtouse)           [**Important**](https://github.com/Retr0100/ProjectDante#important)          [Credit](https://github.com/Retr0100/ProjectDante#credit)
   
 Created principle with [python3.11](https://www.python.org/downloads/) e various library like [SpeechRecognition ](https://pypi.org/project/SpeechRecognition/)  and [TTS library](https://github.com/coqui-ai/TTS) 
 
