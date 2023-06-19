@@ -60,20 +60,22 @@ You can ask lots of questions at Dant3, like us:
 > Simply run the command `python main.py` or `python3 main.py` in the terminal 📃
 
 ## IMPORTANT!!
-The project is very young and is in alpha, indeed missing a good code, there are a lot of bugs or problem and the AI working principle in Italian expect for the part of AI, also the assistant is personalize only via code (for now).
-There are various path to modify and where is necesarry modify with the correct path
+The project is very young and is in alpha, indeed missing a good code, there are a lot of bugs or problem and the AI working principle in Italian expect for the part of AI, also the assistant is personalize only via code (for now). 🐛
+There are various path to modify and where is necesarry modify with the correct path 🛣️
 
 - file TurnTheLight.py (Moduls,Theligh) line 10 
 - file WhatsIs.py (Moduls,TheWeather) line 11
 - file SendCommand.py (Moduls,ChooseCommand) line 28
+
+The api for GPT is almost free but is necessary inser the credit/debit card (sorry i now is annoying) 💸
 
 ## Future idea/goal for this project
 
 > Is to create a multi-platform application with Dart and Flask to give the possibility to modify ALL (Word activation, position for weather and news, configure the domotic, etc..) 👾
 
 ## Credits
-Only me 💻
+Only me 💻 
 
-ps: follow me on [instagram](https://www.instagram.com/akiidjk)
+ps: follow me on [instagram](https://www.instagram.com/akiidjk) and [twitter](https://twitter.com/R3tr0_fj) contact me for help or support
 
 
