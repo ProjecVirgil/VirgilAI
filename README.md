@@ -37,12 +37,12 @@ You can ask lots of questions at Dant3, like us:
 1. The first part of the installation is to download all the files from the repository
 2. After that, open a terminal to the directory and run  `pip install -r requirements.txt`
 3. now is necessary the api (for now i am not rich and i dont pay for all) so
- we are need of 3 toker
-   -api of openai
+ we are need of 3 token
+   - api of openai \n
           I recommend this [video tutorial](https://videodamettere.com) 
-   -api for the wheather
+   - api for the wheather \n
           I recommend this [video tutorial](https://videodamettere.com) 
-   -api for merros (domotic socket)
+   - api for merros (domotic socket) \n
           Simply make a account merros
 4. when you have all token/account create a file named  `secret.json`
 5. and copy this by replacing the token
