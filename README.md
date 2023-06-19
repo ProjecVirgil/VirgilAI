@@ -47,6 +47,7 @@ You can ask lots of questions at Dant3, like us:
 4. when you have all token/account create a file named  `secret.json`
 5. and copy this by replacing the token
    ```
+   #!/usr/bin/env json
    {
         "api":"sk-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
         "weather":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
