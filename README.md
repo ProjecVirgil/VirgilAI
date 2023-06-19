@@ -1,7 +1,7 @@
 # Project Virgil
 
 <p align="center">
- <img src="/docs/Project_Virgilio (1).png" alt="Markdownify" width ="700px" >
+ <img src="/docs/BannerVirgil-transformed.png" alt="Markdownify" width ="700px" >
  </p>
  
 
