@@ -1,123 +1,91 @@
-import json
-import sys
+import pyfiglet
+from colorama import Fore, Back, Style
 import time
-import threading
-import requests
-import calendar
-import datetime
-import threading
+import string as st
+import subprocess
+import random
+import os
+import platform
 
-import openai
-from colorama import Fore,Back
-from pyttsx3 import *
-import speech_recognition as sr
-from googletrans import Translator
+from prefix.creation import Log
+lista = ['W','We','Wel','Welc','Welco','Welcom','Welcome','Welcome ','Welcome t','Welcome to','Welcome to ','Welcome to V','Welcome to Vi','Welcome to Vir','Welcome to Virg','Welcome to Virgi','Welcome to Virgil']
+string = "Thanks for use Virgil"
 
-#from prefix.creation import Log
-from Moduls.CalendarRec import Recoverycalendar
-from Moduls.timeConv import TimeConversion
-from Moduls.ChooseCommand import SendCommand
+print("[")
+for i in range(len(string) + 1):
+    print("'",end='')
+    for x in range(i):
+        print(string[x],end='')
+    print("'",end='')
+    print(",",end='')
+print("]")
 
-
-import speech_recognition as sr
-from colorama import Fore,Back
-
-# init the recognizer
-listener = sr.Recognizer()
-
-#GLOBAL setting the recognizer
-listener.operation_timeout = 3.0
-listener.dynamic_energy_threshold=True
-
-#SETTING FOR HEADPHONE 
-listener.energy_threshold = 3500
-
-#SETTING FOR SPEAKERS
-#listener.energy_threshold = 1000
-
-
-
-from colorama import Fore,Back
-import time
-
-def Log(string:str):
-    prfx=(Fore.GREEN + time.strftime ("%H:%M:%S UTC LOG", time.localtime() )+ Back.RESET + Fore.WHITE)
-    prfx = (prfx + " | ")
-    log = prfx + string
-    return log
-
-  
-
-
-def update_json_value(key, new_value):
-    # Apri il file JSON e carica i dati
-    with open("main/command.json", 'r') as file:
-        data = json.load(file)
-
-    # Modifica il valore desiderato
-    if key in data:
-        data[key] = new_value
-    else:
-        print(f"La chiave '{key}' non esiste nel file JSON.")
-
-    # Sovrascrivi il file JSON con i dati aggiornati
-    with open("main/command.json", 'w') as file:
-        json.dump(data, file, indent=4)
-
-def clean(command):
-        #Cancellation element before the key word
-        try:
-            command = str(command).split("dante ")[1].strip()
-            print(Log(f" comando lavorato: {command} "))
-            return command
-        except IndexError:
-            return command
-
-
-def invio(command:str):
-        print(Log(" comando sentito corretamente "))
-        command = clean(command)
-        res = SendCommand.command(command)
-        with open("main/res.json", 'w') as file:
-            data = {
-                "0":[command,res,False]
-            }
-            json.dump(data,file,indent=4)
-        
-        
-
-def main():
+def stampa():
+    command = "cls"
+    delay = 0.1
+    c = 0
+    for i in lista:
+        subprocess.run(command, shell=True)
+        print(Style.BRIGHT+ Fore.MAGENTA + pyfiglet.figlet_format(i))
+        if(c == 11 ):
+            delay  = 0.2
+        elif(c == 12):
+            delay  = 0.25
+        if(c == 13 ):
+            delay  = 0.3
+        elif(c == 14):
+            delay  = 0.35
+        elif(c == 15):
+            delay  = 0.4
+        time.sleep(delay)
+        c+=1
+    print(Style.RESET_ALL)
     
-    print(Log(Fore.GREEN + " THE ASSISTENT IS ONLINE  "))
-    #starting phrase
-    while(True):
-        with open("main/command.json", 'r') as comandi:
-            command = comandi.read()
-            commandLav = "".join(command.split(":")[0])[7:-1]
-        if("false" in command and command != None):
-            print(commandLav)
-            thread_processo = threading.Thread(target=invio(command))
-            thread_processo.start()
-            thread_processo.join()
-            update_json_value(commandLav, True)
+def rainbow():
+    command = "cls"
+    delay = 0.1
+    colori = [Fore.RED,Fore.YELLOW,Fore.GREEN,Fore.MAGENTA,Fore.CYAN,Fore.WHITE]
+    for i in range(16):
+        subprocess.run(command, shell=True)
+        print(Style.BRIGHT +  random.choice(colori)  + pyfiglet.figlet_format(lista[-1]))
+        time.sleep(delay)
+    subprocess.run(command, shell=True)
+    print(Style.BRIGHT +  Fore.MAGENTA  + pyfiglet.figlet_format(lista[-1]))
+    print(Style.RESET_ALL)
+
+if __name__ == '__main__': 
+    ALERT = Style.BRIGHT + Fore.YELLOW
+    OK = Style.BRIGHT + Fore.CYAN
+    WARNIGN = Style.BRIGHT + Fore.RED
+
+    
+    stampa()
+    rainbow()
+    print(Log(ALERT +"START CHECK THE LIBRARY"))
+    command = "pip install -q -r requirements.txt > logpip.txt"
+    subprocess.run(command, shell=True)
+    print(Log(OK +"LIBRARY INSTALLED CORRECTLY IN CASE OF PROBLEMS, CHECK THE logpip.txt FILE"))
+    print(Log(OK +"STARTING THE PYTHON FILE"))
+    process = ["speechPy.py","process.py","exc.py"]
+    pids = []
+    system = platform.system()
+    for proc in process:
+        if system == 'Windows':
+            # Esecuzione su Windows
+            procID = subprocess.Popen(['start', 'cmd', '/k', 'python', proc], shell=True)
+        elif system == 'Darwin':
+            # Esecuzione su macOS
+            procID = subprocess.Popen(['open', '-a', 'Terminal', 'python', proc], shell=True)
+        elif system == 'Linux':
+            # Esecuzione su Linux (utilizzando GNOME Terminal)
+            procID = subprocess.Popen(['gnome-terminal', '--', 'python', proc], shell=True)
         else:
-            pass
-            
-            
+            print("Sistema operativo non riconosciuto. Impossibile avviare il terminale corrispondente.")
         
-        
-
     
-if __name__ == "__main__":
-        # Creazione dei thread
-    thread_ascolto = threading.Thread(target=main)
-    
-
-    # Avvio dei thread
-    thread_ascolto.start()
-    # Attendi che i thread terminino (in realtà, il thread di ascolto continuerà a eseguirsi in background)
-    thread_ascolto.join()
-    
-    
-    
-    
+            
+    print(Log(OK +"PROGRAM IN EXECUTION"))
+    print("\n")
+    print(Style.BRIGHT +Fore.MAGENTA + pyfiglet.figlet_format("Thanks for using Virgil", font = "digital",justify= "center", width = 110 ))
+    print(Fore.LIGHTMAGENTA_EX + " - credit: @retr0")
+    print(Style.RESET_ALL)

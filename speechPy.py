@@ -1,5 +1,6 @@
 import time
 import json
+import sys
 
 import speech_recognition as sr
 from colorama import Fore,Back
@@ -31,26 +32,49 @@ def Log(string:str):
 
 
 def speech():
+        print(Log(" start hearing function"))
+        dataCom = {
+                None:True
+            }
+        with open("main/command.json", 'w') as command:
+            json.dump(dataCom,command)
+        print(Log(" cleaned buffer command"))
         while(True):
             try:
                 with sr.Microphone() as source:
-                    print(Log(" sto sentendo..."))
+                    print(Log(" I'm hearing..."))
                     voice = listener.listen(source,5,15)
-                    print(Log(" invio comando"))
+                    print(Log(" send command"))
                     command = listener.recognize_google(voice,language='it-it')
-                    print(Log(" comando acquisito"))
+                    print(Log(" command acquired"))
                     command = command.lower()
-                    print(Log(f" comando grezzo acquisito: {command} "))
-                    if('dante' in str(command)):
-                        print(" comando sentito corretamente ")
+                    print(Log(f" command rude acquired: {command} "))
+                    if('virgilio' in str(command)):
+                        print(Log(" command speech correctly "))
+                        listaWord = command.split(" ")
+                        for parola in listaWord:
+                            if("'\'" in listaWord):
+                                parola = " "
+                        command = " ".join(listaWord)
                         data = {
                             command:False
                             }
-                        print(data)
+                        print(Log(f" data sended - {data}"))
                         with open("main/command.json", 'w') as comandi:
                             json.dump(data, comandi,indent=4)
+                        if("spegniti" in command):
+                            sys.exit(0)
+                        sys.stdout.flush()
             except:
-                    print(Log(" Microfono dissattivato o qualcosa è andato storto"))                    
+                sys.stdout.flush()
+                try:
+                    if("spegniti" in command):
+                            print(Log(" shutdown in progress"))
+                            sys.exit(0)
+                    else:
+                        print(Log(" Microfono dissattivato o qualcosa è andato storto"))                    
+                        pass
+                except UnboundLocalError:
                     pass
                 
 if __name__ == "__main__":

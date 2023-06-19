@@ -8,7 +8,7 @@ translator=Translator()
 
 
 #Open file whith key api openai
-with open("F:\ProjectDante\secret.json") as f:
+with open("F:\ProjectVirgilio\secret.json") as f:
     secrets = json.load(f)
     weather_key = secrets["weather"]
     

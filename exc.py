@@ -1,11 +1,13 @@
 import json
 import time
 import threading
-from pyttsx3 import *
+import os
+import sys
 
+import pygame
+import gtts
 
-
-
+from Moduls.sound import run
 from prefix.creation import Log
 from Moduls.CalendarRec import Recoverycalendar
 from  Moduls.timeConv import TimeConversion
@@ -32,8 +34,8 @@ def timer(my_time):
     print(Log(" inizio timer"))
     time.sleep(my_time)
     print(Log(" fine timer"))
-    engine.say("IL TIMER è FINITO")
-    engine.runAndWait()
+    run.create(f"Timer finito")
+    pygame.mixer.music.play()
     #parte allarme
     
 class TimerThread(threading.Thread):
@@ -44,45 +46,45 @@ class TimerThread(threading.Thread):
 
     def run(self):
            timer(self.interval) 
-           
-if __name__ == "__main__":
-    #init e setup the tts
-    engine = init("sapi5")
-    engine.setProperty("rate",180)
-    voices = engine.getProperty("voices")
-    engine.setProperty("voice",voices[0].id)
-    voices=engine.getProperty("voices")
+   
+
+     
     
-    engine.say("Sono Dante come posso aiutarti")
-    engine.runAndWait()
+            
+if __name__ == "__main__":
+    pygame.init()
+    #init e setup the tts
+    run.create("Sono virgilio come posso aiutarti?")
+    time.sleep(3)
     while(True):
         try:
             with open("main/res.json", 'r') as file:
                 data = json.load(file)
                 res = data["0"][1]
                 command = data["0"][0]
-                boole = data["0"][2]
-            if(res != None and boole == False):
+                bool = data["0"][2]
+            if(res != None and bool == False):
+                if("spento" in res):
+                    print(Log(" shutdown in progress..."))
+                    sys.exit(0)
                 if("volume" in command):
-                        engine.setProperty('volume', res)
-                        engine.say("bbbiiipp")
-                        engine.runAndWait()
-                        print(Log(f" volume cambiato correttamente a {res*100}% "))
+                        pygame.mixer.music.set_volume(res)
+                        run.create("biiip")
+                        print(Log(f" volume changed correctly to {res*100}% "))
                         update_json_value(2, True)
                 elif("timer" in command):
-                        print(f"Il timer è partito ci vediamo tra {res} secondi")
-                        engine.say(f"Il timer è partito ci vediamo tra {res} secondi")
-                        engine.runAndWait()
+                        print(Log(f" the timer is started see you in {res} second"))
+                        run.create(f" the timer is started see you in {res} second")
                         t = TimerThread(res)
                         t.start()
                         update_json_value(2, True)
-                else:
-                        engine.say(res)
-                        engine.runAndWait()
+                else:   
+                        run.create(res)
                         print(res)
                         update_json_value(2, True)
             else:
                 pass
+            sys.stdout.flush()
         except json.decoder.JSONDecodeError:
-            print(Log("Non è stato trovato niente nel json"))
+            print(Log("Nothing was found in the json"))
             pass

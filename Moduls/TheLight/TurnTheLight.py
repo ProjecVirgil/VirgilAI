@@ -7,7 +7,7 @@ from meross_iot.http_api import MerossHttpClient
 from meross_iot.manager import MerossManager
 
 #Open file whith key api openai
-with open("F:\ProjectDante\secret.json") as f:
+with open("F:\ProjectVirgilio\secret.json") as f:
     secrets = json.load(f)
     EMAIL = secrets["merros"][0]
     PASSWORD = secrets["merros"][1]

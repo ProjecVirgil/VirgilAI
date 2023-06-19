@@ -49,6 +49,7 @@ gruut==2.2.3
 gruut-ipa==0.13.0
 gruut-lang-de==2.0.0
 gruut-lang-en==2.0.0
+gTTS==2.3.2
 h11==0.9.0
 h2==3.2.0
 hpack==3.0.0
@@ -112,6 +113,7 @@ pycparser==2.21
 pycryptodome==3.17
 pyee==8.2.2
 pyelftools==0.29
+pygame==2.4.0
 Pygments==2.14.0
 PyNaCl==1.5.0
 pynndescent==0.5.10

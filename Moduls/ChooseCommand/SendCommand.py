@@ -1,8 +1,12 @@
-from pyttsx3 import *
 import sys
 import json
-import openai
+import time
+import psutil
 
+import openai
+import pygame
+
+from Moduls.sound import run
 from prefix.creation import Log
 from Moduls.timeNow import Time
 from Moduls.ChanceValue import Value
@@ -12,22 +16,16 @@ from Moduls.CalendarRec import Recoverycalendar,DayOfWeek
 from Moduls.TheNews import news
 from Moduls.TheLight import TurnTheLight
 
-#init e setup the tts
-engine = init("sapi5")
-engine.setProperty("rate",180)
-voices = engine.getProperty("voices")
-engine.setProperty("voice",voices[0].id)
-
 #function for manage the command
 #Preset command
 
 #Start contest for GPT-3 API
 messages = [
-        {"role": "system", "content": "Sei un assistente virtuale chiamata Dante e parli solo italiano."}
+        {"role": "system", "content": "Sei un assistente virtuale chiamata Virgilio e parli solo italiano."}
     ]
 
 #Open file whith key api openai
-with open("F:\ProjectDante\secret.json") as f:
+with open("F:\ProjectVirgilio\secret.json") as f:
     secrets = json.load(f)
     api_key = secrets["api"]
 openai.api_key = api_key
@@ -45,21 +43,18 @@ def get_response(messages:list):
 #shutdown function
 def off():
     print(Log(" shut function"))
-    print("\nDante: Spegnimento in corso...")
-    try:
-        engine.say("Spegnimento in corso...")
-        engine.runAndWait()
-        with open("main/command.json", 'w') as comandi:
-            comandi.write()
-        with open("main/res.json", 'w') as res:
-            res.write()
-        sys.exit()
-        
-    except RuntimeError :
-        print(Log(" Spegnimento con eccezione NO WARNING"))
-        sys.exit()
+    print("\nVirgilio: Spegnimento in corso...")
+    with open("main/res.json", 'w') as file:
+            data = {
+                "0":["spento","spento",False]
+            }
+            json.dump(data,file,indent=4)
+    run.create(" shutdown in progress...")
+    time.sleep(2)
+    sys.exit(0)
     
 def command(command:str):
+    pygame.init()
     if(("spegniti" in command) or ("spegnimento" in command)):
         print(Log(" pre shut function"))
         off()
@@ -74,9 +69,8 @@ def command(command:str):
         print(Log(" pre volume function"))
         res = Value.change(command)
         if(res == 104):
-            print("\nDante: Non puoi dare un valore inferiore a 10, puoi dare solo valori da 100 a 10 ")
-            engine.say("Non puoi dare un valore inferiore a 10, puoi dare solo valori da 100 a 10")
-            engine.runAndWait()
+            print("\nVirgilio: Non puoi dare un valore inferiore a 10, puoi dare solo valori da 100 a 10 ")
+            run.create("Non puoi dare un valore inferiore a 10, puoi dare solo valori da 100 a 10")
             return None
         else:
             return res
@@ -100,9 +94,8 @@ def command(command:str):
             my_time = TimeConversion.conversion(command)
             return my_time
         except IndexError:
-            print("Riprova a chiedere il comando perfavore")
-            engine.say("Riprova a chiedere il comando perfavore")
-            engine.runAndWait()
+            print("Please try the command again")
+            run.create("Please try the command again")
             return None
         
         #timer(command)
@@ -139,11 +132,11 @@ def command(command:str):
         print(Log(" GPT function"))
         messages.append({"role": "user", "content": command})
         new_message = get_response(messages=messages)
-        print(Log(" risposta creata"))
-        print(f"\nDante: {new_message['content']}")
-        print(Log(" sto appendendo il comando..."))
+        print(Log(" response created"))
+        print(f"\nVirgilio: {new_message['content']}")
+        print(Log(" I am hanging the command..."))
         messages.append(new_message)
-        print(Log(" comando appesso"))
+        print(Log(" command append"))
         return new_message['content']
 
         
