@@ -39,9 +39,9 @@ You can ask lots of questions at Dant3, like us:
 3. now we need the api (for now i am not rich and i do not pay for everything) so
  we are need of 3 tokens
    - API for OpenAI and GPT,
-          i recommend this [video tutorial]((https://www.youtube.com/watch?v=u-LeLPBZr2k)) 
+          i recommend this [video tutorial](https://www.youtube.com/watch?v=u-LeLPBZr2k) 
    - API for the weather,
-          i recommend this [video tutorial]((https://www.youtube.com/watch?v=u-LeLPBZr2k)) 
+          i recommend this [video tutorial](https://youtu.be/u-LeLPBZr2k?t=27) 
    - API for Merros (domotic socket),
           just create a Merros account
 4. when you have all the tokens/accounts, create a file called `secret.json`
