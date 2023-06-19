@@ -46,8 +46,8 @@ You can ask lots of questions at Dant3, like us:
           Simply make a account merros
 4. when you have all token/account create a file named  `secret.json`
 5. and copy this by replacing the token
+   secret.json
    ```
-   #!/usr/bin/env json
    {
         "api":"sk-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
         "weather":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
