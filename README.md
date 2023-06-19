@@ -57,7 +57,7 @@ You can ask lots of questions at Dant3, like us:
 7. when/if the installation is go done and you setup the json, just run the python file main.py
 
 ## How to use
-> Simply run the command ```python main.py``` or ```python3 main.py```  📃
+> Simply run the command `python main.py` or `python3 main.py` in the terminal 📃
 
 ## IMPORTANT!!
 The project is very young and is in alpha, indeed missing a good code, there are a lot of bugs or problem and the AI working principle in Italian expect for the part of AI, also the assistant is personalize only via code (for now).
