@@ -46,11 +46,13 @@ You can ask lots of questions at Dant3, like us:
           Simply make a account merros
 4. when you have all token/account create a file named  `secret.json`
 5. and copy this by replacing the token
-   ```{
+   ```
+   {
         "api":"sk-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
         "weather":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
         "merros":["email","password"]
-    }```
+    }
+   ```
 7. when/if the installation is go done and you setup the json, just run the python file main.py
 
 ## How to use
