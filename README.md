@@ -1,4 +1,4 @@
-# ProjectDant3
+# Project Virgilio
 
 <p align="center">
  <img src="/docs/Dant3_Project.png" alt="Markdownify" width ="700px" >
