@@ -36,16 +36,16 @@ You can ask lots of questions at Dant3, like us:
 
 1. The first part of the installation is to download all the files from the repository
 2. After that, open a terminal to the directory and run  ```pip install -r requirements.txt```
-3. now is necessary the api (for now i am not rich and i dont pay for all) so
- we are need of 3 token
-   - api for openai and GPT,
+3. now we need the api (for now i am not rich and i do not pay for everything) so
+ we are need of 3 tokens
+   - API for OpenAI and GPT,
           i recommend this [video tutorial](https://videodamettere.com) 
-   - api for the wheather,
+   - API for the weather,
           i recommend this [video tutorial](https://videodamettere.com) 
-   - api for merros (domotic socket),
-          simply make a account merros
-4. when you have all token/account create a file named  `secret.json`
-5. and copy this by replacing the token
+   - API for Merros (domotic socket),
+          just create a Merros account
+4. when you have all the tokens/accounts, create a file called `secret.json`
+5. and copy this by replacing the token with the your token
    secret.json
    ```
    {
@@ -54,14 +54,15 @@ You can ask lots of questions at Dant3, like us:
         "merros":["email","password"]
     }
    ```
-7. when/if the installation is go done and you setup the json, just run the python file main.py
+7. when/if the installation is go done and you have setup the json, just run the python file main.py
 
 ## How to use
 > Simply run the command `python main.py` or `python3 main.py` in the terminal 📃
 
 ## IMPORTANT!!
 The project is very young and is in alpha, indeed missing a good code, there are a lot of bugs or problem and the AI working principle in Italian expect for the part of AI, also the assistant is personalize only via code (for now). 🐛
-There are various path to modify and where is necesarry modify with the correct path 🛣️
+
+There are different  path to modify and where is necesarry modify with the correct path 🛣️
 
 - file TurnTheLight.py (Moduls,Theligh) line 10 
 - file WhatsIs.py (Moduls,TheWeather) line 11
