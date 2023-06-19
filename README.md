@@ -1,8 +1,10 @@
-# ProjectDant3
- <img src="/docs/Dant3_Project.png" alt="Markdownify" width="100%" align="center">
-<h1 align="center">
-   <b>   Dant3 virtual assistant </b>
-</h1>
+# Project Virgil
+
+<p align="center">
+ <img src="/docs/Project_Virgilio (1).png" alt="Markdownify" width ="700px" >
+ </p>
+ 
+
 <p align="center">
   <a href="#key-features">Key Features</a> •
   <a href="#how-to-use">How To Use</a> •
@@ -26,7 +28,7 @@ You can ask lots of questions at Dant3, like us:
 - Change the volume 🔉
 - The temperature 🌡️
 - The days of the week 📆
-- Interact with the domotic 💡
+- Interact with the domotic (only merros device) 💡
 - Timer 🔂
 - and ask **whatever you want** like: Dant3 explain quantum mathematics 🤖
 
@@ -34,13 +36,17 @@ You can ask lots of questions at Dant3, like us:
 
 1. The first part of the installation is to download all the files from the repository
 2. After that, open a terminal to the directory and run  `pip install -r requirements.txt`
-3. when/if the installation is go done, just run the file run.bat in the terminal and use the command `run.bat` and the program will start
+3. when/if the installation is go done, just run the file run.bat in the terminal and use the command `run.bat` on Windows or `./run` on Linux/MacOS  and the program will start
 
 ## How to use
-> Simple run the file bat and tell a command o ask a question and the bot will respond in short time 📃
+> Simply run the file bat/bash, it depends on your OS  and give the command o ask a question and the bot will answer in a short time 📃
 
 ## IMPORTANT!!
-The project is very young and is in alfa, indeed missing a good code, there are a lots of bugs or problem and the AI work principle in italian expect for the part of AI also the Assistant is personalize only via code (for now)
+The project is very young and is in alpha, indeed missing a good code, there are a lot of bugs or problem and the AI working principle in Italian expect for the part of AI also the assistant is personalize only via code (for now).
+
+## Future idea/goal for this project
+
+> Is to create a multi-platform application with Dart and Flask to give the possibility to modify ALL (Word activation, position for weather and news, configure the domotic, etc..) 👾
 
 ## Credits
 Only me 💻
