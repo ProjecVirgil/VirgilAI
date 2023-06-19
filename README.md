@@ -10,7 +10,7 @@
   <a href="#how-to-use">How To Use</a> •
   <a href="#credits">Credits</a> •
   <a href="#installing">Installing</a> •
-  <a href="#important">Important!</a> •
+  <a href="#important">Important!</a> 
 </p>
 
 ---
