@@ -35,7 +35,7 @@ You can ask lots of questions at Dant3, like us:
 ## Installing
 
 1. The first part of the installation is to download all the files from the repository
-2. After that, open a terminal to the directory and run  `pip install -r requirements.txt`
+2. After that, open a terminal to the directory and run  ```pip install -r requirements.txt```
 3. now is necessary the api (for now i am not rich and i dont pay for all) so
  we are need of 3 token
    - api for openai and GPT
@@ -57,7 +57,7 @@ You can ask lots of questions at Dant3, like us:
 7. when/if the installation is go done and you setup the json, just run the python file main.py
 
 ## How to use
-> Simply run the command `python main.py` 📃
+> Simply run the command ```python main.py``` or ```python3 main.py```  📃
 
 ## IMPORTANT!!
 The project is very young and is in alpha, indeed missing a good code, there are a lot of bugs or problem and the AI working principle in Italian expect for the part of AI, also the assistant is personalize only via code (for now).
