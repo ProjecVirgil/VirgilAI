@@ -105,7 +105,7 @@ def main():
                 commandLav = "".join(command.split(":")[0])[7:-1]
         if("false" in command and command != None):
             print(Log(f" command processed: {commandLav}"))
-            thread_processo = threading.Thread(target=invio(command))
+            thread_processo = threading.Thread(target=invio(commandLav))
             thread_processo.start()
             thread_processo.join()
             print(Log(f" updating the command"))

@@ -68,7 +68,7 @@ if __name__ == "__main__":
                     print(Log(" shutdown in progress..."))
                     sys.exit(0)
                 if("volume" in command):
-                        pygame.mixer.music.set_volume(res)
+                        pygame.mixer.music.set_volume(float(res))
                         run.create("biiip")
                         print(Log(f" volume changed correctly to {res*100}% "))
                         update_json_value(2, True)

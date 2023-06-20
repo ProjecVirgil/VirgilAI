@@ -1,5 +1,5 @@
 from prefix.creation import Log
-
+from Moduls.sound import run
 def change(command:str):
     print(Log(" volume function"))
     comando=command.split(" ")
@@ -8,11 +8,17 @@ def change(command:str):
         volume= volume[:-2]
     elif(("%" in volume) or ("." in volume)):
         volume = volume[:-1]
-    volume = int(volume)/100
-    if(volume < 0.1 ):
-        return 104
-    else:
-        return volume
+    try:
+        volume = int(volume)/100
+        if(volume < 0.1 ):
+            return "104"
+        else:
+            return str(volume)
+    except ValueError:
+        print(Log("Mi dispiace c'è stato un errore richiedimi il comando"))
+        run.create("Mi dispiace c'è stato un errore richiedimi il comando")
+        return "104"
+    
     
     
     
