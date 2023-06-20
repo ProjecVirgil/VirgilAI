@@ -15,7 +15,7 @@
 
 ---
 
-Created principle with [python3.11](https://www.python.org/downloads/) e various library like [SpeechRecognition ](https://pypi.org/project/SpeechRecognition/)  and [TTS library](https://github.com/coqui-ai/TTS) 
+Created principle with [python3.11](https://www.python.org/downloads/) e various library like [SpeechRecognition ](https://pypi.org/project/SpeechRecognition/)  and [TTS library](https://pypi.org/project/gTTS/) 
 
 Virgilio or Virgil is a virtual assistant like Alexa or Google Home but is integrated with an AI (GPT-3.5 turbo).The project is focused on the Ai/virtual assistant, but the idea is the evolve the project in a second part, which consists of a multi-platform app created with Dart and Flask, allowing the customisation of the virtual assistant
 
@@ -61,12 +61,6 @@ You can ask lots of questions at Dant3, like us:
 
 ## IMPORTANT!!
 The project is very young and is in alpha, indeed missing a good code, there are a lot of bugs or problem and the AI working principle in Italian expect for the part of AI, also the assistant is personalize only via code (for now). 🐛
-
-There are different  path to modify and where is necesarry modify with the correct path 🛣️
-
-- file TurnTheLight.py (Moduls,Theligh) line 10 
-- file WhatsIs.py (Moduls,TheWeather) line 11
-- file SendCommand.py (Moduls,ChooseCommand) line 28
 
 The api for GPT is almost free but is necessary inser the credit/debit card (sorry i now is annoying) 💸
 
