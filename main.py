@@ -1,5 +1,3 @@
-import pyfiglet
-from colorama import Fore, Back, Style
 import time
 import string as st
 import subprocess
@@ -7,10 +5,13 @@ import random
 import os
 import platform
 
-from prefix.creation import Log
-lista = ['W','We','Wel','Welc','Welco','Welcom','Welcome','Welcome ','Welcome t','Welcome to','Welcome to ','Welcome to V','Welcome to Vi','Welcome to Vir','Welcome to Virg','Welcome to Virgi','Welcome to Virgil']
-string = "Thanks for use Virgil"
+import pyfiglet
+from colorama import Fore, Back, Style
 
+from prefix.creation import Log
+
+
+'''string = "Thanks for use Virgil"
 print("[")
 for i in range(len(string) + 1):
     print("'",end='')
@@ -18,7 +19,9 @@ for i in range(len(string) + 1):
         print(string[x],end='')
     print("'",end='')
     print(",",end='')
-print("]")
+print("]")'''
+
+lista = ['W','We','Wel','Welc','Welco','Welcom','Welcome','Welcome ','Welcome t','Welcome to','Welcome to ','Welcome to V','Welcome to Vi','Welcome to Vir','Welcome to Virg','Welcome to Virgi','Welcome to Virgil']
 
 def stampa():
     command = "cls"

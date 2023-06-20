@@ -32,6 +32,7 @@ def Log(string:str):
 
 
 def speech():
+        command =""
         print(Log(" start hearing function"))
         dataCom = {
                 None:True
@@ -67,7 +68,7 @@ def speech():
                         sys.stdout.flush()
             except:
                 sys.stdout.flush()
-                try:
+                '''try:
                     if("spegniti" in command):
                             print(Log(" shutdown in progress"))
                             sys.exit(0)
@@ -75,7 +76,8 @@ def speech():
                         print(Log(" Microfono dissattivato o qualcosa è andato storto"))                    
                         pass
                 except UnboundLocalError:
-                    pass
+                    pass'''
+                pass
                 
 if __name__ == "__main__":
     speech()
