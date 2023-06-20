@@ -9,7 +9,6 @@ import threading
 
 import openai
 from colorama import Fore,Back
-from pyttsx3 import *
 import speech_recognition as sr
 from googletrans import Translator
 
