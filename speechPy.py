@@ -4,6 +4,7 @@ import sys
 
 import speech_recognition as sr
 from colorama import Fore,Back
+import unicodedata
 
 #from prefix.creation import Log
 # init the recognizer
@@ -37,10 +38,11 @@ def speech():
         dataCom = {
                 None:True
             }
-        with open("main/command.json", 'w') as command:
-            json.dump(dataCom,command)
+        with open("main/command.json", 'w') as commands:
+            json.dump(dataCom,commands)
         print(Log(" cleaned buffer command"))
-        while(True):
+        status  = True
+        while(status):
             try:
                 with sr.Microphone() as source:
                     print(Log(" I'm hearing..."))
@@ -49,14 +51,10 @@ def speech():
                     command = listener.recognize_google(voice,language='it-it')
                     print(Log(" command acquired"))
                     command = command.lower()
+                    command = unicodedata.normalize('NFKD', command).encode('ascii', 'ignore').decode('ascii')
                     print(Log(f" command rude acquired: {command} "))
                     if('virgilio' in str(command)):
                         print(Log(" command speech correctly "))
-                        listaWord = command.split(" ")
-                        for parola in listaWord:
-                            if("'\'" in listaWord):
-                                parola = " "
-                        command = " ".join(listaWord)
                         data = {
                             command:False
                             }
@@ -64,19 +62,20 @@ def speech():
                         with open("main/command.json", 'w') as comandi:
                             json.dump(data, comandi,indent=4)
                         if("spegniti" in command):
-                            sys.exit(0)
+                            print(Log(" shutdown in progress"))
+                            status = False
                         sys.stdout.flush()
             except:
                 sys.stdout.flush()
-                '''try:
+                try:
                     if("spegniti" in command):
                             print(Log(" shutdown in progress"))
-                            sys.exit(0)
+                            status = False
                     else:
                         print(Log(" Microfono dissattivato o qualcosa è andato storto"))                    
                         pass
                 except UnboundLocalError:
-                    pass'''
+                    pass
                 pass
                 
 if __name__ == "__main__":

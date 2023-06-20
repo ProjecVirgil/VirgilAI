@@ -37,9 +37,9 @@ def conversion(stringa:str):
         if(((stringa[1] == 'ore')) or (stringa[1] == 'ora')):
             return int(stringa[0])*3600
         elif((stringa[1] == 'minuti') or (stringa[1] == 'minuto')):
-            return int(stringa[0])*60
+            return str(stringa[0])*60
         else:
-            return int(stringa[0])
+            return str(stringa[0])
 
 
 

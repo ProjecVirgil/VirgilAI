@@ -11,6 +11,7 @@ from colorama import Fore, Back, Style
 from prefix.creation import Log
 
 
+
 '''string = "Thanks for use Virgil"
 print("[")
 for i in range(len(string) + 1):
@@ -22,13 +23,22 @@ for i in range(len(string) + 1):
 print("]")'''
 
 lista = ['W','We','Wel','Welc','Welco','Welcom','Welcome','Welcome ','Welcome t','Welcome to','Welcome to ','Welcome to V','Welcome to Vi','Welcome to Vir','Welcome to Virg','Welcome to Virgi','Welcome to Virgil']
+system = platform.system()
+
+if system == 'Windows':
+            commandClean = "cls"
+elif system == 'Darwin' or system == 'Linux':
+            # Esecuzione su macOS
+            commandClean = "clear"
+else:
+    print("Sistema operativo non riconosciuto. Impossibile avviare il terminale corrispondente.")
 
 def stampa():
-    command = "cls"
+    global commandClean
     delay = 0.1
     c = 0
     for i in lista:
-        subprocess.run(command, shell=True)
+        subprocess.run(commandClean, shell=True)
         print(Style.BRIGHT+ Fore.MAGENTA + pyfiglet.figlet_format(i))
         if(c == 11 ):
             delay  = 0.2
@@ -45,14 +55,14 @@ def stampa():
     print(Style.RESET_ALL)
     
 def rainbow():
-    command = "cls"
+    global commandClean
     delay = 0.1
     colori = [Fore.RED,Fore.YELLOW,Fore.GREEN,Fore.MAGENTA,Fore.CYAN,Fore.WHITE]
     for i in range(16):
-        subprocess.run(command, shell=True)
+        subprocess.run(commandClean, shell=True)
         print(Style.BRIGHT +  random.choice(colori)  + pyfiglet.figlet_format(lista[-1]))
         time.sleep(delay)
-    subprocess.run(command, shell=True)
+    subprocess.run(commandClean, shell=True)
     print(Style.BRIGHT +  Fore.MAGENTA  + pyfiglet.figlet_format(lista[-1]))
     print(Style.RESET_ALL)
 
@@ -71,7 +81,7 @@ if __name__ == '__main__':
     print(Log(OK +"STARTING THE PYTHON FILE"))
     process = ["speechPy.py","process.py","exc.py"]
     pids = []
-    system = platform.system()
+
     for proc in process:
         if system == 'Windows':
             # Esecuzione su Windows
@@ -80,8 +90,8 @@ if __name__ == '__main__':
             # Esecuzione su macOS
             procID = subprocess.Popen(['open', '-a', 'Terminal', 'python', proc], shell=True)
         elif system == 'Linux':
-            # Esecuzione su Linux (utilizzando GNOME Terminal)
-            procID = subprocess.Popen(['gnome-terminal', '--', 'python', proc], shell=True)
+            # Esecuzione su Linux (utilizzando GNOME Terminal) da FIXARE
+            procID = subprocess.Popen(['gnome-terminal', 'python', proc], shell=True)
         else:
             print("Sistema operativo non riconosciuto. Impossibile avviare il terminale corrispondente.")
         

@@ -54,7 +54,7 @@ class TimerThread(threading.Thread):
 if __name__ == "__main__":
     pygame.init()
     #init e setup the tts
-    run.create("Sono virgilio come posso aiutarti?")
+    run.create("Ciao sono virgilio come posso aiutarti?")
     time.sleep(3)
     while(True):
         try:
@@ -75,7 +75,7 @@ if __name__ == "__main__":
                 elif("timer" in command):
                         print(Log(f" the timer is started see you in {res} second"))
                         run.create(f" the timer is started see you in {res} second")
-                        t = TimerThread(res)
+                        t = TimerThread(int(res))
                         t.start()
                         update_json_value(2, True)
                 else:   
