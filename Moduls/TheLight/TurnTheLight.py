@@ -5,9 +5,10 @@ from prefix.creation import Log
 
 from meross_iot.http_api import MerossHttpClient
 from meross_iot.manager import MerossManager
-
+current_path = os.getcwd()
+file_path = os.path.join(current_path,'secret.json')
 #Open file whith key api openai
-with open("F:\ProjectVirgilio\secret.json") as f:
+with open(file_path) as f:
     secrets = json.load(f)
     EMAIL = secrets["merros"][0]
     PASSWORD = secrets["merros"][1]

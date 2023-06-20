@@ -2,6 +2,7 @@ import sys
 import json
 import time
 import psutil
+import os 
 
 import openai
 import pygame
@@ -23,9 +24,12 @@ from Moduls.TheLight import TurnTheLight
 messages = [
         {"role": "system", "content": "Sei un assistente virtuale chiamata Virgilio e parli solo italiano."}
     ]
+import os 
+current_path = os.getcwd()
+file_path = os.path.join(current_path,'secret.json')
 
 #Open file whith key api openai
-with open("F:\ProjectVirgilio\secret.json") as f:
+with open(file_path) as f:
     secrets = json.load(f)
     api_key = secrets["api"]
 openai.api_key = api_key
