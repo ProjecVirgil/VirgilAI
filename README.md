@@ -35,7 +35,7 @@ You can ask lots of questions at Virgilio, like us:
 ## Installing
 
 1. The first part of the installation is to download all the files from the repository
-2. After that, open a terminal to the directory and run  ```pip install -r requirements.txt``` ⚠️ if you use linux or mac os read the installation of [Pyaudio](https://pypi.org/project/PyAudio/) ⚠️
+2. After that, open a terminal to the directory and run  ```pip install -r requirements.txt``` ⚠️ Read about installing [Pyaudio](https://pypi.org/project/PyAudio/) if you are using Linux or Mac OS.⚠️
 3. now we need the api (for now i am not rich and i do not pay for everything) so
  we are need of 3 tokens
    - API for OpenAI and GPT,
