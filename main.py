@@ -85,13 +85,13 @@ if __name__ == '__main__':
     for proc in process:
         if system == 'Windows':
             # Esecuzione su Windows
-            procID = subprocess.Popen(['start', 'cmd', '/k', 'python', proc], shell=True)
+             subprocess.Popen(['start', 'cmd', '/k', 'python', proc], shell=True)
         elif system == 'Darwin':
             # Esecuzione su macOS
-            procID = subprocess.Popen(['open', '-a', 'Terminal', 'python', proc], shell=True)
+            subprocess.Popen(['open', '-a', 'Terminal', 'python', proc], shell=True)
         elif system == 'Linux':
             # Esecuzione su Linux (utilizzando GNOME Terminal) da FIXARE
-            procID = subprocess.Popen(['gnome-terminal', 'python', proc], shell=True)
+            subprocess.run('gnome-terminal -- python3 ' + proc,shell=True)                       
         else:
             print("Sistema operativo non riconosciuto. Impossibile avviare il terminale corrispondente.")
         
