@@ -36,11 +36,12 @@ def TheWeather(command:str):
     response = requests.get(url(CITY)).json()
     main = response['weather'][0]['description']
     out=translator.translate(main,dest='it')
+    print(print(Log(out)))
     stringa = f"A {CITY} il tempo è {out.text}"
-    print(f"\nDante: A {CITY} il tempo è {out.text}")
+    print(f"\nVirgilio: A {CITY} il tempo è {out.text}")
     return stringa
     
-    
+
     
 def Temp(command):
     print(Log(" funzione temp"))
@@ -59,5 +60,5 @@ def Temp(command):
     tempMin= int(response['main']['temp_min']) - 273.15
     humidity= int( response['main']['humidity'])
     stringa = f"La temperatura ora a {CITY} è di {int(temp)} gradi, con una massima di {int(tempMax)} gradi, una minima di {int(tempMin)} gradi e un' umidita pari al {humidity}% "
-    print(f"\nOrdis: La temperatura ora a {CITY} è di {int(temp)} gradi, con una massima di {int(tempMax)} gradi, una minima di {int(tempMin)} gradi e un' umidita pari al {humidity}% ")
+    print(f"\nVirgilio: La temperatura ora a {CITY} è di {int(temp)} gradi, con una massima di {int(tempMax)} gradi, una minima di {int(tempMin)} gradi e un' umidita pari al {humidity}% ")
     return stringa
