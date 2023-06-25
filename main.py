@@ -70,34 +70,55 @@ if __name__ == '__main__':
     ALERT = Style.BRIGHT + Fore.YELLOW
     OK = Style.BRIGHT + Fore.CYAN
     WARNIGN = Style.BRIGHT + Fore.RED
-
-    
     stampa()
     rainbow()
     print(Log(ALERT +"START CHECK THE LIBRARY"))
     command = "pip install -q -r requirements.txt > logpip.txt"
     subprocess.run(command, shell=True)
     print(Log(OK +"LIBRARY INSTALLED CORRECTLY IN CASE OF PROBLEMS, CHECK THE logpip.txt FILE"))
-    print(Log(OK +"STARTING THE PYTHON FILE"))
-    process = ["speechPy.py","process.py","exc.py"]
-    pids = []
-
-    for proc in process:
-        if system == 'Windows':
-            # Esecuzione su Windows
-             subprocess.Popen(['start', 'cmd', '/k', 'python', proc], shell=True)
-        elif system == 'Darwin':
-            # Esecuzione su macOS
-            subprocess.Popen(['open', '-a', 'Terminal', 'python', proc], shell=True)
-        elif system == 'Linux':
-            # Esecuzione su Linux (utilizzando GNOME Terminal) da FIXARE
-            subprocess.run('gnome-terminal -- python3 ' + proc,shell=True)                       
+    Valid = False
+    while(not Valid):
+        TorS = str(input(Log((ALERT + "You want a text interface (T) or recognise interface(R) T/R: ")))).upper()
+        if(TorS == 'T'):
+            print(Log(OK +"STARTING THE PYTHON FILE"))
+            process = ["textpy.py","process.py","exc.py"]
+            for proc in process:
+                if system == 'Windows':
+                    # Esecuzione su Windows
+                    subprocess.Popen(['start', 'cmd', '/k', 'python', proc], shell=True)
+                elif system == 'Darwin':
+                    # Esecuzione su macOS
+                    subprocess.Popen(['open', '-a', 'Terminal', 'python', proc], shell=True)
+                elif system == 'Linux':
+                    # Esecuzione su Linux (utilizzando GNOME Terminal) da FIXARE
+                    subprocess.run('gnome-terminal -- python3 ' + proc,shell=True)                       
+                else:
+                    print(Log(WARNIGN + "Sistema operativo non riconosciuto. Impossibile avviare il terminale corrispondente."))
+                Valid = True
+        elif(TorS == 'R'):
+            print(Log(OK +"STARTING THE PYTHON FILE"))
+            process = ["speechPy.py","process.py","exc.py"]
+            for proc in process:
+                if system == 'Windows':
+                    # Esecuzione su Windows
+                    subprocess.Popen(['start', 'cmd', '/k', 'python', proc], shell=True)
+                elif system == 'Darwin':
+                    # Esecuzione su macOS
+                    subprocess.Popen(['open', '-a', 'Terminal', 'python', proc], shell=True)
+                elif system == 'Linux':
+                    # Esecuzione su Linux (utilizzando GNOME Terminal) da FIXARE
+                    subprocess.run('gnome-terminal -- python3 ' + proc,shell=True)                       
+                else:
+                    print(Log(WARNIGN + "Sistema operativo non riconosciuto. Impossibile avviare il terminale corrispondente."))
+                Valid = True
         else:
-            print("Sistema operativo non riconosciuto. Impossibile avviare il terminale corrispondente.")
-        
+            print(Log(WARNIGN + "Select a valid choice please"))
     
+    
+    
+        
             
-    print(Log(OK +"PROGRAM IN EXECUTION"))
+    print(Log(OK +"PROGRAM IN EXECUTION"), flush=True)
     print("\n")
     print(Style.BRIGHT +Fore.MAGENTA + pyfiglet.figlet_format("Thanks for using Virgil", font = "digital",justify= "center", width = 110 ))
     print(Fore.LIGHTMAGENTA_EX + " - credit: @retr0")

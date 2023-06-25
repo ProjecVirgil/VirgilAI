@@ -57,7 +57,7 @@ def update_json_value(key, new_value):
     if key in data:
         data[key] = new_value
     else:
-        print(f"The key '{key}' dont exist in the file JSON.")
+        print(Log(f"The key '{key}' dont exist in the file JSON."), flush=True)
 
     # Sovrascrivi il file JSON con i dati aggiornati
     with open("main/command.json", 'w') as file:
@@ -67,7 +67,7 @@ def clean(command):
         #Cancellation element before the key word
         try:
             command = str(command).split("virgilio ")[1].strip()
-            print(Log(f" command processed: {command} "))
+            print(Log(f" command processed: {command} "), flush=True)
             return command
         except IndexError:
             return command
@@ -75,10 +75,10 @@ def clean(command):
 
 def invio(command:str):
         command = clean(command)
-        print(Log(" command heard correctly"))
-        print(Log(" command in process"))
+        print(Log(" command heard correctly"), flush=True)
+        print(Log(" command in process"), flush=True)
         res = SendCommand.command(command)
-        print(Log(" command processed updating file with the result"))
+        print(Log(" command processed updating file with the result"), flush=True)
         with open("main/res.json", 'w') as file:
             data = {
                 "0":[command,res,False]
@@ -88,13 +88,13 @@ def invio(command:str):
         
 
 def main():
-    print(Log(Fore.GREEN + " THE ASSISTENT IS ONLINE  "))
+    print(Log(Fore.GREEN + " THE ASSISTENT IS ONLINE  "), flush=True)
     dataRes = {
                 "0":[None,None,True]
             }
     with open("main/res.json", 'w') as res:
         json.dump(dataRes,res)
-    print(Log(" cleaned buffer result"))
+    print(Log(" cleaned buffer result"), flush=True)
     #starting phrase
     while(True):
         with open("main/command.json", 'r') as comandi:
@@ -104,15 +104,14 @@ def main():
             else:    
                 commandLav = "".join(command.split(":")[0])[7:-1]
         if("false" in command and command != None):
-            print(Log(f" command processed: {commandLav}"))
+            print(Log(f" command processed: {commandLav}"), flush=True)
             thread_processo = threading.Thread(target=invio(commandLav))
             thread_processo.start()
             thread_processo.join()
-            print(Log(f" updating the command"))
+            print(Log(f" updating the command"), flush=True)
             update_json_value(commandLav, True)
         else:
             pass
-        sys.stdout.flush()
             
         
         

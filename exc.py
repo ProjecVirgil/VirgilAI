@@ -30,10 +30,10 @@ def update_json_value(key, new_value):
 
 
 def timer(my_time):
-    print(Log(" timer function"))
-    print(Log(" inizio timer"))
+    print(Log(" timer function"), flush=True)
+    print(Log(" inizio timer"), flush=True)
     time.sleep(my_time)
-    print(Log(" fine timer"))
+    print(Log(" fine timer"), flush=True)
     run.create(f"Timer finito")
     pygame.mixer.music.play()
     #parte allarme
@@ -65,26 +65,25 @@ if __name__ == "__main__":
                 bool = data["0"][2]
             if(res != None and bool == False):
                 if("spento" in res):
-                    print(Log(" shutdown in progress..."))
+                    print(Log(" shutdown in progress..."), flush=True)
                     sys.exit(0)
                 if("volume" in command):
                         pygame.mixer.music.set_volume(float(res))
                         run.create("biiip")
-                        print(Log(f" volume changed correctly to {res*100}% "))
+                        print(Log(f" volume changed correctly to {res*100}% "), flush=True)
                         update_json_value(2, True)
                 elif("timer" in command):
-                        print(Log(f" the timer is started see you in {res} second"))
+                        print(Log(f" the timer is started see you in {res} second"), flush=True)
                         run.create(f" the timer is started see you in {res} second")
                         t = TimerThread(int(res))
                         t.start()
                         update_json_value(2, True)
                 else:   
                         run.create(res)
-                        print(res)
+                        print(res, flush=True)
                         update_json_value(2, True)
             else:
                 pass
-            sys.stdout.flush()
         except json.decoder.JSONDecodeError:
             print(Log("Nothing was found in the json"))
             pass
