@@ -42,7 +42,7 @@ You can ask lots of questions at Virgilio, like us:
    - API for the weather,
           i recommend this [video tutorial](https://youtu.be/u-LeLPBZr2k?t=27) 
    - API for Merros (domotic socket),
-          just create a Merros account
+          just create a [Merros account](https://www.meross.com/en-gc)
 3. when you have all the tokens/accounts, create a file called `secret.json`
 4. and copy this by replacing the token with the your token
    secret.json
