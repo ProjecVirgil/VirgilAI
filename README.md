@@ -53,7 +53,7 @@ You can ask lots of questions at Virgilio, like us:
         "merros":["email","password"]
     }
    ```
-5. After that, open a terminal to the directory and run the file with   ```run.bat``` or run the file bash ```./run.bash``` (first make it execuble) or for the fast start lunch   ```python main.py``` or  ```python3 main.py```
+5. After that, open a terminal to the directory and run the file with   ```run.bat``` or run the file bash ```bash run.sh``` (first make it execuble) or for the fast start lunch   ```python main.py``` or  ```python3 main.py```
 
 ## How to use
 > After the check of the library you need to choice if the interface is vocal or text (for debug i advise the text) and after start with the question/command
