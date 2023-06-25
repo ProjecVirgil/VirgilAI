@@ -35,8 +35,7 @@ You can ask lots of questions at Virgilio, like us:
 ## Installing
 
 1. The first part of the installation is to download all the files from the repository
-2. After that, open a terminal to the directory and run  ```pip install -r requirements.txt```
-3. now we need the api (for now i am not rich and i do not pay for everything) so
+2. now we need the api (for now i am not rich and i do not pay for everything) so
  we are need of 3 tokens
    - API for OpenAI and GPT,
           i recommend this [video tutorial](https://www.youtube.com/watch?v=u-LeLPBZr2k) 
@@ -44,8 +43,8 @@ You can ask lots of questions at Virgilio, like us:
           i recommend this [video tutorial](https://youtu.be/u-LeLPBZr2k?t=27) 
    - API for Merros (domotic socket),
           just create a Merros account
-4. when you have all the tokens/accounts, create a file called `secret.json`
-5. and copy this by replacing the token with the your token
+3. when you have all the tokens/accounts, create a file called `secret.json`
+4. and copy this by replacing the token with the your token
    secret.json
    ```
    {
@@ -54,15 +53,16 @@ You can ask lots of questions at Virgilio, like us:
         "merros":["email","password"]
     }
    ```
-7. when/if the installation is go done and you have setup the json, just run the python file main.py
+5. After that, open a terminal to the directory and run the file with   ```run.bat``` or run the file bash ```./run.bash``` (first make it execuble)
+5.1 For the fast start lunch   ```python main.py``` or  ```python3 main.py```
 
 ## How to use
-> Simply run the command `python main.py` or `python3 main.py` in the terminal 📃
+> After the check of the library you need to choice if the interface is vocal or text (for debug i advise the text) and after staet with the question/command
 
 ## IMPORTANT!!
 The project is very young and is in alpha, indeed missing a good code, there are a lot of bugs or problem and the AI working principle in Italian expect for the part of AI, also the assistant is personalize only via code (for now). 🐛
 
-The api for GPT is almost free but is necessary inser the credit/debit card (sorry i now is annoying) 💸
+The api for GPT is almost free but is necessary inser the credit/debit card (sorry i know is annoying) 💸
 
 ## Future idea/goal for this project
 
