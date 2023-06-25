@@ -56,7 +56,7 @@ You can ask lots of questions at Virgilio, like us:
 5. After that, open a terminal to the directory and run the file with   ```run.bat``` or run the file bash ```./run.bash``` (first make it execuble) or for the fast start lunch   ```python main.py``` or  ```python3 main.py```
 
 ## How to use
-> After the check of the library you need to choice if the interface is vocal or text (for debug i advise the text) and after staet with the question/command
+> After the check of the library you need to choice if the interface is vocal or text (for debug i advise the text) and after start with the question/command
 
 ## IMPORTANT!!
 The project is very young and is in alpha, indeed missing a good code, there are a lot of bugs or problem and the AI working principle in Italian expect for the part of AI, also the assistant is personalize only via code (for now). 🐛
