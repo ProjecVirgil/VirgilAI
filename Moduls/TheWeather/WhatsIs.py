@@ -28,18 +28,24 @@ def TheWeather(command:str):
         print(Log(" citta scelta corretamente"))
         command=command.split(" a ")[1].strip()
         CITY = command.split(" ")[0]
-        print(Log( "Citta selezionata: " + CITY))
+        print(Log( " Citta selezionata: " + CITY))
     else:
         CITY = "Salerno"    
         print(Log( "Citta di default selezionata: " + CITY))
     print(Log(" weather function"))
-    response = requests.get(url(CITY)).json()
-    main = response['weather'][0]['description']
-    out=translator.translate(main,dest='it')
-    print(print(Log(out)))
-    stringa = f"A {CITY} il tempo è {out.text}"
-    print(f"\nVirgilio: A {CITY} il tempo è {out.text}")
-    return stringa
+    response = requests.get(url(CITY))
+    print(Log(" Response: " + str(response.status_code)))
+    if(response.status_code == 200):
+        print("Ripeti la richiesta o aspetta qualche minuto")
+        return None
+    else:
+        response = response.json()
+        main = response['weather'][0]['description']
+        out=translator.translate(main,dest='it')
+        print(print(Log(str(out))))
+        stringa = f"A {CITY} il tempo è {out.text}"
+        print(f"\nVirgilio: A {CITY} il tempo è {out.text}")
+        return stringa
     
 
     

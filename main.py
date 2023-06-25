@@ -72,15 +72,15 @@ if __name__ == '__main__':
     WARNIGN = Style.BRIGHT + Fore.RED
     stampa()
     rainbow()
-    print(Log(ALERT +"START CHECK THE LIBRARY"))
+    print(Log(ALERT +"START CHECK THE LIBRARY"),flush=True)
     command = "pip install -q -r requirements.txt > logpip.txt"
     subprocess.run(command, shell=True)
-    print(Log(OK +"LIBRARY INSTALLED CORRECTLY IN CASE OF PROBLEMS, CHECK THE logpip.txt FILE"))
+    print(Log(OK +"LIBRARY INSTALLED CORRECTLY IN CASE OF PROBLEMS, CHECK THE logpip.txt FILE"),flush=True)
     Valid = False
     while(not Valid):
         TorS = str(input(Log((ALERT + "You want a text interface (T) or recognise interface(R) T/R: ")))).upper()
         if(TorS == 'T'):
-            print(Log(OK +"STARTING THE PYTHON FILE"))
+            print(Log(OK +"STARTING THE PYTHON FILE"),flush=True)
             process = ["textpy.py","process.py","exc.py"]
             for proc in process:
                 if system == 'Windows':
@@ -96,7 +96,7 @@ if __name__ == '__main__':
                     print(Log(WARNIGN + "Sistema operativo non riconosciuto. Impossibile avviare il terminale corrispondente."))
                 Valid = True
         elif(TorS == 'R'):
-            print(Log(OK +"STARTING THE PYTHON FILE"))
+            print(Log(OK +"STARTING THE PYTHON FILE"),flush=True)
             process = ["speechPy.py","process.py","exc.py"]
             for proc in process:
                 if system == 'Windows':
@@ -109,10 +109,10 @@ if __name__ == '__main__':
                     # Esecuzione su Linux (utilizzando GNOME Terminal) da FIXARE
                     subprocess.run('gnome-terminal -- python3 ' + proc,shell=True)                       
                 else:
-                    print(Log(WARNIGN + "Sistema operativo non riconosciuto. Impossibile avviare il terminale corrispondente."))
+                    print(Log(WARNIGN + "Sistema operativo non riconosciuto. Impossibile avviare il terminale corrispondente."),flush=True)
                 Valid = True
         else:
-            print(Log(WARNIGN + "Select a valid choice please"))
+            print(Log(WARNIGN + "Select a valid choice please"),flush=True)
     
     
     
