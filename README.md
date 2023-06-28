@@ -17,7 +17,7 @@
 
 Created principle with [python3.11](https://www.python.org/downloads/) e various library like [SpeechRecognition ](https://pypi.org/project/SpeechRecognition/)  and [TTS library](https://pypi.org/project/gTTS/) 
 
-Virgilio or Virgil is a virtual assistant like Alexa or Google Home, but integrated with an AI (GPT-3.5 turbo).The project is focused on the Ai/Virtual Assistant, but the idea is to develop the project in a second part, which consists of a multi-platform application created with Dart and Flask, allowing the customisation of the virtual assistant.
+Virgilio or Virgil is a virtual assistant like Alexa or Google Home, but integrated with an AI (GPT-3.5 turbo).The project is focused on the Ai/Virtual Assistant, but the idea is to develop the project in a second part, which consists of a multi-platform application created with Dart and Flutter, allowing the customisation of the virtual assistant.
 
 
 ## Key features
