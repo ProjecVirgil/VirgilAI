@@ -7,22 +7,22 @@ import sys
 import pygame
 import gtts
 
-from Moduls.sound import create
-from prefix import Log
+from moduls.sound import create
+from moduls.prefix import Log
 
 
 
 
 def update_json_value(key, new_value):
     # Apri il file JSON e carica i dati
-    with open("main/res.json", 'r') as file:
+    with open("connect/res.json", 'r') as file:
         data = json.load(file)
 
     # Modifica il valore desiderato
     data["0"][key] = new_value
 
     # Sovrascrivi il file JSON con i dati aggiornati
-    with open("main/res.json", 'w') as file:
+    with open("connect/res.json", 'w') as file:
         json.dump(data, file, indent=4)
 
 
@@ -56,7 +56,7 @@ if __name__ == "__main__":
     time.sleep(3)
     while(True):
         try:
-            with open("main/res.json", 'r') as file:
+            with open("connect/res.json", 'r') as file:
                 data = json.load(file)
                 res = data["0"][1]
                 command = data["0"][0]

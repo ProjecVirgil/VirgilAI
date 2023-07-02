@@ -5,7 +5,7 @@ import sys
 from colorama import Fore,Back
 import time
 
-from prefix import Log
+from moduls.prefix import Log
 
 
 
@@ -15,7 +15,7 @@ def speech():
         dataCom = {
                 None:True
             }
-        with open("main/command.json", 'w') as commands:
+        with open("connect/command.json", 'w') as commands:
             json.dump(dataCom,commands)
         print(Log(" cleaned buffer command"), flush=True)
         status  = True
@@ -27,7 +27,7 @@ def speech():
                         command:False
                 }
                 print(Log(f" data sended - {data}"), flush=True)
-                with open("main/command.json", 'w') as comandi:
+                with open("connect/command.json", 'w') as comandi:
                     json.dump(data, comandi,indent=4)
                 if("spegniti" in command):
                     print(Log(" shutdown in progress"), flush=True)

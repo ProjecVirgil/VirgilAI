@@ -12,10 +12,8 @@ from colorama import Fore,Back
 import speech_recognition as sr
 from googletrans import Translator
 
-from prefix import Log
-from Moduls.CalendarRec import recovery
-from  Moduls.timeConv import conversion
-from Moduls.ChooseCommand import Sendcommand
+from moduls.prefix import Log
+from moduls.ChooseCommand import Sendcommand
 
 
 import speech_recognition as sr
@@ -42,7 +40,7 @@ import time
 
 def update_json_value(key, new_value):
     # Apri il file JSON e carica i dati
-    with open("main/command.json", 'r') as file:
+    with open("connect/command.json", 'r') as file:
         data = json.load(file)
 
     # Modifica il valore desiderato
@@ -52,7 +50,7 @@ def update_json_value(key, new_value):
         print(Log(f"The key '{key}' dont exist in the file JSON."), flush=True)
 
     # Sovrascrivi il file JSON con i dati aggiornati
-    with open("main/command.json", 'w') as file:
+    with open("connect/command.json", 'w') as file:
         json.dump(data, file, indent=4)
 
 def clean(command):
@@ -71,7 +69,7 @@ def invio(command:str):
         print(Log(" command in process"), flush=True)
         res = Sendcommand(command)
         print(Log(" command processed updating file with the result"), flush=True)
-        with open("main/res.json", 'w') as file:
+        with open("connect/res.json", 'w') as file:
             data = {
                 "0":[command,res,False]
             }
@@ -84,12 +82,12 @@ def main():
     dataRes = {
                 "0":[None,None,True]
             }
-    with open("main/res.json", 'w') as res:
+    with open("connect/res.json", 'w') as res:
         json.dump(dataRes,res)
     print(Log(" cleaned buffer result"), flush=True)
     #starting phrase
     while(True):
-        with open("main/command.json", 'r') as comandi:
+        with open("connect/command.json", 'r') as comandi:
             command = comandi.read()
             if("spegniti" in command):
                 commandLav = "virgilio spegniti"

@@ -7,15 +7,15 @@ import os
 import openai
 import pygame
 
-from Moduls.sound import create
+from moduls.sound import create
 from prefix import Log
-from Moduls.timeNow import now
-from Moduls.ChanceValue import change
-from Moduls.TheWeather import TheWeather,Temp
-from Moduls.timeConv import conversion
-from Moduls.CalendarRec import recovery,day
-from Moduls.TheNews import createNews
-from Moduls.TheLight import turn
+from moduls.timeNow import now
+from moduls.ChanceValue import change
+from moduls.TheWeather import TheWeather,Temp
+from moduls.timeConv import conversion
+from moduls.CalendarRec import recovery,day
+from moduls.TheNews import createNews
+from moduls.TheLight import turn
 
 #function for manage the command
 #Preset command

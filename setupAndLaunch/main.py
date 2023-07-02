@@ -81,7 +81,7 @@ if __name__ == '__main__':
         TorS = str(input(Log((ALERT + "You want a text interface (T) or recognise interface(R) T/R: ")))).upper()
         if(TorS == 'T'):
             print(Log(OK +"STARTING THE PYTHON FILE"),flush=True)
-            process = ["textpy.py","process.py","exc.py"]
+            process = ["main/textpy.py","main/process.py","main/exc.py"]
             for proc in process:
                 if system == 'Windows':
                     # Esecuzione su Windows
