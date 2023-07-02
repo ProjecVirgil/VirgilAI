@@ -43,6 +43,8 @@ You can ask lots of questions at Virgilio, like us:
           i recommend this [video tutorial](https://youtu.be/u-LeLPBZr2k?t=27) 
    - API for Merros (domotic socket),
           just create a [Merros account](https://www.meross.com/en-gc)
+   -API for Deeple
+        create an account [Deeple](https://www.deepl.com/en/docs-api/)
 3. when you have all the tokens/accounts, create a file called `secret.json`
 4. and copy this by replacing the token with the your token
    secret.json
@@ -54,7 +56,7 @@ You can ask lots of questions at Virgilio, like us:
         "deeple": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
     }
    ```
-5. After that, open a terminal to the directory and run the file with   ```run.bat``` or run the file bash ```bash run.sh``` (first make it execuble) or for the fast start lunch   ```python main.py``` or  ```python3 main.py```
+5. After that, open a terminal to the directory and run the file with   ```setup.bat``` or run the file bash ```bash setup.sh``` (first make it execuble) or for the fast start lunch   ```python launch.py``` or  ```python3 launch.py```
 
 ## How to use
 > After the check of the library you need to choice if the interface is vocal or text (for debug i advise the text) and after start with the question/command
@@ -62,7 +64,7 @@ You can ask lots of questions at Virgilio, like us:
 ## IMPORTANT!!
 The project is very young and is in alpha, indeed missing a good code, there are a lot of bugs or problem and the AI working principle in Italian expect for the part of AI, also the assistant is personalize only via code (for now). 🐛
 
-The api for GPT is almost free but is necessary inser the credit/debit card (sorry i know is annoying) 💸
+The api for GPT and Deeple is almost free but is necessary inser the credit/debit card (sorry i know is annoying) 💸
 
 ## Future idea/goal for this project
 
