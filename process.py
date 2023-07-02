@@ -12,10 +12,10 @@ from colorama import Fore,Back
 import speech_recognition as sr
 from googletrans import Translator
 
-#from prefix.creation import Log
-from Moduls.CalendarRec import Recoverycalendar
-from Moduls.timeConv import TimeConversion
-from Moduls.ChooseCommand import SendCommand
+from prefix import Log
+from Moduls.CalendarRec import recovery
+from  Moduls.timeConv import conversion
+from Moduls.ChooseCommand import Sendcommand
 
 
 import speech_recognition as sr
@@ -38,14 +38,6 @@ listener.energy_threshold = 3500
 
 from colorama import Fore,Back
 import time
-
-def Log(string:str):
-    prfx=(Fore.GREEN + time.strftime ("%H:%M:%S UTC LOG", time.localtime() )+ Back.RESET + Fore.WHITE)
-    prfx = (prfx + " | ")
-    log = prfx + string
-    return log
-
-  
 
 
 def update_json_value(key, new_value):
@@ -77,7 +69,7 @@ def invio(command:str):
         command = clean(command)
         print(Log(" command heard correctly"), flush=True)
         print(Log(" command in process"), flush=True)
-        res = SendCommand.command(command)
+        res = Sendcommand(command)
         print(Log(" command processed updating file with the result"), flush=True)
         with open("main/res.json", 'w') as file:
             data = {

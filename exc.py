@@ -7,10 +7,8 @@ import sys
 import pygame
 import gtts
 
-from Moduls.sound import run
-from prefix.creation import Log
-from Moduls.CalendarRec import Recoverycalendar
-from  Moduls.timeConv import TimeConversion
+from Moduls.sound import create
+from prefix import Log
 
 
 
@@ -34,7 +32,7 @@ def timer(my_time):
     print(Log(" inizio timer"), flush=True)
     time.sleep(my_time)
     print(Log(" fine timer"), flush=True)
-    run.create(f"Timer finito")
+    create(f"Timer finito")
     pygame.mixer.music.play()
     #parte allarme
     
@@ -54,7 +52,7 @@ class TimerThread(threading.Thread):
 if __name__ == "__main__":
     pygame.init()
     #init e setup the tts
-    run.create("Ciao sono virgilio come posso aiutarti?")
+    create("Ciao sono virgilio come posso aiutarti?")
     time.sleep(3)
     while(True):
         try:
@@ -69,17 +67,17 @@ if __name__ == "__main__":
                     sys.exit(0)
                 if("volume" in command):
                         pygame.mixer.music.set_volume(float(res))
-                        run.create("biiip")
+                        create("biiip")
                         print(Log(f" volume changed correctly to {res*100}% "), flush=True)
                         update_json_value(2, True)
                 elif("timer" in command):
                         print(Log(f" the timer is started see you in {res} second"), flush=True)
-                        run.create(f" the timer is started see you in {res} second")
+                        create(f" the timer is started see you in {res} second")
                         t = TimerThread(int(res))
                         t.start()
                         update_json_value(2, True)
                 else:   
-                        run.create(res)
+                        create(res)
                         print(res, flush=True)
                         update_json_value(2, True)
             else:

@@ -8,7 +8,7 @@ import platform
 import pyfiglet
 from colorama import Fore, Back, Style
 
-from prefix.creation import Log
+from prefix import Log
 
 
 
@@ -113,10 +113,6 @@ if __name__ == '__main__':
                 Valid = True
         else:
             print(Log(WARNIGN + "Select a valid choice please"),flush=True)
-    
-    
-    
-        
             
     print(Log(OK +"PROGRAM IN EXECUTION"), flush=True)
     print("\n")

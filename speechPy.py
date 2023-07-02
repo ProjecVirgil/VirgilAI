@@ -1,10 +1,12 @@
 import time
 import json
 import sys
+import unicodedata
+
 
 import speech_recognition as sr
 from colorama import Fore,Back
-import unicodedata
+
 
 #from prefix.creation import Log
 # init the recognizer
@@ -24,11 +26,7 @@ listener.energy_threshold = 3500
 from colorama import Fore,Back
 import time
 
-def Log(string:str):
-    prfx=(Fore.GREEN + time.strftime ("%H:%M:%S UTC LOG", time.localtime() )+ Back.RESET + Fore.WHITE)
-    prfx = (prfx + " | ")
-    log = prfx + string
-    return log
+from prefix import Log  
 
 
 
