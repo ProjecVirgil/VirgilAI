@@ -81,7 +81,7 @@ if __name__ == '__main__':
         TorS = str(input(Log((ALERT + "You want a text interface (T) or recognise interface(R) T/R: ")))).upper()
         if(TorS == 'T'):
             print(Log(OK +"STARTING THE PYTHON FILE"),flush=True)
-            process = ["process.py","exc.py","textpy.py"]
+            process = ["process.py","output.py","textInput.py"]
             for proc in process:
                 if system == 'Windows':
                     # Esecuzione su Windows
@@ -97,7 +97,7 @@ if __name__ == '__main__':
                 Valid = True
         elif(TorS == 'R'):
             print(Log(OK +"STARTING THE PYTHON FILE"),flush=True)
-            process = ["process.py","exc.py","speechPy.py"]
+            process = ["process.py","output.py","vocalInput.py"]
             for proc in process:
                 if system == 'Windows':
                     # Esecuzione su Windows
