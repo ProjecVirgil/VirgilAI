@@ -50,7 +50,8 @@ You can ask lots of questions at Virgilio, like us:
    {
         "api":"sk-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
         "weather":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-        "merros":["email","password"]
+        "merros":["email","password"],
+        "deeple": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
     }
    ```
 5. After that, open a terminal to the directory and run the file with   ```run.bat``` or run the file bash ```bash run.sh``` (first make it execuble) or for the fast start lunch   ```python main.py``` or  ```python3 main.py```
