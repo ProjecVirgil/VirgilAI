@@ -7,7 +7,7 @@ import deepl
 from lib.prefix import Log 
 
 current_path = os.getcwd()
-file_path = os.path.join(current_path,'secret.json')
+file_path = os.path.join(current_path,'setupAndLaunch/secret.json')
 
 #Open file whith key api openai
 with open(file_path) as f:

@@ -6,7 +6,7 @@ from lib.prefix import Log
 from meross_iot.http_api import MerossHttpClient
 from meross_iot.manager import MerossManager
 current_path = os.getcwd()
-file_path = os.path.join(current_path,'secret.json')
+file_path = os.path.join(current_path,'setupAndLaunch/secret.json')
 #Open file whith key api openai
 with open(file_path) as f:
     secrets = json.load(f)
