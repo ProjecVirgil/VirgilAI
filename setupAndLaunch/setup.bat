@@ -1,8 +1,9 @@
 @echo off
 
 cls
+echo If the next command create an error dowload python
+python --version
 echo Wait i am install the libray...
-cd ..
 pip install -q -r requirements.txt
 echo Library installation completed!
 pause
