@@ -10,6 +10,7 @@ sudo apt install python3-pyaudio
 echo "Library installation completed!"
 echo "Press Enter to continue..."
 read
+cd ../
 echo "Running launch.py..."
 python3 launch.py
 

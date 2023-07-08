@@ -2,6 +2,7 @@ import time
 import json
 import sys
 import os
+import unicodedata
 
 from colorama import Fore,Back
 import time
@@ -23,6 +24,8 @@ def speech():
         status  = True
         while(status):
             command = str(input("Enter the command or question you need (use key word Virgilio): ")).lower()
+            command = unicodedata.normalize('NFKD', command).encode('ascii', 'ignore').decode('ascii')
+
             if('virgilio' in str(command)):
                 print(Log(" command speech correctly "))
                 data = {

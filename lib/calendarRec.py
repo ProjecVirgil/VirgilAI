@@ -24,14 +24,14 @@ def day(giorno:str,mese:int = None, anno:int = None):
 
 
 def recovery(stringa:str):
-    if(stringa =="mi dici che giorno è"):
+    if(stringa =="mi dici che giorno e"):
         giorno = datetime.datetime.today()
         lista = [giorno,None,None]
         return lista
     if(" il " in stringa):   
         stringa=stringa.split(" il ")[1].strip()
     else:
-        stringa=stringa.split(" è ")[1].strip()
+        stringa=stringa.split(" e ")[1].strip()
     division = stringa.split(" ")
     lista = []
     

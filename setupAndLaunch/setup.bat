@@ -7,6 +7,7 @@ echo Wait i am install the libray...
 pip install -q -r requirements.txt
 echo Library installation completed!
 pause
+cd ..
 echo Running launch.py...
 python launch.py
 

@@ -106,7 +106,7 @@ def Sendcommand(command:str):
             return None
         
         #timer(command)
-    elif("che giorno è" in command):
+    elif("che giorno e" in command):
         print(Log(" pre recovery function"))
         lista=recovery(command)
         if(len(lista) != 3):

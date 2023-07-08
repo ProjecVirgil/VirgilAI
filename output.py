@@ -79,7 +79,7 @@ if __name__ == "__main__":
                         update_json_value(2, True)
                 elif("timer" in command):
                         print(Log(f" the timer is started see you in {res} second"), flush=True)
-                        create(f" the timer is started see you in {res} second")
+                        create(f" Il timer è partito ci vediamo tra {res} second")
                         t = TimerThread(int(res))
                         t.start()
                         update_json_value(2, True)
