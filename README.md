@@ -50,11 +50,11 @@ You can ask lots of questions at Virgilio, like us:
    secret.json
    ```
    {
-        "api":"sk-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-        "weather":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-        "merros":["email","password"],
-        "deeple": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-    }
+    "openAI":"sk-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "weather":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "merros":["email","password"],
+    "deeple": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+}
    ```
 5. After that, open a terminal to the directory and run the file with   ```setup.bat``` or run the file bash ```bash setup.sh``` (first make it execuble) or for the fast start lunch   ```python launch.py``` or  ```python3 launch.py```
 
