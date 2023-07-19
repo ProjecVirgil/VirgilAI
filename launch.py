@@ -9,10 +9,15 @@ import sys
 import pyfiglet
 from colorama import Fore, Back, Style
 
-
+from lib.request import createUser
 from lib.prefix import Log
 
-
+'''def Log(string:str):
+    prfx=(Fore.GREEN + time.strftime ("%H:%M:%S UTC LOG", time.localtime() )+ Back.RESET + Fore.WHITE)
+    prfx = (prfx + " | ")
+    log = prfx + string
+    return log
+'''
 '''string = "Thanks for use Virgil"
 print("[")
 for i in range(len(string) + 1):
@@ -23,9 +28,8 @@ for i in range(len(string) + 1):
     print(",",end='')
 print("]")'''
 
-lista = ['W','We','Wel','Welc','Welco','Welcom','Welcome','Welcome ','Welcome t','Welcome to','Welcome to ','Welcome to V','Welcome to Vi','Welcome to Vir','Welcome to Virg','Welcome to Virgi','Welcome to Virgil']
+bannerMessage = ['W','We','Wel','Welc','Welco','Welcom','Welcome','Welcome ','Welcome t','Welcome to','Welcome to ','Welcome to V','Welcome to Vi','Welcome to Vir','Welcome to Virg','Welcome to Virgi','Welcome to Virgil']
 system = platform.system()
-
 if system == 'Windows':
             commandClean = "cls"
 elif system == 'Darwin' or system == 'Linux':
@@ -38,7 +42,7 @@ def stampa():
     global commandClean
     delay = 0.1
     c = 0
-    for i in lista:
+    for i in bannerMessage:
         subprocess.run(commandClean, shell=True)
         print(Style.BRIGHT+ Fore.MAGENTA + pyfiglet.figlet_format(i),flush=True)
         if(c == 11 ):
@@ -61,10 +65,10 @@ def rainbow():
     colori = [Fore.RED,Fore.YELLOW,Fore.GREEN,Fore.MAGENTA,Fore.CYAN,Fore.WHITE]
     for i in range(16):
         subprocess.run(commandClean, shell=True)
-        print(Style.BRIGHT +  random.choice(colori)  + pyfiglet.figlet_format(lista[-1]),flush=True)
+        print(Style.BRIGHT +  random.choice(colori)  + pyfiglet.figlet_format(bannerMessage[-1]),flush=True)
         time.sleep(delay)
     subprocess.run(commandClean, shell=True)
-    print(Style.BRIGHT +  Fore.MAGENTA  + pyfiglet.figlet_format(lista[-1]),flush=True)
+    print(Style.BRIGHT +  Fore.MAGENTA  + pyfiglet.figlet_format(bannerMessage[-1]),flush=True)
     print(Style.RESET_ALL,flush=True)
 
 if __name__ == '__main__': 
@@ -74,15 +78,29 @@ if __name__ == '__main__':
     stampa()
     rainbow()
     print(Log(ALERT +"START CHECK THE LIBRARY"),flush=True)
-    command = "pip install -q -r requirements.txt > logpip.txt"
+    command = "pip install -q -r setupAndLaunch/requirements.txt > logpip.txt"
     subprocess.run(command, shell=True)
     print(Log(OK +"LIBRARY INSTALLED CORRECTLY IN CASE OF PROBLEMS, CHECK THE logpip.txt FILE"),flush=True)
+    
+    #TAKE KEY
+    current_path = os.getcwd()
+    current_path = current_path.replace("\ ".strip() , "/")
+    if(os.path.getsize(f"{current_path}/setupAndLaunch/key.txt") == 0):
+        key = createUser()
+        print(Log(OK + f"KEY CREATED CORRECTLY {current_path}/setupAndLaunch/key.txt "))
+        with open(f"{current_path}/setupAndLaunch/key.txt",'w') as fileKey:
+            fileKey.write(str(key))
+    else:
+        with open(f"{current_path}/setupAndLaunch/key.txt",'r') as fileKey:
+            key = fileKey.readline()
+    print(Log(OK + f"KEEP YOUR KEY {key} DON'T GIVE IT TO ANYONE"))
+        
     Valid = False
     while(not Valid):
         TorS = str(input(Log((ALERT + "You want a text interface (T) or recognise interface(R) T/R: ")))).upper()
         if(TorS == 'T'):
             print(Log(OK +"STARTING THE PYTHON FILE"),flush=True)
-            process = ["process.py","output.py","textInput.py"]
+            process = ["procces.py","output.py","textInput.py"]
             for proc in process:
                 if system == 'Windows':
                     # Esecuzione su Windows
@@ -98,7 +116,7 @@ if __name__ == '__main__':
                 Valid = True
         elif(TorS == 'R'):
             print(Log(OK +"STARTING THE PYTHON FILE"),flush=True)
-            process = ["process.py","output.py","vocalInput.py"]
+            process = ["procces.py","output.py","vocalInput.py"]
             for proc in process:
                 if system == 'Windows':
                     # Esecuzione su Windows

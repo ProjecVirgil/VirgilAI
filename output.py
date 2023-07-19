@@ -5,7 +5,6 @@ import os
 import sys
 
 import pygame
-import gtts
 
 current_path = os.getcwd()
 current_path = current_path.replace("\ ".strip() , "/")

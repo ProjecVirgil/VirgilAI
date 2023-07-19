@@ -21,6 +21,7 @@ translator = deepl.Translator(deeple_key)
 def url(CITY):
     BASE_URL = "http://api.openweathermap.org/data/2.5/weather?"
     url = BASE_URL + "appid=" + weather_key + "&q=" + CITY
+    print(url)
     return url
 
 
@@ -37,7 +38,7 @@ def TheWeather(command:str):
     print(Log(" weather function"))
     response = requests.get(url(CITY))
     print(Log(" Response: " + str(response.status_code)))
-    if(response.status_code == 200):
+    if(response.status_code != 200):
         print("Ripeti la richiesta o aspetta qualche minuto")
         return None
     else:

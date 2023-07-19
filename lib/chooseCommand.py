@@ -23,7 +23,7 @@ from lib.theLight import turn
 
 #Start contest for GPT-3 API
 messages = [
-        {"role": "system", "content": "Sei un assistente virtuale chiamata Virgilio e parli solo italiano e puoi darmi tutte le tue risposte entro 30 parole."}
+        {"role": "system", "content": "Sei un assistente virtuale chiamata Virgilio."}
     ]
 import os 
 current_path = os.getcwd()
@@ -32,7 +32,7 @@ file_path = os.path.join(current_path,'setupAndLaunch/secret.json')
 #Open file whith key api openai
 with open(file_path) as f:
     secrets = json.load(f)
-    api_key = secrets["api"]
+    api_key = secrets["openAI"]
 openai.api_key = api_key
 
 #function for communicate whith api GPT-3
