@@ -21,7 +21,6 @@ translator = deepl.Translator(deeple_key)
 def url(CITY):
     BASE_URL = "http://api.openweathermap.org/data/2.5/weather?"
     url = BASE_URL + "appid=" + weather_key + "&q=" + CITY
-    print(url)
     return url
 
 
