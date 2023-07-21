@@ -20,7 +20,7 @@ Created principle with [python3.11](https://www.python.org/downloads/) e various
 Virgilio or Virgil is a virtual assistant like Alexa or Google Home, but integrated with an AI (GPT-3.5 turbo).The project is focused on the Ai/Virtual Assistant, but the idea is to develop the project in a second part, which consists of a multi-platform application created with Dart and Flutter, allowing the customisation of the virtual assistant.
 
 
-## Key features
+## 🔑 Key features
 You can ask lots of questions at Virgilio, like us:
 - The time ⏲️
 - The weather 🌧️
@@ -32,7 +32,7 @@ You can ask lots of questions at Virgilio, like us:
 - Timer 🔂
 - and ask **whatever you want** like: Virgilio explain quantum math 🤖
 
-## Installing
+## 📋 Installing
 
 1. The first part of the installation is to download all the files from the repository
 2. now we need the api (for now i am not rich and i do not pay for everything) so
@@ -58,10 +58,10 @@ You can ask lots of questions at Virgilio, like us:
    ```
 5. After that, open a terminal to the directory and run the file with   ```setup.bat``` or run the file bash ```bash setup.sh``` (first make it execuble) or for the fast start lunch   ```python launch.py``` or  ```python3 launch.py```
 
-## How to use
+## 📖 How to use
 > After the check of the library you need to choice if the interface is vocal or text (for debug i advise the text) and after start with the question/command
 
-## IMPORTANT!!
+## ⚠️ IMPORTANT!!
 The project is very young and is in alpha, indeed missing a good code, there are a lot of bugs or problem and the AI working principle in Italian expect for the part of AI, also the assistant is personalize only via code (for now). 🐛
 
 The api for GPT and Deeple is almost free but is necessary inser the credit/debit card (sorry i know is annoying) 💸
@@ -70,7 +70,7 @@ The api for GPT and Deeple is almost free but is necessary inser the credit/debi
 
 > Is to create a multi-platform application with Dart and Flask to give the possibility to modify ALL (Word activation, position for weather and news, configure the domotic, etc..) 👾
 
-## Credits
+## 💸 Credits
 Only me 💻 
 
 ps: follow me on [instagram](https://www.instagram.com/akiidjk) and [twitter](https://twitter.com/R3tr0_fj) contact me for help or support
