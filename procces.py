@@ -18,18 +18,16 @@ from lib.prefix import Log
 from lib.chooseCommand import Sendcommand
 
 
+
+
 # init the recognizer
 listener = sr.Recognizer()
 
-# GLOBAL setting the recognizer
-listener.operation_timeout = 3.0
-listener.dynamic_energy_threshold = True
-
-# SETTING FOR HEADPHONE
-listener.energy_threshold = 3500
-
-# SETTING FOR SPEAKERS
-# listener.energy_threshold = 1000
+with open('setting.json') as f:
+    setting = json.load(f)
+    listener.operation_timeout = int(setting['Listener']['operation_timeout'])
+    listener.dynamic_energy_threshold = bool(setting['Listener']['dynamic_energy_threshold'])
+    listener.energy_threshold = int(setting['Listener']['energy_threshold'])
 
 
 def update_json_value(key, new_value):

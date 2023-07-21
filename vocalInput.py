@@ -12,21 +12,16 @@ from colorama import Fore,Back
 # init the recognizer
 listener = sr.Recognizer()
 
-#GLOBAL setting the recognizer
-listener.operation_timeout = 3.0
-listener.dynamic_energy_threshold=True
-
-#SETTING FOR HEADPHONE 
-listener.energy_threshold = 3500
-
-#SETTING FOR SPEAKERS
-#listener.energy_threshold = 1000
-
+with open('setting.json') as f:
+    setting = json.load(f)
+    
+    listener.operation_timeout = int(setting['Listener']['operation_timeout'])
+    listener.dynamic_energy_threshold = bool(setting['Listener']['dynamic_energy_threshold'])
+    listener.energy_threshold = int(setting['Listener']['energy_threshold'])
+    
+    wordActivation = setting['wordActivation']
 
 
-current_path = os.getcwd()
-current_path = current_path.replace("\ ".strip() , "/")
-sys.path.append(current_path + "/lib")
 
 
 from lib.prefix import Log  
@@ -54,7 +49,7 @@ def speech():
                     command = command.lower()
                     command = unicodedata.normalize('NFKD', command).encode('ascii', 'ignore').decode('ascii')
                     print(Log(f" command rude acquired: {command} "), flush=True)
-                    if('virgilio' in str(command)):
+                    if( str(wordActivation).lower() in str(command)):
                         print(Log(" command speech correctly "))
                         data = {
                             command:False

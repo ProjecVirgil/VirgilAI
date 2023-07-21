@@ -11,6 +11,10 @@ import time
 from lib.prefix import Log
 
 
+with open('setting.json') as f:
+    setting = json.load(f)
+    
+    wordActivation = setting['wordActivation']
 
 def speech():
         command =""
@@ -26,7 +30,7 @@ def speech():
             command = str(input("Enter the command or question you need (use key word Virgilio): ")).lower()
             command = unicodedata.normalize('NFKD', command).encode('ascii', 'ignore').decode('ascii')
 
-            if('virgilio' in str(command)):
+            if(str(wordActivation).lower() in str(command)):
                 print(Log(" command speech correctly "))
                 data = {
                         command:False

@@ -12,8 +12,9 @@ file_path = os.path.join(current_path,'setupAndLaunch/secret.json')
 #Open file whith key api openai
 with open(file_path) as f:
     secrets = json.load(f)
-    weather_key = secrets["weather"]
-    deeple_key = secrets["deeple"]
+    weather_key = secrets['api']["weather"]
+    deeple_key = secrets['api']["deeple"]
+    language = secrets['language']
     
 translator = deepl.Translator(deeple_key) 
     
@@ -32,7 +33,7 @@ def TheWeather(command:str):
         CITY = command.split(" ")[0]
         print(Log( " Citta selezionata: " + CITY))
     else:
-        CITY = "Salerno"    
+        CITY = secrets['city']   
         print(Log( "Citta di default selezionata: " + CITY))
     print(Log(" weather function"))
     response = requests.get(url(CITY))
@@ -43,7 +44,7 @@ def TheWeather(command:str):
     else:
         response = response.json()
         main = response['weather'][0]['description']
-        out = translator.translate_text(main, target_lang="IT")
+        out = translator.translate_text(main, target_lang=str(language).upper())
         print(print(Log(str(out))))
         stringa = f"A {CITY} il tempo è {out.text}"
         print(f"\nVirgilio: A {CITY} il tempo è {out.text}")
@@ -60,7 +61,7 @@ def Temp(command):
         print(Log( "Citta selezionata: " + CITY))
     else:
         print(Log( "Citta di default selezionata: " + CITY))
-        CITY = "Salerno"    
+        CITY = secrets['city']   
     
     response = requests.get(url(CITY)).json()
     temp = response['main']['temp'] - 273.15

@@ -6,12 +6,12 @@ from lib.prefix import Log
 from meross_iot.http_api import MerossHttpClient
 from meross_iot.manager import MerossManager
 current_path = os.getcwd()
-file_path = os.path.join(current_path,'setupAndLaunch/secret.json')
+file_path = os.path.join(current_path,'setting.json')
 #Open file whith key api openai
 with open(file_path) as f:
     secrets = json.load(f)
-    EMAIL = secrets["merros"][0]
-    PASSWORD = secrets["merros"][1]
+    EMAIL = secrets['api']["merros"][0]
+    PASSWORD = secrets['api']["merros"][1]
 
 
 async def main(status:bool):

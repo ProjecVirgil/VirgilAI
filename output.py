@@ -6,9 +6,6 @@ import sys
 
 import pygame
 
-current_path = os.getcwd()
-current_path = current_path.replace("\ ".strip() , "/")
-sys.path.append(current_path + "/lib")
 
 
 from lib.sound import create

@@ -4,20 +4,14 @@ import subprocess
 import random
 import os
 import platform
-import sys
+import json
 
 import pyfiglet
-from colorama import Fore, Back, Style
+from colorama import Fore,Style
 
-from lib.request import createUser
+from lib.request import createUser,getUser
 from lib.prefix import Log
 
-'''def Log(string:str):
-    prfx=(Fore.GREEN + time.strftime ("%H:%M:%S UTC LOG", time.localtime() )+ Back.RESET + Fore.WHITE)
-    prfx = (prfx + " | ")
-    log = prfx + string
-    return log
-'''
 '''string = "Thanks for use Virgil"
 print("[")
 for i in range(len(string) + 1):
@@ -85,14 +79,37 @@ if __name__ == '__main__':
     #TAKE KEY
     current_path = os.getcwd()
     current_path = current_path.replace("\ ".strip() , "/")
+    
     if(os.path.getsize(f"{current_path}/setupAndLaunch/key.txt") == 0):
+        print(Log(OK + "I am creating your synchronization key"))
         key = createUser()
         print(Log(OK + f"KEY CREATED CORRECTLY {current_path}/setupAndLaunch/key.txt "))
         with open(f"{current_path}/setupAndLaunch/key.txt",'w') as fileKey:
             fileKey.write(str(key))
+        print(Log(OK + "Synchronizing your account settings"))
+        user = getUser(key)
+        with open(f"setting.json",'w') as f:
+            json.dump(user,f,indent=4)
+        if(user == 'User not found'):
+            print(Log(WARNIGN + "User not found"))
+            print(Log(ALERT + "There is a problem with your key try deleting it and restarting the launcher if the problem persists contact support"))
+            exit(1)
+
     else:
         with open(f"{current_path}/setupAndLaunch/key.txt",'r') as fileKey:
+            print(Log(OK + "I pick up the key for synchronization"))
             key = fileKey.readline()
+            print(Log(OK + "Synchronizing your account settings"))
+            user = getUser(key)
+        with open(f"setting.json",'w') as f:
+            json.dump(user,f,indent=4)
+        if(user == 'User not found'):
+            print(Log(WARNIGN + "User not found"))
+            print(Log(ALERT + "There is a problem with your key try deleting it and restarting the launcher if the problem persists contact support"))
+            exit(1)
+
+            
+
     print(Log(OK + f"KEEP YOUR KEY {key} DON'T GIVE IT TO ANYONE"))
         
     Valid = False

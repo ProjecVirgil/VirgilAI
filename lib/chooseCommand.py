@@ -25,14 +25,16 @@ from lib.theLight import turn
 messages = [
         {"role": "system", "content": "Sei un assistente virtuale chiamata Virgilio."}
     ]
-import os 
 current_path = os.getcwd()
-file_path = os.path.join(current_path,'setupAndLaunch/secret.json')
+file_path = os.path.join(current_path,'setting.json')
 
 #Open file whith key api openai
 with open(file_path) as f:
     secrets = json.load(f)
-    api_key = secrets["openAI"]
+    _temperature= secrets['GPT']['temperature']
+    _max_token= secrets['GPT']['max_token']
+    api_key = secrets['api']["openAI"]
+    
 openai.api_key = api_key
 
 #function for communicate whith api GPT-3
@@ -41,8 +43,8 @@ def get_response(messages:list):
     response = openai.ChatCompletion.create(
         model = "gpt-3.5-turbo",
         messages=messages,
-        temperature = 1.0, # 0.0 - 2.0
-        max_tokens=30
+        temperature = float(_temperature), # 0.0 - 2.0
+        max_tokens=int(_max_token)
     )
     return response.choices[0].message
 
