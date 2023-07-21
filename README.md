@@ -73,7 +73,7 @@ Virgil or Virgil is a virtual assistant like Alexa or Google Home, but integrate
  
 ## 🔁 Change the key
 
-> Go in the directory call setupAndLaunch and search the key.txt (remeber the key is a hexadecimal string of 32 characters)
+> Go in the directory call setupAndLaunch and search the key.txt (remeber the key is a hexadecimal string of 32 characters),delete it and relaunch Virgil
 
 ## TO BE CONSIDERED ⚠️
 1. The entire project is only at the albor and is not 100% complete
