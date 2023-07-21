@@ -31,9 +31,9 @@ You can ask lots of questions at Virgilio, like us:
 - Interact with the domotic (Merros device only) 💡
 - Timer 🔂
 - and ask **whatever you want** like: Virgilio explain quantum math 🤖
-Is fast to use
+Is fast to use:
 - in fact all you have to do is insert the key in the app and you're done ✅
-Portable
+Portable:
 - You can put it on any linux/windows device including mac 🌐
   
 
