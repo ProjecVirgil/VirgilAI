@@ -66,7 +66,7 @@ The project is very young and is in alpha, indeed missing a good code, there are
 
 The api for GPT and Deeple is almost free but is necessary inser the credit/debit card (sorry i know is annoying) 💸
 
-## Future idea/goal for this project
+## 💎 Future idea/goal for this project
 
 > Is to create a multi-platform application with Dart and Flask to give the possibility to modify ALL (Word activation, position for weather and news, configure the domotic, etc..) 👾
 
