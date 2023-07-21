@@ -84,6 +84,7 @@ if __name__ == '__main__':
         print(Log(OK + "I am creating your synchronization key"))
         key = createUser()
         print(Log(OK + f"KEY CREATED CORRECTLY {current_path}/setupAndLaunch/key.txt "))
+        check = input(Log(OK + 'Now download the Virgil app on your Android device, go to the configuration page and enter this code in the appropriate field, once done you will be able to change all Virgil settings remotely, once done press any button'))
         with open(f"{current_path}/setupAndLaunch/key.txt",'w') as fileKey:
             fileKey.write(str(key))
         print(Log(OK + "Synchronizing your account settings"))
