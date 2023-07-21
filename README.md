@@ -21,7 +21,7 @@ Virgil or Virgil is a virtual assistant like Alexa or Google Home, but integrate
 
 
 ## 🔑 Key features
-You can ask lots of questions at Virgilio, like us:
+**You can ask lots of questions at Virgilio, like us:**
 - The time ⏲️
 - The weather 🌧️
 - The lates news 🗞️
@@ -32,10 +32,10 @@ You can ask lots of questions at Virgilio, like us:
 - Timer 🔂
 - and ask **whatever you want** like: Virgilio explain quantum math 🤖
   
-Is fast to use:
+**Is fast to use:**
 - in fact all you have to do is insert the key in the app and you're done ✅
   
-Portable:
+**Portable:**
 - You can put it on any linux/windows device including mac 🌐
   
 
@@ -44,6 +44,8 @@ Portable:
 ## 📋 Installing
 
 1. The first part of the installation is to download all the files from the repository
+   - command linee ```git clone https://github.com/Retr0100/VirgilApp.git```
+   - or download the zip
 2. now we need the api (for now i am not rich and i do not pay for everything) so
  we are need of 4 api keys
    - API for OpenAI and GPT,
@@ -59,10 +61,10 @@ Portable:
 ## 📖 How to use
 ### When you have installed and downloaded the API you can start using Virgilio 🥡
  1. Open a terminal to the directory ProjectVirgil/setupAndLaunch and run the file with   ```setup.bat``` for windows or run the file bash ```bash setup.sh``` on linux (first make it execuble) instead for the fast start launch   ```python launch.py``` or  ```python3 launch.py```
- 2. At a certain point you will be asked to install the dedicated app VirgilApp, this app will allow you to configure Virgilio and change the associated settings **BUT BEWARE IT IS NOT ESSENTIAL FOR THE USE OF VIRGILIO, VIRGILIO CAN ALSO BE USED WITHOUT THE USE OF THE APP** if you do not want to use the app [click here](#Configuration-without-app) 
- 3. In the app, you will have to search for the configuration page (it will not be difficult to find it) and you will have to enter the key that will be shown to you on the screen when Virgilio is launched (you only have to do this step the first time, but you can repeat it if you want to change the key)
- 4. Now you can change the setting of Virgil on the corresponding page (unfortunately, in this version of Virgilio, you must fill in all the fields and not leave any blank, otherwise Virgilio will not work properly).
- 5. At the end of this initial configuration, which you only need to do once, you can press any key and choose to use a text interface (recommended for debugging) or a voice interface (recommended for personal use).
+ 2. At a certain point you will be asked to install the dedicated app [**VirgilApp**](https://github.com/Retr0100/VirgilApp), this app will allow you to configure Virgilio and change the associated settings **BUT BEWARE IT IS NOT ESSENTIAL FOR THE USE OF VIRGILIO, VIRGILIO CAN ALSO BE USED WITHOUT THE USE OF THE APP** if you do not want to use the app [click here](#-configuration-without-app) 
+ 3. In the app, you will have to search for the **configuration page** (it will not be difficult to find it) and you will have to enter the **key** that will be shown to you on the screen when Virgilio is launched (you only have to do this step the first time, but you can **repeat** it if you want to [change the key](#-change-the-key))
+ 4. Now you can change the **setting** of Virgil on the corresponding page (unfortunately, in this version of Virgilio, you must fill in all the fields and not leave any blank, otherwise Virgilio will not work properly).
+ 5. At the end of this initial configuration, which you only need to do once, you can press any key and choose to use a **text interface** (recommended for debugging) or a **voice interface** (recommended for personal use).
 
 ## 📃 Configuration without app
 
