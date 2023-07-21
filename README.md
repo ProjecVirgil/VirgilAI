@@ -71,7 +71,9 @@ Virgil or Virgil is a virtual assistant like Alexa or Google Home, but integrate
 1. In the main directory there is a file call ```setting.json``` in this file is present all the setting of Virgil open it
 2. Now you can modify all the setting like API key, location etc
  
+## 🔁 Change the key
 
+> Go in the directory call setupAndLaunch and search the key.txt (remeber the key is a hexadecimal string of 32 characters)
 
 ## TO BE CONSIDERED ⚠️
 1. The entire project is only at the albor and is not 100% complete
