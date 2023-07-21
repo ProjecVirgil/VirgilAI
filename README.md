@@ -21,9 +21,9 @@ Virgil or Virgil is a virtual assistant like Alexa or Google Home, but integrate
 
 
 ## Chart on the functioning of Virgil
-
+<p align="center">
  <img src="/asset/FlowChart.png" alt="Markdownify" width ="700px" >
-
+</p>
 
 
 
