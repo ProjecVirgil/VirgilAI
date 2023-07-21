@@ -33,7 +33,7 @@ Virgil or Virgil is a virtual assistant like Alexa or Google Home, but integrate
 - and ask **whatever you want** like: Virgilio explain quantum math 🤖
   
 **Is fast to use:**
-- in fact all you have to do is insert the key in the app and you're done ✅
+- In fact all you have to do is insert the key in the app and you're done ✅
   
 **Portable:**
 - You can put it on any linux/windows device including mac 🌐
@@ -46,7 +46,7 @@ Virgil or Virgil is a virtual assistant like Alexa or Google Home, but integrate
 1. The first part of the installation is to download all the files from the repository
    - command linee ```git clone https://github.com/Retr0100/VirgilApp.git```
    - or download the zip
-2. now we need the api (for now i am not rich and i do not pay for everything) so
+2. Now we need the api (for now i am not rich and i do not pay for everything) so
  we are need of 4 api keys
    - API for OpenAI and GPT,
           i recommend this [video tutorial](https://www.youtube.com/watch?v=u-LeLPBZr2k) 
