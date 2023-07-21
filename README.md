@@ -48,7 +48,7 @@ You can ask lots of questions at Virgilio, like us:
 3. When you have all the keys/accounts, save them on any file  
 
 ## 📖 How to use
-# When you have installed and downloaded the API you can start using Virgilio
+### When you have installed and downloaded the API you can start using Virgilio
 > 1. Open a terminal to the directory ProjectVirgil/setupAndLaunch and run the file with   ```setup.bat``` or run the file bash ```bash setup.sh``` (first make it execuble) or for the fast start lunch   ```python launch.py``` or  ```python3 launch.py```
 > 2. At a certain point you will be asked to install the dedicated app VirgilApp, this app will allow you to configure Virgilio and change the associated settings **BUT BEWARE IT IS NOT ESSENTIAL FOR THE USE OF VIRGILIO, VIRGILIO CAN ALSO BE USED WITHOUT THE USE OF THE APP** if you do not want to use the app [click here](#Configuration-without-app) 
 > 3. In the app, you will have to search for the configuration page (it will not be difficult to find it) and you will have to enter the key that will be shown to you on the screen when Virgilio is launched (you only have to do this step the first time, but you can repeat it if you want to change the key)
