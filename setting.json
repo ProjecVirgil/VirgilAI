@@ -1,0 +1,17 @@
+{
+    "city": "Ledro",
+    "deeple": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "dynamic_energy_threshold": "true",
+    "elevenlabs": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "energy_threshold": "3500",
+    "language": "en",
+    "max_tokens": "30",
+    "merrosEmail": "email",
+    "merrosPassword": "password",
+    "openAI": "sk-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "operation_timeout": "3",
+    "temperature": "0.9",
+    "volume": "100.0",
+    "weather": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "wordActivation": "Virgilio"
+}
