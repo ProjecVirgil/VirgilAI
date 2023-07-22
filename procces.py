@@ -3,15 +3,14 @@ import sys
 import time
 import os
 import threading
-import requests
 import calendar
 import datetime
 import threading
 
+import requests
 import openai
 from colorama import Fore, Back
 import speech_recognition as sr
-from googletrans import Translator
 
 
 from lib.prefix import Log
@@ -25,9 +24,9 @@ listener = sr.Recognizer()
 
 with open('setting.json') as f:
     setting = json.load(f)
-    listener.operation_timeout = int(setting['Listener']['operation_timeout'])
-    listener.dynamic_energy_threshold = bool(setting['Listener']['dynamic_energy_threshold'])
-    listener.energy_threshold = int(setting['Listener']['energy_threshold'])
+    listener.operation_timeout = int(setting['operation_timeout'])
+    listener.dynamic_energy_threshold = bool(setting['dynamic_energy_threshold'])
+    listener.energy_threshold = int(setting['energy_threshold'])
 
 
 def update_json_value(key, new_value):

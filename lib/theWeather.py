@@ -7,13 +7,13 @@ import deepl
 from lib.prefix import Log 
 
 current_path = os.getcwd()
-file_path = os.path.join(current_path,'setupAndLaunch/secret.json')
+file_path = os.path.join(current_path,'setting.json')
 
 #Open file whith key api openai
 with open(file_path) as f:
     secrets = json.load(f)
-    weather_key = secrets['api']["weather"]
-    deeple_key = secrets['api']["deeple"]
+    weather_key = secrets["weather"]
+    deeple_key = secrets["deeple"]
     language = secrets['language']
     
 translator = deepl.Translator(deeple_key) 

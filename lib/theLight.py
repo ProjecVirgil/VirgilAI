@@ -10,8 +10,8 @@ file_path = os.path.join(current_path,'setting.json')
 #Open file whith key api openai
 with open(file_path) as f:
     secrets = json.load(f)
-    EMAIL = secrets['api']["merros"][0]
-    PASSWORD = secrets['api']["merros"][1]
+    EMAIL = secrets["merrosEmail"]
+    PASSWORD = secrets["merrosPassword"]
 
 
 async def main(status:bool):

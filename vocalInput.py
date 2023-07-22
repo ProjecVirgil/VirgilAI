@@ -15,9 +15,9 @@ listener = sr.Recognizer()
 with open('setting.json') as f:
     setting = json.load(f)
     
-    listener.operation_timeout = int(setting['Listener']['operation_timeout'])
-    listener.dynamic_energy_threshold = bool(setting['Listener']['dynamic_energy_threshold'])
-    listener.energy_threshold = int(setting['Listener']['energy_threshold'])
+    listener.operation_timeout = int(setting['operation_timeout'])
+    listener.dynamic_energy_threshold = bool(setting['dynamic_energy_threshold'])
+    listener.energy_threshold = int(setting['energy_threshold'])
     
     wordActivation = setting['wordActivation']
 

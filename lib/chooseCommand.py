@@ -1,7 +1,6 @@
 import sys
 import json
 import time
-import psutil
 import os 
 
 import openai
@@ -31,9 +30,9 @@ file_path = os.path.join(current_path,'setting.json')
 #Open file whith key api openai
 with open(file_path) as f:
     secrets = json.load(f)
-    _temperature= secrets['GPT']['temperature']
-    _max_token= secrets['GPT']['max_token']
-    api_key = secrets['api']["openAI"]
+    _temperature= secrets['temperature']
+    _max_token= secrets['max_tokens']
+    api_key = secrets["openAI"]
     
 openai.api_key = api_key
 
