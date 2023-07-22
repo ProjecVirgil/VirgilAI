@@ -63,6 +63,9 @@ Virgil or Virgil is a virtual assistant like Alexa or Google Home, but integrate
           just create a [Merros account](https://www.meross.com/en-gc) and insert the credential
    - API for Deeple
         create an account [Deeple](https://www.deepl.com/en/docs-api/) and go on page for the API
+   - API for ElevenLabs
+       This API is not required, but if you want a [BEST EXPERIENCE](https://elevenlabs.io/speech-synthesis) i raccomand you to get
+
 3. When you have all the keys/accounts, save them on any file  
 
 ## 📖 How to use
@@ -84,10 +87,9 @@ Virgil or Virgil is a virtual assistant like Alexa or Google Home, but integrate
 
 ## TO BE CONSIDERED ⚠️
 1. The entire project is only at the albor and is not 100% complete
-2. The convenience of changing settings is not the best due to the fact that if you want to change you have to re-enter all the old parameters that you do not want to change including the API keys
-3. Virgilio without the API insert and without the connection will not function fully 
-4. **FOR NOW** many command works only in italian except for the question at GPT (so any questions not covered by the default commands)
-5. The api for GPT and Deeple is almost free but is necessary inser the credit/debit card (sorry i know is annoying) 💸
+2. Virgilio without the API insert and without the connection will not function fully 
+3. **FOR NOW** many command works only in italian except for the question at GPT (so any questions not covered by the default commands)
+4. The api for GPT and Deeple is almost free but is necessary inser the credit/debit card (sorry i know is annoying) 💸
 
 
 ## 💎 Future idea/goal for this project
