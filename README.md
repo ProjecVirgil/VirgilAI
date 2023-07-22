@@ -107,6 +107,7 @@ Only me 💻 and
  - Flask for create the API
  - Flutter for create the mobile app (only android for now)
  - Firebase for the manage of account
+ - EvenLabs API 
 
 ps: follow me on [instagram](https://www.instagram.com/akiidjk) and [twitter](https://twitter.com/R3tr0_fj) contact me for help or support
 
