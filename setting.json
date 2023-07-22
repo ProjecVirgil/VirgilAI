@@ -1,17 +1,17 @@
 {
     "city": "Ledro",
-    "deeple": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "deeple": "104fa937-067d-ed70-11c3-7faa51a52fd8:fx",
     "dynamic_energy_threshold": "true",
-    "elevenlabs": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "elevenlabs": "34288e276f53e9fa5744feb06613e25a",
     "energy_threshold": "3500",
     "language": "en",
     "max_tokens": "30",
     "merrosEmail": "email",
     "merrosPassword": "password",
-    "openAI": "sk-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "openAI": "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",
     "operation_timeout": "3",
     "temperature": "0.9",
     "volume": "100.0",
-    "weather": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "weather": "5c0a1bbace1baec6ec85e262da7c12ed",
     "wordActivation": "Virgilio"
 }
