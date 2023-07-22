@@ -94,7 +94,7 @@ Virgil or Virgil is a virtual assistant like Alexa or Google Home, but integrate
 
 ## 💎 Future idea/goal for this project
 
-> Is improve the code and its efficiency and improve the mobile application perhaps with the possibility of changing more values and increasing the customisation of the app and Virgilio and expand the compatibily, improve Virgilio itself with perhaps the possibility of understanding other languages, adding more commands and **CREATE A PERSONAL VOICE FOR THE VIRTUAL ASSISTANT**👾
+> Is improve the code and its efficiency and improve the mobile application perhaps with the possibility of changing more values and increasing the customisation of the app and Virgilio and expand the compatibily, improve Virgilio itself with perhaps the possibility of understanding other languages and adding more commands👾
 
 ## 💸 Credits and technologies used
 Only me 💻 and
