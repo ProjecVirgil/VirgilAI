@@ -3,6 +3,7 @@
 clear
 echo "Wait, I am installing python.."
 sudo apt install python3
+sudo apt install python3-pip
 python3 --version
 echo "Wait, I am installing the library..."
 pip install -q -r requirements.txt
