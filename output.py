@@ -32,7 +32,9 @@ def timer(my_time):
     time.sleep(my_time)
     print(Log(" fine timer"), flush=True)
     create(f"Timer finito")
-    pygame.mixer.music.play()
+    pygame.mixer.music.unload()    
+    pygame.mixer.music.load('asset/timerEndVirgil.mp3') 
+    pygame.mixer.music.play()       
     #parte allarme
 class TimerThread(threading.Thread):
     def __init__(self, interval):
@@ -56,7 +58,10 @@ def recoverData():
 if __name__ == "__main__":
     pygame.init()
     #init e setup the tts
-    create("Ciao sono virgilio come posso aiutarti?")
+    pygame.mixer.music.unload()    
+    pygame.mixer.music.load('asset/EntryVirgil.mp3')   
+    pygame.mixer.music.play()
+
     time.sleep(3)
     while(True):
         try:
@@ -66,13 +71,15 @@ if __name__ == "__main__":
                 if("spento" in res):
                     print(Log(" shutdown in progress..."), flush=True)
                     pygame.mixer.music.unload()    
-                    pygame.mixer.music.load('asset/FinishVirgil.mp3')                   
+                    pygame.mixer.music.load('asset/FinishVirgil.mp3') 
+                    pygame.mixer.music.play()                  
                     time.sleep(2)
                     sys.exit(0)
                 if("volume" in command):
                         pygame.mixer.music.set_volume(float(res))
                         pygame.mixer.music.unload()    
-                        pygame.mixer.music.load('asset/bipEffectCheckSound.mp3')       
+                        pygame.mixer.music.load('asset/bipEffectCheckSound.mp3')
+                        pygame.mixer.music.play()       
                         print(Log(f" volume changed correctly to {res*100}% "), flush=True)
                         update_json_value(2, True)
                 elif("timer" in command):

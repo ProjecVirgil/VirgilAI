@@ -11,7 +11,7 @@ from lib.prefix import Log
 from lib.sound import create
 from lib.timeNow import now
 from lib.changeValue import change
-from lib.theWeather import TheWeather,Temp
+from lib.theWeather import recoverWeather,recoverTemp
 from lib.timeConv import conversion
 from lib.calendarRec import recoveryDate,dayOfWeek
 from lib.theNews import createNews
@@ -87,12 +87,12 @@ def Sendcommand(command:str):
         
     elif(("tempo fa" in command) or ("tempo fa a" in command) or ("che tempo fa" in command) or ("che tempo c'è" in command)):
         print(Log(" pre wheather function"))
-        result = TheWeather(command)
+        result = recoverWeather(command)
         return result
 
     elif((("gradi" in command ) or ("temperatura" in command)) and (("quanti" in command) or ("quanta" in command)) ):
         print(Log(" pre temperature function"))
-        result = Temp(command)
+        result = recoverTemp(command)
         return result
 
 

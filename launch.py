@@ -128,7 +128,7 @@ if __name__ == '__main__':
                     subprocess.Popen(['open', '-a', 'Terminal', 'python', proc], shell=True)
                 elif system == 'Linux':
                     # Esecuzione su Linux (utilizzando GNOME Terminal) da FIXARE
-                    subprocess.run('gnome-terminal -- python3 ' + proc,shell=True)                       
+                    subprocess.run('gnome-terminal --  python3 ' + proc,shell=True)                           
                 else:
                     print(Log(WARNIGN + "Sistema operativo non riconosciuto. Impossibile avviare il terminale corrispondente."))
                 Valid = True
