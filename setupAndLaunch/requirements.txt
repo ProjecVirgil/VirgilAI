@@ -20,7 +20,7 @@ deepl==1.15.0
 elevenlabs==0.2.21
 executing==1.2.0
 fake-useragent==1.1.3
-frozenlist==1.4.0
+frozenlist==1.3.3
 gTTS==2.3.2
 idna==3.4
 importlib-metadata==6.8.0
