@@ -13,7 +13,7 @@ from lib.timeNow import now
 from lib.changeValue import change
 from lib.theWeather import recoverWeather,recoverTemp
 from lib.timeConv import conversion
-from lib.calendarRec import recoveryDate,dayOfWeek
+from lib.calendarRec import recoveryDate,recoverDayOfWeek
 from lib.theNews import createNews
 from lib.theLight import turn
 
@@ -112,23 +112,24 @@ def Sendcommand(command:str):
         print(Log(" pre recovery function"))
         listOfDate=recoveryDate(command)
         if(len(listOfDate) != 3):
-            for x in range(3-len(listOfDate)):
+            for _ in range(3-len(listOfDate)):
                 listOfDate.append(None)
-        print(Log("Risultato: {lista}"))  
+        print(Log(f" result: {listOfDate}"))  
         day=listOfDate[0]
         month=listOfDate[1]
         year=listOfDate[2]
         print(Log(" pre dayOfWeek function"))
         if( (month != None ) and (year != None) ):
-            result = dayOfWeek(day,month,year)
+            result = recoverDayOfWeek(day,month,year)
         elif(month == None and year != None):
-            result = dayOfWeek(day,year=year)
+            result = recoverDayOfWeek(day,year=year)
         elif(year == None and month != None):
-            result = dayOfWeek(day,month=month)
+            result = recoverDayOfWeek(day,month=month)
         else:
-            result = dayOfWeek(day)
+            result = recoverDayOfWeek(day)
         return result
-    elif(( ("news" in command) or ("novità" in command) or ("notizie" in command) ) and (("parlami" in command) or ("dimmi" in command) or ("dammi" in command))):
+    
+    elif(( ("news" in command) or ("novita" in command) or ("notizie" in command) ) and (("parlami" in command) or ("dimmi" in command) or ("dammi" in command))):
         print(Log(" pre news function"))
         result = createNews(command)
         return result

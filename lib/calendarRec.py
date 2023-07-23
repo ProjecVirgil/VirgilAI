@@ -4,9 +4,12 @@ import calendar
 import datetime
 
 from lib.prefix import Log 
+from lib.numberConvertToText import numberToWord
 
-def dayOfWeek(day:str,month:int = None, year:int = None):
+
+def recoverDayOfWeek(day:str,month:int = None, year:int = None):
     print(Log(" DayOfWeek function"))
+    dayOfWeek= 0
     dateCurrente = datetime.datetime.now()
     if(month == None):
         month = dateCurrente.month
@@ -16,25 +19,27 @@ def dayOfWeek(day:str,month:int = None, year:int = None):
         for x in week:
             if( x == day):
                 dayOfWeek=week.index(x)
-
+                
     week = ["Lunedi","Martedi","Mercoledi","Giovedi","Venerdi","Sabato","Domenica"]
-    result = f"Il {day} di {month} del {year} è {week[dayOfWeek]}"
+    result = f"Il {numberToWord(day)} di {numberToWord(str(month))} del {numberToWord(str(year))} è {numberToWord(str(week[dayOfWeek]))}"
     print(f"Il {day} di {month} del {year} è {week[dayOfWeek]}")
     return result
 
 
 
 def recoveryDate(command:str):
-    
-    if(command == "mi dici che giorno e"):
-        day = datetime.datetime.today()
+    print(command)
+    if(command in "che giorno e"):
+        day = str(datetime.datetime.now().date()).split('-')[2]
         listOfTime = [day,None,None]
         return listOfTime
     
     if(" il " in command):   
-        query=command.split(" il ")[1].strip()
+        query=command.split("il")[1].strip()
+    elif(" e " in command):
+        query=command.split(" e ")[1].strip()
     else:
-        query=command.split(" è ")[1].strip()
+        query=command.split(" e' ")[1].strip()
         
     divisionQuery = query.split(" ")
     listOfTime = []
@@ -66,7 +71,7 @@ def recoveryDate(command:str):
     
     months=["gennaio","febbraio","marzo","aprile","maggio","giugno","luglio","agosto","settembre","ottobre","novembre","dicembre"]
     bool=True
-    
+    recoverMonth = ''
     for x in months:
         if(x in command):
             if("dopo domani" not in command):
@@ -98,5 +103,8 @@ def recoveryDate(command:str):
             listOfTime.append(int(anno))
     except IndexError:
         listOfTime.append(None)
-
     return listOfTime
+
+
+
+print(recoveryDate('che giorno e oggi'))

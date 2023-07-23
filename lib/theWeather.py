@@ -4,6 +4,7 @@ import json
 
 import deepl
 
+from lib.numberConvertToText import numberToWord
 from lib.prefix import Log 
 
 current_path = os.getcwd()
@@ -25,17 +26,17 @@ def url(CITY):
     return url
 
 def recoverCity(command:str):
-    
     if(' a ' in command):
+        print('ciao')
         print(Log(" city chosen correctly"))
         command=command.split(" a ")[1].strip()
         CITY = command.split(" ")[0]
         print(Log( " selected city: " + CITY))
+        return CITY
     else:
-        print(Log( " defalut city selected: " + CITY))
-        CITY = secrets['city']   
-    
-    return CITY
+        CITY = secrets['city'] 
+        print(Log( " default city selected: " + CITY))
+        return CITY
 
 def recoverWeather(command:str):
     CITY = recoverCity(command)
@@ -64,6 +65,7 @@ def recoverTemp(command):
     tempatureMax= int(response['main']['temp_max']) - 273.15
     tempratureMin= int(response['main']['temp_min']) - 273.15
     humidity= int( response['main']['humidity'])
-    stringa = f"La temperatura ora a {CITY} è di {int(temperature)} gradi, con una massima di {int(tempatureMax)} gradi, una minima di {int(tempratureMin)} gradi e un' umidita pari al {humidity}% "
-    print(f"\nVirgilio: La temperatura ora a {CITY} è di {int(temperature)} gradi, con una massima di {int(tempatureMax)} gradi, una minima di {int(tempratureMin)} gradi e un' umidita pari al {humidity}% ")
+    
+    stringa = f"La temperatura ora a {CITY} è di {numberToWord(temperature)} gradi, con una massima di {numberToWord(tempatureMax)} gradi, una minima di {numberToWord(tempratureMin)} gradi e un' umidita pari al {humidity} percento "
+    print(f"\nVirgilio: La temperatura ora a {CITY} è di {temperature} gradi, con una massima di {tempatureMax} gradi, una minima di {tempratureMin} gradi e un' umidita pari al {humidity}% ")
     return stringa
