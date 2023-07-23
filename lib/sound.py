@@ -21,19 +21,21 @@ def create(text:str):
     if(pygame.mixer.music.get_volume != float(volume)):
         pygame.mixer.music.set_volume(float(volume))
     try:
-        audio = generate(
+        sound = generate(
             api_key = api_key,
             text=text,
-            voice="Sam",
+            voice="Antoni",
             model='eleven_multilingual_v1'
         )
-        save(audio,'audio.mp3')    
+        save(sound,'audio.mp3')    
     except:
         sound = gtts.gTTS(text,lang="it")
         sound.save(file_path)
+
     file = os.path.join(current_path, "audio.mp3")
     pygame.mixer.music.load(file)
     pygame.mixer.music.play()
+    
     return
     
     

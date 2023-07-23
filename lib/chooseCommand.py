@@ -13,7 +13,7 @@ from lib.timeNow import now
 from lib.changeValue import change
 from lib.theWeather import TheWeather,Temp
 from lib.timeConv import conversion
-from lib.calendarRec import recovery,day
+from lib.calendarRec import recoveryDate,dayOfWeek
 from lib.theNews import createNews
 from lib.theLight import turn
 
@@ -33,8 +33,8 @@ with open(file_path) as f:
     _temperature= secrets['temperature']
     _max_token= secrets['max_tokens']
     api_key = secrets["openAI"]
-    
 openai.api_key = api_key
+
 
 #function for communicate whith api GPT-3
 def get_response(messages:list):
@@ -61,38 +61,39 @@ def off():
     
 def Sendcommand(command:str):
     pygame.init()
+    
     if(("spegniti" in command) or ("spegnimento" in command)):
         print(Log(" pre shut function"))
         off()
         
     elif((("ore" in command) or ("ora" in command)) and (("sono" in command) or ("è" in command))):
         print(Log(" pre time function"))
-        res = now()
-        return res
+        result = now()
+        return result
 
     elif("stop" in command or "fermati" in command or "basta" in command):
         create("va bene mi fermo")
         
     elif("volume" in command and (("imposta") in command or ("metti" in command) or ("inserisci")) ):
         print(Log(" pre volume function"))
-        res = change(command)
-        if(res == 104):
+        result = change(command)
+        if(result == 104):
             print("\nVirgilio: Non puoi dare un valore inferiore a 10, puoi dare solo valori da 100 a 10 ")
             create("Non puoi dare un valore inferiore a 10, puoi dare solo valori da 100 a 10")
             return None
         else:
-            return res
+            return result
 
         
     elif(("tempo fa" in command) or ("tempo fa a" in command) or ("che tempo fa" in command) or ("che tempo c'è" in command)):
         print(Log(" pre wheather function"))
-        res = TheWeather(command)
-        return res
+        result = TheWeather(command)
+        return result
 
     elif((("gradi" in command ) or ("temperatura" in command)) and (("quanti" in command) or ("quanta" in command)) ):
         print(Log(" pre temperature function"))
-        res = Temp(command)
-        return res
+        result = Temp(command)
+        return result
 
 
     elif("timer" in command and (("imposta" in command) or ("metti" in command) or ("crea" in command) )):
@@ -109,29 +110,28 @@ def Sendcommand(command:str):
         #timer(command)
     elif("che giorno e" in command):
         print(Log(" pre recovery function"))
-        lista=recovery(command)
-        if(len(lista) != 3):
-            for x in range(3-len(lista)):
-                lista.append(None)
+        listOfDate=recoveryDate(command)
+        if(len(listOfDate) != 3):
+            for x in range(3-len(listOfDate)):
+                listOfDate.append(None)
         print(Log("Risultato: {lista}"))  
-        giorno=lista[0]
-        mese=lista[1]
-        anno=lista[2]
-        print(Log(" pre DayOfWeek function"))
-        if( (mese != None ) and (anno != None) ):
-            res = day(giorno,mese,anno)
-        elif(mese == None and anno != None):
-            res = day(giorno,anno=anno)
-        elif(anno == None and mese != None):
-            res = day(giorno,mese=mese)
+        day=listOfDate[0]
+        month=listOfDate[1]
+        year=listOfDate[2]
+        print(Log(" pre dayOfWeek function"))
+        if( (month != None ) and (year != None) ):
+            result = dayOfWeek(day,month,year)
+        elif(month == None and year != None):
+            result = dayOfWeek(day,year=year)
+        elif(year == None and month != None):
+            result = dayOfWeek(day,month=month)
         else:
-            res = day(giorno)
-        return res
-    
+            result = dayOfWeek(day)
+        return result
     elif(( ("news" in command) or ("novità" in command) or ("notizie" in command) ) and (("parlami" in command) or ("dimmi" in command) or ("dammi" in command))):
         print(Log(" pre news function"))
-        res = createNews(command)
-        return res
+        result = createNews(command)
+        return result
     elif("luce" in command and (("accendi" in command) or ("spegni" in command) )):
         print(Log(" pre light function"))
         turn(command)

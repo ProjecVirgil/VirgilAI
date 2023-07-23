@@ -6,8 +6,6 @@ import sys
 
 import pygame
 
-
-
 from lib.sound import create
 from lib.prefix import Log
 
@@ -36,7 +34,6 @@ def timer(my_time):
     create(f"Timer finito")
     pygame.mixer.music.play()
     #parte allarme
-    
 class TimerThread(threading.Thread):
     def __init__(self, interval):
         threading.Thread.__init__(self)
@@ -47,9 +44,15 @@ class TimerThread(threading.Thread):
            timer(self.interval) 
    
 
-     
+def recoverData():
+    with open("connect/res.json", 'r') as file:
+        data = json.load(file)
+        res = data["0"][1]
+        command = data["0"][0]
+        bool = data["0"][2]
+        return res,command,bool
     
-            
+    
 if __name__ == "__main__":
     pygame.init()
     #init e setup the tts
@@ -57,20 +60,19 @@ if __name__ == "__main__":
     time.sleep(3)
     while(True):
         try:
-            with open("connect/res.json", 'r') as file:
-                data = json.load(file)
-                res = data["0"][1]
-                command = data["0"][0]
-                bool = data["0"][2]
+            res,command,bool = recoverData()
+            
             if(res != None and bool == False):
                 if("spento" in res):
                     print(Log(" shutdown in progress..."), flush=True)
-                    create(" Spegnimento in corso...")
+                    pygame.mixer.music.unload()    
+                    pygame.mixer.music.load('asset/FinishVirgil.mp3')                   
                     time.sleep(2)
                     sys.exit(0)
                 if("volume" in command):
                         pygame.mixer.music.set_volume(float(res))
-                        create("biiip")
+                        pygame.mixer.music.unload()    
+                        pygame.mixer.music.load('asset/bipEffectCheckSound.mp3')       
                         print(Log(f" volume changed correctly to {res*100}% "), flush=True)
                         update_json_value(2, True)
                 elif("timer" in command):

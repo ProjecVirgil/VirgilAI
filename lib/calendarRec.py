@@ -1,98 +1,102 @@
+import datetime
+import calendar
+import calendar
+import datetime
+
 from lib.prefix import Log 
-import datetime
-import calendar
-import calendar
-import datetime
 
-def day(giorno:str,mese:int = None, anno:int = None):
+def dayOfWeek(day:str,month:int = None, year:int = None):
     print(Log(" DayOfWeek function"))
-    data_corrente = datetime.datetime.now()
-    if(mese == None):
-        mese = data_corrente.month
-    if(anno ==None):
-        anno = data_corrente.year
-    for settimana in calendar.monthcalendar(anno,mese):
-        for x in settimana:
-            if( x == giorno):
-                dayOfWeek=settimana.index(x)
+    dateCurrente = datetime.datetime.now()
+    if(month == None):
+        month = dateCurrente.month
+    if(year == None):
+        year = dateCurrente.year
+    for week in calendar.monthcalendar(year,month):
+        for x in week:
+            if( x == day):
+                dayOfWeek=week.index(x)
 
-    settimana = ["Lunedi","Martedi","Mercoledi","Giovedi","Venerdi","Sabato","Domenica"]
-    stringa = f"Il {giorno} di {mese} del {anno} è {settimana[dayOfWeek]}"
-    print(f"Il {giorno} di {mese} del {anno} è {settimana[dayOfWeek]}")
-    return stringa
+    week = ["Lunedi","Martedi","Mercoledi","Giovedi","Venerdi","Sabato","Domenica"]
+    result = f"Il {day} di {month} del {year} è {week[dayOfWeek]}"
+    print(f"Il {day} di {month} del {year} è {week[dayOfWeek]}")
+    return result
 
 
 
-def recovery(stringa:str):
-    if(stringa =="mi dici che giorno e"):
-        giorno = datetime.datetime.today()
-        lista = [giorno,None,None]
-        return lista
-    if(" il " in stringa):   
-        stringa=stringa.split(" il ")[1].strip()
-    else:
-        stringa=stringa.split(" e ")[1].strip()
-    division = stringa.split(" ")
-    lista = []
+def recoveryDate(command:str):
     
-    if(division[0].isnumeric()):
-        giorno=division[0]
-        lista.append(int(giorno))
+    if(command == "mi dici che giorno e"):
+        day = datetime.datetime.today()
+        listOfTime = [day,None,None]
+        return listOfTime
+    
+    if(" il " in command):   
+        query=command.split(" il ")[1].strip()
     else:
-        if(division[0] == "domani"):
+        query=command.split(" è ")[1].strip()
+        
+    divisionQuery = query.split(" ")
+    listOfTime = []
+    
+    if(divisionQuery[0].isnumeric()):
+        day=divisionQuery[0]
+        listOfTime.append(int(day))
+    else:
+        if(divisionQuery[0] == "domani"):
             today = datetime.datetime.today()
-            tomorrow = today + datetime.timedelta(days=1) # Calcola il numero del giorno della settimana di domani
-            giorno = tomorrow.day  # Converte il numero in una stringa corrispondente al giorno della settimana
-            lista.append(giorno)
-        elif(division[0] == "ieri"):
+            tomorrow = today + datetime.timedelta(days=1) 
+            day = tomorrow.day  
+            listOfTime.append(day)
+        elif(divisionQuery[0] == "ieri"):
             today = datetime.datetime.today()
-            tomorrow = today + datetime.timedelta(days=-1) # Calcola il numero del giorno della settimana di domani
-            giorno = tomorrow.day  # Converte il numero in una stringa corrispondente al giorno della settimana
-            lista.append(giorno)
-        elif(division[0] == "oggi"):
+            tomorrow = today + datetime.timedelta(days=-1) 
+            day = tomorrow.day  
+            listOfTime.append(day)
+        elif(divisionQuery[0] == "oggi"):
             today = datetime.datetime.today()
-            tomorrow = today + datetime.timedelta(days=0) # Calcola il numero del giorno della settimana di domani
-            giorno = tomorrow.day  # Converte il numero in una stringa corrispondente al giorno della settimana
-            lista.append(giorno)
-        elif((division[0] == "dopo") and (division[1] == 'domani') ):
+            tomorrow = today + datetime.timedelta(days=0) 
+            day = tomorrow.day  
+            listOfTime.append(day)
+        elif((divisionQuery[0] == "dopo") and (divisionQuery[1] == 'domani') ):
                 today = datetime.datetime.today()
-                tomorrow = today + datetime.timedelta(days=2) # Calcola il numero del giorno della settimana di domani
-                giorno = tomorrow.day  # Converte il numero in una stringa corrispondente al giorno della settimana
-                lista.append(giorno)
+                tomorrow = today + datetime.timedelta(days=2) 
+                day = tomorrow.day 
+                listOfTime.append(day)
     
-    mesi=["gennaio","febbraio","marzo","aprile","maggio","giugno","luglio","agosto","settembre","ottobre","novembre","dicembre"]
+    months=["gennaio","febbraio","marzo","aprile","maggio","giugno","luglio","agosto","settembre","ottobre","novembre","dicembre"]
     bool=True
-    for x in mesi:
-        if(x in stringa):
-            if("dopo domani" not in stringa):
-                for meseInd in mesi:
-                    if(meseInd == division[1] ):
-                        mese = mesi.index(meseInd) + 1
-                lista.append(mese)
+    
+    for x in months:
+        if(x in command):
+            if("dopo domani" not in command):
+                for month in months:
+                    if(month == divisionQuery[1] ):
+                        recoverMonth = months.index(month) + 1
+                listOfTime.append(recoverMonth)
                 break
             else:
-                for meseInd in mesi:
-                        if(meseInd == division[2] ):
-                            mese = mesi.index(meseInd) + 1
-                lista.append(mese)
+                for month in months:
+                        if(month == divisionQuery[2] ):
+                            recoverMonth = months.index(month) + 1
+                listOfTime.append(recoverMonth)
                 break
     else:
         bool=False
         
     if(not bool):
-        
-        return lista
+        return listOfTime
     try:
-        if(division[2].isnumeric):
-            anno = division[2]
-            lista.append(int(anno))
-        elif(division[3].isnumeric):
-            anno=division[3]
-            lista.append(int(anno))
+        if(divisionQuery[2].isnumeric):
+            anno = divisionQuery[2]
+            listOfTime.append(int(anno))
+        elif(divisionQuery[3].isnumeric):
+            anno=divisionQuery[3]
+            listOfTime.append(int(anno))
         else:
             anno = None
-            lista.append(int(anno))
+            listOfTime.append(int(anno))
     except IndexError:
-        lista.append(None)
+        listOfTime.append(None)
 
-    return lista
+    return listOfTime

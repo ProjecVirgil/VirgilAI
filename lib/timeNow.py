@@ -2,45 +2,44 @@ from lib.prefix import Log
 import time
 
 
-def numero_in_parole(numero):
+def numberToWord(number):
     # Definizione delle parole per i numeri da 0 a 19
-    parole_fino_a_venti = [
+    wordsUpToVents = [
         "zero", "uno", "due", "tre", "quattro", "cinque", "sei", "sette", "otto", "nove",
         "dieci", "undici", "dodici", "tredici", "quattordici", "quindici", "sedici", "diciassette", "diciotto", "diciannove"
     ]
 
     # Definizione delle parole per le decine
-    parole_decine = [
+    wordDozens = [
         "", "", "venti", "trenta", "quaranta", "cinquanta", "sessanta", "settanta", "ottanta", "novanta"
     ]
 
     # Gestione dei numeri fino a 99
-    if 0 <= numero <= 99:
-        if numero < 20:
-            return parole_fino_a_venti[numero]
+    if 0 <= number <= 99:
+        if number < 20:
+            return wordsUpToVents[number]
         else:
-            decina = numero // 10
-            unita = numero % 10
+            dozen = number // 10
+            unit = number % 10
             # Regola di grammatica: se l'unità è 1 o 8, la decina perde l'ultima lettera
-            if unita == 1 or unita == 8:
-                parole_decina = parole_decine[decina][:-1]
+            if unit == 1 or unit == 8:
+                wordDozen = wordDozens[dozen][:-1]
             else:
-                parole_decina = parole_decine[decina]
-            return parole_decina + parole_fino_a_venti[unita]
+                wordDozen = wordDozens[dozen]
+            return wordDozen + wordsUpToVents[unit]
 
-    # Altri casi (numerazioni superiori a 99 non gestite in questo esempio)
-    return "Numero non gestito"
+    return "Unmanaged number"
 
 
 
 
 def now():
     print(Log(" Time function"))
-    named_tuple = time.localtime() # get struct_time
-    ore = time.strftime('%H',named_tuple)
-    minuti = time.strftime('%M',named_tuple)
-    oreInParole = numero_in_parole(int(ore))
-    minutiInParole = numero_in_parole(int(minuti))
-    time_string = (f"Sono le {str(oreInParole)} e {str(minutiInParole)}  minuti")
-    print(time.strftime("\nVirgilio: Sono le %H e %M minuti", named_tuple))
-    return time_string
+    timeTuple = time.localtime() # get struct_time
+    hours = time.strftime('%H',timeTuple)
+    minuts = time.strftime('%M',timeTuple)
+    hoursToWords = numberToWord(int(hours))
+    minutsToWords = numberToWord(int(minuts))
+    timeString = (f"Sono le {str(hoursToWords)} e {str(minutsToWords)}  minuti")
+    print(time.strftime("\nVirgilio: Sono le %H e %M minuti", timeTuple))
+    return timeString

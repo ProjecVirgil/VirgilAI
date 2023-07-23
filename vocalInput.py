@@ -8,35 +8,44 @@ import speech_recognition as sr
 from colorama import Fore,Back
 
 
-#from prefix.creation import Log
-# init the recognizer
-listener = sr.Recognizer()
-
-with open('setting.json') as f:
-    setting = json.load(f)
-    
-    listener.operation_timeout = int(setting['operation_timeout'])
-    listener.dynamic_energy_threshold = bool(setting['dynamic_energy_threshold'])
-    listener.energy_threshold = int(setting['energy_threshold'])
-    
-    wordActivation = setting['wordActivation']
-
-
-
-
 from lib.prefix import Log  
 
 
 
-def speech():
-        command =""
-        print(Log(" start hearing function"), flush=True)
-        dataCom = {
+
+
+# init the recognizer
+listener = sr.Recognizer()
+with open('setting.json') as f:
+    setting = json.load(f)
+    listener.operation_timeout = int(setting['operation_timeout'])
+    listener.dynamic_energy_threshold = bool(setting['dynamic_energy_threshold'])
+    listener.energy_threshold = int(setting['energy_threshold'])
+    
+    wordActivation = str(setting['wordActivation']).lower()
+
+
+def cleanBuffer():
+    dataEmpty = {
                 None:True
             }
-        with open("connect/command.json", 'w') as commands:
-            json.dump(dataCom,commands)
-        print(Log(" cleaned buffer command"), flush=True)
+    with open("connect/command.json", 'w') as commands:
+            json.dump(dataEmpty,commands)
+    print(Log(" cleaned buffer command"), flush=True)
+
+
+def copyData(command:str):
+    data = {
+        command:False
+        }
+    print(Log(f" data sended - {data}"), flush=True)
+    with open("connect/command.json", 'w') as comandi:
+        json.dump(data, comandi,indent=4)
+
+def speech():
+        command = ""
+        print(Log(" start hearing function"), flush=True)
+        cleanBuffer()
         status  = True
         while(status):
             try:
@@ -49,16 +58,11 @@ def speech():
                     command = command.lower()
                     command = unicodedata.normalize('NFKD', command).encode('ascii', 'ignore').decode('ascii')
                     print(Log(f" command rude acquired: {command} "), flush=True)
-                    if( str(wordActivation).lower() in str(command)):
+                    if(wordActivation in command):
                         print(Log(" command speech correctly "))
-                        data = {
-                            command:False
-                            }
-                        print(Log(f" data sended - {data}"), flush=True)
-                        with open("connect/command.json", 'w') as comandi:
-                            json.dump(data, comandi,indent=4)
+                        copyData(command)
                         if("spegniti" in command):
-                            print(Log(" shutdown in progress"), flush=True)
+                            print(Log(" shutdown in progress..."), flush=True)
                             status = False
             except:
                 try:

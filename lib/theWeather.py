@@ -24,50 +24,46 @@ def url(CITY):
     url = BASE_URL + "appid=" + weather_key + "&q=" + CITY
     return url
 
-
-
-def TheWeather(command:str):
+def recoverCity(command:str):
+    
     if(' a ' in command):
-        print(Log(" citta scelta corretamente"))
+        print(Log(" city chosen correctly"))
         command=command.split(" a ")[1].strip()
         CITY = command.split(" ")[0]
-        print(Log( " Citta selezionata: " + CITY))
+        print(Log( " selected city: " + CITY))
     else:
+        print(Log( " defalut city selected: " + CITY))
         CITY = secrets['city']   
-        print(Log( "Citta di default selezionata: " + CITY))
+    
+    return CITY
+
+def recoverWeather(command:str):
+    CITY = recoverCity(command)
     print(Log(" weather function"))
     response = requests.get(url(CITY))
     print(Log(" Response: " + str(response.status_code)))
     if(response.status_code != 200):
-        print("Ripeti la richiesta o aspetta qualche minuto")
+        print(Log(" repeat the request or wait a few minutes"))
         return None
     else:
         response = response.json()
         main = response['weather'][0]['description']
-        out = translator.translate_text(main, target_lang=str(language).upper())
-        print(print(Log(str(out))))
-        stringa = f"A {CITY} il tempo è {out.text}"
-        print(f"\nVirgilio: A {CITY} il tempo è {out.text}")
+        outputTranslation = translator.translate_text(main, target_lang=str(language).upper())
+        print(print(Log(str(outputTranslation))))
+        stringa = f"A {CITY} il tempo è {outputTranslation.text}"
+        print(f"\nVirgilio: A {CITY} il tempo è {outputTranslation.text}")
         return stringa
     
 
     
-def Temp(command):
-    print(Log(" funzione temp"))
-    if(' a ' in command):
-        print(Log(" citta scelta corretamente"))
-        command=command.split(" a ")[1].strip()
-        CITY = command.split(" ")[0]
-        print(Log( "Citta selezionata: " + CITY))
-    else:
-        print(Log( "Citta di default selezionata: " + CITY))
-        CITY = secrets['city']   
-    
+def recoverTemp(command):
+    print(Log(" function recoverTemp"))
+    CITY = recoverCity(command)
     response = requests.get(url(CITY)).json()
-    temp = response['main']['temp'] - 273.15
-    tempMax= int(response['main']['temp_max']) - 273.15
-    tempMin= int(response['main']['temp_min']) - 273.15
+    temperature = response['main']['temp'] - 273.15
+    tempatureMax= int(response['main']['temp_max']) - 273.15
+    tempratureMin= int(response['main']['temp_min']) - 273.15
     humidity= int( response['main']['humidity'])
-    stringa = f"La temperatura ora a {CITY} è di {int(temp)} gradi, con una massima di {int(tempMax)} gradi, una minima di {int(tempMin)} gradi e un' umidita pari al {humidity}% "
-    print(f"\nVirgilio: La temperatura ora a {CITY} è di {int(temp)} gradi, con una massima di {int(tempMax)} gradi, una minima di {int(tempMin)} gradi e un' umidita pari al {humidity}% ")
+    stringa = f"La temperatura ora a {CITY} è di {int(temperature)} gradi, con una massima di {int(tempatureMax)} gradi, una minima di {int(tempratureMin)} gradi e un' umidita pari al {humidity}% "
+    print(f"\nVirgilio: La temperatura ora a {CITY} è di {int(temperature)} gradi, con una massima di {int(tempatureMax)} gradi, una minima di {int(tempratureMin)} gradi e un' umidita pari al {humidity}% ")
     return stringa
