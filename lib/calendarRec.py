@@ -23,14 +23,11 @@ def recoverDayOfWeek(day:str,month:int = None, year:int = None):
                 dayOfWeek=week.index(x)
     week = ["Lunedi","Martedi","Mercoledi","Giovedi","Venerdi","Sabato","Domenica"]
     months=["gennaio","febbraio","marzo","aprile","maggio","giugno","luglio","agosto","settembre","ottobre","novembre","dicembre"]
-    
+    print(f"Il {day} di {month} del {year} è {week[dayOfWeek]}")
     if(day != 1):
-        result = f"Il {numberToWord(str(day))} di {months[month-1]} del {numberToWord(str(year))} è {str(week[dayOfWeek])}"
+        return f"Il {numberToWord(str(day))} di {months[month-1]} del {numberToWord(str(year))} è {str(week[dayOfWeek])}"
     else:
-        result = f"L'{numberToWord(str(day))} di {months[month-1]} del {numberToWord(str(year))} è {str(week[dayOfWeek])}"
-
-    #print(f"Il {day} di {month} del {year} è {week[dayOfWeek]}")
-    return  result
+        return f"L'{numberToWord(str(day))} di {months[month-1]} del {numberToWord(str(year))} è {str(week[dayOfWeek])}"
 
 
 
@@ -142,12 +139,7 @@ def getDate(command:str):
     print(dateNumber)
     result= splitTheDate(dateNumber)
     print(result)
-    return result
-
-        
-        
-#print(recoveryDate('che giorno e il 1 maggio 2012'))
-            
+    return result            
     
         
         
