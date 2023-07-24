@@ -5,9 +5,6 @@ import time
 
 
 
-
-
-
 def now():
     print(Log(" Time function"))
     timeTuple = time.localtime() # get struct_time

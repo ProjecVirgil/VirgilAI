@@ -2,6 +2,7 @@ import os
 import requests
 import json
 
+import pygame
 import deepl
 
 from lib.numberConvertToText import numberToWord
@@ -45,15 +46,18 @@ def recoverWeather(command:str):
     print(Log(" Response: " + str(response.status_code)))
     if(response.status_code != 200):
         print(Log("repeat the request or wait a few minutes"))
-        return "Non riesco a collegarmi al meteo mi dispiace controlla che la chiave o la connesione siano ok"  #TO REG
-    else:
+        pygame.mixer.music.unload()    
+        pygame.mixer.music.load('asset/ErrorOpenMeteo.mp3') 
+        pygame.mixer.music.play()     
         response = response.json()
         main = response['weather'][0]['description']
         try:
             outputTranslation = translator.translate_text(main, target_lang=str(language).upper())
         except:
             print(Log(' Error in the key or connection try later or insert a valid key'))
-            return 'Mi dispiace ma purtroppo sembra che o la chiave inserita o la connesione non permattano la traduzione del meteo' #TO REG
+            pygame.mixer.music.unload()    
+            pygame.mixer.music.load('asset/ErrorDeeple.mp3') 
+            pygame.mixer.music.play()  
         print(print(Log(str(outputTranslation))))
         stringa = f"A {CITY} il tempo è {outputTranslation.text}"
         print(f"\nVirgilio: A {CITY} il tempo è {outputTranslation.text}")

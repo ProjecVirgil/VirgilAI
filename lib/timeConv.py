@@ -29,14 +29,13 @@ def conversion(command:str):
         seconds = int(command[3])
         sumSeconds= hours * 3600 + seconds
         return sumSeconds
-    
     else:
         if(((command[1] == 'ore')) or (command[1] == 'ora')):
             return int(command[0])*3600
         elif((command[1] == 'minuti') or (command[1] == 'minuto')):
-            return str(command[0])*60
+            return int(command[0])*60
         else:
-            return str(command[0])
+            return int(command[0])
 
 
 

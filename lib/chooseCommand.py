@@ -110,23 +110,7 @@ def Sendcommand(command:str):
         #timer(command)
     elif("che giorno e" in command):
         print(Log(" pre recovery function"))
-        listOfDate=recoveryDate(command)
-        if(len(listOfDate) != 3):
-            for _ in range(3-len(listOfDate)):
-                listOfDate.append(None)
-        print(Log(f" result: {listOfDate}"))  
-        day=listOfDate[0]
-        month=listOfDate[1]
-        year=listOfDate[2]
-        print(Log(" pre dayOfWeek function"))
-        if( (month != None ) and (year != None) ):
-            result = recoverDayOfWeek(day,month,year)
-        elif(month == None and year != None):
-            result = recoverDayOfWeek(day,year=year)
-        elif(year == None and month != None):
-            result = recoverDayOfWeek(day,month=month)
-        else:
-            result = recoverDayOfWeek(day)
+        result=recoveryDate(command)
         return result
     
     elif(( ("news" in command) or ("novita" in command) or ("notizie" in command) ) and (("parlami" in command) or ("dimmi" in command) or ("dammi" in command))):
@@ -144,7 +128,9 @@ def Sendcommand(command:str):
             new_message = get_response(messages=messages)
         except:
             print(Log("Unfortunately the key of openAI you entered is invalid or not present if you don't know how to get a key check the guide on github"))
-            return "Purtroppo la chiave di openAI che hai inserito non e' valida o non e' presente se il problema persiste potrebbe essere un errore causato dalla tua rete o quella di openAI" #TO REG
+            pygame.mixer.music.unload()    
+            pygame.mixer.music.load('asset/ErrorOpenAi.mp3') 
+            pygame.mixer.music.play()    #TO REG
         print(Log(" response created"))
         print(f"\nVirgilio: {new_message['content']}")
         print(Log(" I am hanging the command..."))

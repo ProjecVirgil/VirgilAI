@@ -12,13 +12,13 @@ def change(command:str):
     commandSplitted=command.split(" ")
     volume = commandSplitted[-1]
     
-    if("." in volume and "%" in volume):
+    if("." in volume and "%" in volume): # 20%.  / 20.  /
         volume = volume[:-2]
     elif( "%" in volume or "." in volume):
         volume = volume[:-1]
     try:
         volume = int(volume)/100
-        if(volume < 0.1 ):
+        if(volume < 0.1 or volume > 1.0 ):
             return "104"
         else:
             return str(volume)
@@ -28,6 +28,7 @@ def change(command:str):
         pygame.mixer.music.load(f'{file_path}/ErrorValueVirgil.mp3 ')
         return "104"
     
+
     
     
     
