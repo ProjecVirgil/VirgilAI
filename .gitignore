@@ -1,6 +1,4 @@
 tests
-audio.mp3
-audio.mp3
 .vscode/settings.json
 lib/__pycache__/calendarRec.cpython-310.pyc
 connect/res.json
@@ -9,4 +7,5 @@ lib/__pycache__/calendarRec.cpython-310.pyc
 lib/__pycache__/chooseCommand.cpython-310.pyc
 lib/__pycache__/theLight.cpython-310.pyc
 lib/__pycache__/theWeather.cpython-310.pyc
+audio.mp3
 setupAndLaunch/key.txt
