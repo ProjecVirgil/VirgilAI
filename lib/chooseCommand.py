@@ -140,7 +140,11 @@ def Sendcommand(command:str):
     else:
         print(Log(" GPT function"))
         messages.append({"role": "user", "content": command})
-        new_message = get_response(messages=messages)
+        try:
+            new_message = get_response(messages=messages)
+        except:
+            print(Log("Unfortunately the key of openAI you entered is invalid or not present if you don't know how to get a key check the guide on github"))
+            return "Purtroppo la chiave di openAI che hai inserito non e' valida o non e' presente se il problema persiste potrebbe essere un errore causato dalla tua rete o quella di openAI" #TO REG
         print(Log(" response created"))
         print(f"\nVirgilio: {new_message['content']}")
         print(Log(" I am hanging the command..."))

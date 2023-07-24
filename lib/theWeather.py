@@ -44,12 +44,16 @@ def recoverWeather(command:str):
     response = requests.get(url(CITY))
     print(Log(" Response: " + str(response.status_code)))
     if(response.status_code != 200):
-        print(Log(" repeat the request or wait a few minutes"))
-        return None
+        print(Log("repeat the request or wait a few minutes"))
+        return "Non riesco a collegarmi al meteo mi dispiace controlla che la chiave o la connesione siano ok"  #TO REG
     else:
         response = response.json()
         main = response['weather'][0]['description']
-        outputTranslation = translator.translate_text(main, target_lang=str(language).upper())
+        try:
+            outputTranslation = translator.translate_text(main, target_lang=str(language).upper())
+        except:
+            print(Log(' Error in the key or connection try later or insert a valid key'))
+            return 'Mi dispiace ma purtroppo sembra che o la chiave inserita o la connesione non permattano la traduzione del meteo' #TO REG
         print(print(Log(str(outputTranslation))))
         stringa = f"A {CITY} il tempo è {outputTranslation.text}"
         print(f"\nVirgilio: A {CITY} il tempo è {outputTranslation.text}")

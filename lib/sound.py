@@ -2,7 +2,10 @@ import gtts
 import pygame
 import os
 import json
+
 from elevenlabs import generate,save
+
+from lib.prefix import Log
 
 current_path = os.getcwd()
 file_path = os.path.join(current_path,'audio.mp3')
@@ -29,6 +32,7 @@ def create(text:str):
         )
         save(sound,'audio.mp3')    
     except:
+        print(Log(" Google text to speech has started the cause could be a missing valid key or the end of the elevenLabs plan if you are aware of this you can ignore the message"))
         sound = gtts.gTTS(text,lang="it")
         sound.save(file_path)
 

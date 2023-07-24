@@ -104,7 +104,3 @@ def recoveryDate(command:str):
     except IndexError:
         listOfTime.append(None)
     return listOfTime
-
-
-
-print(recoveryDate('che giorno e oggi'))
