@@ -1,11 +1,8 @@
 tests
-.vscode/settings.json
-lib/__pycache__/calendarRec.cpython-310.pyc
-connect/res.json
-connect/command.json
-lib/__pycache__/calendarRec.cpython-310.pyc
-lib/__pycache__/chooseCommand.cpython-310.pyc
-lib/__pycache__/theLight.cpython-310.pyc
-lib/__pycache__/theWeather.cpython-310.pyc
+.vscode
+lib/__pycache__
+connect
 audio.mp3
 setupAndLaunch/key.txt
+.coverage
+htmlcov
