@@ -19,6 +19,7 @@ Created principle with [python3.11](https://www.python.org/downloads/) e various
 
 Virgil or Virgil is a virtual assistant like Alexa or Google Home, but integrated with an AI (GPT-3.5 turbo).The project is focused on the virtual assistant, but it is actually divided into two, in fact there is its own Android [app](https://github.com/Retr0100/VirgilApp) created with Flutter dedicated with which you can set, change your settings of the virtual assistant just as you would with Alexa or Google Home.
 
+[Virgil-AI](https://sloc.xyz/github/Retr0100/ProjectVirgil/) • [Virgil-App](https://sloc.xyz/github/Retr0100/VirgilApp/) • [Virgil-API](https://sloc.xyz/github/Retr0100/VirgilAPI/) 
 
 ## Chart on the functioning of Virgil
 <p align="center">
