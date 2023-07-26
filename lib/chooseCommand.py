@@ -11,9 +11,9 @@ from lib.prefix import Log
 from lib.sound import create
 from lib.timeNow import now
 from lib.changeValue import change
-from lib.theWeather import recoverWeather,recoverTemp
+from lib.theWeather import recoverWeather
 from lib.timeConv import conversion
-from lib.calendarRec import recoveryDate,recoverDayOfWeek
+from lib.calendarRec import recoverDayOfWeek
 from lib.theNews import createNews
 from lib.theLight import turn
 
@@ -85,17 +85,10 @@ def Sendcommand(command:str):
             return result
 
         
-    elif(("tempo fa" in command) or ("tempo fa a" in command) or ("che tempo fa" in command) or ("che tempo c'è" in command)):
+    elif(("tempo fa" in command) or ("tempo fa a" in command) or ("che tempo fa" in command) or ("che tempo c'è" in command) or (("gradi" in command ) or ("temperatura" in command)) and (("quanti" in command) or ("quanta" in command))):
         print(Log(" pre wheather function"))
         result = recoverWeather(command)
         return result
-
-    elif((("gradi" in command ) or ("temperatura" in command)) and (("quanti" in command) or ("quanta" in command)) ):
-        print(Log(" pre temperature function"))
-        result = recoverTemp(command)
-        return result
-
-
     elif("timer" in command and (("imposta" in command) or ("metti" in command) or ("crea" in command) )):
         print(Log(" pre timer function"))
         try:
@@ -108,9 +101,9 @@ def Sendcommand(command:str):
             return None
         
         #timer(command)
-    elif("che giorno e" in command):
+    elif("che giorno e" in command or "che giorno della settima e" in command):
         print(Log(" pre recovery function"))
-        result=recoveryDate(command)
+        result=recoverDayOfWeek(command)
         return result
     
     elif(( ("news" in command) or ("novita" in command) or ("notizie" in command) ) and (("parlami" in command) or ("dimmi" in command) or ("dammi" in command))):

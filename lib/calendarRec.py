@@ -109,7 +109,6 @@ def recoveryDateNumber(command:str):
    
         
 def splitTheDate(listOfDate:list):
-
     if(len(listOfDate) != 3):
         for _ in range(3-len(listOfDate)):
                 listOfDate.append(None)
