@@ -54,15 +54,11 @@ Virgil or Virgil is a virtual assistant like Alexa or Google Home, but integrate
    - command linee ```git clone https://github.com/Retr0100/VirgilApp.git```
    - or download the zip
 2. Now we need the api (for now i am not rich and i do not pay for everything) so
- we are need of 4 api keys
-   - API for OpenAI and GPT,
+ we are need of 3 api keys (the keys marked with * are mandatory for operation)
+   - * API for OpenAI and GPT,
           i recommend this [video tutorial](https://www.youtube.com/watch?v=u-LeLPBZr2k) 
-   - API for the weather,
-          i recommend this [video tutorial](https://youtu.be/u-LeLPBZr2k?t=27) 
    - API for Merros (domotic socket),
-          just create a [Merros account](https://www.meross.com/en-gc) and insert the credential
-   - API for Deeple
-        create an account [Deeple](https://www.deepl.com/en/docs-api/) and go on page for the API
+          just create a [Merros account](https://www.meross.com/en-gc) and insert the credential 
    - API for ElevenLabs
        This API is not required, but if you want a [BEST EXPERIENCE](https://elevenlabs.io/speech-synthesis) i raccomand you to get
 
@@ -89,7 +85,7 @@ Virgil or Virgil is a virtual assistant like Alexa or Google Home, but integrate
 1. The entire project is only at the albor and is not 100% complete
 2. Virgilio without the API insert and without the connection will not function fully 
 3. **FOR NOW** many command works only in italian except for the question at GPT (so any questions not covered by the default commands)
-4. The api for GPT and Deeple is almost free but is necessary inser the credit/debit card (sorry i know is annoying) 💸
+4. The api for GPT is almost free but is necessary inser the credit/debit card (sorry i know is annoying) 💸
 
 
 ## 💎 Future idea/goal for this project
@@ -100,7 +96,6 @@ Virgil or Virgil is a virtual assistant like Alexa or Google Home, but integrate
 Only me 💻 and
 
  - openAI API
- - Deeple API
  - OpenMeteo API
  - Merros API
  - MongoDB for Database of the setting
