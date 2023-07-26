@@ -26,7 +26,7 @@ Virgil or Virgil is a virtual assistant like Alexa or Google Home, but integrate
 ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ![Virgil-AI](https://sloc.xyz/github/Retr0100/ProjectVirgil/) ![Virgil-App](https://sloc.xyz/github/Retr0100/VirgilApp/) ![Virgil-API](https://sloc.xyz/github/Retr0100/VirgilAPI/) 
 
 
-ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/w/Retr0100/ProjectVirgil) ![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/w/Retr0100/VirgilApp) ![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/w/Retr0100/VirgilAPI)
+ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/w/Retr0100/ProjectVirgil) ![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/w/Retr0100/VirgilApp) ![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/w/Retr0100/VirgilAPI)
 
 
 ## Chart on the functioning of Virgil
