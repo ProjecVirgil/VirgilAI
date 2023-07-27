@@ -30,6 +30,7 @@ lxml==4.9.3
 matplotlib-inline==0.1.6
 meross-iot==0.4.5.9
 multidict==6.0.4
+geopy==2.3.0
 openai==0.27.8
 paho-mqtt==1.6.1
 parse==1.19.1
