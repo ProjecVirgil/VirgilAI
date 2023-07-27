@@ -31,9 +31,19 @@ Virgil or Virgil is a virtual assistant like Alexa or Google Home, but integrate
 
 ## Chart on the functioning of Virgil
 <p align="center">
- <img src="/asset/FlowChart.png" alt="Markdownify" width ="700px" >
+ <img src="/asset/FlowChart1.png" alt="Markdownify" width ="700px" >
 </p>
 
+## Structure
+<p align="center">
+ <img src="/asset/StructurePie.png" alt="Markdownify" width ="700px" >
+</p>
+
+
+## Component
+<p align="center">
+ <img src="/asset/MindMap.png" alt="Markdownify" width ="700px" >
+</p>
 
 
 ## 🔑 Key features
