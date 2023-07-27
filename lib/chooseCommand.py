@@ -78,7 +78,7 @@ def Sendcommand(command:str):
     elif("volume" in command and (("imposta") in command or ("metti" in command) or ("inserisci")) ):
         print(Log(" pre volume function"))
         result = change(command)
-        if(result == 104):
+        if(result == "104"):
             print("\nVirgilio: Non puoi dare un valore inferiore a 10, puoi dare solo valori da 100 a 10 ")
             create("Non puoi dare un valore inferiore a 10, puoi dare solo valori da 100 a 10")
             return None
