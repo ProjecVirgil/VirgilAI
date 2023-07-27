@@ -17,15 +17,14 @@ def createNews(command:str):
         print(Log(" specify topic"))
         topic=command.split(" di ")[1]
         topic = topic.split(" ")[0]
-        return topic
-        '''print(Log(f" topic scelto: {topic}"))
+        print(Log(f" topic scelto: {topic}"))
         urlWithTopic = f"https://news.google.com/rss/search?q={topic}&hl=it&gl=IT&ceid=IT:it"
         r=s.get(urlWithTopic) 
         for title in r.html.find('title'):
             news.append(title.text)
         newsSelected = random.choice(news)
         print(Log(f" news scelta {newsSelected}"))
-        return newsSelected '''
+        return newsSelected
     
     elif(" su " in command):
         print(Log(" specify topic"))

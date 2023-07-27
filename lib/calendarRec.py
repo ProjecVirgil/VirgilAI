@@ -32,11 +32,7 @@ def recoverDayOfWeek(day:str,month:int = None, year:int = None):
 
 
 def recoveryDateNumber(command:str):
-    if(command in "che giorno e"):
-        day = str(datetime.datetime.now().date()).split('-')[2]
-        listOfTime = [day,None,None]
-        return listOfTime
-    elif(command in "che giorno e'"):
+    if(command in "che giorno e" or command in "che giorno e'"):
         day = str(datetime.datetime.now().date()).split('-')[2]
         listOfTime = [day,None,None]
         return listOfTime
