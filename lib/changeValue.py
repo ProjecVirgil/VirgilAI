@@ -19,14 +19,14 @@ def change(command:str):
     try:
         volume = int(volume)/100
         if(volume < 0.1 or volume > 1.0 ):
-            return "104"
+            return 104
         else:
             return str(volume)
     except ValueError:
         print(Log("Mi dispiace c'è stato un errore richiedimi il comando con un valore adeguato"))
         pygame.mixer.music.unload()
         pygame.mixer.music.load(f'{file_path}/ErrorValueVirgil.mp3 ')
-        return "104"
+        return 104
     
 
     
