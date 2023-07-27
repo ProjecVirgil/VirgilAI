@@ -36,13 +36,12 @@ def recoveryDateNumber(command:str):
         day = str(datetime.datetime.now().date()).split('-')[2]
         listOfTime = [day,None,None]
         return listOfTime
-    
     if(" il " in command):   
         query=command.split("il")[1].strip()
     elif(" e " in command):
         query=command.split(" e")[1].strip()
     elif(" era " in command):
-            query=command.split(" era")[1].strip()
+        query=command.split(" era")[1].strip()
     else:
         query=command.split(" e'")[1].strip()
                 
