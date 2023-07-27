@@ -8,7 +8,7 @@ import pygame
 
 from lib.sound import create
 from lib.prefix import Log
-
+from lib.numberConvertToText  import numberToWord
 
 
 
@@ -28,9 +28,9 @@ def update_json_value(key, new_value):
 
 def timer(my_time):
     print(Log(" timer function"), flush=True)
-    print(Log(" inizio timer"), flush=True)
+    print(Log(" start timer"), flush=True)
     time.sleep(my_time)
-    print(Log(" fine timer"), flush=True)
+    print(Log(" end timer"), flush=True)
     create(f"Timer finito")
     pygame.mixer.music.unload()    
     pygame.mixer.music.load('asset/timerEndVirgil.mp3') 
@@ -84,7 +84,7 @@ if __name__ == "__main__":
                         update_json_value(2, True)
                 elif("timer" in command):
                         print(Log(f" the timer is started see you in {res} second"), flush=True)
-                        create(f" Il timer è partito ci vediamo tra {res} second")
+                        create(f"Il timer è partito ci vediamo tra {numberToWord(res)} secondi")
                         t = TimerThread(int(res))
                         t.start()
                         update_json_value(2, True)

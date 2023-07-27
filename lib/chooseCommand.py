@@ -95,7 +95,7 @@ def Sendcommand(command:str):
         try:
             command = str(command).split(" di ")[1].strip()
             my_time = conversion(command)
-            return my_time
+            return str(my_time)
         except IndexError:
             print("Please try the command again")
             create("Please try the command again")
