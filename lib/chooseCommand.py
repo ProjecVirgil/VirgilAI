@@ -13,7 +13,7 @@ from lib.timeNow import now
 from lib.changeValue import change
 from lib.theWeather import recoverWeather
 from lib.timeConv import conversion
-from lib.calendarRec import recoverDayOfWeek
+from lib.calendarRec import getDate
 from lib.theNews import createNews
 from lib.theLight import turn
 from lib.searchyt import playonyt
@@ -104,7 +104,7 @@ def Sendcommand(command:str):
         #timer(command)
     elif("che giorno e" in command or "che giorno della settima e" in command):
         print(Log(" pre recovery function"))
-        result=recoverDayOfWeek(command)
+        result=getDate(command)
         return result
     
     elif(( ("news" in command) or ("novita" in command) or ("notizie" in command) ) and (("parlami" in command) or ("dimmi" in command) or ("dammi" in command))):
