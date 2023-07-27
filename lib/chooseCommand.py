@@ -16,6 +16,7 @@ from lib.timeConv import conversion
 from lib.calendarRec import recoverDayOfWeek
 from lib.theNews import createNews
 from lib.theLight import turn
+from lib.searchyt import playonyt
 
 #function for manage the command
 #Preset command
@@ -110,6 +111,10 @@ def Sendcommand(command:str):
         print(Log(" pre news function"))
         result = createNews(command)
         return result
+    elif("play" in command or "riproduci" in command ):
+        playonyt(command)
+        print(Log(" pre yt function"))
+        
     elif("luce" in command and (("accendi" in command) or ("spegni" in command) )):
         print(Log(" pre light function"))
         turn(command)
