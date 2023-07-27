@@ -5,8 +5,8 @@ import time
 
 def Log(string: str, filepath: str = None):
     callstack = inspect.stack()[1]
-    caller = inspect.getmodule(callstack[0])
-    prfx = (Fore.GREEN + "(in module %S)".format(caller) + time.strftime("%H:%M:%S UTC LOG", time.localtime()) + Back.RESET + Fore.WHITE)
+    caller = str(inspect.getmodule(callstack[0])).split("\\")[-1]
+    prfx=(Fore.GREEN + f"(in module {caller[:-2]}) " + time.strftime("%H:%M:%S UTC LOG", time.localtime()) + Back.RESET + Fore.WHITE)
     prfx = (prfx + " | ")
     log = prfx + string
     if filepath is not None:
