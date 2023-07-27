@@ -18,13 +18,32 @@
 Created principle with [python3.11](https://www.python.org/downloads/) e various library like [SpeechRecognition ](https://pypi.org/project/SpeechRecognition/)  and [TTS library](https://pypi.org/project/gTTS/) 
 
 Virgil or Virgil is a virtual assistant like Alexa or Google Home, but integrated with an AI (GPT-3.5 turbo).The project is focused on the virtual assistant, but it is actually divided into two, in fact there is its own Android [app](https://github.com/Retr0100/VirgilApp) created with Flutter dedicated with which you can set, change your settings of the virtual assistant just as you would with Alexa or Google Home.
+ㅤㅤㅤ
+
+ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ**Virgil-AI** ㅤㅤ  **Virgil-App**   ㅤㅤ**Virgil-API**
+
+
+ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ![Virgil-AI](https://sloc.xyz/github/Retr0100/ProjectVirgil/) ![Virgil-App](https://sloc.xyz/github/Retr0100/VirgilApp/) ![Virgil-API](https://sloc.xyz/github/Retr0100/VirgilAPI/) 
+
+
+ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/w/Retr0100/ProjectVirgil) ![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/w/Retr0100/VirgilApp) ![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/w/Retr0100/VirgilAPI)
 
 
 ## Chart on the functioning of Virgil
 <p align="center">
- <img src="/asset/FlowChart.png" alt="Markdownify" width ="700px" >
+ <img src="/asset/FlowChart1.png" alt="Markdownify" width ="700px" >
 </p>
 
+## Structure
+<p align="center">
+ <img src="/asset/StructurePie.png" alt="Markdownify" width ="700px" >
+</p>
+
+
+## Component
+<p align="center">
+ <img src="/asset/MindMap.png" alt="Markdownify" width ="700px" >
+</p>
 
 
 ## 🔑 Key features
@@ -54,15 +73,11 @@ Virgil or Virgil is a virtual assistant like Alexa or Google Home, but integrate
    - command linee ```git clone https://github.com/Retr0100/VirgilApp.git```
    - or download the zip
 2. Now we need the api (for now i am not rich and i do not pay for everything) so
- we are need of 4 api keys
-   - API for OpenAI and GPT,
+ we are need of 3 api keys (the keys marked with * are mandatory for operation)
+   - * API for OpenAI and GPT,
           i recommend this [video tutorial](https://www.youtube.com/watch?v=u-LeLPBZr2k) 
-   - API for the weather,
-          i recommend this [video tutorial](https://youtu.be/u-LeLPBZr2k?t=27) 
    - API for Merros (domotic socket),
-          just create a [Merros account](https://www.meross.com/en-gc) and insert the credential
-   - API for Deeple
-        create an account [Deeple](https://www.deepl.com/en/docs-api/) and go on page for the API
+          just create a [Merros account](https://www.meross.com/en-gc) and insert the credential 
    - API for ElevenLabs
        This API is not required, but if you want a [BEST EXPERIENCE](https://elevenlabs.io/speech-synthesis) i raccomand you to get
 
@@ -89,7 +104,7 @@ Virgil or Virgil is a virtual assistant like Alexa or Google Home, but integrate
 1. The entire project is only at the albor and is not 100% complete
 2. Virgilio without the API insert and without the connection will not function fully 
 3. **FOR NOW** many command works only in italian except for the question at GPT (so any questions not covered by the default commands)
-4. The api for GPT and Deeple is almost free but is necessary inser the credit/debit card (sorry i know is annoying) 💸
+4. The api for GPT is almost free but is necessary inser the credit/debit card (sorry i know is annoying) 💸
 
 
 ## 💎 Future idea/goal for this project
@@ -100,7 +115,6 @@ Virgil or Virgil is a virtual assistant like Alexa or Google Home, but integrate
 Only me 💻 and
 
  - openAI API
- - Deeple API
  - OpenMeteo API
  - Merros API
  - MongoDB for Database of the setting
