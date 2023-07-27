@@ -10,6 +10,3 @@ def Log(string:str):
     prfx = (prfx + " | ")
     log = prfx + string
     return log
-
-
-print(Log("ciao"))
