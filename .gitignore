@@ -3,7 +3,7 @@ tests
 lib/__pycache__
 connect
 audio.mp3
-setupAndLaunch/key.txt
+setup/key.txt
 .coverage
 htmlcov
 trys
