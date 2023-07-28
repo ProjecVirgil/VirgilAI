@@ -9,7 +9,7 @@ import json
 import pyfiglet
 from colorama import Fore,Style
 
-from lib.request import createUser,getUser
+from lib.request import createUser,getUser,createUserEvent
 from lib.prefix import Log
 
 '''string = "Thanks for use Virgil"
@@ -72,7 +72,7 @@ if __name__ == '__main__':
     stampa()
     rainbow()
     print(Log(ALERT +"START CHECK THE LIBRARY"),flush=True)
-    command = "pip install -q -r setupAndLaunch/requirements.txt > logpip.txt"
+    command = "pip install -q -r setup/requirements.txt > logpip.txt"
     subprocess.run(command, shell=True)
     print(Log(OK +"LIBRARY INSTALLED CORRECTLY IN CASE OF PROBLEMS, CHECK THE logpip.txt FILE"),flush=True)
     
@@ -80,15 +80,16 @@ if __name__ == '__main__':
     current_path = os.getcwd()
     current_path = current_path.replace("\ ".strip() , "/")
     
-    if(os.path.getsize(f"{current_path}/setupAndLaunch/key.txt") == 0):
+    if(os.path.getsize(f"{current_path}/setup/key.txt") == 0):
         print(Log(OK + "I am creating your synchronization key"))
         key = createUser()
-        print(Log(OK + f"KEY {Fore.RED + str(key) + OK} CREATED CORRECTLY IN {current_path}/setupAndLaunch/key.txt "))
-        with open(f"{current_path}/setupAndLaunch/key.txt",'w') as fileKey:
+        createUserEvent(key)
+        print(Log(OK + f"KEY {Fore.RED + str(key) + OK} CREATED CORRECTLY IN {current_path}/setup/key.txt "))
+        with open(f"{current_path}/setup/key.txt",'w') as fileKey:
             fileKey.write(str(key))
         check = input(Log(ALERT + 'Now download the Virgil app on your Android device, go to the configuration page and enter this code in the appropriate field, once done you will be able to change all Virgil settings remotely, once done press any button: '))
         print(Log(OK + "Synchronizing your account settings"))
-        user = getUser(key)
+        user = getUser()
         with open(f"setting.json",'w') as f:
             json.dump(user,f,indent=4)
         if(user == 'User not found'):
@@ -97,7 +98,7 @@ if __name__ == '__main__':
             exit(1)
 
     else:
-        with open(f"{current_path}/setupAndLaunch/key.txt",'r') as fileKey:
+        with open(f"{current_path}/setup/key.txt",'r') as fileKey:
             print(Log(OK + "I pick up the key for synchronization"))
             key = fileKey.readline()
             print(Log(OK + "Synchronizing your account settings"))

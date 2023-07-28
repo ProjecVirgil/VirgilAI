@@ -14,6 +14,7 @@ import speech_recognition as sr
 
 from lib.prefix import Log
 from lib.chooseCommand import Sendcommand
+from lib.request import getEvents
 
 
 # init the recognizer
@@ -73,26 +74,36 @@ def cleanBuffer():
         json.dump(dataRes, res)
     print(Log(" cleaned buffer result"), flush=True)
 
+def checkEvent():
+    with open("connect/reminder.txt","w") as f:
+        f.write("0")
+    time.sleep(86400)   
+    #parte allarme
+    
+class EventThread(threading.Thread):
+    def __init__(self):
+        threading.Thread.__init__(self)
+        self.daemon = True
+    def run(self):
+           checkEvent() 
 
 def main():
     print(Log(Fore.GREEN + " THE ASSISTENT IS ONLINE  "), flush=True)
     cleanBuffer()
+    print(Log(" Start check event"), flush=True)
+    t = EventThread()
+    t.start()
     while (True):
-        
         with open("connect/command.json", 'r') as commands:
             command = commands.read()
             if ("spegniti" in command):
                 commandToElaborate = "virgilio spegniti"
             else:
                 commandToElaborate = "".join(command.split(":")[0])[7:-1]
-                
         if ("false" in command and command != None):
             print(Log(f" command processed: {commandToElaborate}"), flush=True)
             #TODO VERIFY IF WIHOUT THIS THE CODE WORK
-            thread_processo = threading.Thread(target=send(commandToElaborate))
-            thread_processo.start()
-            thread_processo.join()
-            
+            send(commandToElaborate)
             print(Log(f" updating the command"), flush=True)
             update_json_value(commandToElaborate, True)
         else:
@@ -100,9 +111,4 @@ def main():
 
 
 if __name__ == "__main__":
-    # Creazione dei thread
-    thread_ascolto = threading.Thread(target=main)
-    # Avvio dei thread
-    thread_ascolto.start()
-    # Attendi che i thread terminino (in realtà, il thread di ascolto continuerà a eseguirsi in background)
-    thread_ascolto.join()
+    main()

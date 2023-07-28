@@ -18,6 +18,8 @@ from lib.theNews import createNews
 from lib.theLight import turn
 from lib.searchyt import playonyt
 
+from lib.manageEvents import addEvents
+
 #function for manage the command
 #Preset command
 
@@ -112,9 +114,12 @@ def Sendcommand(command:str):
         result = createNews(command)
         return result
     elif("play" in command or "riproduci" in command ):
-        playonyt(command)
         print(Log(" pre yt function"))
-        
+        playonyt(command)
+    elif("ricordami" in command or "imposta un promemoria" in command or "mi ricordi" in command):
+        print(Log(" pre create events function"))
+        return addEvents(command)
+        #TODO SEE WHAT MAKE
     elif("luce" in command and (("accendi" in command) or ("spegni" in command) )):
         print(Log(" pre light function"))
         turn(command)

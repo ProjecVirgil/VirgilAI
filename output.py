@@ -1,3 +1,4 @@
+import datetime
 import json
 import time
 import threading
@@ -9,7 +10,7 @@ import pygame
 from lib.sound import create
 from lib.prefix import Log
 from lib.numberConvertToText  import numberToWord
-
+from lib.manageEvents import sendNotify
 
 
 def update_json_value(key, new_value):
@@ -23,9 +24,18 @@ def update_json_value(key, new_value):
     # Sovrascrivi il file JSON con i dati aggiornati
     with open("connect/res.json", 'w') as file:
         json.dump(data, file, indent=4)
+        
 
-
-
+def checkReminder():
+    with open("connect/reminder.txt","r") as f:
+        if(f.read() == "0"):
+            with open("connect/reminder.txt","w") as f:
+                f.write("1")
+            return False
+        else:
+            return True
+    
+    
 def timer(my_time):
     print(Log(" timer function"), flush=True)
     print(Log(" start timer"), flush=True)
@@ -66,7 +76,6 @@ if __name__ == "__main__":
     while(True):
         try:
             res,command,bool = recoverData()
-            
             if(res != None and bool == False):
                 if("spento" in res):
                     print(Log(" shutdown in progress..."), flush=True)
@@ -92,6 +101,12 @@ if __name__ == "__main__":
                         create(res)
                         print(res, flush=True)
                         update_json_value(2, True)
+                        
+                #Cotrollo bit
+                if(not checkReminder()):
+                    result = sendNotify()
+                    time.sleep(10)
+                    create(result)
             else:
                 pass
         except json.decoder.JSONDecodeError:
