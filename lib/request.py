@@ -1,6 +1,7 @@
 import datetime
 import requests
 from colorama import Style,Fore
+
 from lib.prefix import Log  
 
 ALERT = Style.BRIGHT + Fore.YELLOW
@@ -66,4 +67,11 @@ def getEvents():
     events = r.json()
     print(events)
     return events
+
+def deleteEvents():
+    url = f'https://flask-production-bb00.up.railway.app/api/calendar/deleteEvent/{id}/'
+    r = requests.put(url)
+    print(Log(f" reponse: {r.status_code}"))
+    
+
 
