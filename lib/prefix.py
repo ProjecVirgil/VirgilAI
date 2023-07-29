@@ -2,6 +2,8 @@ from colorama import Fore,Back
 import inspect
 import time
 
+# ---- This file make the preset for Log ----
+
 
 def Log(string: str, filepath: str = None):
     callstack = inspect.stack()[1]

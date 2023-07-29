@@ -17,6 +17,8 @@ from lib.chooseCommand import Sendcommand
 from lib.request import deleteEvents
 
 
+# ----- File to elaborate the input  -----
+
 # init the recognizer
 listener = sr.Recognizer()
 
@@ -75,11 +77,12 @@ def cleanBuffer():
     print(Log(" cleaned buffer result"), flush=True)
 
 def checkEvent():
+    print(Log("  update the reminder"),flush=True)
     with open("connect/reminder.txt","w") as f:
         f.write("0")
+    print(Log(" check the old events"),flush=True)
     deleteEvents()
     time.sleep(86400)   
-    #parte allarme
     
 class EventThread(threading.Thread):
     def __init__(self):

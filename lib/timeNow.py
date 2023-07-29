@@ -3,6 +3,7 @@ from lib.numberConvertToText import numberToWord
 import time
 
 
+# ---- This file get the current time ----
 
 
 def now():

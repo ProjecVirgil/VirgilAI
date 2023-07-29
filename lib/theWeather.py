@@ -10,6 +10,8 @@ import pygame
 from lib.numberConvertToText import numberToWord
 from lib.prefix import Log 
 
+# ---- This file get the Meteo of all week ----
+
 
 current_path = os.getcwd()
 file_path = os.path.join(current_path,'setting.json')

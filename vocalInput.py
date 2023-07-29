@@ -7,11 +7,11 @@ import os
 import speech_recognition as sr
 from colorama import Fore,Back
 
-
 from lib.prefix import Log  
 
 
 
+# ----- File to take the input by the microphone -----
 
 
 # init the recognizer
@@ -41,7 +41,7 @@ def copyData(command:str):
     print(Log(f" data sended - {data}"), flush=True)
     with open("connect/command.json", 'w') as comandi:
         json.dump(data, comandi,indent=4)
-
+#Main
 def speech():
         command = ""
         print(Log(" start hearing function"), flush=True)

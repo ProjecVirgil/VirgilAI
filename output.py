@@ -13,6 +13,8 @@ from lib.numberConvertToText  import numberToWord
 from lib.manageEvents import sendNotify
 
 
+# ----- File to manage the result and hunt it as TTS -----
+
 def update_json_value(key, new_value):
     # Apri il file JSON e carica i dati
     with open("connect/res.json", 'r') as file:
@@ -103,7 +105,9 @@ if __name__ == "__main__":
                         update_json_value(2, True)
                         
                 #Cotrollo bit
+                print(Log(" check the reminder"),flush=True)
                 if(not checkReminder()):
+                    print(Log(" send notify for today event"),flush=True)
                     result = sendNotify()
                     time.sleep(10)
                     create(result)

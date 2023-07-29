@@ -9,13 +9,12 @@ import time
 
 from lib.prefix import Log
 
+# ----- File to take the input by the console -----
+
 
 with open('setting.json') as f:
     setting = json.load(f)
-    
     wordActivation = str(setting['wordActivation']).lower()
-
-
 
 def cleanBuffer():
     dataEmpty = {
@@ -34,7 +33,7 @@ def copyData(command:str):
     with open("connect/command.json", 'w') as comandi:
         json.dump(data, comandi,indent=4)
 
-
+#MAIN
 def text():
         command = ""
         print(Log(" start hearing function"), flush=True)

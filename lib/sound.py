@@ -7,6 +7,9 @@ from elevenlabs import generate,save
 
 from lib.prefix import Log
 
+# ---- This file make the TTS ----
+
+
 current_path = os.getcwd()
 file_path = os.path.join(current_path,'audio.mp3')
 

@@ -1,3 +1,7 @@
+# ---- This file convert all the number in word ----
+
+# Because the ElevenLabs TTS read the number only in english
+
 def numberToWord(number: str):
     # Definizione delle parole per i numeri da 0 a 19
     wordsUpToVents = [

@@ -11,8 +11,10 @@ WARNIGN = Style.BRIGHT + Fore.RED
 #TAKE KEY
 fileKey = open("setup/key.txt","r")
 id = fileKey.read()    
- 
-#USER
+
+# ---- File for make the request at the VirgilAPI ----
+
+
 def createUser():
     #CREAZIONE USER
     url = 'https://flask-production-bb00.up.railway.app/api/createUser'

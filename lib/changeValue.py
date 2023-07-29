@@ -7,6 +7,8 @@ from lib.sound import create
 current_path = os.getcwd()
 file_path = os.path.join(current_path,'/asset')
 
+# ---- File for change the volume of Virgil ----
+
 def change(command:str):
     print(Log(" volume function"))
     commandSplitted=command.split(" ")

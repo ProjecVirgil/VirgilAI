@@ -5,6 +5,10 @@ import calendar
 from lib.prefix import Log 
 from lib.numberConvertToText import numberToWord
 
+
+# ---- File for get the week of the day ----
+
+
 #ULTIMA DA LANCIARE
 def recoverDayOfWeek(day:str,month:int = None, year:int = None):
     print(Log(" DayOfWeek function"))

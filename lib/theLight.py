@@ -7,6 +7,9 @@ from meross_iot.manager import MerossManager
 
 from lib.prefix import Log
 
+# ---- This file controll the domotic meross ----
+
+
 #TODO DA RIVEDERE
 current_path = os.getcwd()
 file_path = os.path.join(current_path,'setting.json')

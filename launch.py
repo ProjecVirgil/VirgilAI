@@ -12,6 +12,9 @@ from colorama import Fore,Style
 from lib.request import createUser,getUser,createUserEvent
 from lib.prefix import Log
 
+# ---- This file launch all the file for making Virgilio work  ----
+
+
 '''string = "Thanks for use Virgil"
 print("[")
 for i in range(len(string) + 1):
@@ -35,22 +38,22 @@ else:
 def stampa():
     global commandClean
     delay = 0.1
-    c = 0
+    counter = 0
     for i in bannerMessage:
         subprocess.run(commandClean, shell=True)
         print(Style.BRIGHT+ Fore.MAGENTA + pyfiglet.figlet_format(i),flush=True)
-        if(c == 11 ):
+        if(counter == 11 ):
             delay  = 0.2
-        elif(c == 12):
+        elif(counter == 12):
             delay  = 0.25
-        if(c == 13 ):
+        if(counter == 13 ):
             delay  = 0.3
-        elif(c == 14):
+        elif(counter == 14):
             delay  = 0.35
-        elif(c == 15):
+        elif(counter == 15):
             delay  = 0.4
         time.sleep(delay)
-        c+=1
+        counter+=1
     print(Style.RESET_ALL,flush=True)
     
 def rainbow():
@@ -81,33 +84,33 @@ if __name__ == '__main__':
     current_path = current_path.replace("\ ".strip() , "/")
     
     if(os.path.getsize(f"{current_path}/setup/key.txt") == 0):
-        print(Log(OK + "I am creating your synchronization key"))
+        print(Log(OK + "I am creating your synchronization key"),flush=True)
         key = createUser()
         createUserEvent(key)
-        print(Log(OK + f"KEY {Fore.RED + str(key) + OK} CREATED CORRECTLY IN {current_path}/setup/key.txt "))
+        print(Log(OK + f"KEY {Fore.RED + str(key) + OK} CREATED CORRECTLY IN {current_path}/setup/key.txt "),flush=True)
         with open(f"{current_path}/setup/key.txt",'w') as fileKey:
             fileKey.write(str(key))
-        check = input(Log(ALERT + 'Now download the Virgil app on your Android device, go to the configuration page and enter this code in the appropriate field, once done you will be able to change all Virgil settings remotely, once done press any button: '))
-        print(Log(OK + "Synchronizing your account settings"))
+        check = input(Log(ALERT + 'Now download the Virgil app on your Android device, go to the configuration page and enter this code in the appropriate field, once done you will be able to change all Virgil settings remotely, once done press any button: '),flush=True)
+        print(Log(OK + "Synchronizing your account settings"),flush=True)
         user = getUser()
         with open(f"setting.json",'w') as f:
             json.dump(user,f,indent=4)
         if(user == 'User not found'):
-            print(Log(WARNIGN + "User not found"))
-            print(Log(ALERT + "There is a problem with your key try deleting it and restarting the launcher if the problem persists contact support"))
+            print(Log(WARNIGN + "User not found"),flush=True)
+            print(Log(ALERT + "There is a problem with your key try deleting it and restarting the launcher if the problem persists contact support"),flush=True)
             exit(1)
 
     else:
         with open(f"{current_path}/setup/key.txt",'r') as fileKey:
-            print(Log(OK + "I pick up the key for synchronization"))
+            print(Log(OK + "I pick up the key for synchronization"),flush=True)
             key = fileKey.readline()
-            print(Log(OK + "Synchronizing your account settings"))
+            print(Log(OK + "Synchronizing your account settings"),flush=True)
             user = getUser(key)
         with open(f"setting.json",'w') as f:
             json.dump(user,f,indent=4)
         if(user == 'User not found'):
-            print(Log(WARNIGN + "User not found"))
-            print(Log(ALERT + "There is a problem with your key try deleting it and restarting the launcher if the problem persists contact support"))
+            print(Log(WARNIGN + "User not found"),flush=True)
+            print(Log(ALERT + "There is a problem with your key try deleting it and restarting the launcher if the problem persists contact support"),flush=True)
             exit(1)
 
             
@@ -116,36 +119,36 @@ if __name__ == '__main__':
         
     Valid = False
     while(not Valid):
-        TorS = str(input(Log((ALERT + "You want a text interface (T) or recognise interface(R) T/R: ")))).upper()
-        if(TorS == 'T'):
+        TextOrSpeech = str(input(Log((ALERT + "You want a text interface (T) or recognise interface(R) T/R: ")))).upper()
+        if(TextOrSpeech == 'T'):
             print(Log(OK +"STARTING THE PYTHON FILE"),flush=True)
-            process = ["procces.py","output.py","textInput.py"]
-            for proc in process:
+            processes = ["procces.py","output.py","textInput.py"]
+            for process in processes:
                 if system == 'Windows':
                     # Esecuzione su Windows
-                    subprocess.Popen(['start', 'cmd', '/k', 'python', proc], shell=True)
+                    subprocess.Popen(['start', 'cmd', '/k', 'python', process], shell=True)
                 elif system == 'Darwin':
                     # Esecuzione su macOS
-                    subprocess.Popen(['open', '-a', 'Terminal', 'python', proc], shell=True)
+                    subprocess.Popen(['open', '-a', 'Terminal', 'python', process], shell=True)
                 elif system == 'Linux':
                     # Esecuzione su Linux (utilizzando GNOME Terminal) da FIXARE
-                    subprocess.run('gnome-terminal --  python3 ' + proc,shell=True)                           
+                    subprocess.run('gnome-terminal --  python3 ' + process,shell=True)                           
                 else:
                     print(Log(WARNIGN + "Sistema operativo non riconosciuto. Impossibile avviare il terminale corrispondente."))
                 Valid = True
-        elif(TorS == 'R'):
+        elif(TextOrSpeech == 'R'):
             print(Log(OK +"STARTING THE PYTHON FILE"),flush=True)
-            process = ["procces.py","output.py","vocalInput.py"]
-            for proc in process:
+            processes = ["procces.py","output.py","vocalInput.py"]
+            for process in processes:
                 if system == 'Windows':
                     # Esecuzione su Windows
-                    subprocess.Popen(['start', 'cmd', '/k', 'python', proc], shell=True)
+                    subprocess.Popen(['start', 'cmd', '/k', 'python', process], shell=True)
                 elif system == 'Darwin':
                     # Esecuzione su macOS
-                    subprocess.Popen(['open', '-a', 'Terminal', 'python', proc], shell=True)
+                    subprocess.Popen(['open', '-a', 'Terminal', 'python', process], shell=True)
                 elif system == 'Linux':
                     # Esecuzione su Linux (utilizzando GNOME Terminal) da FIXARE
-                    subprocess.run('gnome-terminal -- python3 ' + proc,shell=True)                       
+                    subprocess.run('gnome-terminal -- python3 ' + process,shell=True)                       
                 else:
                     print(Log(WARNIGN + "Sistema operativo non riconosciuto. Impossibile avviare il terminale corrispondente."),flush=True)
                 Valid = True

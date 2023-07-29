@@ -1,7 +1,12 @@
 from lib.prefix import Log 
 
+
+
+# ---- This file a time in %h %m %s in only second this need for the Timer ----
+
+
 def conversion(command:str):
-    print(Log(" Conversione in corso"))
+    print(Log(" Conversion in progress"))
     command=command.replace(",","")
     command=command.split(" ")
     

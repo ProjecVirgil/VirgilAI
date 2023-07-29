@@ -20,8 +20,8 @@ from lib.searchyt import playonyt
 
 from lib.manageEvents import addEvents
 
-#function for manage the command
-#Preset command
+# ---- File for manage all the preset command ----
+
 
 #Start contest for GPT-3 API
 messages = [

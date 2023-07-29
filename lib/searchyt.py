@@ -1,6 +1,7 @@
 import webbrowser as web
 import requests
 
+# ---- This file is for search music and video via yt ----
 
 
 def getTopic(command:str):

@@ -3,6 +3,9 @@ import random
 from requests_html import HTMLSession
 from lib.prefix import Log
 
+# ---- This file generate a random news by GoogleNews ----
+
+
 urlGenRandom  = "https://news.google.com/rss?oc=5&hl=it&gl=IT&ceid=IT:it"
 urlSpec = "https://news.google.com/rss/search?q={topic}&hl=it&gl=IT&ceid=IT:it"
 
