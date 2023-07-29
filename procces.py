@@ -14,7 +14,7 @@ import speech_recognition as sr
 
 from lib.prefix import Log
 from lib.chooseCommand import Sendcommand
-from lib.request import getEvents
+from lib.request import deleteEvents
 
 
 # init the recognizer
@@ -77,6 +77,7 @@ def cleanBuffer():
 def checkEvent():
     with open("connect/reminder.txt","w") as f:
         f.write("0")
+    deleteEvents()
     time.sleep(86400)   
     #parte allarme
     
