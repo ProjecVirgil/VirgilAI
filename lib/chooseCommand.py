@@ -9,15 +9,14 @@ import pygame
 
 from lib.prefix import Log
 from lib.sound import create
-from lib.timeNow import now
+from lib.time import now,diffTime
 from lib.changeValue import change
 from lib.theWeather import recoverWeather
 from lib.timeConv import conversion
-from lib.calendarRec import getDate
+from lib.calendarRec import getDate,getDiff
 from lib.theNews import createNews
 from lib.theLight import turn
 from lib.searchyt import playonyt
-
 from lib.manageEvents import addEvents
 
 # ---- File for manage all the preset command ----
@@ -64,34 +63,28 @@ def off():
     
 def Sendcommand(command:str):
     pygame.init()
-    
     if(("spegniti" in command) or ("spegnimento" in command)):
         print(Log(" pre shut function"))
         off()
-        
-    elif((("ore" in command) or ("ora" in command)) and (("sono" in command) or ("è" in command))):
+    elif((("ore" in command) or ("ora" in command)) and (("sono" in command) or ("e'" in command))):
         print(Log(" pre time function"))
-        result = now()
-        return result
-
+        response = now()
+        return response
     elif("stop" in command or "fermati" in command or "basta" in command):
         create("va bene mi fermo")
-        
     elif("volume" in command and (("imposta") in command or ("metti" in command) or ("inserisci")) ):
         print(Log(" pre volume function"))
-        result = change(command)
-        if(result == "104"):
+        response = change(command)
+        if(response == "104"):
             print("\nVirgilio: Non puoi dare un valore inferiore a 10, puoi dare solo valori da 100 a 10 ")
             create("Non puoi dare un valore inferiore a 10, puoi dare solo valori da 100 a 10")
             return None
         else:
-            return result
-
-        
+            return response
     elif(("tempo fa" in command) or ("tempo fa a" in command) or ("che tempo fa" in command) or ("che tempo c'è" in command) or (("gradi" in command ) or ("temperatura" in command)) and (("quanti" in command) or ("quanta" in command))):
         print(Log(" pre wheather function"))
-        result = recoverWeather(command)
-        return result
+        response = recoverWeather(command)
+        return response
     elif("timer" in command and (("imposta" in command) or ("metti" in command) or ("crea" in command) )):
         print(Log(" pre timer function"))
         try:
@@ -106,13 +99,20 @@ def Sendcommand(command:str):
         #timer(command)
     elif("che giorno e" in command or "che giorno della settima e" in command):
         print(Log(" pre recovery function"))
-        result=getDate(command)
-        return result
-    
+        response=getDate(command)
+        return response
+    elif("quanto mancano alle" in command or "quanto manca alle" in command):
+         print(Log(" pre difftime function"),flush=True)
+         response = diffTime(command)
+         return response   
+    elif("quanto manca al" in command or "quanti giorni mancano al" in command):
+        print(Log(" pre getDiff function"),flush=True)
+        response = getDiff(command)
+        return response
     elif(( ("news" in command) or ("novita" in command) or ("notizie" in command) ) and (("parlami" in command) or ("dimmi" in command) or ("dammi" in command))):
         print(Log(" pre news function"))
-        result = createNews(command)
-        return result
+        response = createNews(command)
+        return response
     elif("play" in command or "riproduci" in command ):
         print(Log(" pre yt function"))
         playonyt(command)
