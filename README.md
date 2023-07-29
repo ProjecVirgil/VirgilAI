@@ -56,6 +56,7 @@ Virgil or Virgil is a virtual assistant like Alexa or Google Home, but integrate
 - Days of the week 📆
 - Interact with the domotic (Merros device only) 💡
 - Timer 🔂
+- Ask a Virgil to remember your commitments 🗓️
 - and ask **whatever you want** like: Virgilio explain quantum math 🤖
   
 **Is fast to use:**
