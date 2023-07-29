@@ -2,19 +2,17 @@
 
 # Because the ElevenLabs TTS read the number only in english
 
-def numberToWord(number: str):
-    # Definizione delle parole per i numeri da 0 a 19
+def numberToWord(number):
+    number = int(number)
     wordsUpToVents = [
         "zero", "uno", "due", "tre", "quattro", "cinque", "sei", "sette", "otto", "nove",
         "dieci", "undici", "dodici", "tredici", "quattordici", "quindici", "sedici", "diciassette", "diciotto", "diciannove", "venti"
     ]
 
-    # Definizione delle parole per le decine
     wordDozens = [
         "", "", "venti", "trenta", "quaranta", "cinquanta", "sessanta", "settanta", "ottanta", "novanta"
     ]
 
-    # Definizione delle parole per le centinaia
     wordHundreds = [
         "", "cento", "duecento", "trecento", "quattrocento", "cinquecento", "seicento", "settecento", "ottocento", "novecento"
     ]
@@ -45,7 +43,7 @@ def numberToWord(number: str):
                 else:
                     return wordHundreds[hundred] + convert_under_1000(remainder)
 
-    number = int(number)
+    
 
     if 0 <= number <= 9999:
         if number < 1000:
