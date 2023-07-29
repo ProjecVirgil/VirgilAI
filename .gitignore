@@ -7,3 +7,5 @@ setup/key.txt
 .coverage
 htmlcov
 trys
+setting.json
+.pytest_cache
