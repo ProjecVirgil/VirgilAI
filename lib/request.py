@@ -13,7 +13,7 @@ fileKey = open("setup/key.txt","r")
 id = fileKey.read()    
 
 
-URL_BASE = "http://fastapi-production-cd01.up.railway.app" + "/api"
+URL_BASE = "https://fastapi-production-cd01.up.railway.app" + "/api"
 # ---- File for make the request at the VirgilAPI ----
 
 
@@ -59,13 +59,10 @@ def createEvents(event:str,date:str):
         print(Log( "Sorry, but there was an error, the request will not be sent"),flush=True) 
     else:
         url = f'{URL_BASE}/calendar/createEvent/{id}/{date}/'
-        #events = [event]
-        events = { #DA CANCELLARE APPENA RITORNA UP RAILWAY
-            date:[event]
-        }
-
+        events = [event]
+        print(events)
         headers = {'Content-Type': 'application/json'}
-        r = requests.put(url,json=events,headers=headers)
+        r = requests.put(url, json=events,headers=headers)
         print(Log(f" response: {r.status_code}"),flush=True)
 
 ## Get events
