@@ -13,7 +13,7 @@ fileKey = open("setup/key.txt","r")
 id = fileKey.read()    
 
 
-URL_BASE = "https://flask-production-bb00.up.railway.app" + "/api"
+URL_BASE = "http://fastapi-production-cd01.up.railway.app" + "/api"
 # ---- File for make the request at the VirgilAPI ----
 
 
