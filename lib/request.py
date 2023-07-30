@@ -12,12 +12,14 @@ WARNIGN = Style.BRIGHT + Fore.RED
 fileKey = open("setup/key.txt","r")
 id = fileKey.read()    
 
+
+URL_BASE = "https://flask-production-bb00.up.railway.app" + "/api"
 # ---- File for make the request at the VirgilAPI ----
 
 
 def createUser():
     #CREAZIONE USER
-    url = 'https://flask-production-bb00.up.railway.app/api/createUser'
+    url = f'{URL_BASE}/createUser'
     try:
         r = requests.put(url)
         UserCreated = r.json()
@@ -28,7 +30,7 @@ def createUser():
     
     
 def getUser(id):
-    url = f'https://flask-production-bb00.up.railway.app/api/setting/{id}/'
+    url = f'{URL_BASE}/setting/{id}/'
     try:
         r = requests.get(url)
         user = r.json()
@@ -44,7 +46,7 @@ def getUser(id):
 
 ## Create user
 def createUserEvent(key):
-    url = f'https://flask-production-bb00.up.railway.app/api/calendar/createUser/{key}/'
+    url = f'{URL_BASE}/calendar/createUser/{key}/'
     r = requests.put(url)
     if(r.status_code == 201):
         print(Log(" User calendar created correcly"))
@@ -52,18 +54,20 @@ def createUserEvent(key):
         print(Log(" User calendar offline"))
 
 ## Create Event
-def createEvents(events:str,date:str):
-    url = f'https://flask-production-bb00.up.railway.app/api/calendar/createEvent/{id}/{date}/'
-    events = {
-        date : [events]
+def createEvents(event:str,date:str):
+    url = f'{URL_BASE}/calendar/createEvent/{id}/{date}/'
+    #events = [event]
+    events = { #DA CANCELLARE APPENA RITORNA UP RAILWAY
+        date:[event]
     }
+
     headers = {'Content-Type': 'application/json'}
     r = requests.put(url,json=events,headers=headers)
     print(Log(f" response: {r.status_code}"))
 
 ## Get events
 def getEvents():
-    url = f'https://flask-production-bb00.up.railway.app/api/calendar/{id}/'
+    url = f'{URL_BASE}/calendar/{id}/'
     r = requests.get(url)
     print(Log(f" reponse: {r.status_code}"))
     events = r.json()
@@ -71,7 +75,7 @@ def getEvents():
     return events
 
 def deleteEvents():
-    url = f'https://flask-production-bb00.up.railway.app/api/calendar/deleteEvent/{id}/'
+    url = f'{URL_BASE}/calendar/deleteEvent/{id}/'
     r = requests.put(url)
     print(Log(f" reponse: {r.status_code}"))
     
