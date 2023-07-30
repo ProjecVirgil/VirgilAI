@@ -1,8 +1,9 @@
 import datetime
+import time
+import re
+
 from lib.prefix import Log
 from lib.numberConvertToText import numberToWord 
-import time
-
 
 # ---- This file get the current time and more ----
 
@@ -19,8 +20,15 @@ def now():
     return timeString
 
 
+def countNumber(command:str):
+    numberFind = re.findall(r'\d+', command)
+    return len(numberFind)
+
+
+
 def diffTime(command:str):
     currentTime = datetime.datetime.now().time()
+    
     if(" al " in command):
         query=command.split(" al")[1].strip()
     elif(" alle " in command):
@@ -28,11 +36,34 @@ def diffTime(command:str):
     elif(" per le " in command):
         query=command.split(" le")[1].strip()
 
+    numberFind = countNumber(command)
+    print(numberFind)
+    if(numberFind > 1):
+        querySplitted = query.split(" e ")
+        hours = querySplitted[0]
+        minuts = querySplitted[1]
+    else:
+        if("mezza" in command):
+            query = query.replace("mezza","30")
+            querySplitted = query.split(" e ")
+            hours = querySplitted[0]
+            minuts = querySplitted[1]
+        elif("meno un quarto" in command):
+            query = query.replace("meno un quarto", "45")
+            query = query.replace(query.split(" ")[0], str(int(query.split(" ")[0])-1) ) #TAKE THE NUMBER OF THE NOW AND REPLACE IT WITH ITSELF MINUS ONE
+            querySplitted = query.split(" ")
+            hours = querySplitted[0]
+            minuts = querySplitted[1]
+        elif("un quarto" in command):
+            query = query.replace("un quarto","15")
+            querySplitted = query.split(" e ")
+            hours = querySplitted[0]
+            minuts = querySplitted[1]
+        else:
+            minuts = "00"
+            hours = query.split(" ")[-1]
+
         
-    querySplitted = query.split(" e ")
-    
-    hours = querySplitted[0]
-    minuts = querySplitted[1]
     timeString = f"{hours}:{minuts}"
     
     timeFormatted = datetime.datetime.strptime(timeString, "%H:%M").time()
