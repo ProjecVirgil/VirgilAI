@@ -38,24 +38,30 @@ def checkReminder():
             return True
     
     
-def timer(my_time):
-    print(Log(" timer function"), flush=True)
-    print(Log(" start timer"), flush=True)
-    time.sleep(my_time)
-    print(Log(" end timer"), flush=True)
-    create(f"Timer finito")
-    pygame.mixer.music.unload()    
-    pygame.mixer.music.load('asset/timerEndVirgil.mp3') 
-    pygame.mixer.music.play()       
+def timer(my_time,command):
+    if("sveglia" in command):
+        print(Log(" timer function"), flush=True)
+        print(Log(" alarm clock actived"), flush=True)
+        time.sleep(my_time)
+        #ADD ALARM CLOCK
+    else:
+        print(Log(" timer function"), flush=True)
+        print(Log(" start timer"), flush=True)
+        time.sleep(my_time)
+        print(Log(" end timer"), flush=True)
+        pygame.mixer.music.unload()    
+        pygame.mixer.music.load('asset/timerEndVirgil.mp3') 
+        pygame.mixer.music.play()       
     #parte allarme
 class TimerThread(threading.Thread):
-    def __init__(self, interval):
+    def __init__(self, interval,command:str):
         threading.Thread.__init__(self)
         self.interval = interval
         self.daemon = True
+        self.command = command
 
     def run(self):
-           timer(self.interval) 
+           timer(self.interval,self.command) 
    
 
 def recoverData():
@@ -93,10 +99,13 @@ if __name__ == "__main__":
                         pygame.mixer.music.play()       
                         print(Log(f" volume changed correctly to {res*100}% "), flush=True)
                         update_json_value(2, True)
-                elif("timer" in command):
+                elif("timer" in command or "sveglia" in command):
                         print(Log(f" the timer is started see you in {res} second"), flush=True)
-                        create(f"Il timer è partito ci vediamo tra {numberToWord(res)} secondi")
-                        t = TimerThread(int(res))
+                        if("timer" in command):
+                            create(f"Il timer è partito ci vediamo tra {numberToWord(res)} secondi")
+                        else:
+                            create(f"Ho impostato la sveglia") #DA METTERRE COME PRESET
+                        t = TimerThread(int(res),command)
                         t.start()
                         update_json_value(2, True)
                 else:   

@@ -6,8 +6,8 @@ from lib.prefix import Log
 
 
 def conversion(command:str):
-    print(Log(" Conversion in progress"))
-    command=command.replace(",","")
+    print(Log(" Conversion in progress"),flush=True)
+    command=command.replace(","," ")
     command=command.split(" ")
     
     if((("ora" in command) or ("ore" in command)) and (("minuto" in command) or ("minuti" in command)) and (("secondo" in command) or ("secondi" in command)) ):
@@ -41,6 +41,3 @@ def conversion(command:str):
             return int(command[0])*60
         else:
             return int(command[0])
-
-
-
