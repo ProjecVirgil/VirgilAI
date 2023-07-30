@@ -64,16 +64,16 @@ def off():
 def Sendcommand(command:str):
     pygame.init()
     if(("spegniti" in command) or ("spegnimento" in command)):
-        print(Log(" pre shut function"))
+        print(Log(" pre shut function"),flush=True)
         off()
     elif((("ore" in command) or ("ora" in command)) and (("sono" in command) or ("e'" in command))):
-        print(Log(" pre time function"))
+        print(Log(" pre time function"),flush=True)
         response = now()
         return response
     elif("stop" in command or "fermati" in command or "basta" in command):
         create("va bene mi fermo")
     elif("volume" in command and (("imposta") in command or ("metti" in command) or ("inserisci")) ):
-        print(Log(" pre volume function"))
+        print(Log(" pre volume function"),flush=True)
         response = change(command)
         if(response == "104"):
             print("\nVirgilio: Non puoi dare un valore inferiore a 10, puoi dare solo valori da 100 a 10 ")
@@ -82,7 +82,7 @@ def Sendcommand(command:str):
         else:
             return response
     elif(("tempo fa" in command) or ("tempo fa a" in command) or ("che tempo fa" in command) or ("che tempo c'è" in command) or (("gradi" in command ) or ("temperatura" in command)) and (("quanti" in command) or ("quanta" in command))):
-        print(Log(" pre wheather function"))
+        print(Log(" pre wheather function"),flush=True)
         response = recoverWeather(command)
         return response
     elif("timer" in command and (("imposta" in command) or ("metti" in command) or ("crea" in command) )):
@@ -95,10 +95,20 @@ def Sendcommand(command:str):
             print("Please try the command again")
             create("Please try the command again")
             return None
-        
-        #timer(command)
+    elif("sveglia" in command and (("imposta" in command) or ("metti" in command) or ("crea" in command) )):
+        print(Log(" pre alarm function"),flush=True)
+        try:
+            timeDiff = diffTime(command)
+            print(timeDiff)
+            my_time = conversion(timeDiff)
+            print(my_time)
+            return str(my_time)
+        except IndexError:
+            print("Please try the command again",flush=True)
+            create("Please try the command again") # DA STOSTITURE COL PRESET
+            return None
     elif("che giorno e" in command or "che giorno della settima e" in command):
-        print(Log(" pre recovery function"))
+        print(Log(" pre recovery function"),flush=True)
         response=getDate(command)
         return response
     elif("quanto mancano alle" in command or "quanto manca alle" in command):
@@ -110,18 +120,18 @@ def Sendcommand(command:str):
         response = getDiff(command)
         return response
     elif(( ("news" in command) or ("novita" in command) or ("notizie" in command) ) and (("parlami" in command) or ("dimmi" in command) or ("dammi" in command))):
-        print(Log(" pre news function"))
+        print(Log(" pre news function"),flush=True)
         response = createNews(command)
         return response
     elif("play" in command or "riproduci" in command ):
-        print(Log(" pre yt function"))
+        print(Log(" pre yt function"),flush=True)
         playonyt(command)
     elif("ricordami" in command or "imposta un promemoria" in command or "mi ricordi" in command):
-        print(Log(" pre create events function"))
+        print(Log(" pre create events function"),flush=True)
         return addEvents(command)
         #TODO SEE WHAT MAKE
     elif("luce" in command and (("accendi" in command) or ("spegni" in command) )):
-        print(Log(" pre light function"))
+        print(Log(" pre light function"),flush=True)
         turn(command)
     #Question at GPT-3   
     else:
@@ -134,9 +144,9 @@ def Sendcommand(command:str):
             pygame.mixer.music.unload()    
             pygame.mixer.music.load('asset/ErrorOpenAi.mp3') 
             pygame.mixer.music.play()    #TO REG
-        print(Log(" response created"))
-        print(f"\nVirgilio: {new_message['content']}")
-        print(Log(" I am hanging the command..."))
+        print(Log(" response created"),flush=True)
+        print(f"\nVirgilio: {new_message['content']}",flush=True)
+        print(Log(" I am hanging the command..."),flush=True)
         messages.append(new_message)
-        print(Log(" command append"))
+        print(Log(" command append"),flush=True)
         return new_message['content']
