@@ -16,9 +16,9 @@ def sendNotify():
     
     print(Log(" get the events"),flush=True)
     events = getEvents()
-    todayEvents = events[dateFormatted]
-    phrase = "Ciao ti ricordo che oggi hai vari impegni: "
-    if(len(todayEvents) != 0):
+    if(len(events) != 0):
+        todayEvents = events[dateFormatted]
+        phrase = "Ciao ti ricordo che oggi hai vari impegni: "
         for event in todayEvents:
             phrase = phrase + event.strip() + " "
     else:
