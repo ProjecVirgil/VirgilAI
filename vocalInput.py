@@ -59,7 +59,7 @@ def speech():
                     command = unicodedata.normalize('NFKD', command).encode('ascii', 'ignore').decode('ascii')
                     print(Log(f" command rude acquired: {command} "), flush=True)
                     if(wordActivation in command):
-                        print(Log(" command speech correctly "))
+                        print(Log(" command speech correctly "), flush=True)
                         copyData(command)
                         if("spegniti" in command):
                             print(Log(" shutdown in progress..."), flush=True)

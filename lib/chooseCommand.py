@@ -40,7 +40,7 @@ openai.api_key = api_key
 
 #function for communicate whith api GPT-3
 def get_response(messages:list):
-    print(Log(" Sto creando la risposta..."))
+    print(Log(" Sto creando la risposta..."), flush=True)
     response = openai.ChatCompletion.create(
         model = "gpt-3.5-turbo",
         messages=messages,
@@ -51,8 +51,8 @@ def get_response(messages:list):
 
 #shutdown function
 def off():
-    print(Log(" shut function"))
-    print("\nVirgilio: Spegnimento in corso...")
+    print(Log(" shut function"), flush=True)
+    print("\nVirgilio: Spegnimento in corso...", flush=True)
     with open("connect/res.json", 'w') as file:
             data = {
                 "0":["spento","spento",False]
@@ -76,7 +76,7 @@ def Sendcommand(command:str):
         print(Log(" pre volume function"),flush=True)
         response = change(command)
         if(response == "104"):
-            print("\nVirgilio: Non puoi dare un valore inferiore a 10, puoi dare solo valori da 100 a 10 ")
+            print("\nVirgilio: Non puoi dare un valore inferiore a 10, puoi dare solo valori da 100 a 10 ", flush=True)
             create("Non puoi dare un valore inferiore a 10, puoi dare solo valori da 100 a 10")
             return None
         else:
@@ -86,22 +86,22 @@ def Sendcommand(command:str):
         response = recoverWeather(command)
         return response
     elif("timer" in command and (("imposta" in command) or ("metti" in command) or ("crea" in command) )):
-        print(Log(" pre timer function"))
+        print(Log(" pre timer function"), flush=True)
         try:
             command = str(command).split(" di ")[1].strip()
             my_time = conversion(command)
             return str(my_time)
         except IndexError:
-            print("Please try the command again")
-            create("Please try the command again")
+            print("Please try the command again", flush=True)
+            create("Please try the command again") #PRESET
             return None
     elif("sveglia" in command and (("imposta" in command) or ("metti" in command) or ("crea" in command) )):
         print(Log(" pre alarm function"),flush=True)
         try:
             timeDiff = diffTime(command)
-            print(timeDiff)
+            print(Log(f"tempo mancante alla sveglia {timeDiff}"), flush=True)
             my_time = conversion(timeDiff)
-            print(my_time)
+            print(Log(f"tempo mancante alla sveglia in secondi {my_time}"), flush=True)
             return str(my_time)
         except IndexError:
             print("Please try the command again",flush=True)
@@ -115,7 +115,7 @@ def Sendcommand(command:str):
          print(Log(" pre difftime function"),flush=True)
          response = diffTime(command)
          return response   
-    elif("quanto manca al" in command or "quanti giorni mancano al" in command):
+    elif("quanto manca" in command or "quanti giorni mancano al" in command):
         print(Log(" pre getDiff function"),flush=True)
         response = getDiff(command)
         return response
@@ -135,12 +135,12 @@ def Sendcommand(command:str):
         turn(command)
     #Question at GPT-3   
     else:
-        print(Log(" GPT function"))
+        print(Log(" GPT function"), flush=True)
         messages.append({"role": "user", "content": command})
         try:
             new_message = get_response(messages=messages)
         except:
-            print(Log("Unfortunately the key of openAI you entered is invalid or not present if you don't know how to get a key check the guide on github"))
+            print(Log("Unfortunately the key of openAI you entered is invalid or not present if you don't know how to get a key check the guide on github"), flush=True)
             pygame.mixer.music.unload()    
             pygame.mixer.music.load('asset/ErrorOpenAi.mp3') 
             pygame.mixer.music.play()    #TO REG

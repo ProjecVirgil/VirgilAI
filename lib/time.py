@@ -35,9 +35,7 @@ def diffTime(command:str):
         query=command.split(" alle")[1].strip()
     elif(" per le " in command):
         query=command.split(" le")[1].strip()
-
     numberFind = countNumber(command)
-    print(numberFind)
     if(numberFind > 1):
         querySplitted = query.split(" e ")
         hours = querySplitted[0]

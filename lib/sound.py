@@ -35,7 +35,7 @@ def create(text:str):
         )
         save(sound,'audio.mp3')    
     except:
-        print(Log(" Google text to speech has started the cause could be a missing valid key or the end of the elevenLabs plan if you are aware of this you can ignore the message"))
+        print(Log(" Google text to speech has started the cause could be a missing valid key or the end of the elevenLabs plan if you are aware of this you can ignore the message"), flush=True)
         sound = gtts.gTTS(text,lang="it")
         sound.save(file_path)
 

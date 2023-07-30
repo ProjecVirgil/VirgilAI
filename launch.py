@@ -33,7 +33,7 @@ elif system == 'Darwin' or system == 'Linux':
             # Esecuzione su macOS
             commandClean = "clear"
 else:
-    print("Sistema operativo non riconosciuto. Impossibile avviare il terminale corrispondente.")
+    print("Sistema operativo non riconosciuto. Impossibile avviare il terminale corrispondente.", flush=True)
 
 def stampa():
     global commandClean
@@ -115,7 +115,7 @@ if __name__ == '__main__':
 
             
 
-    print(Log(OK + f"KEEP YOUR KEY {key} DON'T GIVE IT TO ANYONE"))
+    print(Log(OK + f"KEEP YOUR KEY {key} DON'T GIVE IT TO ANYONE"), flush=True)
         
     Valid = False
     while(not Valid):
@@ -134,7 +134,7 @@ if __name__ == '__main__':
                     # Esecuzione su Linux (utilizzando GNOME Terminal) da FIXARE
                     subprocess.run('gnome-terminal --  python3 ' + process,shell=True)                           
                 else:
-                    print(Log(WARNIGN + "Sistema operativo non riconosciuto. Impossibile avviare il terminale corrispondente."))
+                    print(Log(WARNIGN + "Sistema operativo non riconosciuto. Impossibile avviare il terminale corrispondente."), flush=True)
                 Valid = True
         elif(TextOrSpeech == 'R'):
             print(Log(OK +"STARTING THE PYTHON FILE"),flush=True)
@@ -157,6 +157,6 @@ if __name__ == '__main__':
             
     print(Log(OK +"PROGRAM IN EXECUTION"), flush=True)
     print("\n")
-    print(Style.BRIGHT +Fore.MAGENTA + pyfiglet.figlet_format("Thanks for using Virgil", font = "digital",justify= "center", width = 110 ))
-    print(Fore.LIGHTMAGENTA_EX + " - credit: @retr0")
-    print(Style.RESET_ALL)
+    print(Style.BRIGHT +Fore.MAGENTA + pyfiglet.figlet_format("Thanks for using Virgil", font = "digital",justify= "center", width = 110 ), flush=True)
+    print(Fore.LIGHTMAGENTA_EX + " - credit: @retr0", flush=True)
+    print(Style.RESET_ALL, flush=True)

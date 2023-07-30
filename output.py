@@ -123,5 +123,5 @@ if __name__ == "__main__":
             else:
                 pass
         except json.decoder.JSONDecodeError:
-            print(Log("Nothing was found in the json"))
+            print(Log("Nothing was found in the json"), flush=True)
             pass

@@ -43,7 +43,7 @@ def splitTheDate(listOfDate:list):
         else:
             return(day,dateCurrente.month,dateCurrente.year)
     else:
-        print(Log(f" result: {listOfDate}")) 
+        print(Log(f" result: {listOfDate}"), flush=True) 
         dateCurrente = datetime.datetime.now()
         day=listOfDate[0]
         month=listOfDate[1]

@@ -63,7 +63,7 @@ def get_coordinates(city_name):
         longitude = location.longitude
         return latitude, longitude
     else:
-        print(f"Coordinate not found for '{city_name}'")
+        print(f"Coordinate not found for '{city_name}'", flush=True)
         return None, None   
     
 #Init the api wheather
@@ -75,15 +75,14 @@ def url(CITY):
 
 def recoverCity(command:str):
     if(' a ' in command):
-        print('ciao')
-        print(Log(" city chosen correctly"))
+        print(Log(" city chosen correctly"), flush=True)
         command=command.split(" a ")[1].strip()
         CITY = command.split(" ")[0]
-        print(Log( " selected city: " + CITY))
+        print(Log( " selected city: " + CITY), flush=True)
         return CITY
     else:
         CITY = city
-        print(Log( " default city selected: " + CITY))
+        print(Log( " default city selected: " + CITY), flush=True)
         return CITY
 
 def get_current_week_days():
@@ -130,9 +129,9 @@ def recoverDay(command:str):
 def recoverWeather(command:str):
     CITY = recoverCity(command)
     day,weekDay = recoverDay(command)
-    print(Log(" weather function"))
+    print(Log(" weather function"), flush=True)
     response = requests.get(url(CITY))
-    print(Log(" Response: " + str(response.status_code)))
+    print(Log(" Response: " + str(response.status_code)), flush=True)
     if(str(response.status_code) != 200):  
         response = response.json()
         if(day != 404):
@@ -148,7 +147,7 @@ def recoverWeather(command:str):
             return "" 
     
     else:       
-        print(Log(" repeat the request or wait a few minutes"))
+        print(Log(" repeat the request or wait a few minutes"), flush=True)
         pygame.mixer.music.unload()    
         pygame.mixer.music.load('asset/ErrorOpenMeteo.mp3') 
         pygame.mixer.music.play()    
