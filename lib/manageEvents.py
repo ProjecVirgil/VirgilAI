@@ -16,12 +16,12 @@ def sendNotify():
     
     print(Log(" get the events"),flush=True)
     events = getEvents()
-    if(len(events) != 0):
+    try:
         todayEvents = events[dateFormatted]
         phrase = "Ciao ti ricordo che oggi hai vari impegni: "
         for event in todayEvents:
             phrase = phrase + event.strip() + " "
-    else:
+    except:
         phrase = "Oggi non hai nessun impegno goditi la giornata"
     print(Log(f" {phrase}"),flush=True)
     return phrase
