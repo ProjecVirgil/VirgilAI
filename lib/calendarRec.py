@@ -11,7 +11,7 @@ from lib.numberConvertToText import numberToWord
 
 #ULTIMA DA LANCIARE
 def recoverDayOfWeek(day:str,month:str,year:str):
-    print(Log(" DayOfWeek function"))
+    print(Log(" DayOfWeek function"), flush=True)
     dayOfWeek= 0
     for week in calendar.monthcalendar(year,month):
         for x in week:
@@ -19,11 +19,16 @@ def recoverDayOfWeek(day:str,month:str,year:str):
                 dayOfWeek=week.index(x)
     week = ["Lunedi","Martedi","Mercoledi","Giovedi","Venerdi","Sabato","Domenica"]
     months=["gennaio","febbraio","marzo","aprile","maggio","giugno","luglio","agosto","settembre","ottobre","novembre","dicembre"]
-    print(f"Il {day} di {months[month-1]} del {year} è {week[dayOfWeek]}")
-    if(day != 1):
-        return f"Il {numberToWord(str(day))} di {months[month-1]} del {numberToWord(str(year))} è {str(week[dayOfWeek])}"
+    print(f"Il {day} di {months[month-1]} del {year} è {week[dayOfWeek]}", flush=True)
+    
+    if((day == None or day == '' ) or month == None or year ==  None ):
+        print("Mi dispiace ma non sono riuscito a capire bene la data puoi rifare la domanda",flush=True)
+        return "Mi dispiace ma non sono riuscito a capire bene la data puoi rifare la domanda" #PRESET
     else:
-        return f"L'{numberToWord(str(day))} di {months[month-1]} del {numberToWord(str(year))} è {str(week[dayOfWeek])}"
+        if(day != 1):
+            return f"Il {numberToWord(str(day))} di {months[month-1]} del {numberToWord(str(year))} è {str(week[dayOfWeek])}"
+        else:
+            return f"L'{numberToWord(str(day))} di {months[month-1]} del {numberToWord(str(year))} è {str(week[dayOfWeek])}"
 
 
 def fillDate(day:str,month:int = None, year:int = None):
@@ -41,18 +46,25 @@ def recoveryDateNumber(command:str):
         day = str(datetime.datetime.now().date()).split('-')[2]
         listOfTime = [int(day),None,None]
         return listOfTime
-    if(" il " in command or "il " in command):         
-        query=command.split("il")[1].strip()
-    elif(" e " in command):
-        query=command.split(" e")[1].strip()
-    elif(" era " in command):
-        query=command.split(" era")[1].strip()
-    elif(" al " in command):
-        query=command.split(" al")[1].strip()
-    elif(" all " in command):
-        query=command.split(" al")[1].strip()
-    else:
-        query=command.split(" e'")[1].strip()
+    try:
+        if(" il " in command or "il " in command):         
+            query=command.split("il")[1].strip()
+        elif(" e " in command):
+            query=command.split(" e")[1].strip()
+        elif(" sara' " in command):
+            query=command.split(" sara'")[1].strip()
+        elif(" sara " in command):
+            query=command.split(" sara")[1].strip()
+        elif(" era " in command):
+            query=command.split(" era")[1].strip()
+        elif(" al " in command):
+            query=command.split(" al")[1].strip()
+        elif(" all " in command):
+            query=command.split(" al")[1].strip()
+        else:
+            query=command.split(" e'")[1].strip()
+    except IndexError:
+        return "ERROR"
                 
     divisionQuery = query.split(" ")
     listOfTime = []
@@ -112,17 +124,17 @@ def splitTheDate(listOfDate:list):
     if(len(listOfDate) != 3):
         for _ in range(3-len(listOfDate)):
                 listOfDate.append(None)
-        print(Log(f" result: {listOfDate}"))  
+        print(Log(f" result: {listOfDate}"), flush=True)  
         day=listOfDate[0]
         month=listOfDate[1]
         year=listOfDate[2]
         return fillDate(day,month,year)
     else:
-        print(Log(f" result: {listOfDate}")) 
+        print(Log(f" result: {listOfDate}"), flush=True)
         day=listOfDate[0]
         month=listOfDate[1]
         year=listOfDate[2]
-        print(Log(" pre dayOfWeek function"))
+        print(Log(" pre dayOfWeek function"), flush=True)
         if(month != None  and year != None ):
             return fillDate(day,month,year) #forse da fixare
         elif(year == None and month != None):
@@ -134,7 +146,9 @@ def splitTheDate(listOfDate:list):
         
 def getDate(command:str):
     dateNumber = recoveryDateNumber(command)
-    print(dateNumber)
+    if(dateNumber == "ERROR"):
+        print("Mi dispiace, c'è stato un errore prova a rifarmi la domanda in maniera piu precisa, specifica il giorno",flush=True)
+        return "Mi dispiace, c'è stato un errore prova a rifarmi la domanda in maniera piu precisa, specifica il giorno" # TEMPLETE
     correctDay,correctMonth,correctYear = splitTheDate(dateNumber)
     result = recoverDayOfWeek(correctDay,correctMonth,correctYear)
     return result            
@@ -143,10 +157,13 @@ def getDate(command:str):
 def getDiff(command:str):
     print(Log(" calculating the days..."),flush=True)
     dateNumber = recoveryDateNumber(command)
+    if(dateNumber == "ERROR"):
+        print("Mi dispiace, c'è stato un errore prova a rifarmi la domanda in maniera piu precisa, specifica il giorno",flush=True)
+        return "Mi dispiace, c'è stato un errore prova a rifarmi la domanda in maniera piu precisa, specifica il giorno" # TEMPLETE
     correctDay,correctMonth,correctYear = splitTheDate(dateNumber)
     correct_date = datetime.datetime(correctYear, correctMonth, correctDay)
     diff_days = (datetime.datetime.now() - correct_date).days
-    print(f" Al {correctDay} {correctMonth} {correctYear} mancano {diff_days * -1}")
+    print(f" Al {correctDay} {correctMonth} {correctYear} mancano {diff_days * -1}", flush=True)
     
     if(diff_days * -1 == 1):
         return f" Al {numberToWord(correctDay)} {numberToWord(correctMonth)} {numberToWord(correctYear)} manca un giorno"
