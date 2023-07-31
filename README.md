@@ -84,6 +84,13 @@ Virgil or Virgil is a virtual assistant like Alexa or Google Home, but integrate
 
 3. When you have all the keys/accounts, save them on any file  
 
+## Notes ❗
+
+* THIS IS NOT OBLIGATORY. 
+> ! Before the user on Linux (preferably, but also on Windows it would not be) create an enviroment with venv ```python -m venv name_enviroment``` after writing ```source name_enviroment/bin/activate```.
+> Now you can install all the dependencies without putting your PC at risk. 
+> To close the environment, just run ```deactivate```.
+
 ## 📖 How to use
 ### When you have installed and downloaded the API you can start using Virgilio 🥡
  1. Open a terminal to the directory ProjectVirgil/setupAndLaunch and run the file with   ```setup.bat``` for windows or run the file bash ```bash setup.sh``` on linux (first make it execuble) instead for the fast start launch   ```python launch.py``` or  ```python3 launch.py```
