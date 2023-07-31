@@ -53,98 +53,103 @@ with open(file_path) as f:
     secrets = json.load(f)
     city = secrets["city"]
     
+  
+class Wheather:
     
-def get_coordinates(city_name):
-    geolocator = Nominatim(user_agent="city_locator")
-    location = geolocator.geocode(city_name)
+    def __init__(self) -> None:
+        pass
     
-    if location:
-        latitude = location.latitude
-        longitude = location.longitude
-        return latitude, longitude
-    else:
-        print(f"Coordinate not found for '{city_name}'", flush=True)
-        return None, None   
-    
-#Init the api wheather
-def url(CITY):
-    latitude, longitude = get_coordinates(CITY)
-    if latitude is not None and longitude is not None:
-        url= f"https://api.open-meteo.com/v1/forecast?latitude={latitude}&longitude={longitude}&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Europe%2FLondon"
-    return url
-
-def recoverCity(command:str):
-    if(' a ' in command):
-        print(Log(" city chosen correctly"), flush=True)
-        command=command.split(" a ")[1].strip()
-        CITY = command.split(" ")[0]
-        print(Log( " selected city: " + CITY), flush=True)
-        return CITY
-    else:
-        CITY = city
-        print(Log( " default city selected: " + CITY), flush=True)
-        return CITY
-
-def get_current_week_days():
-    today = datetime.date.today()
-    days_in_month = calendar.monthrange(today.year, today.month)[1] 
-    week_days = [min(today.day + i, days_in_month) for i in range(7)]
-    repition = 0
-    for i in week_days:
-        if(i == 31):
-            repition += 1
-            if(repition >= 2):
-                week_days[7 - repition + 1] = repition - 1
-    return week_days
-
-def isValidDate(days,command):
-    for i in days:
-        if(str(i) in command):
-            return True
-    return False
-    
-
-def recoverDay(command:str):
-    days = get_current_week_days()
-    if("oggi" in command or str(days[0]) in command ):
-        return 0,days[0]
-    elif("domani" in command or str(days[1]) in command):
-        return 1,days[1]
-    elif("dopo domani" in command or str(days[2]) in command):
-        return 2,days[2]
-    elif(str(days[3]) in command):
-        return 3,days[3]
-    elif(str(days[4]) in command):
-        return 4,days[4]
-    elif(str(days[5]) in command):
-        return 5,days[5]
-    elif(str(days[6]) in command):
-        return 6,days[6]
-    elif(any(s.isdigit() for s in command.split()) ):
-        return 404,days[0]
-    else:
-        return 0,days[0]
-    
-
-def recoverWeather(command:str):
-    CITY = recoverCity(command)
-    day,weekDay = recoverDay(command)
-    print(Log(" weather function"), flush=True)
-    response = requests.get(url(CITY))
-    print(Log(" Response: " + str(response.status_code)), flush=True)
-    if(str(response.status_code) != 200):  
-        response = response.json()
-        if(day != 404):
-            main = response["daily"]["weathercode"][day]
-            max = str(int(response["daily"]["temperature_2m_max"][day]))
-            min =  str(int(response["daily"]["temperature_2m_min"][day]))
-            precipitation = str(response["daily"]["precipitation_probability_max"][day]) 
-            return f"Il meteo a {CITY} per il {numberToWord(str(weekDay))} prevede {WWC[main]} con una massima di {numberToWord(max)} gradi,una minima di {numberToWord(min)} gradi e una probabilita di precipitazione del {numberToWord(precipitation)} percento"
+    def get_coordinates(self,city_name):
+        geolocator = Nominatim(user_agent="city_locator")
+        location = geolocator.geocode(city_name)
+        
+        if location:
+            latitude = location.latitude
+            longitude = location.longitude
+            return latitude, longitude
         else:
-            create(file=True,namefile="ErrorDay")
-            return "" 
-    
-    else:       
-        print(Log(" repeat the request or wait a few minutes"), flush=True)
-        create(file=True,namefile="ErrorMeteo")  
-        return ""
+            print(f"Coordinate not found for '{city_name}'", flush=True)
+            return None, None   
+        
+    #Init the api wheather
+    def getUrl(self,CITY):
+        latitude, longitude = self.get_coordinates(CITY)
+        if latitude is not None and longitude is not None:
+            url= f"https://api.open-meteo.com/v1/forecast?latitude={latitude}&longitude={longitude}&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Europe%2FLondon"
+        return url
+
+    def recoverCity(self,command:str):
+        if(' a ' in command):
+            print(Log(" city chosen correctly"), flush=True)
+            command=command.split(" a ")[1].strip()
+            CITY = command.split(" ")[0]
+            print(Log( " selected city: " + CITY), flush=True)
+            return CITY
+        else:
+            CITY = city
+            print(Log( " default city selected: " + CITY), flush=True)
+            return CITY
+
+    def get_current_week_days(self):
+        today = datetime.date.today()
+        days_in_month = calendar.monthrange(today.year, today.month)[1] 
+        week_days = [min(today.day + i, days_in_month) for i in range(7)]
+        repition = 0
+        for i in week_days:
+            if(i == 31):
+                repition += 1
+                if(repition >= 2):
+                    week_days[7 - repition + 1] = repition - 1
+        return week_days
+
+    def isValidDate(self,days,command):
+        for i in days:
+            if(str(i) in command):
+                return True
+        return False
+        
+
+    def recoverDay(self,command:str):
+        days = self.get_current_week_days()
+        if("oggi" in command or str(days[0]) in command ):
+            return 0,days[0]
+        elif("domani" in command or str(days[1]) in command):
+            return 1,days[1]
+        elif("dopo domani" in command or str(days[2]) in command):
+            return 2,days[2]
+        elif(str(days[3]) in command):
+            return 3,days[3]
+        elif(str(days[4]) in command):
+            return 4,days[4]
+        elif(str(days[5]) in command):
+            return 5,days[5]
+        elif(str(days[6]) in command):
+            return 6,days[6]
+        elif(any(s.isdigit() for s in command.split()) ):
+            return 404,days[0]
+        else:
+            return 0,days[0]
+        
+
+    def recoverWeather(self,command:str):
+        CITY = self.recoverCity(command)
+        day,weekDay = self.recoverDay(command)
+        print(Log(" weather function"), flush=True)
+        response = requests.get(self.getUrl(CITY))
+        print(Log(" Response: " + str(response.status_code)), flush=True)
+        if(str(response.status_code) != 200):  
+            response = response.json()
+            if(day != 404):
+                main = response["daily"]["weathercode"][day]
+                max = str(int(response["daily"]["temperature_2m_max"][day]))
+                min =  str(int(response["daily"]["temperature_2m_min"][day]))
+                precipitation = str(response["daily"]["precipitation_probability_max"][day]) 
+                return f"Il meteo a {CITY} per il {numberToWord(str(weekDay))} prevede {WWC[main]} con una massima di {numberToWord(max)} gradi,una minima di {numberToWord(min)} gradi e una probabilita di precipitazione del {numberToWord(precipitation)} percento"
+            else:
+                create(file=True,namefile="ErrorDay")
+                return "" 
+        
+        else:       
+            print(Log(" repeat the request or wait a few minutes"), flush=True)
+            create(file=True,namefile="ErrorMeteo")  
+            return ""

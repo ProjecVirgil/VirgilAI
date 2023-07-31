@@ -82,7 +82,7 @@ def out():
             if(res != None and bool == False):
                 if("spento" in res):
                     print(Log(" shutdown in progress..."), flush=True)
-                    create(file=True,namefile="FinisciVirgil")
+                    create(file=True,namefile="FinishVirgil")
                  
                     time.sleep(2)
                     sys.exit(0)

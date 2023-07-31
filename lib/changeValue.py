@@ -11,7 +11,7 @@ from lib.time import countNumber
 class VolumeMixer:
     #settings_path = f"{current_path}/setting.json"
 
-    def __init__(self, sValue: int = 100):
+    def __init__(self, sValue:int = 100):
         self.__volume = sValue
         self.current_path = os.getcwd()
         self.file_path = os.path.join(self.current_path, '/asset')

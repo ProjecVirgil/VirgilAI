@@ -9,10 +9,9 @@ import pygame
 
 from lib.prefix import Log
 from lib.sound import create
-from lib.time import now,diffTime
+from lib.time import now,diffTime,conversion
 from lib.changeValue import change
 from lib.theWeather import recoverWeather
-from lib.timeConv import conversion
 from lib.calendarRec import getDate,getDiff
 from lib.theNews import createNews
 from lib.theLight import turn
