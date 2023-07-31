@@ -2,7 +2,6 @@ import datetime
 import json
 import time
 import threading
-import os
 import sys
 
 import pygame
@@ -49,9 +48,8 @@ def timer(my_time,command):
         print(Log(" start timer"), flush=True)
         time.sleep(my_time)
         print(Log(" end timer"), flush=True)
-        pygame.mixer.music.unload()    
-        pygame.mixer.music.load('asset/timerEndVirgil.mp3') 
-        pygame.mixer.music.play()       
+        create(file=True,namefile="timerEndVirgil")
+    
     #parte allarme
 class TimerThread(threading.Thread):
     def __init__(self, interval,command:str):
@@ -76,9 +74,8 @@ def recoverData():
 if __name__ == "__main__":
     pygame.init()
     #init e setup the tts
-    pygame.mixer.music.unload()    
-    pygame.mixer.music.load('asset/EntryVirgil.mp3')   
-    pygame.mixer.music.play()
+    create(file=True,namefile="EntryVirgil")
+
 
     time.sleep(3)
     while(True):
@@ -87,9 +84,8 @@ if __name__ == "__main__":
             if(res != None and bool == False):
                 if("spento" in res):
                     print(Log(" shutdown in progress..."), flush=True)
-                    pygame.mixer.music.unload()    
-                    pygame.mixer.music.load('asset/FinishVirgil.mp3') 
-                    pygame.mixer.music.play()                  
+                    create(file=True,namefile="FinisciVirgil")
+                 
                     time.sleep(2)
                     sys.exit(0)
                 if("volume" in command):

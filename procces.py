@@ -7,9 +7,7 @@ import calendar
 import datetime
 import threading
 
-import requests
-import openai
-from colorama import Fore, Back
+from colorama import Fore
 import speech_recognition as sr
 
 from lib.prefix import Log

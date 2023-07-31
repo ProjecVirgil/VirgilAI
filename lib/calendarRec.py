@@ -1,7 +1,8 @@
 import datetime
 import calendar
-import calendar
 
+
+from lib.sound import create
 from lib.prefix import Log 
 from lib.numberConvertToText import numberToWord
 
@@ -23,7 +24,7 @@ def recoverDayOfWeek(day:str,month:str,year:str):
     
     if((day == None or day == '' ) or month == None or year ==  None ):
         print("Mi dispiace ma non sono riuscito a capire bene la data puoi rifare la domanda",flush=True)
-        return "Mi dispiace ma non sono riuscito a capire bene la data puoi rifare la domanda" #PRESET
+        create(file=True,namefile="ErrorDate")
     else:
         if(day != 1):
             return f"Il {numberToWord(str(day))} di {months[month-1]} del {numberToWord(str(year))} è {str(week[dayOfWeek])}"
@@ -148,7 +149,9 @@ def getDate(command:str):
     dateNumber = recoveryDateNumber(command)
     if(dateNumber == "ERROR"):
         print("Mi dispiace, c'è stato un errore prova a rifarmi la domanda in maniera piu precisa, specifica il giorno",flush=True)
-        return "Mi dispiace, c'è stato un errore prova a rifarmi la domanda in maniera piu precisa, specifica il giorno" # TEMPLETE
+        create(file=True,namefile="ErrorRecoveryDay")
+        return None
+
     correctDay,correctMonth,correctYear = splitTheDate(dateNumber)
     result = recoverDayOfWeek(correctDay,correctMonth,correctYear)
     return result            
@@ -159,7 +162,8 @@ def getDiff(command:str):
     dateNumber = recoveryDateNumber(command)
     if(dateNumber == "ERROR"):
         print("Mi dispiace, c'è stato un errore prova a rifarmi la domanda in maniera piu precisa, specifica il giorno",flush=True)
-        return "Mi dispiace, c'è stato un errore prova a rifarmi la domanda in maniera piu precisa, specifica il giorno" # TEMPLETE
+        create(file=True,namefile="ErrorRecoveryDay")
+        return None
     correctDay,correctMonth,correctYear = splitTheDate(dateNumber)
     correct_date = datetime.datetime(correctYear, correctMonth, correctDay)
     diff_days = (datetime.datetime.now() - correct_date).days

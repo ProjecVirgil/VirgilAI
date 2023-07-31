@@ -5,7 +5,6 @@ import unicodedata
 import os
 
 import speech_recognition as sr
-from colorama import Fore,Back
 
 from lib.prefix import Log  
 

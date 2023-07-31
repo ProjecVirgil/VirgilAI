@@ -16,7 +16,7 @@ from lib.timeConv import conversion
 from lib.calendarRec import getDate,getDiff
 from lib.theNews import createNews
 from lib.theLight import turn
-from lib.searchyt import playonyt
+from lib.searchyt import playMusic
 from lib.manageEvents import addEvents
 
 # ---- File for manage all the preset command ----
@@ -71,7 +71,8 @@ def Sendcommand(command:str):
         response = now()
         return response
     elif("stop" in command or "fermati" in command or "basta" in command):
-        create("va bene mi fermo")
+            print(Log(" Audio stopped succesflully"),flush=True)
+            pygame.mixer.music.stop()
     elif("volume" in command and (("imposta") in command or ("metti" in command) or ("inserisci")) ):
         print(Log(" pre volume function"),flush=True)
         response = change(command)
@@ -125,7 +126,7 @@ def Sendcommand(command:str):
         return response
     elif("play" in command or "riproduci" in command ):
         print(Log(" pre yt function"),flush=True)
-        playonyt(command)
+        playMusic(command)
     elif("ricordami" in command or "imposta un promemoria" in command or "mi ricordi" in command):
         print(Log(" pre create events function"),flush=True)
         return addEvents(command)
@@ -141,9 +142,8 @@ def Sendcommand(command:str):
             new_message = get_response(messages=messages)
         except:
             print(Log("Unfortunately the key of openAI you entered is invalid or not present if you don't know how to get a key check the guide on github"), flush=True)
-            pygame.mixer.music.unload()    
-            pygame.mixer.music.load('asset/ErrorOpenAi.mp3') 
-            pygame.mixer.music.play()    #TO REG
+            create(file=True,namefile="ErrorOpenAi")
+            return#TO REG
         print(Log(" response created"),flush=True)
         print(f"\nVirgilio: {new_message['content']}",flush=True)
         print(Log(" I am hanging the command..."),flush=True)

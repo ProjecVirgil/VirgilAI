@@ -5,10 +5,10 @@ import json
 import datetime
 
 from geopy.geocoders import Nominatim
-import pygame
 
 from lib.numberConvertToText import numberToWord
-from lib.prefix import Log 
+from lib.prefix import Log
+from lib.sound import create 
 
 # ---- This file get the Meteo of all week ----
 
@@ -141,14 +141,10 @@ def recoverWeather(command:str):
             precipitation = str(response["daily"]["precipitation_probability_max"][day]) 
             return f"Il meteo a {CITY} per il {numberToWord(str(weekDay))} prevede {WWC[main]} con una massima di {numberToWord(max)} gradi,una minima di {numberToWord(min)} gradi e una probabilita di precipitazione del {numberToWord(precipitation)} percento"
         else:
-            pygame.mixer.music.unload()    
-            pygame.mixer.music.load('asset/ErrorDay.mp3') 
-            pygame.mixer.music.play()
+            create(file=True,namefile="ErrorDay")
             return "" 
     
     else:       
         print(Log(" repeat the request or wait a few minutes"), flush=True)
-        pygame.mixer.music.unload()    
-        pygame.mixer.music.load('asset/ErrorOpenMeteo.mp3') 
-        pygame.mixer.music.play()    
+        create(file=True,namefile="ErrorMeteo")  
         return ""

@@ -1,7 +1,5 @@
 from lib.prefix import Log 
 
-
-
 # ---- This file a time in %h %m %s in only second this need for the Timer ----
 
 

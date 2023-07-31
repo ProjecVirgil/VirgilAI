@@ -1,10 +1,7 @@
 import time
 import json
 import sys
-import os
 import unicodedata
-
-from colorama import Fore,Back
 import time
 
 from lib.prefix import Log
