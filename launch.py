@@ -12,10 +12,10 @@ from colorama import Fore,Style
 
 from lib.request import MakeRequests
 from lib.logger import Logger   
-from output import out
-from textInput import text
-from vocalInput import speech
-from procces import main
+from output import Output
+from textInput import TextInput
+from vocalInput import VocalInput
+from procces import Process
 
 # ---- This file launch all the file for making Virgilio work  ----
 
@@ -126,15 +126,15 @@ if __name__ == '__main__':
     while(not Valid):
         TextOrSpeech = str(input(Logger.Log((ALERT + "You want a text interface (T) or recognise interface(R) T/R: ")))).upper()
         if(TextOrSpeech == 'T'):
-            thread_1 = threading.Thread(target=text)
-            thread_2 = threading.Thread(target=main)
-            thread_3 = threading.Thread(target=out)
+            thread_1 = threading.Thread(target=TextInput.text)
+            thread_2 = threading.Thread(target=Process.main)
+            thread_3 = threading.Thread(target=Output.out)
             break
         elif(TextOrSpeech == 'R'):
             # Creazione di tre oggetti thread
-            thread_1 = threading.Thread(target=speech)
-            thread_2 = threading.Thread(target=main)
-            thread_3 = threading.Thread(target=out)
+            thread_1 = threading.Thread(target=VocalInput.speech)
+            thread_2 = threading.Thread(target=Process.main)
+            thread_3 = threading.Thread(target=Output.out)
             break
         else:
             print(Logger.LogLog(WARNIGN + " Select a valid choice please"),flush=True)

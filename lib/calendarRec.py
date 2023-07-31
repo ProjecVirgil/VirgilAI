@@ -4,7 +4,7 @@ import calendar
 
 from lib.sound import Audio
 from lib.logger import Logger
-from lib.numberConvertToText import numberToWord
+from lib.utils import Utils
 
 
 # ---- File for get the week of the day ----
@@ -27,9 +27,9 @@ def recoverDayOfWeek(day:str,month:str,year:str):
         Audio.create(file=True,namefile="ErrorDate")
     else:
         if(day != 1):
-            return f"Il {numberToWord(str(day))} di {months[month-1]} del {numberToWord(str(year))} è {str(week[dayOfWeek])}"
+            return f"Il {Utils.numberToWord(str(day))} di {months[month-1]} del {Utils.numberToWord(str(year))} è {str(week[dayOfWeek])}"
         else:
-            return f"L'{numberToWord(str(day))} di {months[month-1]} del {numberToWord(str(year))} è {str(week[dayOfWeek])}"
+            return f"L'{Utils.numberToWord(str(day))} di {months[month-1]} del {Utils.numberToWord(str(year))} è {str(week[dayOfWeek])}"
 
 
 def fillDate(day:str,month:int = None, year:int = None):
@@ -170,9 +170,9 @@ def getDiff(command:str):
     print(f" Al {correctDay} {correctMonth} {correctYear} mancano {diff_days * -1}", flush=True)
     
     if(diff_days * -1 == 1):
-        return f" Al {numberToWord(correctDay)} {numberToWord(correctMonth)} {numberToWord(correctYear)} manca un giorno"
+        return f" Al {Utils.numberToWord(correctDay)} {Utils.numberToWord(correctMonth)} {Utils.numberToWord(correctYear)} manca un giorno"
     else:
-        return f" Al {numberToWord(correctDay)}, {numberToWord(correctMonth)}, {numberToWord(correctYear)} mancano {numberToWord(diff_days * -1)} giorni"
+        return f" Al {Utils.numberToWord(correctDay)}, {Utils.numberToWord(correctMonth)}, {Utils.numberToWord(correctYear)} mancano {Utils.numberToWord(diff_days * -1)} giorni"
 
     
     

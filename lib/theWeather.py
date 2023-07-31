@@ -6,7 +6,7 @@ import datetime
 
 from geopy.geocoders import Nominatim
 
-from lib.numberConvertToText import numberToWord
+from lib.utils import Utils
 from lib.logger import Logger
 from lib.sound import Audio 
 
@@ -144,7 +144,7 @@ class Wheather:
                 max = str(int(response["daily"]["temperature_2m_max"][day]))
                 min =  str(int(response["daily"]["temperature_2m_min"][day]))
                 precipitation = str(response["daily"]["precipitation_probability_max"][day]) 
-                return f"Il meteo a {CITY} per il {numberToWord(str(weekDay))} prevede {WWC[main]} con una massima di {numberToWord(max)} gradi,una minima di {numberToWord(min)} gradi e una probabilita di precipitazione del {numberToWord(precipitation)} percento"
+                return f"Il meteo a {CITY} per il {Utils.numberToWord(str(weekDay))} prevede {WWC[main]} con una massima di {Utils.numberToWord(max)} gradi,una minima di {Utils.numberToWord(min)} gradi e una probabilita di precipitazione del {Utils.numberToWord(precipitation)} percento"
             else:
                 Audio.create(file=True,namefile="ErrorDay")
                 return "" 

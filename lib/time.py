@@ -3,7 +3,7 @@ import time
 import re
 
 from lib.logger import Logger
-from lib.numberConvertToText import numberToWord 
+from lib.utils import Utils 
 
 # ---- This file get the current time and more ----
 
@@ -22,25 +22,11 @@ class Time:
         timeTuple = time.localtime() # get struct_time
         hours = time.strftime('%H',timeTuple)
         minuts = time.strftime('%M',timeTuple)
-        hoursToWords = numberToWord(hours)
-        minutsToWords = numberToWord(minuts)
+        hoursToWords = Utils.numberToWord(hours)
+        minutsToWords = Utils.numberToWord(minuts)
         timeString = (f"Sono le {str(hoursToWords)} e {str(minutsToWords)}  minuti")
         print(time.strftime("\nVirgilio: Sono le %H e %M minuti", timeTuple),flush=True)
         return timeString
-
-    #da spostare in utility
-    def countNumber(self,command:str):
-        """_summary_
-
-        Args:
-            command (str): _description_
-
-        Returns:
-            _type_: _description_
-        """
-        numberFind = re.findall(r'\d+', command)
-        return len(numberFind)
-
 
 
     def diffTime(self,command:str):
@@ -103,8 +89,8 @@ class Time:
             print(Logger.LogLog( f" tempo calcolato per la sveglia {calculatedHours},{calculatedMinuts},{calculateSeconds}"),flush=True)
             return f"{calculatedHours} ore {calculatedMinuts} minuti e {calculateSeconds} secondi"
         else:
-            print(Logger.LogLog(f" alle {numberToWord(hours)} e {numberToWord(minuts)} mancano {numberToWord(calculatedHours)} {numberToWord(calculatedMinuts)} {numberToWord(calculateSeconds)}"),flush=True)
-            return f" alle {numberToWord(hours)} e {numberToWord(minuts)} mancano {numberToWord(calculatedHours)} ore {numberToWord(calculatedMinuts)} minuti e {numberToWord(calculateSeconds)} secondi"
+            print(Logger.LogLog(f" alle {Utils.numberToWord(hours)} e {Utils.numberToWord(minuts)} mancano {Utils.numberToWord(calculatedHours)} {Utils.numberToWord(calculatedMinuts)} {Utils.numberToWord(calculateSeconds)}"),flush=True)
+            return f" alle {Utils.numberToWord(hours)} e {Utils.numberToWord(minuts)} mancano {Utils.numberToWord(calculatedHours)} ore {Utils.numberToWord(calculatedMinuts)} minuti e {Utils.numberToWord(calculateSeconds)} secondi"
         # Stampa la differenza in un formato più comprensibile
         
 
