@@ -71,13 +71,11 @@ def recoverData():
         return res,command,bool
     
     
-if __name__ == "__main__":
+def out():
     pygame.init()
     #init e setup the tts
     create(file=True,namefile="EntryVirgil")
-
-
-    time.sleep(3)
+    time.sleep(5)
     while(True):
         try:
             res,command,bool = recoverData()
@@ -121,3 +119,4 @@ if __name__ == "__main__":
         except json.decoder.JSONDecodeError:
             print(Log("Nothing was found in the json"), flush=True)
             pass
+   

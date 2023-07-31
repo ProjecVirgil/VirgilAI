@@ -1,3 +1,4 @@
+import threading
 import time
 import string as st
 import subprocess
@@ -11,6 +12,10 @@ from colorama import Fore,Style
 
 from lib.request import createUser,getUser,createUserEvent
 from lib.prefix import Log
+from output import out
+from textInput import text
+from vocalInput import speech
+from procces import main
 
 # ---- This file launch all the file for making Virgilio work  ----
 
@@ -90,7 +95,7 @@ if __name__ == '__main__':
         print(Log(OK + f"KEY {Fore.RED + str(key) + OK} CREATED CORRECTLY IN {current_path}/setup/key.txt "),flush=True)
         with open(f"{current_path}/setup/key.txt",'w') as fileKey:
             fileKey.write(str(key))
-        check = input(Log(ALERT + 'Now download the Virgil app on your Android device, go to the configuration page and enter this code in the appropriate field, once done you will be able to change all Virgil settings remotely, once done press any button: '),flush=True)
+        check = input(Log(ALERT + 'Now download the Virgil app on your Android device, go to the configuration page and enter this code in the appropriate field, once done you will be able to change all Virgil settings remotely, once done press any button: '))
         print(Log(OK + "Synchronizing your account settings"),flush=True)
         user = getUser()
         with open(f"setting.json",'w') as f:
@@ -121,39 +126,23 @@ if __name__ == '__main__':
     while(not Valid):
         TextOrSpeech = str(input(Log((ALERT + "You want a text interface (T) or recognise interface(R) T/R: ")))).upper()
         if(TextOrSpeech == 'T'):
-            print(Log(OK +"STARTING THE PYTHON FILE"),flush=True)
-            processes = ["procces.py","output.py","textInput.py"]
-            for process in processes:
-                if system == 'Windows':
-                    # Esecuzione su Windows
-                    subprocess.Popen(['start', 'cmd', '/k', 'python', process], shell=True)
-                elif system == 'Darwin':
-                    # Esecuzione su macOS
-                    subprocess.Popen(['open', '-a', 'Terminal', 'python', process], shell=True)
-                elif system == 'Linux':
-                    # Esecuzione su Linux (utilizzando GNOME Terminal) da FIXARE
-                    subprocess.run('gnome-terminal --  python3 ' + process,shell=True)                           
-                else:
-                    print(Log(WARNIGN + "Sistema operativo non riconosciuto. Impossibile avviare il terminale corrispondente."), flush=True)
-                Valid = True
+            thread_1 = threading.Thread(target=text)
+            thread_2 = threading.Thread(target=main)
+            thread_3 = threading.Thread(target=out)
+            break
         elif(TextOrSpeech == 'R'):
-            print(Log(OK +"STARTING THE PYTHON FILE"),flush=True)
-            processes = ["procces.py","output.py","vocalInput.py"]
-            for process in processes:
-                if system == 'Windows':
-                    # Esecuzione su Windows
-                    subprocess.Popen(['start', 'cmd', '/k', 'python', process], shell=True)
-                elif system == 'Darwin':
-                    # Esecuzione su macOS
-                    subprocess.Popen(['open', '-a', 'Terminal', 'python', process], shell=True)
-                elif system == 'Linux':
-                    # Esecuzione su Linux (utilizzando GNOME Terminal) da FIXARE
-                    subprocess.run('gnome-terminal -- python3 ' + process,shell=True)                       
-                else:
-                    print(Log(WARNIGN + "Sistema operativo non riconosciuto. Impossibile avviare il terminale corrispondente."),flush=True)
-                Valid = True
+            # Creazione di tre oggetti thread
+            thread_1 = threading.Thread(target=speech)
+            thread_2 = threading.Thread(target=main)
+            thread_3 = threading.Thread(target=out)
+            break
         else:
-            print(Log(WARNIGN + "Select a valid choice please"),flush=True)
+            print(Log(WARNIGN + " Select a valid choice please"),flush=True)
+    
+                # Avvio dei thread
+    thread_1.start()
+    thread_2.start()
+    thread_3.start()
             
     print(Log(OK +"PROGRAM IN EXECUTION"), flush=True)
     print("\n")

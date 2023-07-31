@@ -110,7 +110,3 @@ def main():
             update_json_value(commandToElaborate, True)
         else:
             pass
-
-
-if __name__ == "__main__":
-    main()
