@@ -11,7 +11,7 @@ import re
 class Utils:
     
     def __init__(self) -> None:
-        pass
+        self.logger = Logger()
     
     def countNumber(self,command:str):
         """_summary_
@@ -29,9 +29,9 @@ class Utils:
     def cleanBuffer(self,dataEmpty:dict,fileName:str):
         with open(f"connect/{fileName}", 'w') as commands:
                 json.dump(dataEmpty,commands)
-        print(Logger.Log(" cleaned buffer command"), flush=True)
+        print(self.logger.Log(" cleaned buffer command"), flush=True)
     
-    def numberToWord(number):
+    def numberToWord(self,number):
         number = int(number)
         wordsUpToVents = [
             "zero", "uno", "due", "tre", "quattro", "cinque", "sei", "sette", "otto", "nove",

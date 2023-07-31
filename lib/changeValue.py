@@ -3,7 +3,7 @@ import json
 
 from lib.logger import Logger
 from lib.sound import Audio
-from lib.time import Time
+from lib.utils import Utils
 
 # ---- File for change the volume of Virgil ----
 
@@ -15,21 +15,25 @@ class VolumeMixer:
         self.__volume = sValue
         self.current_path = os.getcwd()
         self.file_path = os.path.join(self.current_path, '/asset')
+        self.logger = Logger()
+        self.audio = Audio()
+        self.utils  = Utils()
+        
 
     def getVolume(self):
         return self.__volume
 
     def change(self, command:str):
-        print(Logger.Log(" volume function"), flush=True)
+        print(self.logger.Log(" volume function"), flush=True)
         commandSplit = command.split(" ")
         self.__volume = commandSplit[-1]
 
-        if(Time.countNumber(self.__volume) >= 1):
+        if(self.utils.countNumber(self.__volume) >= 1):
             if( "%" in self.__volume):
                 self.__volume = self.__volume[:-1]
         else:
             print(Logger.Log("Mi dispiace c'è stato un errore richiedimi il comando con un valore adeguato"), flush=True)
-            Audio.create(file=True,namefile="ErrorValueVirgil")
+            self.audio.create(file=True,namefile="ErrorValueVirgil")
             return "104"
 
 
@@ -41,5 +45,5 @@ class VolumeMixer:
                 return str(self.__volume)
         except ValueError:
             print(Logger.Log("Mi dispiace c'è stato un errore richiedimi il comando con un valore adeguato"), flush=True)
-            Audio.create(file=True,namefile="ErrorValueVirgil")
+            self.audio.create(file=True,namefile="ErrorValueVirgil")
             return "104"

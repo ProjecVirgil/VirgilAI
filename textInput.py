@@ -22,33 +22,35 @@ class TextInput:
         self.dataEmpy = {
             None:True
             }
+        self.logger = Logger()
+        self.utils = Utils()
         
         
     def copyData(self,command:str):
         data = {
             command:False
             }
-        print(Logger.Log(f" data sended - {data}"), flush=True)
+        print(self.logger.Log(f" data sended - {data}"), flush=True)
         with open("connect/command.json", 'w') as comandi:
             json.dump(data, comandi,indent=4)
 
     #MAIN
     def text(self):
             command = ""
-            print(Logger.Log(" start hearing function"), flush=True)
-            Utils.cleanBuffer(dataEmpty=self.dataEmpy,fileName="command")
+            print(self.logger.Log(" start hearing function"), flush=True)
+            self.utils.cleanBuffer(dataEmpty=self.dataEmpy,fileName="command")
             status  = True
             while(status):
                 command = str(input("Enter the command or question you need (use key word Virgilio): ")).lower()
                 command = unicodedata.normalize('NFKD', command).encode('ascii', 'ignore').decode('ascii')
                 if(wordActivation in command):
-                    print(Logger.Log(" command speech correctly "), flush=True)
+                    print(self.logger.Log(" command speech correctly "), flush=True)
                     self.copyData(command)
                     if("spegniti" in command):
-                        print(Logger.Log(" shutdown in progress"), flush=True)
+                        print(self.logger.Log(" shutdown in progress"), flush=True)
                         status = False
                 else:
-                    print(Logger.Log("Remember to use the key word"), flush=True)
+                    print(self.logger.Log("Remember to use the key word"), flush=True)
                     pass
             sys.exit()
                 

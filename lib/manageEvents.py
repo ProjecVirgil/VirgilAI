@@ -6,16 +6,20 @@ from lib.request import MakeRequests
 
 # ----- Calendar Event Function -----
 class EventScheduler:
+    
     def __init__(self):
-        print(Logger.Log("fetching date"), flush=True)
+        self.logger = Logger()
+        self.request_maker = MakeRequests()
+        
+        print(self.logger.Log("fetching date"), flush=True)
         self.currentDate = datetime.datetime.now().date()
         self.formattedDate = self.currentDate.strftime("%d-%m-%Y")
         self.formattedDate = self.formattedDate.split("-")
         self.formattedDate[1] = self.formattedDate[1].replace("0", "")
         self.formattedDate = "-".join(self.formattedDate)
-        print(Logger.Log("fetching events"), flush=True)
-        self.events = MakeRequests.getEvents()
-
+        print(self.logger.Log("fetching events"), flush=True)
+        
+        
     def sendNotify(self):
         try:
             todayEvents = self.events[self.formattedDate]
@@ -24,7 +28,7 @@ class EventScheduler:
                 phrase = phrase + event.strip() + " "
         except:
             phrase = "Oggi non hai nessun impegno goditi la giornata"
-        print(Logger.Log(f" {phrase}"), flush=True)
+        print(self.logger.Log(f" {phrase}"), flush=True)
         return phrase
 
     #CREATE EVENT
@@ -32,7 +36,7 @@ class EventScheduler:
         if(len(listOfDate) != 3):
             for _ in range(3-len(listOfDate)):
                     listOfDate.append(None)
-            print(Logger.Log(f" result: {listOfDate}"),flush=True)
+            print(self.logger.Log(f" result: {listOfDate}"),flush=True)
             day = listOfDate[0]
             month = listOfDate[1]
             year = listOfDate[2]
@@ -43,11 +47,11 @@ class EventScheduler:
             else:
                 return(day,self.currentDate.month,self.currentDate.year)
         else:
-            print(Logger.Log(f" result: {listOfDate}"), flush=True)
+            print(self.logger.Log(f" result: {listOfDate}"), flush=True)
             day=listOfDate[0]
             month=listOfDate[1]
             year=listOfDate[2]
-            print(Logger.Log(" pre dayOfWeek function"),flush=True)
+            print(self.logger.Log(" pre dayOfWeek function"),flush=True)
             if(month != None  and year != None ):
                 return(day,month,year)
             elif(year == None and month != None):
@@ -129,10 +133,10 @@ class EventScheduler:
 
 # Main function
 def addEvents(self,command:str):
-    print(Logger.Log(" i will create event"),flush=True)
+    print(self.logger.Log(" i will create event"),flush=True)
     date = self.recoverDate(command)
-    print(Logger.Log(" i recov the date"),flush=True)
+    print(self.logger.Log(" i recov the date"),flush=True)
     event = command.split("ho")[1]
-    print(Logger.Log(" send the request"),flush=True)
+    print(self.logger.Log(" send the request"),flush=True)
     MakeRequests.createEvents(event,date)
     return "Promemoria creato con successo"

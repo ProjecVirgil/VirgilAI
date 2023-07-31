@@ -9,7 +9,10 @@ from lib.utils import Utils
 
 class Time:
     def __init__(self):
-        pass
+        self.logger = Logger()
+        self.utils  = Utils()
+        
+
         
         
     def now(self):
@@ -18,12 +21,12 @@ class Time:
         Returns:
             _type_: _description_
         """
-        print(Logger.Log(" Time function"),flush=True)
+        print(self.logger.Log(" Time function"),flush=True)
         timeTuple = time.localtime() # get struct_time
         hours = time.strftime('%H',timeTuple)
         minuts = time.strftime('%M',timeTuple)
-        hoursToWords = Utils.numberToWord(hours)
-        minutsToWords = Utils.numberToWord(minuts)
+        hoursToWords = self.utils.numberToWord(hours)
+        minutsToWords = self.utils.numberToWord(minuts)
         timeString = (f"Sono le {str(hoursToWords)} e {str(minutsToWords)}  minuti")
         print(time.strftime("\nVirgilio: Sono le %H e %M minuti", timeTuple),flush=True)
         return timeString
@@ -86,11 +89,11 @@ class Time:
         calculatedMinuts, calculateSeconds = divmod(rest, 60)
 
         if("sveglia" in command):
-            print(Logger.LogLog( f" tempo calcolato per la sveglia {calculatedHours},{calculatedMinuts},{calculateSeconds}"),flush=True)
+            print(self.logger.LogLog( f" tempo calcolato per la sveglia {calculatedHours},{calculatedMinuts},{calculateSeconds}"),flush=True)
             return f"{calculatedHours} ore {calculatedMinuts} minuti e {calculateSeconds} secondi"
         else:
-            print(Logger.LogLog(f" alle {Utils.numberToWord(hours)} e {Utils.numberToWord(minuts)} mancano {Utils.numberToWord(calculatedHours)} {Utils.numberToWord(calculatedMinuts)} {Utils.numberToWord(calculateSeconds)}"),flush=True)
-            return f" alle {Utils.numberToWord(hours)} e {Utils.numberToWord(minuts)} mancano {Utils.numberToWord(calculatedHours)} ore {Utils.numberToWord(calculatedMinuts)} minuti e {Utils.numberToWord(calculateSeconds)} secondi"
+            print(self.logger.LogLog(f" alle {self.utils.numberToWord(hours)} e {self.utils.numberToWord(minuts)} mancano {self.utils.numberToWord(calculatedHours)} {self.utils.numberToWord(calculatedMinuts)} {self.utils.numberToWord(calculateSeconds)}"),flush=True)
+            return f" alle {self.utils.numberToWord(hours)} e {self.utils.numberToWord(minuts)} mancano {self.utils.numberToWord(calculatedHours)} ore {self.utils.numberToWord(calculatedMinuts)} minuti e {self.utils.numberToWord(calculateSeconds)} secondi"
         # Stampa la differenza in un formato più comprensibile
         
 
@@ -103,7 +106,7 @@ class Time:
         Returns:
             _type_: _description_
         """
-        print(Logger.LogLog(" Conversion in progress"),flush=True)
+        print(self.logger.LogLog(" Conversion in progress"),flush=True)
         command=command.replace(","," ")
         command=command.split(" ")
         

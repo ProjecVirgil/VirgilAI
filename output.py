@@ -19,6 +19,14 @@ from lib.manageEvents import EventScheduler
 
 class Output:
     
+    def __init__(self) -> None:
+        
+        self.event_scheduler = EventScheduler()
+        self.logger = Logger()
+        self.utils = Utils()
+        self.audio = Audio()
+        
+    
     def update_json_value(self,key, new_value):
         # Apri il file JSON e carica i dati
         with open("connect/res.json", 'r') as file:
@@ -44,16 +52,16 @@ class Output:
         
     def timer(self,my_time,command):
         if("sveglia" in command):
-            print(Logger.Log(" timer function"), flush=True)
-            print(Logger.Log(" alarm clock actived"), flush=True)
+            print(self.logger.Log(" timer function"), flush=True)
+            print(self.logger.Log(" alarm clock actived"), flush=True)
             time.sleep(my_time)
             #ADD ALARM CLOCK
         else:
-            print(Logger.Log(" timer function"), flush=True)
-            print(Logger.Log(" start timer"), flush=True)
+            print(self.logger.Log(" timer function"), flush=True)
+            print(self.logger.Log(" start timer"), flush=True)
             time.sleep(my_time)
-            print(Logger.Log(" end timer"), flush=True)
-            Audio.create(file=True,namefile="timerEndVirgil")
+            print(self.logger.Log(" end timer"), flush=True)
+            self.audio.create(file=True,namefile="timerEndVirgil")
         
         #parte allarme
     class TimerThread(threading.Thread):
@@ -79,15 +87,15 @@ class Output:
     def out(self,):
         pygame.init()
         #init e setup the tts
-        Audio.create(file=True,namefile="EntryVirgil")
+        self.audio.create(file=True,namefile="EntryVirgil")
         time.sleep(5)
         while(True):
             try:
                 res,command,bool = self.recoverData()
                 if(res != None and bool == False):
                     if("spento" in res):
-                        print(Logger.Log(" shutdown in progress..."), flush=True)
-                        Audio.create(file=True,namefile="FinishVirgil")
+                        print(self.logger.Log(" shutdown in progress..."), flush=True)
+                        self.audio.create(file=True,namefile="FinishVirgil")
                     
                         time.sleep(2)
                         sys.exit(0)
@@ -96,32 +104,32 @@ class Output:
                             pygame.mixer.music.unload()    
                             pygame.mixer.music.load('asset/bipEffectCheckSound.mp3')
                             pygame.mixer.music.play()       
-                            print(Logger.Log(f" volume changed correctly to {res*100}% "), flush=True)
+                            print(self.logger.Log(f" volume changed correctly to {res*100}% "), flush=True)
                             self.update_json_value(2, True)
                     elif("timer" in command or "sveglia" in command):
-                            print(Logger.Log(f" the timer is started see you in {res} second"), flush=True)
+                            print(self.logger.Log(f" the timer is started see you in {res} second"), flush=True)
                             if("timer" in command):
-                                Audio.create(f"Il timer è partito ci vediamo tra {Utils.numberToWord(res)} secondi")
+                                self.audio.create(f"Il timer è partito ci vediamo tra {self.utils.numberToWord(res)} secondi")
                             else:
-                                Audio.create(f"Ho impostato la sveglia") #DA METTERRE COME PRESET
+                                self.audio.create(f"Ho impostato la sveglia") #DA METTERRE COME PRESET
                             t = self.TimerThread(int(res),command)
                             t.start()
                             self.update_json_value(2, True)
                     else:   
-                            Audio.create(res)
+                            self.audio.create(res)
                             print(res, flush=True)
                             self.update_json_value(2, True)
                             
                     #Cotrollo bit
-                    print(Logger.Log(" check the reminder"),flush=True)
+                    print(self.logger.Log(" check the reminder"),flush=True)
                     if(not self.checkReminder()):
-                        print(Logger.Log(" send notify for today event"),flush=True)
-                        result = EventScheduler.sendNotify()
+                        print(self.logger.Log(" send notify for today event"),flush=True)
+                        result = self.event_scheduler.sendNotify()
                         time.sleep(10)
-                        Audio.create(result)
+                        self.audio.create(result)
                 else:
                     pass
             except json.decoder.JSONDecodeError:
-                print(Logger.Log("Nothing was found in the json"), flush=True)
+                print(self.logger.Log("Nothing was found in the json"), flush=True)
                 pass
    

@@ -57,8 +57,9 @@ with open(file_path) as f:
 class Wheather:
     
     def __init__(self) -> None:
-        pass
-    
+        self.logger = Logger()
+        self.audio = Audio()
+        self.utils  = Utils()
     def get_coordinates(self,city_name):
         geolocator = Nominatim(user_agent="city_locator")
         location = geolocator.geocode(city_name)
@@ -80,14 +81,14 @@ class Wheather:
 
     def recoverCity(self,command:str):
         if(' a ' in command):
-            print(Logger.Log(" city chosen correctly"), flush=True)
+            print(self.logger.Log(" city chosen correctly"), flush=True)
             command=command.split(" a ")[1].strip()
             CITY = command.split(" ")[0]
-            print(Logger.Log( " selected city: " + CITY), flush=True)
+            print(self.logger.Log( " selected city: " + CITY), flush=True)
             return CITY
         else:
             CITY = city
-            print(Logger.Log( " default city selected: " + CITY), flush=True)
+            print(self.logger.Log( " default city selected: " + CITY), flush=True)
             return CITY
 
     def get_current_week_days(self):
@@ -134,9 +135,9 @@ class Wheather:
     def recoverWeather(self,command:str):
         CITY = self.recoverCity(command)
         day,weekDay = self.recoverDay(command)
-        print(Logger.Log(" weather function"), flush=True)
+        print(self.logger.Log(" weather function"), flush=True)
         response = requests.get(self.getUrl(CITY))
-        print(Logger.Log(" Response: " + str(response.status_code)), flush=True)
+        print(self.logger.Log(" Response: " + str(response.status_code)), flush=True)
         if(str(response.status_code) != 200):  
             response = response.json()
             if(day != 404):
@@ -144,12 +145,12 @@ class Wheather:
                 max = str(int(response["daily"]["temperature_2m_max"][day]))
                 min =  str(int(response["daily"]["temperature_2m_min"][day]))
                 precipitation = str(response["daily"]["precipitation_probability_max"][day]) 
-                return f"Il meteo a {CITY} per il {Utils.numberToWord(str(weekDay))} prevede {WWC[main]} con una massima di {Utils.numberToWord(max)} gradi,una minima di {Utils.numberToWord(min)} gradi e una probabilita di precipitazione del {Utils.numberToWord(precipitation)} percento"
+                return f"Il meteo a {CITY} per il {self.utils.numberToWord(str(weekDay))} prevede {WWC[main]} con una massima di {self.utils.numberToWord(max)} gradi,una minima di {self.utils.numberToWord(min)} gradi e una probabilita di precipitazione del {self.utils.numberToWord(precipitation)} percento"
             else:
-                Audio.create(file=True,namefile="ErrorDay")
+                self.audio.create(file=True,namefile="ErrorDay")
                 return "" 
         
         else:       
-            print(Logger.Log(" repeat the request or wait a few minutes"), flush=True)
-            Audio.create(file=True,namefile="ErrorMeteo")  
+            print(self.logger.Log(" repeat the request or wait a few minutes"), flush=True)
+            self.audio.create(file=True,namefile="ErrorMeteo")  
             return ""

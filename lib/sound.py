@@ -23,6 +23,7 @@ with open(current_path + '/setting.json') as f:
 class Audio:
     
     def __init__(self):
+        self.logger = Logger()
         pass
 
     def create(self,text:str = "",file:bool = False,namefile:str = ""):
@@ -45,7 +46,7 @@ class Audio:
                     )
                     save(sound,'audio.mp3')    
                 except:
-                    print(Logger.Log(" Google text to speech has started the cause could be a missing valid key or the end of the elevenLabs plan if you are aware of this you can ignore the message"), flush=True)
+                    print(self.logger.Log(" Google text to speech has started the cause could be a missing valid key or the end of the elevenLabs plan if you are aware of this you can ignore the message"), flush=True)
                     sound = gtts.gTTS(text,lang="it")
                     sound.save(file_path)
 

@@ -12,30 +12,29 @@ fileKey = open("setup/key.txt","r")
 id = fileKey.read()    
 
 
-URL_BASE = "https://fastapi-production-cd01.up.railway.app" + "/api"
 # ---- File for make the request at the VirgilAPI ----
 
 class MakeRequests:
     
-    def __init__(self,id,event:str=None,date:str = None) -> None:
-        self.date  = date
-        self.event = event
-        self.id = id
+    def __init__(self) -> None:
+        self.logger = Logger()
+        self.URL_BASE = "https://fastapi-production-cd01.up.railway.app" + "/api"
+    
     
     def createUser(self):
         #CREAZIONE USER
-        url = f'{URL_BASE}/createUser'
+        url = f'{self.URL_BASE}/createUser'
         try:
             r = requests.put(url)
             UserCreated = r.json()
-            print(Logger.Log( "User created Correctly"),flush=True)
+            print(self.logger.Log( "User created Correctly"),flush=True)
             return UserCreated["userId"]
         except:
-            print(Logger.Log(WARNIGN + "I can't stable connection check the network"),flush=True)
+            print(self.logger.Log(WARNIGN + "I can't stable connection check the network"),flush=True)
         
         
     def getUser(self,id):
-        url = f'{URL_BASE}/setting/{id}/'
+        url = f'{self.URL_BASE}/setting/{id}/'
         try:
             r = requests.get(url)
             user = r.json()
@@ -44,44 +43,44 @@ class MakeRequests:
             else:    
                 return user['setting']
         except:
-            print(Logger.Log(WARNIGN + "I can't stable connection check the network"),flush=True)
+            print(self.logger.Log(WARNIGN + "I can't stable connection check the network"),flush=True)
         
         
     #CALENDAR
 
     ## Create user
     def createUserEvent(self,id):
-        url = f'{URL_BASE}/calendar/createUser/{id}/'
+        url = f'{self.URL_BASE}/calendar/createUser/{id}/'
         r = requests.put(url)
         if(r.status_code == 201):
-            print(Logger.Log(" User calendar created correcly"),flush=True)
+            print(self.logger.Log(" User calendar created correcly"),flush=True)
         else:
-            print(Logger.Log(" User calendar offline"),flush=True)
+            print(self.logger.Log(" User calendar offline"),flush=True)
 
     ## Create Event
     def createEvents(self,event:str,date:str):
         if("None" in date):
-            print(Logger.Log( "Sorry, but there was an error, the request will not be sent"),flush=True) 
+            print(self.logger.Log( "Sorry, but there was an error, the request will not be sent"),flush=True) 
         else:
-            url = f'{URL_BASE}/calendar/createEvent/{id}/{date}/'
+            url = f'{self.URL_BASE}/calendar/createEvent/{id}/{date}/'
             events = [event]
             print(events)
             headers = {'Content-Type': 'application/json'}
             r = requests.put(url, json=events,headers=headers)
-            print(Logger.Log(f" response: {r.status_code}"),flush=True)
+            print(self.logger.Log(f" response: {r.status_code}"),flush=True)
 
     ## Get events
     def getEvents(self):
-        url = f'{URL_BASE}/calendar/{id}/'
+        url = f'{self.URL_BASE}/calendar/{id}/'
         r = requests.get(url)
-        print(Logger.Log(f" reponse: {r.status_code}"),flush=True)
+        print(self.logger.Log(f" reponse: {r.status_code}"),flush=True)
         events = r.json()
         return events
 
     def deleteEvents(self):
-        url = f'{URL_BASE}/calendar/deleteEvent/{id}/'
+        url = f'{self.URL_BASE}/calendar/deleteEvent/{id}/'
         r = requests.put(url)
-        print(Logger.Log(f" reponse: {r.status_code}"),flush=True)
+        print(self.logger.Log(f" reponse: {r.status_code}"),flush=True)
         
 
 

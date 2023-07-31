@@ -11,7 +11,7 @@ from colorama import Fore
 import speech_recognition as sr
 
 from lib.logger import Logger
-from lib.chooseCommand import Sendcommand
+from lib.chooseCommand import CommandSelection
 from lib.request import MakeRequests
 from lib.utils import Utils
 
@@ -33,11 +33,15 @@ with open('setting.json') as f:
 
 class Process:
     
-    
     def __init__(self) -> None:
         self.dataEmpy = {
         "0": [None, None, True]
         }
+        self.request_maker = MakeRequests()
+        self.logger = Logger()
+        self.utils = Utils()
+        self.command_selection = CommandSelection()
+        
     
     def update_json_value(self,key, new_value):
         # Apri il file JSON e carica i dati
@@ -47,7 +51,7 @@ class Process:
         if key in data:
             data[key] = new_value
         else:
-            print(Logger.Log(f"The key '{key}' dont exist in the file JSON."), flush=True)
+            print(self.logger.Log(f"The key '{key}' dont exist in the file JSON."), flush=True)
         # Sovrascrivi il file JSON con i dati aggiornati
         with open("connect/command.json", 'w') as file:
             json.dump(data, file, indent=4)
@@ -57,7 +61,7 @@ class Process:
         # Cancellation element before the key word
         try:
             command = str(command).split(f"{wordActivation} ")[1].strip()
-            print(Logger.Log(f" command processed: {command} "), flush=True)
+            print(self.logger.Log(f" command processed: {command} "), flush=True)
             return command
         except IndexError:
             #If command contain only virgil word
@@ -66,10 +70,10 @@ class Process:
 
     def send(self,command: str):
         command = self.cleanCommand(command)
-        print(Logger.Log(" command heard correctly"), flush=True)
-        print(Logger.Log(" command in process"), flush=True)
-        res = Sendcommand(command)
-        print(Logger.Log(" command processed updating file with the result"), flush=True)
+        print(self.logger.Log(" command heard correctly"), flush=True)
+        print(self.logger.Log(" command in process"), flush=True)
+        res = self.command_selection.Sendcommand(command)
+        print(self.logger.Log(" command processed updating file with the result"), flush=True)
         with open("connect/res.json", 'w') as file:
             data = {
                 "0": [command, res, False]
@@ -77,26 +81,28 @@ class Process:
             json.dump(data, file, indent=4)
 
 
-    def checkEvent(self):
-        print(Logger.Log("  update the reminder"),flush=True)
-        with open("connect/reminder.txt","w") as f:
-            f.write("0")
-        print(Logger.Log(" check the old events"),flush=True)
-        MakeRequests.deleteEvents()
-        time.sleep(86400)   
-        
     class EventThread(threading.Thread):
-        def __init__(self):
+        def __init__(self, logger):
             threading.Thread.__init__(self)
             self.daemon = True
+            self.logger = logger
+
+        def checkEvent(self):
+            print(self.logger.Log("  update the reminder"), flush=True)
+            with open("connect/reminder.txt", "w") as f:
+                f.write("0")
+            print(self.logger.Log(" check the old events"), flush=True)
+            # Esegue altre operazioni specifiche della funzione checkEvent()
+            # Nota che qui puoi utilizzare self.logger per accedere al logger
+
         def run(self):
-            self.checkEvent() 
+            self.checkEvent()
 
     def main(self,):
-        print(Logger.Log(Fore.GREEN + " THE ASSISTENT IS ONLINE  "), flush=True)
-        Utils.cleanBuffer(dataEmpty=self.dataEmpy,fileName="res")
-        print(Logger.Log(" Start check event"), flush=True)
-        t = self.EventThread()
+        print(self.logger.Log(Fore.GREEN + " THE ASSISTENT IS ONLINE  "), flush=True)
+        self.utils.cleanBuffer(dataEmpty=self.dataEmpy,fileName="res")
+        print(self.logger.Log(" Start check event"), flush=True)
+        t = self.EventThread(self.logger)
         t.start()
         while (True):
             with open("connect/command.json", 'r') as commands:
@@ -106,10 +112,10 @@ class Process:
                 else:
                     commandToElaborate = "".join(command.split(":")[0])[7:-1]
             if ("false" in command and command != None):
-                print(Logger.Log(f" command processed: {commandToElaborate}"), flush=True)
+                print(self.logger.Log(f" command processed: {commandToElaborate}"), flush=True)
                 #TODO VERIFY IF WIHOUT THIS THE CODE WORK
                 self.send(commandToElaborate)
-                print(Logger.Log(f" updating the command"), flush=True)
+                print(self.logger.Log(f" updating the command"), flush=True)
                 self.update_json_value(commandToElaborate, True)
             else:
                 pass

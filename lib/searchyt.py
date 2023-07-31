@@ -10,7 +10,7 @@ from lib.logger import Logger
 class MediaPlayer:
     
     def __init__(self) -> None:
-        pass
+        self.logger  = Logger()
         
     def getTopic(self,command:str):
         try:
@@ -67,9 +67,9 @@ class MediaPlayer:
             
     def playMusic(self,command):
         topic = self.getTopic(command)
-        print(Logger.Log(f" topic selected: {topic}"),flush=True)
+        print(self.logger.Log(f" topic selected: {topic}"),flush=True)
         URL = self.searchOnYt(topic)
-        print(Logger.Log(f" url gererater: {URL}"),flush=True)
+        print(self.logger.Log(f" url gererater: {URL}"),flush=True)
         self.download(URL)
         self.play()
         
