@@ -82,7 +82,9 @@ Virgil or Virgil is a virtual assistant like Alexa or Google Home, but integrate
    - API for ElevenLabs
        This API is not required, but if you want a [BEST EXPERIENCE](https://elevenlabs.io/speech-synthesis) i raccomand you to get
 
-3. When you have all the keys/accounts, save them on any file  
+3. When you have all the keys/accounts, save them on any file
+
+   
 
 ## Notes ❗
 
