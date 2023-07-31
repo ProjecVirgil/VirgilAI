@@ -2,20 +2,15 @@ import datetime
 import time
 import re
 
-from lib.prefix import Log
+from lib.logger import Logger
 from lib.numberConvertToText import numberToWord 
 
 # ---- This file get the current time and more ----
 
-
-
-
-
 class Time:
-    
-        
     def __init__(self):
         pass
+        
         
     def now(self):
         """_summary_
@@ -23,7 +18,7 @@ class Time:
         Returns:
             _type_: _description_
         """
-        print(Log(" Time function"),flush=True)
+        print(Logger.Log(" Time function"),flush=True)
         timeTuple = time.localtime() # get struct_time
         hours = time.strftime('%H',timeTuple)
         minuts = time.strftime('%M',timeTuple)
@@ -33,7 +28,7 @@ class Time:
         print(time.strftime("\nVirgilio: Sono le %H e %M minuti", timeTuple),flush=True)
         return timeString
 
-
+    #da spostare in utility
     def countNumber(self,command:str):
         """_summary_
 
@@ -105,10 +100,10 @@ class Time:
         calculatedMinuts, calculateSeconds = divmod(rest, 60)
 
         if("sveglia" in command):
-            print(Log( f" tempo calcolato per la sveglia {calculatedHours},{calculatedMinuts},{calculateSeconds}"),flush=True)
+            print(Logger.LogLog( f" tempo calcolato per la sveglia {calculatedHours},{calculatedMinuts},{calculateSeconds}"),flush=True)
             return f"{calculatedHours} ore {calculatedMinuts} minuti e {calculateSeconds} secondi"
         else:
-            print(Log(f" alle {numberToWord(hours)} e {numberToWord(minuts)} mancano {numberToWord(calculatedHours)} {numberToWord(calculatedMinuts)} {numberToWord(calculateSeconds)}"),flush=True)
+            print(Logger.LogLog(f" alle {numberToWord(hours)} e {numberToWord(minuts)} mancano {numberToWord(calculatedHours)} {numberToWord(calculatedMinuts)} {numberToWord(calculateSeconds)}"),flush=True)
             return f" alle {numberToWord(hours)} e {numberToWord(minuts)} mancano {numberToWord(calculatedHours)} ore {numberToWord(calculatedMinuts)} minuti e {numberToWord(calculateSeconds)} secondi"
         # Stampa la differenza in un formato più comprensibile
         
@@ -122,7 +117,7 @@ class Time:
         Returns:
             _type_: _description_
         """
-        print(Log(" Conversion in progress"),flush=True)
+        print(Logger.LogLog(" Conversion in progress"),flush=True)
         command=command.replace(","," ")
         command=command.split(" ")
         

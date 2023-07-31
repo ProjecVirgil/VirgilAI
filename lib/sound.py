@@ -5,7 +5,7 @@ import json
 
 from elevenlabs import generate,save
 
-from lib.prefix import Log
+from lib.logger import Logger
 
 # ---- This file make the TTS ----
 
@@ -45,7 +45,7 @@ class Audio:
                     )
                     save(sound,'audio.mp3')    
                 except:
-                    print(Log(" Google text to speech has started the cause could be a missing valid key or the end of the elevenLabs plan if you are aware of this you can ignore the message"), flush=True)
+                    print(Logger.Log(" Google text to speech has started the cause could be a missing valid key or the end of the elevenLabs plan if you are aware of this you can ignore the message"), flush=True)
                     sound = gtts.gTTS(text,lang="it")
                     sound.save(file_path)
 

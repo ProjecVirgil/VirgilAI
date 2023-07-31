@@ -10,9 +10,9 @@ import threading
 from colorama import Fore
 import speech_recognition as sr
 
-from lib.prefix import Log
+from lib.logger import Logger
 from lib.chooseCommand import Sendcommand
-from lib.request import deleteEvents
+from lib.request import MakeRequests
 
 
 # ----- File to elaborate the input  -----
@@ -36,7 +36,7 @@ def update_json_value(key, new_value):
     if key in data:
         data[key] = new_value
     else:
-        print(Log(f"The key '{key}' dont exist in the file JSON."), flush=True)
+        print(Logger.Log(f"The key '{key}' dont exist in the file JSON."), flush=True)
     # Sovrascrivi il file JSON con i dati aggiornati
     with open("connect/command.json", 'w') as file:
         json.dump(data, file, indent=4)
@@ -46,7 +46,7 @@ def cleanCommand(command):
     # Cancellation element before the key word
     try:
         command = str(command).split(f"{wordActivation} ")[1].strip()
-        print(Log(f" command processed: {command} "), flush=True)
+        print(Logger.Log(f" command processed: {command} "), flush=True)
         return command
     except IndexError:
         #If command contain only virgil word
@@ -55,10 +55,10 @@ def cleanCommand(command):
 
 def send(command: str):
     command = cleanCommand(command)
-    print(Log(" command heard correctly"), flush=True)
-    print(Log(" command in process"), flush=True)
+    print(Logger.Log(" command heard correctly"), flush=True)
+    print(Logger.Log(" command in process"), flush=True)
     res = Sendcommand(command)
-    print(Log(" command processed updating file with the result"), flush=True)
+    print(Logger.Log(" command processed updating file with the result"), flush=True)
     with open("connect/res.json", 'w') as file:
         data = {
             "0": [command, res, False]
@@ -72,14 +72,14 @@ def cleanBuffer():
     }
     with open("connect/res.json", 'w') as res:
         json.dump(dataRes, res)
-    print(Log(" cleaned buffer result"), flush=True)
+    print(Logger.Log(" cleaned buffer result"), flush=True)
 
 def checkEvent():
-    print(Log("  update the reminder"),flush=True)
+    print(Logger.Log("  update the reminder"),flush=True)
     with open("connect/reminder.txt","w") as f:
         f.write("0")
-    print(Log(" check the old events"),flush=True)
-    deleteEvents()
+    print(Logger.Log(" check the old events"),flush=True)
+    MakeRequests.deleteEvents()
     time.sleep(86400)   
     
 class EventThread(threading.Thread):
@@ -90,9 +90,9 @@ class EventThread(threading.Thread):
            checkEvent() 
 
 def main():
-    print(Log(Fore.GREEN + " THE ASSISTENT IS ONLINE  "), flush=True)
+    print(Logger.Log(Fore.GREEN + " THE ASSISTENT IS ONLINE  "), flush=True)
     cleanBuffer()
-    print(Log(" Start check event"), flush=True)
+    print(Logger.Log(" Start check event"), flush=True)
     t = EventThread()
     t.start()
     while (True):
@@ -103,10 +103,10 @@ def main():
             else:
                 commandToElaborate = "".join(command.split(":")[0])[7:-1]
         if ("false" in command and command != None):
-            print(Log(f" command processed: {commandToElaborate}"), flush=True)
+            print(Logger.Log(f" command processed: {commandToElaborate}"), flush=True)
             #TODO VERIFY IF WIHOUT THIS THE CODE WORK
             send(commandToElaborate)
-            print(Log(f" updating the command"), flush=True)
+            print(Logger.Log(f" updating the command"), flush=True)
             update_json_value(commandToElaborate, True)
         else:
             pass

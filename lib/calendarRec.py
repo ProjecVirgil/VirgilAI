@@ -2,8 +2,8 @@ import datetime
 import calendar
 
 
-from lib.sound import create
-from lib.prefix import Log 
+from lib.sound import Audio
+from lib.logger import Logger
 from lib.numberConvertToText import numberToWord
 
 
@@ -12,7 +12,7 @@ from lib.numberConvertToText import numberToWord
 
 #ULTIMA DA LANCIARE
 def recoverDayOfWeek(day:str,month:str,year:str):
-    print(Log(" DayOfWeek function"), flush=True)
+    print(Logger.Log(" DayOfWeek function"), flush=True)
     dayOfWeek= 0
     for week in calendar.monthcalendar(year,month):
         for x in week:
@@ -24,7 +24,7 @@ def recoverDayOfWeek(day:str,month:str,year:str):
     
     if((day == None or day == '' ) or month == None or year ==  None ):
         print("Mi dispiace ma non sono riuscito a capire bene la data puoi rifare la domanda",flush=True)
-        create(file=True,namefile="ErrorDate")
+        Audio.create(file=True,namefile="ErrorDate")
     else:
         if(day != 1):
             return f"Il {numberToWord(str(day))} di {months[month-1]} del {numberToWord(str(year))} è {str(week[dayOfWeek])}"
@@ -125,17 +125,17 @@ def splitTheDate(listOfDate:list):
     if(len(listOfDate) != 3):
         for _ in range(3-len(listOfDate)):
                 listOfDate.append(None)
-        print(Log(f" result: {listOfDate}"), flush=True)  
+        print(Logger.LogLog(f" result: {listOfDate}"), flush=True)  
         day=listOfDate[0]
         month=listOfDate[1]
         year=listOfDate[2]
         return fillDate(day,month,year)
     else:
-        print(Log(f" result: {listOfDate}"), flush=True)
+        print(Logger.LogLog(f" result: {listOfDate}"), flush=True)
         day=listOfDate[0]
         month=listOfDate[1]
         year=listOfDate[2]
-        print(Log(" pre dayOfWeek function"), flush=True)
+        print(Logger.LogLog(" pre dayOfWeek function"), flush=True)
         if(month != None  and year != None ):
             return fillDate(day,month,year) #forse da fixare
         elif(year == None and month != None):
@@ -149,7 +149,7 @@ def getDate(command:str):
     dateNumber = recoveryDateNumber(command)
     if(dateNumber == "ERROR"):
         print("Mi dispiace, c'è stato un errore prova a rifarmi la domanda in maniera piu precisa, specifica il giorno",flush=True)
-        create(file=True,namefile="ErrorRecoveryDay")
+        Audio.create(file=True,namefile="ErrorRecoveryDay")
         return None
 
     correctDay,correctMonth,correctYear = splitTheDate(dateNumber)
@@ -158,11 +158,11 @@ def getDate(command:str):
 
     
 def getDiff(command:str):
-    print(Log(" calculating the days..."),flush=True)
+    print(Logger.LogLog(" calculating the days..."),flush=True)
     dateNumber = recoveryDateNumber(command)
     if(dateNumber == "ERROR"):
         print("Mi dispiace, c'è stato un errore prova a rifarmi la domanda in maniera piu precisa, specifica il giorno",flush=True)
-        create(file=True,namefile="ErrorRecoveryDay")
+        Audio.create(file=True,namefile="ErrorRecoveryDay")
         return None
     correctDay,correctMonth,correctYear = splitTheDate(dateNumber)
     correct_date = datetime.datetime(correctYear, correctMonth, correctDay)

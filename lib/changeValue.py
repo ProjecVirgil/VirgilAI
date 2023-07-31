@@ -1,9 +1,9 @@
 import os
 import json
 
-from lib.prefix import Log
-from lib.sound import create
-from lib.time import countNumber
+from lib.logger import Logger
+from lib.sound import Audio
+from lib.time import Time
 
 # ---- File for change the volume of Virgil ----
 
@@ -20,16 +20,16 @@ class VolumeMixer:
         return self.__volume
 
     def change(self, command:str):
-        print(Log(" volume function"), flush=True)
+        print(Logger.Log(" volume function"), flush=True)
         commandSplit = command.split(" ")
         self.__volume = commandSplit[-1]
 
-        if(countNumber(self.__volume) >= 1):
+        if(Time.countNumber(self.__volume) >= 1):
             if( "%" in self.__volume):
                 self.__volume = self.__volume[:-1]
         else:
-            print(Log("Mi dispiace c'è stato un errore richiedimi il comando con un valore adeguato"), flush=True)
-            create(file=True,namefile="ErrorValueVirgil")
+            print(Logger.Log("Mi dispiace c'è stato un errore richiedimi il comando con un valore adeguato"), flush=True)
+            Audio.create(file=True,namefile="ErrorValueVirgil")
             return "104"
 
 
@@ -40,6 +40,6 @@ class VolumeMixer:
             else:
                 return str(self.__volume)
         except ValueError:
-            print(Log("Mi dispiace c'è stato un errore richiedimi il comando con un valore adeguato"), flush=True)
-            create(file=True,namefile="ErrorValueVirgil")
+            print(Logger.Log("Mi dispiace c'è stato un errore richiedimi il comando con un valore adeguato"), flush=True)
+            Audio.create(file=True,namefile="ErrorValueVirgil")
             return "104"

@@ -5,7 +5,7 @@ import asyncio
 from meross_iot.http_api import MerossHttpClient
 from meross_iot.manager import MerossManager
 
-from lib.prefix import Log
+from lib.logger import Logger
 
 # ---- This file controll the domotic meross ----
 
@@ -22,7 +22,7 @@ with open(file_path) as f:
 
 
 async def main(status:bool):
-    print(Log(" Funzione di turn main"))
+    print(Logger.LogLog(" Funzione di turn main"))
     # Setup the HTTP client API from user-password
     http_api_client = await MerossHttpClient.async_from_user_password(email=EMAIL, password=PASSWORD)
 
@@ -59,18 +59,18 @@ async def main(status:bool):
 
     
 def turn(command:str):
-    print(Log(" Funzione di turn"))
+    print(Logger.LogLog(" Funzione di turn"))
     
     if("accendi" in command):
         status = True
     elif("spegni" in command):
         status = False
     else:
-        print(Log(" Comando non trovato"))
+        print(Logger.LogLog(" Comando non trovato"))
         status =  None
         
     # Create and run a new event loop for this turn() call
-    print(Log(" Creazione chiamata"))
+    print(Logger.LogLog(" Creazione chiamata"))
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
     try:

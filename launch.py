@@ -10,8 +10,8 @@ import json
 import pyfiglet
 from colorama import Fore,Style
 
-from lib.request import createUser,getUser,createUserEvent
-from lib.prefix import Log
+from lib.request import MakeRequests
+from lib.logger import Logger   
 from output import out
 from textInput import text
 from vocalInput import speech
@@ -79,52 +79,52 @@ if __name__ == '__main__':
     WARNIGN = Style.BRIGHT + Fore.RED
     stampa()
     rainbow()
-    print(Log(ALERT +"START CHECK THE LIBRARY"),flush=True)
+    print(Logger.Log(ALERT +"START CHECK THE LIBRARY"),flush=True)
     command = "pip install -q -r setup/requirements.txt > logpip.txt"
     subprocess.run(command, shell=True)
-    print(Log(OK +"LIBRARY INSTALLED CORRECTLY IN CASE OF PROBLEMS, CHECK THE logpip.txt FILE"),flush=True)
+    print(Logger.Log(OK +"LIBRARY INSTALLED CORRECTLY IN CASE OF PROBLEMS, CHECK THE logpip.txt FILE"),flush=True)
     
     #TAKE KEY
     current_path = os.getcwd()
     current_path = current_path.replace("\ ".strip() , "/")
     
     if(os.path.getsize(f"{current_path}/setup/key.txt") == 0):
-        print(Log(OK + "I am creating your synchronization key"),flush=True)
-        key = createUser()
-        createUserEvent(key)
-        print(Log(OK + f"KEY {Fore.RED + str(key) + OK} CREATED CORRECTLY IN {current_path}/setup/key.txt "),flush=True)
+        print(Logger.Log(OK + "I am creating your synchronization key"),flush=True)
+        key = MakeRequests.createUser()
+        MakeRequests.createUserEvent(key)
+        print(Logger.Log(OK + f"KEY {Fore.RED + str(key) + OK} CREATED CORRECTLY IN {current_path}/setup/key.txt "),flush=True)
         with open(f"{current_path}/setup/key.txt",'w') as fileKey:
             fileKey.write(str(key))
-        check = input(Log(ALERT + 'Now download the Virgil app on your Android device, go to the configuration page and enter this code in the appropriate field, once done you will be able to change all Virgil settings remotely, once done press any button: '))
-        print(Log(OK + "Synchronizing your account settings"),flush=True)
-        user = getUser()
+        check = input(Logger.Log(ALERT + 'Now download the Virgil app on your Android device, go to the configuration page and enter this code in the appropriate field, once done you will be able to change all Virgil settings remotely, once done press any button: '))
+        print(Logger.Log(OK + "Synchronizing your account settings"),flush=True)
+        user = MakeRequests.getUser()
         with open(f"setting.json",'w') as f:
             json.dump(user,f,indent=4)
         if(user == 'User not found'):
-            print(Log(WARNIGN + "User not found"),flush=True)
-            print(Log(ALERT + "There is a problem with your key try deleting it and restarting the launcher if the problem persists contact support"),flush=True)
+            print(Logger.LogLog(WARNIGN + "User not found"),flush=True)
+            print(Logger.LogLog(ALERT + "There is a problem with your key try deleting it and restarting the launcher if the problem persists contact support"),flush=True)
             exit(1)
 
     else:
         with open(f"{current_path}/setup/key.txt",'r') as fileKey:
-            print(Log(OK + "I pick up the key for synchronization"),flush=True)
+            print(Logger.Log(OK + "I pick up the key for synchronization"),flush=True)
             key = fileKey.readline()
-            print(Log(OK + "Synchronizing your account settings"),flush=True)
-            user = getUser(key)
+            print(Logger.Log(OK + "Synchronizing your account settings"),flush=True)
+            user = MakeRequests.getUser(key)
         with open(f"setting.json",'w') as f:
             json.dump(user,f,indent=4)
         if(user == 'User not found'):
-            print(Log(WARNIGN + "User not found"),flush=True)
-            print(Log(ALERT + "There is a problem with your key try deleting it and restarting the launcher if the problem persists contact support"),flush=True)
+            print(Logger.LogLog(WARNIGN + "User not found"),flush=True)
+            print(Logger.LogLog(ALERT + "There is a problem with your key try deleting it and restarting the launcher if the problem persists contact support"),flush=True)
             exit(1)
 
             
 
-    print(Log(OK + f"KEEP YOUR KEY {key} DON'T GIVE IT TO ANYONE"), flush=True)
+    print(Logger.Log(OK + f"KEEP YOUR KEY {key} DON'T GIVE IT TO ANYONE"), flush=True)
         
     Valid = False
     while(not Valid):
-        TextOrSpeech = str(input(Log((ALERT + "You want a text interface (T) or recognise interface(R) T/R: ")))).upper()
+        TextOrSpeech = str(input(Logger.Log((ALERT + "You want a text interface (T) or recognise interface(R) T/R: ")))).upper()
         if(TextOrSpeech == 'T'):
             thread_1 = threading.Thread(target=text)
             thread_2 = threading.Thread(target=main)
@@ -137,14 +137,14 @@ if __name__ == '__main__':
             thread_3 = threading.Thread(target=out)
             break
         else:
-            print(Log(WARNIGN + " Select a valid choice please"),flush=True)
+            print(Logger.LogLog(WARNIGN + " Select a valid choice please"),flush=True)
     
                 # Avvio dei thread
     thread_1.start()
     thread_2.start()
     thread_3.start()
             
-    print(Log(OK +"PROGRAM IN EXECUTION"), flush=True)
+    print(Logger.Log(OK +"PROGRAM IN EXECUTION"), flush=True)
     print("\n")
     print(Style.BRIGHT +Fore.MAGENTA + pyfiglet.figlet_format("Thanks for using Virgil", font = "digital",justify= "center", width = 110 ), flush=True)
     print(Fore.LIGHTMAGENTA_EX + " - credit: @retr0", flush=True)

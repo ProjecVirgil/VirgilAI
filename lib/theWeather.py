@@ -7,8 +7,8 @@ import datetime
 from geopy.geocoders import Nominatim
 
 from lib.numberConvertToText import numberToWord
-from lib.prefix import Log
-from lib.sound import create 
+from lib.logger import Logger
+from lib.sound import Audio 
 
 # ---- This file get the Meteo of all week ----
 
@@ -80,14 +80,14 @@ class Wheather:
 
     def recoverCity(self,command:str):
         if(' a ' in command):
-            print(Log(" city chosen correctly"), flush=True)
+            print(Logger.Log(" city chosen correctly"), flush=True)
             command=command.split(" a ")[1].strip()
             CITY = command.split(" ")[0]
-            print(Log( " selected city: " + CITY), flush=True)
+            print(Logger.Log( " selected city: " + CITY), flush=True)
             return CITY
         else:
             CITY = city
-            print(Log( " default city selected: " + CITY), flush=True)
+            print(Logger.Log( " default city selected: " + CITY), flush=True)
             return CITY
 
     def get_current_week_days(self):
@@ -134,9 +134,9 @@ class Wheather:
     def recoverWeather(self,command:str):
         CITY = self.recoverCity(command)
         day,weekDay = self.recoverDay(command)
-        print(Log(" weather function"), flush=True)
+        print(Logger.Log(" weather function"), flush=True)
         response = requests.get(self.getUrl(CITY))
-        print(Log(" Response: " + str(response.status_code)), flush=True)
+        print(Logger.Log(" Response: " + str(response.status_code)), flush=True)
         if(str(response.status_code) != 200):  
             response = response.json()
             if(day != 404):
@@ -146,10 +146,10 @@ class Wheather:
                 precipitation = str(response["daily"]["precipitation_probability_max"][day]) 
                 return f"Il meteo a {CITY} per il {numberToWord(str(weekDay))} prevede {WWC[main]} con una massima di {numberToWord(max)} gradi,una minima di {numberToWord(min)} gradi e una probabilita di precipitazione del {numberToWord(precipitation)} percento"
             else:
-                create(file=True,namefile="ErrorDay")
+                Audio.create(file=True,namefile="ErrorDay")
                 return "" 
         
         else:       
-            print(Log(" repeat the request or wait a few minutes"), flush=True)
-            create(file=True,namefile="ErrorMeteo")  
+            print(Logger.Log(" repeat the request or wait a few minutes"), flush=True)
+            Audio.create(file=True,namefile="ErrorMeteo")  
             return ""

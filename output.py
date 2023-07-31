@@ -7,9 +7,9 @@ import sys
 import pygame
 
 from lib.sound import create
-from lib.prefix import Log
+from lib.logger import Logger
 from lib.numberConvertToText  import numberToWord
-from lib.manageEvents import sendNotify
+from lib.manageEvents import EventScheduler
 
 
 # ----- File to manage the result and hunt it as TTS -----
@@ -39,15 +39,15 @@ def checkReminder():
     
 def timer(my_time,command):
     if("sveglia" in command):
-        print(Log(" timer function"), flush=True)
-        print(Log(" alarm clock actived"), flush=True)
+        print(Logger.Log(" timer function"), flush=True)
+        print(Logger.Log(" alarm clock actived"), flush=True)
         time.sleep(my_time)
         #ADD ALARM CLOCK
     else:
-        print(Log(" timer function"), flush=True)
-        print(Log(" start timer"), flush=True)
+        print(Logger.Log(" timer function"), flush=True)
+        print(Logger.Log(" start timer"), flush=True)
         time.sleep(my_time)
-        print(Log(" end timer"), flush=True)
+        print(Logger.Log(" end timer"), flush=True)
         create(file=True,namefile="timerEndVirgil")
     
     #parte allarme
@@ -81,7 +81,7 @@ def out():
             res,command,bool = recoverData()
             if(res != None and bool == False):
                 if("spento" in res):
-                    print(Log(" shutdown in progress..."), flush=True)
+                    print(Logger.Log(" shutdown in progress..."), flush=True)
                     create(file=True,namefile="FinishVirgil")
                  
                     time.sleep(2)
@@ -91,10 +91,10 @@ def out():
                         pygame.mixer.music.unload()    
                         pygame.mixer.music.load('asset/bipEffectCheckSound.mp3')
                         pygame.mixer.music.play()       
-                        print(Log(f" volume changed correctly to {res*100}% "), flush=True)
+                        print(Logger.Log(f" volume changed correctly to {res*100}% "), flush=True)
                         update_json_value(2, True)
                 elif("timer" in command or "sveglia" in command):
-                        print(Log(f" the timer is started see you in {res} second"), flush=True)
+                        print(Logger.Log(f" the timer is started see you in {res} second"), flush=True)
                         if("timer" in command):
                             create(f"Il timer è partito ci vediamo tra {numberToWord(res)} secondi")
                         else:
@@ -108,15 +108,15 @@ def out():
                         update_json_value(2, True)
                         
                 #Cotrollo bit
-                print(Log(" check the reminder"),flush=True)
+                print(Logger.Log(" check the reminder"),flush=True)
                 if(not checkReminder()):
-                    print(Log(" send notify for today event"),flush=True)
-                    result = sendNotify()
+                    print(Logger.Log(" send notify for today event"),flush=True)
+                    result = EventScheduler.sendNotify()
                     time.sleep(10)
                     create(result)
             else:
                 pass
         except json.decoder.JSONDecodeError:
-            print(Log("Nothing was found in the json"), flush=True)
+            print(Logger.Log("Nothing was found in the json"), flush=True)
             pass
    

@@ -1,7 +1,8 @@
-#from lib.prefix import Log
 import requests
 import yt_dlp
 import pygame
+
+from lib.logger import Logger
 # ---- This file is for search music and video via yt ----
 
 
@@ -66,9 +67,9 @@ class MediaPlayer:
             
     def playMusic(self,command):
         topic = self.getTopic(command)
-        #print(Log(f" topic selected: {topic}"),flush=True)
+        print(Logger.Log(f" topic selected: {topic}"),flush=True)
         URL = self.searchOnYt(topic)
-        #print(Log(f" url gererater: {URL}"),flush=True)
+        print(Logger.Log(f" url gererater: {URL}"),flush=True)
         self.download(URL)
         self.play()
         

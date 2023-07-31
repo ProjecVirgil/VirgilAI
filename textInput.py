@@ -4,7 +4,7 @@ import sys
 import unicodedata
 import time
 
-from lib.prefix import Log
+from lib.logger import Logger
 
 # ----- File to take the input by the console -----
 
@@ -19,34 +19,34 @@ def cleanBuffer():
             }
     with open("connect/command.json", 'w') as commands:
             json.dump(dataEmpty,commands)
-    print(Log(" cleaned buffer command"), flush=True)
+    print(Logger.Log(" cleaned buffer command"), flush=True)
 
 
 def copyData(command:str):
     data = {
         command:False
         }
-    print(Log(f" data sended - {data}"), flush=True)
+    print(Logger.Log(f" data sended - {data}"), flush=True)
     with open("connect/command.json", 'w') as comandi:
         json.dump(data, comandi,indent=4)
 
 #MAIN
 def text():
         command = ""
-        print(Log(" start hearing function"), flush=True)
+        print(Logger.Log(" start hearing function"), flush=True)
         cleanBuffer()
         status  = True
         while(status):
             command = str(input("Enter the command or question you need (use key word Virgilio): ")).lower()
             command = unicodedata.normalize('NFKD', command).encode('ascii', 'ignore').decode('ascii')
             if(wordActivation in command):
-                print(Log(" command speech correctly "), flush=True)
+                print(Logger.Log(" command speech correctly "), flush=True)
                 copyData(command)
                 if("spegniti" in command):
-                    print(Log(" shutdown in progress"), flush=True)
+                    print(Logger.Log(" shutdown in progress"), flush=True)
                     status = False
             else:
-                print(Log("Remember to use the key word"), flush=True)
+                print(Logger.Log("Remember to use the key word"), flush=True)
                 pass
         sys.exit()
                 

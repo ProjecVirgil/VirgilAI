@@ -1,7 +1,7 @@
 import requests
 from colorama import Style,Fore
 
-from lib.prefix import Log  
+from lib.logger import Logger  
 
 ALERT = Style.BRIGHT + Fore.YELLOW
 OK = Style.BRIGHT + Fore.CYAN
@@ -28,10 +28,10 @@ class MakeRequests:
         try:
             r = requests.put(url)
             UserCreated = r.json()
-            print(Log( "User created Correctly"),flush=True)
+            print(Logger.Log( "User created Correctly"),flush=True)
             return UserCreated["userId"]
         except:
-            print(Log(WARNIGN + "I can't stable connection check the network"),flush=True)
+            print(Logger.Log(WARNIGN + "I can't stable connection check the network"),flush=True)
         
         
     def getUser(self,id):
@@ -44,7 +44,7 @@ class MakeRequests:
             else:    
                 return user['setting']
         except:
-            print(Log(WARNIGN + "I can't stable connection check the network"),flush=True)
+            print(Logger.Log(WARNIGN + "I can't stable connection check the network"),flush=True)
         
         
     #CALENDAR
@@ -54,34 +54,34 @@ class MakeRequests:
         url = f'{URL_BASE}/calendar/createUser/{id}/'
         r = requests.put(url)
         if(r.status_code == 201):
-            print(Log(" User calendar created correcly"),flush=True)
+            print(Logger.Log(" User calendar created correcly"),flush=True)
         else:
-            print(Log(" User calendar offline"),flush=True)
+            print(Logger.Log(" User calendar offline"),flush=True)
 
     ## Create Event
     def createEvents(self,event:str,date:str):
         if("None" in date):
-            print(Log( "Sorry, but there was an error, the request will not be sent"),flush=True) 
+            print(Logger.Log( "Sorry, but there was an error, the request will not be sent"),flush=True) 
         else:
             url = f'{URL_BASE}/calendar/createEvent/{id}/{date}/'
             events = [event]
             print(events)
             headers = {'Content-Type': 'application/json'}
             r = requests.put(url, json=events,headers=headers)
-            print(Log(f" response: {r.status_code}"),flush=True)
+            print(Logger.Log(f" response: {r.status_code}"),flush=True)
 
     ## Get events
     def getEvents(self):
         url = f'{URL_BASE}/calendar/{id}/'
         r = requests.get(url)
-        print(Log(f" reponse: {r.status_code}"),flush=True)
+        print(Logger.Log(f" reponse: {r.status_code}"),flush=True)
         events = r.json()
         return events
 
     def deleteEvents(self):
         url = f'{URL_BASE}/calendar/deleteEvent/{id}/'
         r = requests.put(url)
-        print(Log(f" reponse: {r.status_code}"),flush=True)
+        print(Logger.Log(f" reponse: {r.status_code}"),flush=True)
         
 
 
