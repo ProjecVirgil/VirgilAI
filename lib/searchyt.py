@@ -1,9 +1,8 @@
 from lib.prefix import Log
-import webbrowser as web
 import requests
-
+import yt_dlp
+import pygame
 # ---- This file is for search music and video via yt ----
-
 
 def getTopic(command:str):
     try:
@@ -11,16 +10,14 @@ def getTopic(command:str):
             topic = command.split("play ")[1]
         if("riproduci" in command):
             topic = command.split("riproduci ")[1]
-        print(Log(f" sto per riprodurre: {topic}"),flush=True)
         return topic
     except:
-        print(Log(f" non ho capito il topic mi dispiace"),flush=True)
+        pass
         #AUDIO ERROR
 
 
-
-def playonyt(command: str) -> str:
-        topic = getTopic(command)
+#MODIFICARE TO GET ONLY URL 
+def searchOnYt(topic:str) -> str:
         if(topic != None):
             url = f"https://www.youtube.com/results?q={topic}"
             count = 0
@@ -34,6 +31,42 @@ def playonyt(command: str) -> str:
                     break
             if lst[count - 5] == "/results":
                 raise Exception("No Video Found for this Topic!")
-            web.open(f"https://www.youtube.com{lst[count - 5]}")
             return f"https://www.youtube.com{lst[count - 5]}"
+        
+
+def download(URL):
+    nameFile = "music"
+    ydl_opts = {
+        'format': 'bestaudio/best',
+        'outtmpl': nameFile + '.%(ext)s',
+        'postprocessors': [{
+            'key': 'FFmpegExtractAudio',
+            'preferredcodec': 'wav',
+        }]
+    }
+
+    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+        error_code = ydl.download(URL)
+        
+def play():
+    filename = "music.wav"
+    #pygame.mixer.init()
+    playerAudio = pygame.mixer.music
+    playerAudio.unload()
+    playerAudio.load(filename)
+    playerAudio.play()
+        
+        
+def playMusic(command):
+    topic = getTopic(command)
+    print(Log(f" topic selected: {topic}"),flush=True)
+    URL = searchOnYt(topic)
+    print(Log(f" url gererater: {URL}"),flush=True)
+    download(URL)
+    play()
+    
+
+    
+    
+
     
