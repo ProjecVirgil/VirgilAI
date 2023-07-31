@@ -82,7 +82,16 @@ Virgil or Virgil is a virtual assistant like Alexa or Google Home, but integrate
    - API for ElevenLabs
        This API is not required, but if you want a [BEST EXPERIENCE](https://elevenlabs.io/speech-synthesis) i raccomand you to get
 
-3. When you have all the keys/accounts, save them on any file  
+3. When you have all the keys/accounts, save them on any file
+
+   
+
+## Notes ❗
+
+**THIS IS NOT OBLIGATORY.**  
+ Before the user on Linux (preferably, but also on Windows it would not be) create an enviroment with venv ```python -m venv name_enviroment``` after writing ```source name_enviroment/bin/activate```.
+ Now you can install all the dependencies without putting your PC at risk. 
+ To close the environment, just run ```deactivate```.
 
 ## 📖 How to use
 ### When you have installed and downloaded the API you can start using Virgilio 🥡
