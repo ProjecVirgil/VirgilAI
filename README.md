@@ -88,7 +88,7 @@ Virgil or Virgil is a virtual assistant like Alexa or Google Home, but integrate
 
 ## Notes ❗
 
-** THIS IS NOT OBLIGATORY. **  
+**THIS IS NOT OBLIGATORY.**  
  Before the user on Linux (preferably, but also on Windows it would not be) create an enviroment with venv ```python -m venv name_enviroment``` after writing ```source name_enviroment/bin/activate```.
  Now you can install all the dependencies without putting your PC at risk. 
  To close the environment, just run ```deactivate```.
