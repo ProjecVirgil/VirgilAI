@@ -127,12 +127,12 @@ class EventScheduler:
                 dateFormattedCorrectly = f"{date[0]}-{date[1]}-{date[2]}"
                 return dateFormattedCorrectly
 
-    # Main function
-    def addEvents(self, command:str):
-        print(Log(" creating new event"),flush=True)
-        date = self.recoverDate(command)
-        print(Log(" recovering the date"),flush=True)
-        event = command.split("ho")[1]
-        print(Log(" sending request"),flush=True)
-        createEvents(event,date)
-        return "Promemoria creato con successo"
+# Main function
+def addEvents(command:str):
+    print(Log(" i will create event"),flush=True)
+    date = recoverDate(command)
+    print(Log(" i recov the date"),flush=True)
+    event = command.split("ho")[1]
+    print(Log(" send the request"),flush=True)
+    createEvents(event,date)
+    return "Promemoria creato con successo"
