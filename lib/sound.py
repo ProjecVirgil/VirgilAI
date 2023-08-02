@@ -12,7 +12,7 @@ class Audio:
     def __init__(self):
         self.logger = Logger()
         #Open file whith key api openai
-        with open("settings.json") as f:
+        with open("setup/settings.json") as f:
             SETTINGS = json.load(f)
             self.volume = SETTINGS['volume']
             self.API_KEY = SETTINGS['elevenlabs']

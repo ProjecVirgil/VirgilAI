@@ -32,7 +32,7 @@ class Process:
         self.logger = Logger()
         self.utils = Utils()
         self.command_selection = CommandSelection()
-        with open('settings.json') as f:
+        with open('setup/settings.json') as f:
             SETTINGS = json.load(f)
             self.WORD_ACTIVATION = str(SETTINGS['wordActivation']).lower()
     

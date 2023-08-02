@@ -33,7 +33,7 @@ class CommandSelection:
         self.startPrompt = [
                 {"role": "system", "content": "Sei un assistente virtuale chiamata Virgilio."}
             ]
-        with open("settings.json") as f:
+        with open("setup/settings.json") as f:
             SECRETS = json.load(f)
             self.TEMPERATURE= SECRETS['temperature']
             self.MAX_TOKEN= SECRETS['max_tokens']

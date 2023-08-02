@@ -20,7 +20,7 @@ class TextInput:
             }
         self.logger = Logger()
         self.utils = Utils()
-        with open('settings.json') as f:
+        with open('setup/settings.json') as f:
             settings = json.load(f)
             self.WORD_ACTIVATION = str(settings['wordActivation']).lower()
         

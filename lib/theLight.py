@@ -12,7 +12,7 @@ from lib.logger import Logger
 
 #Open file whith key api openai
 
-with open("settings.json") as f:
+with open("setup/settings.json") as f:
     secrets = json.load(f)
     EMAIL = secrets["merrosEmail"]
     PASSWORD = secrets["merrosPassword"]

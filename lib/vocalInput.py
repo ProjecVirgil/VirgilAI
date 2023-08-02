@@ -18,7 +18,7 @@ class VocalInput:
         self.logger = Logger()
         self.utils = Utils()
         listener = sr.Recognizer()
-        with open('settings.json') as f:
+        with open('setup/settings.json') as f:
             SETTINGS = json.load(f)
             # init the recognizer
             listener.operation_timeout = int(SETTINGS['operation_timeout'])
