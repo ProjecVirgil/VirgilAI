@@ -18,30 +18,23 @@ from lib.utils import Utils
 
 # ----- File to elaborate the input  -----
 
-# init the recognizer
-listener = sr.Recognizer()
 
-with open('setting.json') as f:
-    setting = json.load(f)
-    listener.operation_timeout = int(setting['operation_timeout'])
-    listener.dynamic_energy_threshold = bool(setting['dynamic_energy_threshold'])
-    listener.energy_threshold = int(setting['energy_threshold'])
-    
-    wordActivation = str(setting['wordActivation']).lower()
 
 
 
 class Process:
     
     def __init__(self) -> None:
-        self.dataEmpy = {
+        self.DATA_EMPTY = {
         "0": [None, None, True]
         }
         self.request_maker = MakeRequests()
         self.logger = Logger()
         self.utils = Utils()
         self.command_selection = CommandSelection()
-        
+        with open('settings.json') as f:
+            SETTINGS = json.load(f)
+            self.WORD_ACTIVATION = str(SETTINGS['wordActivation']).lower()
     
     def update_json_value(self,key, new_value):
         # Apri il file JSON e carica i dati
@@ -60,7 +53,7 @@ class Process:
     def cleanCommand(self,command):
         # Cancellation element before the key word
         try:
-            command = str(command).split(f"{wordActivation} ")[1].strip()
+            command = str(command).split(f"{self.WORD_ACTIVATION} ")[1].strip()
             print(self.logger.Log(f" command processed: {command} "), flush=True)
             return command
         except IndexError:
@@ -100,7 +93,7 @@ class Process:
 
     def main(self,):
         print(self.logger.Log(Fore.GREEN + " THE ASSISTENT IS ONLINE  "), flush=True)
-        self.utils.cleanBuffer(dataEmpty=self.dataEmpy,fileName="res")
+        self.utils.cleanBuffer(dataEmpty=self.DATA_EMPTY,fileName="res")
         print(self.logger.Log(" Start check event"), flush=True)
         t = self.EventThread(self.logger)
         t.start()

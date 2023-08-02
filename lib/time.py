@@ -12,9 +12,6 @@ class Time:
         self.logger = Logger()
         self.utils  = Utils()
         
-
-        
-        
     def now(self):
         """_summary_
 

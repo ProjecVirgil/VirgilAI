@@ -10,20 +10,19 @@ from lib.utils import Utils
 # ----- File to take the input by the console -----
 
 
-with open('setting.json') as f:
-    setting = json.load(f)
-    wordActivation = str(setting['wordActivation']).lower()
+
 
 
 class TextInput:
-    
-    
     def __init__(self) -> None:
-        self.dataEmpy = {
+        self.DATA_EMPTY = {
             None:True
             }
         self.logger = Logger()
         self.utils = Utils()
+        with open('settings.json') as f:
+            settings = json.load(f)
+            self.WORD_ACTIVATION = str(settings['wordActivation']).lower()
         
         
     def copyData(self,command:str):
@@ -38,12 +37,12 @@ class TextInput:
     def text(self):
             command = ""
             print(self.logger.Log(" start hearing function"), flush=True)
-            self.utils.cleanBuffer(dataEmpty=self.dataEmpy,fileName="command")
+            self.utils.cleanBuffer(dataEmpty=self.DATA_EMPTY,fileName="command")
             status  = True
             while(status):
                 command = str(input("Enter the command or question you need (use key word Virgilio): ")).lower()
                 command = unicodedata.normalize('NFKD', command).encode('ascii', 'ignore').decode('ascii')
-                if(wordActivation in command):
+                if(self.WORD_ACTIVATION in command):
                     print(self.logger.Log(" command speech correctly "), flush=True)
                     self.copyData(command)
                     if("spegniti" in command):

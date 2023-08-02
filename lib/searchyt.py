@@ -8,7 +8,6 @@ from lib.logger import Logger
 
 
 class MediaPlayer:
-    
     def __init__(self) -> None:
         self.logger  = Logger()
         

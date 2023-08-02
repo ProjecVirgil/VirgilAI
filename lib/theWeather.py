@@ -43,12 +43,6 @@ WWC = {
     96: "Temporale con grandine leggera",
     99: "Temporale con grandine intensa"
 }
-
-#Open file whith key api openai
-with open("setting.json") as f:
-    secrets = json.load(f)
-    city = secrets["city"]
-    
   
 class Wheather:
     
@@ -56,6 +50,10 @@ class Wheather:
         self.logger = Logger()
         self.audio = Audio()
         self.utils  = Utils()
+        with open("settings.json") as f:
+            SETTINGS = json.load(f)
+            self.CITY = SETTINGS["city"]
+    
     def get_coordinates(self,city_name):
         geolocator = Nominatim(user_agent="city_locator")
         location = geolocator.geocode(city_name)
@@ -83,7 +81,7 @@ class Wheather:
             print(self.logger.Log( " selected city: " + CITY), flush=True)
             return CITY
         else:
-            CITY = city
+            CITY = self.CITY
             print(self.logger.Log( " default city selected: " + CITY), flush=True)
             return CITY
 

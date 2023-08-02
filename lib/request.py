@@ -7,9 +7,6 @@ ALERT = Style.BRIGHT + Fore.YELLOW
 OK = Style.BRIGHT + Fore.CYAN
 WARNIGN = Style.BRIGHT + Fore.RED
     
-#TAKE KEY
-fileKey = open("setup/key.txt","r")
-id = fileKey.read()    
 
 
 # ---- File for make the request at the VirgilAPI ----
@@ -19,6 +16,9 @@ class MakeRequests:
     def __init__(self) -> None:
         self.logger = Logger()
         self.URL_BASE = "https://fastapi-production-cd01.up.railway.app" + "/api"
+        fileKey = open("setup/key.txt","r")
+        self.ID = fileKey.read()    
+
     
     
     def createUser(self):
@@ -62,7 +62,7 @@ class MakeRequests:
         if("None" in date):
             print(self.logger.Log( "Sorry, but there was an error, the request will not be sent"),flush=True) 
         else:
-            url = f'{self.URL_BASE}/calendar/createEvent/{id}/{date}/'
+            url = f'{self.URL_BASE}/calendar/createEvent/{self.ID}/{date}/'
             events = [event]
             print(events)
             headers = {'Content-Type': 'application/json'}
@@ -71,14 +71,14 @@ class MakeRequests:
 
     ## Get events
     def getEvents(self):
-        url = f'{self.URL_BASE}/calendar/{id}/'
+        url = f'{self.URL_BASE}/calendar/{self.ID}/'
         r = requests.get(url)
         print(self.logger.Log(f" reponse: {r.status_code}"),flush=True)
         events = r.json()
         return events
 
     def deleteEvents(self):
-        url = f'{self.URL_BASE}/calendar/deleteEvent/{id}/'
+        url = f'{self.URL_BASE}/calendar/deleteEvent/{self.ID}/'
         r = requests.put(url)
         print(self.logger.Log(f" reponse: {r.status_code}"),flush=True)
         

@@ -8,25 +8,19 @@ from elevenlabs import generate,save
 from lib.logger import Logger
 
 # ---- This file make the TTS ----
-
-
-
-#Open file whith key api openai
-with open("setting.json") as f:
-    setting = json.load(f)
-    volume = setting['volume']
-    api_key = setting['elevenlabs']
-
 class Audio:
-    
     def __init__(self):
         self.logger = Logger()
-        pass
-
+        #Open file whith key api openai
+        with open("settings.json") as f:
+            SETTINGS = json.load(f)
+            self.volume = SETTINGS['volume']
+            self.API_KEY = SETTINGS['elevenlabs']
+        
     def create(self,text:str = "",file:bool = False,namefile:str = ""):
         pygame.mixer.music.unload()
-        if(pygame.mixer.music.get_volume != float(volume)):
-            pygame.mixer.music.set_volume(float(volume))
+        if(pygame.mixer.music.get_volume != float(self.volume)):
+            pygame.mixer.music.set_volume(float(self.volume))
             
             if(file):
                 file = os.path.join(f"asset/{namefile}.mp3")
@@ -36,7 +30,7 @@ class Audio:
             else:
                 try:
                     sound = generate(
-                        api_key = api_key,
+                        api_key = self.API_KEY,
                         text=text,
                         voice="Antoni",
                         model='eleven_multilingual_v1'
@@ -50,8 +44,6 @@ class Audio:
         file = os.path.join("audio.mp3")
         pygame.mixer.music.load(file)
         pygame.mixer.music.play()
-        
-        return
         
         
         

@@ -13,7 +13,6 @@ class Newsletter:
     def __init__(self) -> None:
         self.URL_RANDOM  = "https://news.google.com/rss?oc=5&hl=it&gl=IT&ceid=IT:it"
         self.logger = Logger()
-        pass
     
     def getTopic(self,command:str):
         print(self.logger.Log(" specify topic"), flush=True)

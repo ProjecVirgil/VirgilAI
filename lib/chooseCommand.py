@@ -19,23 +19,7 @@ from lib.searchyt import   MediaPlayer #playMusic
 from lib.manageEvents import EventScheduler #addEvents
 
 # ---- File for manage all the preset command ----
-
-
-#Start contest for GPT-3 API
-messages = [
-        {"role": "system", "content": "Sei un assistente virtuale chiamata Virgilio."}
-    ]
-
-#Open file whith key api openai
-with open("setting.json") as f:
-    secrets = json.load(f)
-    _temperature= secrets['temperature']
-    _max_token= secrets['max_tokens']
-    api_key = secrets["openAI"]
-openai.api_key = api_key
-
 class CommandSelection:
-    
     def __init__(self) -> None:
         self.logger = Logger()
         self.audio = Audio()
@@ -45,6 +29,16 @@ class CommandSelection:
         self.news_letter = Newsletter()
         self.media_player = MediaPlayer()
         self.event_scheduler = EventScheduler()
+        #Start contest for GPT-3 API
+        self.startPrompt = [
+                {"role": "system", "content": "Sei un assistente virtuale chiamata Virgilio."}
+            ]
+        with open("settings.json") as f:
+            SECRETS = json.load(f)
+            self.TEMPERATURE= SECRETS['temperature']
+            self.MAX_TOKEN= SECRETS['max_tokens']
+            self.API_KEY = SECRETS["openAI"]
+        openai.api_key = self.API_KEY
         
         
     #function for communicate whith api GPT-3
@@ -53,8 +47,8 @@ class CommandSelection:
         response = openai.ChatCompletion.create(
             model = "gpt-3.5-turbo",
             messages=messages,
-            temperature = float(_temperature), # 0.0 - 2.0
-            max_tokens=int(_max_token)
+            temperature = float(self.TEMPERATURE), # 0.0 - 2.0
+            max_tokens=int(self.MAX_TOKEN)
         )
         return response.choices[0].message
 
@@ -146,9 +140,9 @@ class CommandSelection:
         #Question at GPT-3   
         else:
             print(self.logger.Log(" GPT function"), flush=True)
-            messages.append({"role": "user", "content": command})
+            self.startPrompt.append({"role": "user", "content": command})
             try:
-                new_message = self.get_response(messages=messages)
+                new_message = self.get_response(messages=self.startPrompt)
             except:
                 print(self.logger.Log("Unfortunately the key of openAI you entered is invalid or not present if you don't know how to get a key check the guide on github"), flush=True)
                 self.audio.create(file=True,namefile="ErrorOpenAi")
@@ -156,6 +150,6 @@ class CommandSelection:
             print(self.logger.Log(" response created"),flush=True)
             print(f"\nVirgilio: {new_message['content']}",flush=True)
             print(self.logger.Log(" I am hanging the command..."),flush=True)
-            messages.append(new_message)
+            self.startPrompt.append(new_message)
             print(self.logger.Log(" command append"),flush=True)
             return new_message['content']

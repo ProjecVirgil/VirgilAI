@@ -9,8 +9,6 @@ from lib.utils import Utils
 
 
 class VolumeMixer:
-    #settings_path = f"{current_path}/setting.json"
-
     def __init__(self, sValue:int = 100):
         self.__volume = sValue
         self.logger = Logger()
