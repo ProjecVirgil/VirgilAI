@@ -7,6 +7,6 @@ setup/key.txt
 .coverage
 htmlcov
 trys
-setting.json
+settings.json
 .pytest_cache
 music.wav
