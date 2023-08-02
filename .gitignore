@@ -9,4 +9,5 @@ htmlcov
 trys
 .pytest_cache
 music.wav
+logpip.txt
 
