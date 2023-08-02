@@ -1,0 +1,15 @@
+{
+      "language": "it",
+      "wordActivation": "Virgilio",
+      "volume": "100",
+      "city": "Salerno",
+      "operation_timeout": "3",
+      "dynamic_energy_threshold": "true",
+      "energy_threshold": "3500",
+      "elevenlabs": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "openAI": "sk-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "merrosEmail": "email",
+      "merrosPassword": "password",
+      "temperature": "0.9",
+      "max_tokens": "30"
+}
