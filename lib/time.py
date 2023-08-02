@@ -89,10 +89,10 @@ class Time:
         calculatedMinuts, calculateSeconds = divmod(rest, 60)
 
         if("sveglia" in command):
-            print(self.logger.LogLog( f" tempo calcolato per la sveglia {calculatedHours},{calculatedMinuts},{calculateSeconds}"),flush=True)
+            print(self.logger.Log( f" tempo calcolato per la sveglia {calculatedHours},{calculatedMinuts},{calculateSeconds}"),flush=True)
             return f"{calculatedHours} ore {calculatedMinuts} minuti e {calculateSeconds} secondi"
         else:
-            print(self.logger.LogLog(f" alle {self.utils.numberToWord(hours)} e {self.utils.numberToWord(minuts)} mancano {self.utils.numberToWord(calculatedHours)} {self.utils.numberToWord(calculatedMinuts)} {self.utils.numberToWord(calculateSeconds)}"),flush=True)
+            print(self.logger.Log(f" alle {self.utils.numberToWord(hours)} e {self.utils.numberToWord(minuts)} mancano {self.utils.numberToWord(calculatedHours)} {self.utils.numberToWord(calculatedMinuts)} {self.utils.numberToWord(calculateSeconds)}"),flush=True)
             return f" alle {self.utils.numberToWord(hours)} e {self.utils.numberToWord(minuts)} mancano {self.utils.numberToWord(calculatedHours)} ore {self.utils.numberToWord(calculatedMinuts)} minuti e {self.utils.numberToWord(calculateSeconds)} secondi"
         # Stampa la differenza in un formato più comprensibile
         
@@ -106,7 +106,7 @@ class Time:
         Returns:
             _type_: _description_
         """
-        print(self.logger.LogLog(" Conversion in progress"),flush=True)
+        print(self.logger.Log(" Conversion in progress"),flush=True)
         command=command.replace(","," ")
         command=command.split(" ")
         

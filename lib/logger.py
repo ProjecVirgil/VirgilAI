@@ -11,9 +11,6 @@ class Logger:
         self.lastCaller = ''
         self.__updateCallstack()
 
-    def __del__(self):
-        print(Fore.GREEN + "application terminated successfully" + Back.RESET + Fore.WHITE)
-
     def __updateCallstack(self):
         self.currentCallstack = inspect.stack()[1]
         self.lastCaller = str(inspect.getmodule(self.currentCallstack[0])).split("\\")[-1]

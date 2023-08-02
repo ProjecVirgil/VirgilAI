@@ -11,22 +11,16 @@ from lib.logger import Logger
 from lib.utils  import Utils
 from lib.manageEvents import EventScheduler
 
-
-# ----- File to manage the result and hunt it as TTS -----
-
-
-
+# ... (il resto del tuo codice)
 
 class Output:
     
     def __init__(self) -> None:
-        
         self.event_scheduler = EventScheduler()
         self.logger = Logger()
         self.utils = Utils()
         self.audio = Audio()
-        
-    
+
     def update_json_value(self,key, new_value):
         # Apri il file JSON e carica i dati
         with open("connect/res.json", 'r') as file:
@@ -48,33 +42,35 @@ class Output:
                 return False
             else:
                 return True
-        
-        
-    def timer(self,my_time,command):
-        if("sveglia" in command):
+
+
+    def timer(self, my_time, command):
+        if "sveglia" in command:
             print(self.logger.Log(" timer function"), flush=True)
             print(self.logger.Log(" alarm clock actived"), flush=True)
             time.sleep(my_time)
-            #ADD ALARM CLOCK
+            # AGGIUNGI QUI LA LOGICA DELL'ALARME
         else:
             print(self.logger.Log(" timer function"), flush=True)
             print(self.logger.Log(" start timer"), flush=True)
             time.sleep(my_time)
             print(self.logger.Log(" end timer"), flush=True)
-            self.audio.create(file=True,namefile="timerEndVirgil")
+            self.audio.create(file=True, namefile="timerEndVirgil")
         
-        #parte allarme
+        # Parte dell'allarme
+
     class TimerThread(threading.Thread):
-        def __init__(self, interval,command:str):
+        def __init__(self, interval, command):
             threading.Thread.__init__(self)
             self.interval = interval
             self.daemon = True
             self.command = command
 
         def run(self):
-            self.timer(self.interval,self.command) 
+            output_instance = Output()
+            output_instance.timer(self.interval, self.command)
     
-
+    
     def recoverData(self,):
         with open("connect/res.json", 'r') as file:
             data = json.load(file)
@@ -82,8 +78,7 @@ class Output:
             command = data["0"][0]
             bool = data["0"][2]
             return res,command,bool
-        
-        
+
     def out(self,):
         pygame.init()
         #init e setup the tts
@@ -132,4 +127,3 @@ class Output:
             except json.decoder.JSONDecodeError:
                 print(self.logger.Log("Nothing was found in the json"), flush=True)
                 pass
-   

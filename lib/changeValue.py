@@ -32,7 +32,7 @@ class VolumeMixer:
             if( "%" in self.__volume):
                 self.__volume = self.__volume[:-1]
         else:
-            print(Logger.Log("Mi dispiace c'è stato un errore richiedimi il comando con un valore adeguato"), flush=True)
+            print(self.logger.Log("Mi dispiace c'è stato un errore richiedimi il comando con un valore adeguato"), flush=True)
             self.audio.create(file=True,namefile="ErrorValueVirgil")
             return "104"
 
@@ -44,6 +44,6 @@ class VolumeMixer:
             else:
                 return str(self.__volume)
         except ValueError:
-            print(Logger.Log("Mi dispiace c'è stato un errore richiedimi il comando con un valore adeguato"), flush=True)
+            print(self.logger.Log("Mi dispiace c'è stato un errore richiedimi il comando con un valore adeguato"), flush=True)
             self.audio.create(file=True,namefile="ErrorValueVirgil")
             return "104"

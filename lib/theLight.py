@@ -20,9 +20,10 @@ with open(file_path) as f:
     EMAIL = secrets["merrosEmail"]
     PASSWORD = secrets["merrosPassword"]
 
+logger = Logger()
 
 async def main(status:bool):
-    print(Logger.LogLog(" Funzione di turn main"))
+    print(logger.Log(" Funzione di turn main"))
     # Setup the HTTP client API from user-password
     http_api_client = await MerossHttpClient.async_from_user_password(email=EMAIL, password=PASSWORD)
 
@@ -59,18 +60,18 @@ async def main(status:bool):
 
     
 def turn(command:str):
-    print(Logger.LogLog(" Funzione di turn"))
+    print(logger.Log(" Funzione di turn"))
     
     if("accendi" in command):
         status = True
     elif("spegni" in command):
         status = False
     else:
-        print(Logger.LogLog(" Comando non trovato"))
+        print(logger.Log(" Comando non trovato"))
         status =  None
         
     # Create and run a new event loop for this turn() call
-    print(Logger.LogLog(" Creazione chiamata"))
+    print(logger.Log(" Creazione chiamata"))
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
     try:
