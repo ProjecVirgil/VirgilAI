@@ -12,10 +12,10 @@ from colorama import Fore,Style
 
 from lib.request import MakeRequests
 from lib.logger import Logger   
-from output import Output
-from textInput import TextInput
-from vocalInput import VocalInput
-from procces import Process
+from lib.output import Output
+from lib.textInput import TextInput
+from lib.vocalInput import VocalInput
+from lib.procces import Process
 
 # ---- This file launch all the file for making Virgilio work  ----
 
