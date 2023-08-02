@@ -85,6 +85,7 @@ if __name__ == '__main__':
     ALERT = Style.BRIGHT + Fore.YELLOW
     OK = Style.BRIGHT + Fore.CYAN
     WARNIGN = Style.BRIGHT + Fore.RED
+    
     stampa()
     rainbow()
     print(logger.Log(string=ALERT +"START CHECK THE LIBRARY"),flush=True)
@@ -92,16 +93,13 @@ if __name__ == '__main__':
     subprocess.run(command, shell=True)
     print(logger.Log(OK +"LIBRARY INSTALLED CORRECTLY IN CASE OF PROBLEMS, CHECK THE logpip.txt FILE"),flush=True)
     
-    #TAKE KEY
-    current_path = os.getcwd()
-    current_path = current_path.replace("\ ".strip() , "/")
     
-    if(os.path.getsize(f"{current_path}/setup/key.txt") == 0):
+    if(os.path.getsize(f"setup/key.txt") == 0):
         print(logger.Log(OK + "I am creating your synchronization key"),flush=True)
         key = request_maker.createUser()
         request_maker.createUserEvent(key)
-        print(logger.Log(OK + f"KEY {Fore.RED + str(key) + OK} CREATED CORRECTLY IN {current_path}/setup/key.txt "),flush=True)
-        with open(f"{current_path}/setup/key.txt",'w') as fileKey:
+        print(logger.Log(OK + f"KEY {Fore.RED + str(key) + OK} CREATED CORRECTLY IN /setup/key.txt "),flush=True)
+        with open(f"setup/key.txt",'w') as fileKey:
             fileKey.write(str(key))
         check = input(logger.Log(ALERT + 'Now download the Virgil app on your Android device, go to the configuration page and enter this code in the appropriate field, once done you will be able to change all Virgil settings remotely, once done press any button: '))
         print(logger.Log(OK + "Synchronizing your account settings"),flush=True)
@@ -114,7 +112,7 @@ if __name__ == '__main__':
             exit(1)
 
     else:
-        with open(f"{current_path}/setup/key.txt",'r') as fileKey:
+        with open(f"setup/key.txt",'r') as fileKey:
             print(logger.Log(OK + "I pick up the key for synchronization"),flush=True)
             key = fileKey.readline()
             print(logger.Log(OK + "Synchronizing your account settings"),flush=True)

@@ -10,12 +10,9 @@ from lib.logger import Logger
 # ---- This file controll the domotic meross ----
 
 
-#TODO DA RIVEDERE
-current_path = os.getcwd()
-file_path = os.path.join(current_path,'setting.json')
 #Open file whith key api openai
 
-with open(file_path) as f:
+with open("setting.json") as f:
     secrets = json.load(f)
     EMAIL = secrets["merrosEmail"]
     PASSWORD = secrets["merrosPassword"]

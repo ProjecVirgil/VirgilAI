@@ -13,8 +13,6 @@ class VolumeMixer:
 
     def __init__(self, sValue:int = 100):
         self.__volume = sValue
-        self.current_path = os.getcwd()
-        self.file_path = os.path.join(self.current_path, '/asset')
         self.logger = Logger()
         self.audio = Audio()
         self.utils  = Utils()

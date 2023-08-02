@@ -13,10 +13,6 @@ from lib.sound import Audio
 # ---- This file get the Meteo of all week ----
 
 
-current_path = os.getcwd()
-file_path = os.path.join(current_path,'setting.json')
-
-
 WWC = {
     0: "Cielo sereno",
     1: "Prevalentemente sereno",
@@ -49,7 +45,7 @@ WWC = {
 }
 
 #Open file whith key api openai
-with open(file_path) as f:
+with open("setting.json") as f:
     secrets = json.load(f)
     city = secrets["city"]
     

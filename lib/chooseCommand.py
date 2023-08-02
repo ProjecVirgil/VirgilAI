@@ -25,11 +25,9 @@ from lib.manageEvents import EventScheduler #addEvents
 messages = [
         {"role": "system", "content": "Sei un assistente virtuale chiamata Virgilio."}
     ]
-current_path = os.getcwd()
-file_path = os.path.join(current_path,'setting.json')
 
 #Open file whith key api openai
-with open(file_path) as f:
+with open("setting.json") as f:
     secrets = json.load(f)
     _temperature= secrets['temperature']
     _max_token= secrets['max_tokens']
