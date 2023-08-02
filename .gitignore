@@ -1,6 +1,6 @@
 tests
 .vscode
-lib/__pycache__
+__pycache__
 connect
 audio.mp3
 setup/key.txt
