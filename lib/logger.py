@@ -12,7 +12,7 @@ class Logger:
         self.__updateCallstack()
 
     def __updateCallstack(self):
-        self.currentCallstack = inspect.stack()[1]
+        self.currentCallstack = inspect.stack()[2]
         self.lastCaller = str(inspect.getmodule(self.currentCallstack[0])).split("\\")[-1]
 
     def Log(self, string: str, filepath: str = None):
