@@ -83,8 +83,8 @@ def createAccount():
     print(logger.Log(OK + "I am creating your synchronization key"),flush=True)
     key = request_maker.createUser()
     request_maker.createUserEvent(key)
-    print(logger.Log(OK + f"KEY {Fore.RED + str(key) + OK} CREATED CORRECTLY IN /setup/key.txt "),flush=True)
-    with open(f"setup/key.txt",'w') as fileKey:
+    print(logger.Log(OK + f"KEY {Fore.RED + str(key) + OK} CREATED CORRECTLY IN setup/key.txt "),flush=True)
+    with open(KEY_FILE,'w') as fileKey:
         fileKey.write(str(key))
     check = input(logger.Log(ALERT + 'Now download the Virgil app on your Android device, go to the configuration page and enter this code in the appropriate field, once done you will be able to change all Virgil settings remotely, once done press any button: '))
     print(logger.Log(OK + "Synchronizing your account settings"),flush=True)
@@ -98,7 +98,7 @@ def createAccount():
     return key
         
 def logIn():
-    with open(f"setup/key.txt",'r') as fileKey:
+    with open(KEY_FILE,'r') as fileKey:
         print(logger.Log(OK + "I pick up the key for synchronization"),flush=True)
         key = fileKey.readline()
         print(logger.Log(OK + "Synchronizing your account settings"),flush=True)
@@ -123,7 +123,8 @@ if __name__ == '__main__':
     #* CONST 
     BANNER_MESSAGE = ['W','We','Wel','Welc','Welco','Welcom','Welcome','Welcome ','Welcome t','Welcome to','Welcome to ','Welcome to V','Welcome to Vi','Welcome to Vir','Welcome to Virg','Welcome to Virgi','Welcome to Virgil']
     SYSTEM = platform.system()
-    SETTINGS_FILE = "settings.json"
+    SETTINGS_FILE = "setup/settings.json"
+    KEY_FILE = "setup/key.txt"
     ALERT = Style.BRIGHT + Fore.YELLOW
     OK = Style.BRIGHT + Fore.CYAN
     WARNIGN = Style.BRIGHT + Fore.RED
@@ -133,7 +134,7 @@ if __name__ == '__main__':
     rainbow(commandCleaner)
     installLibrary()
 
-    if(os.path.getsize(f"setup/key.txt") == 0):
+    if(os.path.getsize(KEY_FILE) == 0):
         key = createAccount()
     else:
         key = logIn()
