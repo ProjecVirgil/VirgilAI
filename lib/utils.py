@@ -27,7 +27,7 @@ class Utils:
     
     
     def cleanBuffer(self,dataEmpty:dict,fileName:str):
-        with open(f"connect/{fileName}", 'w') as commands:
+        with open(f"connect/{fileName}.json", 'w') as commands:
                 json.dump(dataEmpty,commands)
         print(self.logger.Log(" cleaned buffer command"), flush=True)
     
