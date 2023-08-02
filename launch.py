@@ -39,7 +39,7 @@ def checkSystem():
                 # Esecuzione su macOS
                 return "clear"
     else:
-        print("Sistema operativo non riconosciuto. Impossibile avviare il terminale corrispondente.", flush=True)
+        print(logger.Log(WARNIGN + " Sistema operativo non riconosciuto. Impossibile avviare il terminale corrispondente.", flush=True))
 
 def stampa(commandCleanear:str):
     delay = 0.1
@@ -112,13 +112,9 @@ def logIn():
     return key
             
 if __name__ == '__main__': 
-    #INIT
+#*  INIT LOGGER AND REQUEST_MAKER
     logger = Logger()
     request_maker = MakeRequests()
-    output = Output()
-    process = Process()
-    text_input = TextInput()
-    vocal_input = VocalInput()
     
     #* CONST 
     BANNER_MESSAGE = ['W','We','Wel','Welc','Welco','Welcom','Welcome','Welcome ','Welcome t','Welcome to','Welcome to ','Welcome to V','Welcome to Vi','Welcome to Vir','Welcome to Virg','Welcome to Virgi','Welcome to Virgil']
@@ -129,6 +125,7 @@ if __name__ == '__main__':
     OK = Style.BRIGHT + Fore.CYAN
     WARNIGN = Style.BRIGHT + Fore.RED
     
+    
     commandCleaner = checkSystem()
     stampa(commandCleaner)
     rainbow(commandCleaner)
@@ -138,9 +135,18 @@ if __name__ == '__main__':
         key = createAccount()
     else:
         key = logIn()
-
-    print(logger.Log(OK + f"KEEP YOUR KEY {key} DON'T GIVE IT TO ANYONE"), flush=True)
         
+#*  INIT ALL PRINCIPLE CLASS
+
+    output = Output()
+    process = Process()
+    text_input = TextInput()
+    vocal_input = VocalInput()
+    
+    
+    print(logger.Log(OK + f"KEEP YOUR KEY {key} DON'T GIVE IT TO ANYONE"), flush=True)
+    
+    
     validChoise = False
     while(not validChoise):
         TextOrSpeech = str(input(logger.Log((ALERT + "You want a text interface (T) or recognise interface(R) T/R: ")))).upper()
