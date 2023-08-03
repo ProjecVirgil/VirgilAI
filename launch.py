@@ -72,7 +72,7 @@ def rainbow(commandCleanear:str):
     print(Style.BRIGHT +  Fore.MAGENTA  + pyfiglet.figlet_format(BANNER_MESSAGE[-1]),flush=True)
     print(Style.RESET_ALL,flush=True)
 
-def installLibrary():
+def installLibraries():
     print(logger.Log(string=ALERT +"START CHECK THE LIBRARY"),flush=True)
     command = "pip install -q -r setup/requirements.txt > logpip.txt"
     subprocess.run(command, shell=True)
@@ -129,7 +129,7 @@ if __name__ == '__main__':
     commandCleaner = checkSystem()
     stampa(commandCleaner)
     rainbow(commandCleaner)
-    installLibrary()
+    installLibraries()
 
     if(os.path.getsize(KEY_FILE) == 0):
         key = createAccount()
