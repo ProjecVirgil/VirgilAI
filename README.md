@@ -76,8 +76,8 @@ Virgil or Virgil is a virtual assistant like Alexa or Google Home, but integrate
    - or download the zip
 2. Now we need the api (for now i am not rich and i do not pay for everything) so
  we are need of 3 api keys (the keys marked with * are mandatory for operation)
-   - * API for OpenAI and GPT,
-          i recommend this [video tutorial](https://www.youtube.com/watch?v=u-LeLPBZr2k) 
+   - API for OpenAI and GPT, 
+          i recommend this [video tutorial](https://www.youtube.com/watch?v=u-LeLPBZr2k) *
    - API for Merros (domotic socket),
           just create a [Merros account](https://www.meross.com/en-gc) and insert the credential 
    - API for ElevenLabs
@@ -118,9 +118,16 @@ Virgil or Virgil is a virtual assistant like Alexa or Google Home, but integrate
 4. The api for GPT is almost free but is necessary inser the credit/debit card (sorry i know is annoying) 💸
 
 
-## 💎 Future idea/goal for this project
+## 💎 RoadMap for the ProjectVirgil
 
-> Is improve the code and its efficiency and improve the mobile application perhaps with the possibility of changing more values and increasing the customisation of the app and Virgilio and expand the compatibily, improve Virgilio itself with perhaps the possibility of understanding other languages and adding more commands👾
+[x] Make a beta of VirgilAI
+[x] Make a first Version of App
+[x] Increase the possibility of Virgil
+[ ] Improve the code design and make the code more efficent
+[ ] Create a website for the Project
+[ ] Improve the command reqcognition
+[ ] Add more language
+
 
 ## 💸 Credits and technologies used
 Only me 💻 and
