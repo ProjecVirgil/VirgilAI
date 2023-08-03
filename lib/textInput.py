@@ -1,8 +1,6 @@
-import time
 import json
 import sys
 import unicodedata
-import time
 
 from lib.logger import Logger
 from lib.utils import Utils

@@ -1,5 +1,5 @@
 import gtts
-import pygame
+from pygame import mixer
 import os
 import json
 
@@ -18,14 +18,14 @@ class Audio:
             self.API_KEY = SETTINGS['elevenlabs']
         
     def create(self,text:str = "",file:bool = False,namefile:str = ""):
-        pygame.mixer.music.unload()
-        if(pygame.mixer.music.get_volume != float(self.volume)):
-            pygame.mixer.music.set_volume(float(self.volume))
+        mixer.music.unload()
+        if(mixer.music.get_volume != float(self.volume)):
+            mixer.music.set_volume(float(self.volume))
             
             if(file):
                 file = os.path.join(f"asset/{namefile}.mp3")
-                pygame.mixer.music.load(file)
-                pygame.mixer.music.play()
+                mixer.music.load(file)
+                mixer.music.play()
                 return
             else:
                 try:
@@ -42,8 +42,8 @@ class Audio:
                     sound.save("audio.mp3")
 
         file = os.path.join("audio.mp3")
-        pygame.mixer.music.load(file)
-        pygame.mixer.music.play()
+        mixer.music.load(file)
+        mixer.music.play()
         
         
         

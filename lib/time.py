@@ -1,6 +1,5 @@
 import datetime
 import time
-import re
 
 from lib.logger import Logger
 from lib.utils import Utils 

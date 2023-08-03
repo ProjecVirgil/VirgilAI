@@ -1,10 +1,9 @@
 import sys
 import json
 import time
-import os 
 
 import openai
-import pygame
+from pygame import mixer
 
 
 from lib.logger import Logger
@@ -93,7 +92,7 @@ Pronto a fingerti Virgilio? rispondi si se hai capito ed da ora in poi quando ti
         sys.exit(0)
         
     def Sendcommand(self,command:str):
-        pygame.init()
+        mixer.init()
         if(("spegniti" in command) or ("spegnimento" in command)):
             print(self.logger.Log(" pre shut function"),flush=True)
             self.off()
@@ -103,7 +102,7 @@ Pronto a fingerti Virgilio? rispondi si se hai capito ed da ora in poi quando ti
             return response
         elif("stop" in command or "fermati" in command or "basta" in command):
                 print(self.logger.Log(" Audio stopped succesflully"),flush=True)
-                pygame.mixer.music.stop()
+                mixer.music.stop()
         elif("volume" in command and (("imposta") in command or ("metti" in command) or ("inserisci")) ):
             print(self.logger.Log(" pre volume function"),flush=True)
             response = self.volume_mixer.change(command)
