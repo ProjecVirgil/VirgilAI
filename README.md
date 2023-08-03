@@ -120,13 +120,13 @@ Virgil or Virgil is a virtual assistant like Alexa or Google Home, but integrate
 
 ## 💎 RoadMap for the ProjectVirgil
 
-[x] Make a beta of VirgilAI
-[x] Make a first Version of App
-[x] Increase the possibility of Virgil
-[ ] Improve the code design and make the code more efficent
-[ ] Create a website for the Project
-[ ] Improve the command reqcognition
-[ ] Add more language
+- [x] Make a beta of VirgilAI
+- [x] Make a first Version of App
+- [x] Increase the possibility of Virgil
+- [ ] Improve the code design and make the code more efficent
+- [ ] Create a website for the Project
+- [ ] Improve the command reqcognition
+- [ ] Add more language
 
 
 ## 💸 Credits and technologies used
