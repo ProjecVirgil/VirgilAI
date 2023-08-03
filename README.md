@@ -99,7 +99,7 @@ Virgil or Virgil is a virtual assistant like Alexa or Google Home, but integrate
  1. Open a terminal to the directory ProjectVirgil/setupAndLaunch and run the file with   ```setup.bat``` for windows or run the file bash ```bash setup.sh``` on linux (first make it execuble) instead for the fast start launch   ```python launch.py``` or  ```python3 launch.py```
  2. At a certain point you will be asked to install the dedicated app [**VirgilApp**](https://github.com/Retr0100/VirgilApp), this app will allow you to configure Virgilio and change the associated settings **BUT BEWARE IT IS NOT ESSENTIAL FOR THE USE OF VIRGILIO, VIRGILIO CAN ALSO BE USED WITHOUT THE USE OF THE APP** if you do not want to use the app [click here](#-configuration-without-app) 
  3. In the app, you will have to search for the **configuration page** (it will not be difficult to find it) and you will have to enter the **key** that will be shown to you on the screen when Virgilio is launched (you only have to do this step the first time, but you can **repeat** it if you want to [change the key](#-change-the-key))
- 4. Now you can change the **settings** of Virgil on the corresponding page
+ 4. Now you can change the **settings** of Virgil on the corresponding page (Each time you change a setting in order to have the settings updated, you will have to restart Virgil)
  5. At the end of this initial configuration, which you only need to do once, you can press any key and choose to use a **text interface** (recommended for debugging) or a **voice interface** (recommended for personal use).
 
 ## 📚 Guide to setting
@@ -146,6 +146,7 @@ Virgil or Virgil is a virtual assistant like Alexa or Google Home, but integrate
                     )
     ```
     And replace the voice whith the one you want (if after the TTS dont'work try another voice on whatch a video on YT on how to use default entries )
+5.  Restart Virgil
 
 ## 📃 Configuration without app
 
