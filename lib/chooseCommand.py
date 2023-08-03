@@ -12,7 +12,7 @@ from lib.sound import Audio # Create
 from lib.time import Time  #now,diffTime,conversion
 from lib.changeValue import  VolumeMixer  #change
 from lib.theWeather import Wheather  #recoverWeather
-from lib.calendarRec import getDate,getDiff
+from lib.calendarRec import Calendar
 from lib.theNews import  Newsletter #createNews
 from lib.theLight import turn
 from lib.searchyt import   MediaPlayer #playMusic
@@ -29,6 +29,7 @@ class CommandSelection:
         self.news_letter = Newsletter()
         self.media_player = MediaPlayer()
         self.event_scheduler = EventScheduler()
+        self.calendar = Calendar()
         #Start contest for GPT-3 API
         self.startPrompt = [
                 {"role": "system", "content": "Sei un assistente virtuale chiamata Virgilio."}
@@ -113,7 +114,7 @@ class CommandSelection:
                 return None
         elif("che giorno e" in command or "che giorno della settima e" in command):
             print(self.logger.Log(" pre recovery function"),flush=True)
-            response=getDate(command)
+            response=self.calendar.getDate(command)
             return response
         elif("quanto mancano alle" in command or "quanto manca alle" in command):
             print(self.logger.Log(" pre difftime function"),flush=True)
@@ -121,7 +122,7 @@ class CommandSelection:
             return response   
         elif("quanto manca" in command or "quanti giorni mancano al" in command):
             print(self.logger.Log(" pre getDiff function"),flush=True)
-            response = getDiff(command)
+            response = self.calendar.getDiff(command)
             return response
         elif(( ("news" in command) or ("novita" in command) or ("notizie" in command) ) and (("parlami" in command) or ("dimmi" in command) or ("dammi" in command))):
             print(self.logger.Log(" pre news function"),flush=True)
