@@ -102,8 +102,54 @@ Virgil or Virgil is a virtual assistant like Alexa or Google Home, but integrate
  4. Now you can change the **settings** of Virgil on the corresponding page
  5. At the end of this initial configuration, which you only need to do once, you can press any key and choose to use a **text interface** (recommended for debugging) or a **voice interface** (recommended for personal use).
 
+## 📚 Guide to setting
+
+```
+// THE VALUES ON THE JSON ARE THE DEFAULT
+{
+    "language": "it", //The launguage for now is useless sorry
+    "wordActivation": "Virgilio", //The word on Virgil can Activate
+    "volume": "100.0", // Set the start volume of Virgil
+    "city": "Salerno", // City default for the Meteo
+    "operation_timeout": "3", // Listening time if you don't tal 
+    "dynamic_energy_threshold": "true", // Automatic and dynamic microphone sensitivity
+    "energy_threshold": "3500", //Sensitivy of microphone                                     
+    "elevenlabs": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", //Key for elevenlabs                  
+    "openAI": "sk-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", //Key for openAI
+    "merrosEmail": "email", //Credential for merros                                                                
+    "merrosPassword": "password", //Credential for merros                                                               
+    "temperature": "0.9", //Randomness of GPT responses
+    "max_tokens": "30" //Max lenght phrase of GPT                                                                       
+}                                                                                                                      
+```
+
+### Why the key of OpenAI,ElevenLabs and Merros❓
+
+- OpenAI: This is in fact the only mandatory key, as GPT covers 50% of the application, and this is the real **difference** to Alexa and Virgil.
+- ElevenLabs: This key is not mandatory but it makes the experience more pleasant because ElevenLabs implements a more natural Speech To Text (TTS) and also allows you to choose your own voice.
+  The key for the API is free and only requires registration (TIPS: If you run out of tokens and want to continue using elevenlabs free, create another account with the same email address, but put a dot anywhere before the "@" and the confirmation email will still arrive, but it will be a different email address for the site... **SHHH DON'T TELL ANYONE**) If you can't register, Virgil will still work, but with Google's TTS.
+ and it's not the best choice 😅. 
+- Meross: This credential an required **ONLY** if you can use a domotic Meross but if you dont have a domotic Meross don't waste time ⏲️
+
+### How to change the voice for TTS ElevenLabs:
+
+1. Go in this file ```lib/sound.py```
+2. Go on the site of [ElevenLabs](https://elevenlabs.io/speech-synthesis) create an account (You should already have it)
+3. Explore the default Voice and choice one
+4. Now on this part of file ```sound.py```
+    ```
+    sound = generate(
+                        api_key = self.API_KEY,
+                        text=text,
+                        voice="Antoni",
+                        model='eleven_multilingual_v1'
+                    )
+    ```
+    And replace the voice whith the one you want (if after the TTS dont'work try another voice on whatch a video on YT on how to use default entries )
+
 ## 📃 Configuration without app
 
+**not updated to revision**
 1. In the main directory there is a file call ```settings.json``` in this file is present all the setting of Virgil open it
 2. Now you can modify all the setting like API key, location etc
  
