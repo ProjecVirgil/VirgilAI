@@ -179,7 +179,7 @@ Virgilo or Virgil is a virtual assistant like Alexa or Google Home, but integrat
 
 > Go in the directory call setup and search the key.txt (remeber the key is a hexadecimal string of 32 characters),delete it and relaunch Virgil
 
-## TO BE CONSIDERED ⚠️
+## ⚠️ TO BE CONSIDERED 
 1. The entire project is only at the albor and is not 100% complete
 2. Virgilio without the API insert and without the connection will not function fully 
 3. **FOR NOW** many command works only in italian except for the question at GPT (so any questions not covered by the default commands)
