@@ -1,3 +1,4 @@
+import platform
 from colorama import Fore,Back
 
 import inspect
@@ -11,9 +12,25 @@ class Logger:
         self.lastCaller = ''
         self.__updateCallstack()
 
+
+    def checkSystem(self):
+        SYSTEM = platform.system()
+
+        if SYSTEM == 'Windows':
+                    return "win"
+        elif SYSTEM == 'Darwin' or SYSTEM == 'Linux':
+                    return "lin"  
+                              
     def __updateCallstack(self):
-        self.currentCallstack = inspect.stack()[2]
-        self.lastCaller = str(inspect.getmodule(self.currentCallstack[0])).split("\\")[-1]
+        system = self.checkSystem()
+        if(system == "win"):
+            self.currentCallstack = inspect.stack()[2]
+            self.lastCaller = str(inspect.getmodule(self.currentCallstack[0])).split("\\")[-1]
+        else:
+            self.currentCallstack = inspect.stack()[2]
+            self.lastCaller = str(inspect.getmodule(self.currentCallstack[0])).split("\\")[-1]
+            self.lastCaller = self.lastCaller.split("from")[1].split("/")[-1]
+        
 
     def Log(self, string: str, filepath: str = None):
         self.__updateCallstack()
@@ -28,3 +45,7 @@ class Logger:
             except IOError:
                 return log
         return log
+
+
+logger = Logger()
+print(logger.Log("Ciao"))
