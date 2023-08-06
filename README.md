@@ -1,7 +1,7 @@
 # Project Virgil
 
 <p align="center">
- <img src="/asset/BannerVirgil-transformed.png" alt="Markdownify" width ="700px" >
+ <img src="asset/BannerVirgil-transformed.png" alt="Markdownify" width ="700px" >
  </p>
  
 
@@ -18,31 +18,44 @@
 Created principle with [python3.11](https://www.python.org/downloads/) e various library like [SpeechRecognition ](https://pypi.org/project/SpeechRecognition/)  and [TTS library](https://pypi.org/project/gTTS/) 
 
 Virgil or Virgil is a virtual assistant like Alexa or Google Home, but integrated with an AI (GPT-3.5 turbo).The project is focused on the virtual assistant, but it is actually divided into two, in fact there is its own Android [app](https://github.com/Retr0100/VirgilApp) created with Flutter dedicated with which you can set, change your settings of the virtual assistant just as you would with Alexa or Google Home.
-ㅤㅤㅤ
+ㅤㅤ
 
-ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ**Virgil-AI** ㅤㅤ  **Virgil-App**   ㅤㅤ**Virgil-API**
+### **Virgil-AI** 
 
+![Virgil-AI](https://sloc.xyz/github/Retr0100/ProjectVirgil/) 
+![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/w/Retr0100/ProjectVirgil)
 
-ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ![Virgil-AI](https://sloc.xyz/github/Retr0100/ProjectVirgil/) ![Virgil-App](https://sloc.xyz/github/Retr0100/VirgilApp/) ![Virgil-API](https://sloc.xyz/github/Retr0100/VirgilAPI/) 
+### **Virgil-App**
 
+![Virgil-App](https://sloc.xyz/github/Retr0100/VirgilApp/)
+![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/w/Retr0100/VirgilApp)
 
-ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/w/Retr0100/ProjectVirgil) ![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/w/Retr0100/VirgilApp) ![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/w/Retr0100/VirgilAPI)
+### **Virgil-API**
+
+![Virgil-API](https://sloc.xyz/github/Retr0100/VirgilAPI/) 
+![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/w/Retr0100/VirgilAPI)
+
+### **Virgil-WebSite**
+
+![Virgil-API](https://sloc.xyz/github/Retr0100/VirgilWebSite/) 
+![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/w/Retr0100/VirgilWebSite)
+![Website](https://img.shields.io/website/https/projectvirgil.net?up_message=online&down_message=offline)
 
 
 ## Chart on the functioning of Virgil
 <p align="center">
- <img src="/asset/FlowChart1.png" alt="Markdownify" width ="700px" >
+ <img src="asset/FlowChart1.png" alt="Markdownify" width ="700px" >
 </p>
 
 ## Structure
 <p align="center">
- <img src="/asset/StructurePie.png" alt="Markdownify" width ="700px" >
+ <img src="asset/StructurePie.png" alt="Markdownify" width ="700px" >
 </p>
 
 
 ## Component
 <p align="center">
- <img src="/asset/MindMap.png" alt="Markdownify" width ="700px" >
+ <img src="asset/MindMap.png" alt="Markdownify" width ="700px" >
 </p>
 
 
