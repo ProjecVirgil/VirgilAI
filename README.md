@@ -25,7 +25,6 @@ Virgilo or Virgil is a virtual assistant like Alexa or Google Home, but integrat
 ![VirgilAI](https://img.shields.io/badge/2%2C1k-2%2C1k?style=for-the-badge&logo=visualstudiocode&label=Lines%20of%20code&labelColor=282a3&color=%23164773)
 ![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/w/Retr0100/ProjectVirgil?style=for-the-badge&logo=github&labelColor=%23282a3&color=%231B7F79)
 ![GitHub repo size](https://img.shields.io/github/repo-size/Retr0100/ProjectVirgil?style=for-the-badge&logo=github&labelColor=%23282a3&color=%23bd93f9)
-![VirgilAI](https://img.shields.io/badge/2%2C1k-2%2C1k?style=for-the-badge&logo=visualstudiocode&label=Lines%20of%20code&labelColor=282a3&color=%23164773)
 
 
 ### **Virgil-App** 📱
@@ -41,7 +40,6 @@ Virgilo or Virgil is a virtual assistant like Alexa or Google Home, but integrat
 ![VirgilAPI](https://img.shields.io/badge/450-450?style=for-the-badge&logo=visualstudiocode&label=Lines%20of%20code&labelColor=282a3&color=%23164773)
 ![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/w/Retr0100/VirgilAPI?style=for-the-badge&logo=github&labelColor=%23282a3&color=%231B7F79)
 ![GitHub repo size](https://img.shields.io/github/repo-size/Retr0100/VirgilAPI?style=for-the-badge&logo=github&labelColor=%23282a3&color=%23bd93f9)
-![VirgilAPI](https://img.shields.io/badge/450-450?style=for-the-badge&logo=visualstudiocode&label=Lines%20of%20code&labelColor=282a3&color=%23164773)
 
 ### **Virgil-WebSite** 🌐
 
