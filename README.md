@@ -22,31 +22,34 @@ Virgilo or Virgil is a virtual assistant like Alexa or Google Home, but integrat
 ## **Some information** 📋
 ### **Virgil-AI** 🤖
 
-![Virgil-AI](https://sloc.xyz/github/Retr0100/ProjectVirgil/) 
-![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/w/Retr0100/ProjectVirgil)
-![GitHub repo size](https://img.shields.io/github/repo-size/Retr0100/ProjectVirgil?color=purple)
+![VirgilAI](https://img.shields.io/badge/2%2C1k-2%2C1k?style=for-the-badge&logo=visualstudiocode&label=Lines%20of%20code&labelColor=282a3&color=%23164773)
+![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/w/Retr0100/ProjectVirgil?style=for-the-badge&logo=github&labelColor=%23282a3&color=%231B7F79)
+![GitHub repo size](https://img.shields.io/github/repo-size/Retr0100/ProjectVirgil?style=for-the-badge&logo=github&labelColor=%23282a3&color=%23bd93f9)
+![VirgilAI](https://img.shields.io/badge/2%2C1k-2%2C1k?style=for-the-badge&logo=visualstudiocode&label=Lines%20of%20code&labelColor=282a3&color=%23164773)
 
 
 ### **Virgil-App** 📱
 
-![Virgil-App](https://sloc.xyz/github/Retr0100/VirgilApp/)
-![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/w/Retr0100/VirgilApp)
-![GitHub repo size](https://img.shields.io/github/repo-size/Retr0100/VirgilApp?color=purple)
+![VirgilApp](https://img.shields.io/badge/4%2C5k-4%2C5k?style=for-the-badge&logo=visualstudiocode&label=Lines%20of%20code&labelColor=282a3&color=%23164773)
+![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/w/Retr0100/VirgilApp?style=for-the-badge&logo=github&labelColor=%23282a3&color=%231B7F79)
+![GitHub repo size](https://img.shields.io/github/repo-size/Retr0100/VirgilApp?style=for-the-badge&logo=github&labelColor=%23282a3&color=%23bd93f9)
+
 
 
 ### **Virgil-API** 🐝
 
-![Virgil-API](https://sloc.xyz/github/Retr0100/VirgilAPI/) 
-![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/w/Retr0100/VirgilAPI)
-![GitHub repo size](https://img.shields.io/github/repo-size/Retr0100/VirgilAPI?color=purple)
-
+![VirgilAPI](https://img.shields.io/badge/450-450?style=for-the-badge&logo=visualstudiocode&label=Lines%20of%20code&labelColor=282a3&color=%23164773)
+![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/w/Retr0100/VirgilAPI?style=for-the-badge&logo=github&labelColor=%23282a3&color=%231B7F79)
+![GitHub repo size](https://img.shields.io/github/repo-size/Retr0100/VirgilAPI?style=for-the-badge&logo=github&labelColor=%23282a3&color=%23bd93f9)
+![VirgilAPI](https://img.shields.io/badge/450-450?style=for-the-badge&logo=visualstudiocode&label=Lines%20of%20code&labelColor=282a3&color=%23164773)
 
 ### **Virgil-WebSite** 🌐
 
-![Virgil-API](https://sloc.xyz/github/Retr0100/VirgilWebSite/) 
-![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/w/Retr0100/VirgilWebSite)
-![Website](https://img.shields.io/website/https/projectvirgil.net?up_message=online&down_message=offline)
-![GitHub repo size](https://img.shields.io/github/repo-size/Retr0100/VirgilWebSite?color=purple)
+![VirgilWebSite](https://img.shields.io/badge/7%2C5k-7%2C5k?style=for-the-badge&logo=visualstudiocode&label=Lines%20of%20code&labelColor=282a3&color=%23164773)
+![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/w/Retr0100/VirgilWebSite?style=for-the-badge&logo=github&labelColor=%23282a3&color=%231B7F79)
+![Website](https://img.shields.io/website/https/projectvirgil.net?up_message=online&down_message=offline&style=for-the-badge&logo=railway&labelColor=%23282a3&color=%23a6da95)
+![GitHub repo size](https://img.shields.io/github/repo-size/Retr0100/VirgilWebSite?style=for-the-badge&logo=github&labelColor=%23282a3&color=%23bd93f9)
+
 
 
 
