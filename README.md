@@ -17,7 +17,7 @@
 
 Created principle with [python3.11](https://www.python.org/downloads/) e various library like [SpeechRecognition ](https://pypi.org/project/SpeechRecognition/)  and [TTS library](https://pypi.org/project/gTTS/) 
 
-Virgilo or Virgil is a virtual assistant like Alexa or Google Home, but integrated with an AI (GPT-3.5 turbo).The project is focused on the virtual assistant, but it is actually divided into two, in fact there is its own Android [app](https://github.com/Retr0100/VirgilApp) created with Flutter dedicated with which you can set, change your settings of the virtual assistant just as you would with Alexa or Google Home.
+Virgilo or Virgil is a virtual assistant like Alexa or Google Home, but integrated with an AI (GPT-3.5 turbo).The project is focused on the virtual assistant, but it is actually divided into two, in fact there is its own [Android app](https://github.com/Retr0100/VirgilApp) created with Flutter dedicated with which you can set, change your settings of the virtual assistant just as you would with Alexa or Google Home.
 ㅤㅤ
 ## **Some information** 📋
 ### **Virgil-AI** 🤖
@@ -192,8 +192,8 @@ Virgilo or Virgil is a virtual assistant like Alexa or Google Home, but integrat
 - [x] Make a beta of VirgilAI
 - [x] Make a first Version of App
 - [x] Increase the possibility of Virgil
+- [x] Create a website for the Project
 - [ ] Improve the code design and make the code more efficent
-- [ ] Create a website for the Project
 - [ ] Improve the command reqcognition
 - [ ] Add more language
 
