@@ -12,13 +12,11 @@ class EventScheduler:
         self.request_maker = MakeRequests()
         self.calendar = Calendar()
         
-        print(self.logger.Log("fetching date"), flush=True)
         self.currentDate = datetime.datetime.now().date()
         self.formattedDate = self.currentDate.strftime("%d-%m-%Y")
         self.formattedDate = self.formattedDate.split("-")
         self.formattedDate[1] = self.formattedDate[1].replace("0", "")
         self.formattedDate = "-".join(self.formattedDate)
-        print(self.logger.Log("fetching events"), flush=True)
         
         
     def sendNotify(self):
@@ -39,24 +37,27 @@ class EventScheduler:
         if(presetDate == None):
             commandSplitted = self.calendar.splitCommand(command)
             date = self.calendar.recovDate(commandSplitted)
-            day,month,year = date.split("-")
+            try:
+                day,month,year = date.split("-")
+            except:
+                day,month,year = date.split(" ")
             day,month = self.calendar.clearNumber(day,month)
             date = "-".join([day,month,year])
             return date
         else:
-            return date
+            return presetDate
         
 
     def addEvents(self,command:str):
         print(self.logger.Log(" i will create event"),flush=True)
+        date,event = command.split("ho")
         if("che" in command):
-            commandSplit = command.split(" che ")[1]
-            date = self.getDate(commandSplit)
+            dateSplited = date.split(" che ")[1]
+            date = self.getDate(dateSplited)
         elif("per" in command):
-            commandSplit = command.split(" per ")[1]
-            date = self.getDate(commandSplit)
+            dateSplited = date.split(" per ")[1]
+            date = self.getDate(dateSplited)
         print(self.logger.Log(" i recov the date"),flush=True)
-        event = command.split("ho")[1]
         print(self.logger.Log(" send the request"),flush=True)
-        MakeRequests.createEvents(event,date)
+        self.request_maker.createEvents(event,date)
         return "Promemoria creato con successo"

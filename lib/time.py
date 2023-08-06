@@ -38,22 +38,32 @@ class Time:
             _type_: _description_
         """
         currentTime = datetime.datetime.now().time()
-        
+        #TODO MORE TEST WITH STT
         if(" al " in command):
             query=command.split(" al")[1].strip()
         elif(" alle " in command):
             query=command.split(" alle")[1].strip()
         elif(" per le " in command):
             query=command.split(" le")[1].strip()
-        numberFind = self.countNumber(command)
+        numberFind = self.utils.countNumber(command)
+        print(query)
         if(numberFind > 1):
-            querySplitted = query.split(" e ")
-            hours = querySplitted[0]
-            minuts = querySplitted[1]
+            try:
+                querySplitted = query.split(" e ")
+                hours = querySplitted[0]
+                minuts = querySplitted[1]
+            except:
+                querySplitted = query.split(":")
+                hours = querySplitted[0]
+                minuts = querySplitted[1]
+            
         else:
             if("mezza" in command):
                 query = query.replace("mezza","30")
-                querySplitted = query.split(" e ")
+                try:
+                    querySplitted = query.split(":")
+                except:
+                    querySplitted = query.split(" e ")
                 hours = querySplitted[0]
                 minuts = querySplitted[1]
             elif("meno un quarto" in command):
@@ -64,7 +74,10 @@ class Time:
                 minuts = querySplitted[1]
             elif("un quarto" in command):
                 query = query.replace("un quarto","15")
-                querySplitted = query.split(" e ")
+                try:
+                    querySplitted = query.split(":")
+                except:
+                    querySplitted = query.split(" e ")
                 hours = querySplitted[0]
                 minuts = querySplitted[1]
             else:

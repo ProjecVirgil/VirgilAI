@@ -49,9 +49,9 @@ class Calendar:
             self.audio.create(file=True,namefile="ErrorDate")
         else:
             if(day != 1 or day != 11):
-                return f"Il {self.utils.numberToWord(str(day))} di {months[month-1]} del {self.utils.numberToWord(str(year))} è {str(week[indexWeek])}"
+                return f"Il {self.utils.numberToWord(str(day))} di {months[int(month)-1]} del {self.utils.numberToWord(str(year))} è {str(week[indexWeek])}"
             else:
-                return f"L'{self.utils.numberToWord(str(day))} di {months[month-1]} del {self.utils.numberToWord(str(year))} è {str(week[indexWeek])}"
+                return f"L'{self.utils.numberToWord(str(day))} di {months[int(month)-1]} del {self.utils.numberToWord(str(year))} è {str(week[indexWeek])}"
         
         
     def recovMonth(self,query:str):
@@ -59,26 +59,36 @@ class Calendar:
         query = query.lower()
         for month in months:
             if(month in query):
-                query = query.replace(month,str(months.index(month)+1))
+                if(len(str(months.index(month)+1)) == 1):
+                    monthReplace = "0" + str(months.index(month)+1)
+                else:
+                    monthReplace = str(months.index(month)+1)
+                query = query.replace(month,monthReplace)
         return query
     
     def recovDate(self,query:str):
-        pattern = ["%d %m %Y","%d %m","%d"]
+        patterns = ["%d %m %Y","%d %m","%d"]
         dateCurrent = datedate.now()
         formattedDate = dateCurrent.strftime('%d-%m-%Y') 
         query = self.recovMonth(query)
-        for i in pattern:
+        print(query)
+        for pattern in patterns:
             try:
-                parsed_datetime = datedate.strptime(query, i)
-                parsed_datetime = parsed_datetime.strftime('%d-%m-%Y') 
-                if(pattern.index(i) == 1):
+                parsed_datetime = datedate.strptime(query, pattern)
+                print(parsed_datetime)
+                parsed_datetime = parsed_datetime.strftime('%d-%m-%Y')
+                print(parsed_datetime) 
+                if(patterns.index(pattern) == 1):
                     parsed_datetime = parsed_datetime.replace("1900",formattedDate.split("-")[2]) 
+                    print(parsed_datetime,"1")
                     return parsed_datetime
-                elif(pattern.index(i) == 2):
+                elif(patterns.index(pattern) == 2):
                     parsed_datetime = parsed_datetime.replace("01",formattedDate.split("-")[1]) 
-                    parsed_datetime = parsed_datetime.replace("1900",formattedDate.split("-")[2]) 
+                    parsed_datetime = parsed_datetime.replace("1900",formattedDate.split("-")[2])
+                    print(parsed_datetime,"2")
                     return parsed_datetime
                 else:
+                    print(parsed_datetime)
                     return parsed_datetime
             except ValueError:
                 pass  
@@ -86,7 +96,7 @@ class Calendar:
         
     def splitCommand(self,command:str):
         try:
-            if(" il " in command or "il " in command):         
+            if(" il " in command or "il " in command):
                 query=command.split("il")[1].strip()
             elif("l'" in command or "l' " in command):
                 query=command.split(" l'")[1].strip()
@@ -162,8 +172,8 @@ class Calendar:
         diff_days = (datetime.datetime.now() - correct_date).days
         print(self.logger.Log(f"result: Al {day} {month} {year} mancano {diff_days * -1}"), flush=True)
         if(diff_days * -1 == 1):
-            return f" Al {Utils.numberToWord(day)} {Utils.numberToWord(month)} {Utils.numberToWord(year)} manca un giorno"
+            return f" Al {self.utils.numberToWord(day)} {self.utils.numberToWord(month)} {self.utils.numberToWord(year)} manca un giorno"
         else:
-            return f" Al {Utils.numberToWord(day)}, {Utils.numberToWord(month)}, {Utils.numberToWord(year)} mancano {Utils.numberToWord(diff_days * -1)} giorni"
+            return f" Al {self.utils.numberToWord(day)}, {self.utils.numberToWord(month)}, {self.utils.numberToWord(year)} mancano {self.utils.numberToWord(diff_days * -1)} giorni"
         
         

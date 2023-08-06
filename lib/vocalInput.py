@@ -10,20 +10,19 @@ from lib.utils import Utils
 
 # ----- File to take the input by the microphone -----
 class VocalInput:
-
     def __init__(self) -> None:
         self.DATA_EMPTY = {
             None:True
             }
         self.logger = Logger()
         self.utils = Utils()
-        listener = sr.Recognizer()
+        self.listener = sr.Recognizer()
         with open('setup/settings.json') as f:
             SETTINGS = json.load(f)
             # init the recognizer
-            listener.operation_timeout = int(SETTINGS['operation_timeout'])
-            listener.dynamic_energy_threshold = bool(SETTINGS['dynamic_energy_threshold'])
-            listener.energy_threshold = int(SETTINGS['energy_threshold'])
+            self.listener.operation_timeout = int(SETTINGS['operation_timeout'])
+            self.listener.dynamic_energy_threshold = bool(SETTINGS['dynamic_energy_threshold'])
+            self.listener.energy_threshold = int(SETTINGS['energy_threshold'])
             self.WORD_ACTIVATION = str(SETTINGS['wordActivation']).lower()
     
     def copyData(self,command:str):
@@ -37,7 +36,7 @@ class VocalInput:
     def speech(self):
             command = ""
             print(self.logger.Log(" start hearing function"), flush=True)
-            self.utils.cleanBuffer(dataEmpty=self.dataEmpty,fileName="command")
+            self.utils.cleanBuffer(dataEmpty=self.DATA_EMPTY,fileName="command")
             status  = True
             while(status):
                 try:

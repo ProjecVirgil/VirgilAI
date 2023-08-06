@@ -98,7 +98,7 @@ class Process:
                 if ("spegniti" in command):
                     commandToElaborate = "virgilio spegniti"
                 else:
-                    commandToElaborate = "".join(command.split(":")[0])[7:-1]
+                    commandToElaborate = "".join(command.split('":')[0])[7:]
             if ("false" in command and command != None):
                 print(self.logger.Log(f" command processed: {commandToElaborate}"), flush=True)
                 #TODO VERIFY IF WIHOUT THIS THE CODE WORK
