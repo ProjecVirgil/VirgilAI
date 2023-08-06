@@ -5,7 +5,7 @@ import sys
 
 from colorama import Style,Fore
 import pyfiglet
-from pygame import mixer
+from pygame.mixer import music
 
 from lib.sound import Audio
 from lib.logger import Logger
@@ -20,7 +20,7 @@ class Output:
         self.logger = Logger()
         self.utils = Utils()
         self.audio = Audio()
-        mixer.init()
+        music.init()
 
 
     def update_json_value(self,key, new_value):
@@ -99,10 +99,10 @@ class Output:
                         self.shutdown()
                     if("volume" in command):
                         
-                            mixer.music.set_volume(float(res))
-                            mixer.music.unload()    
-                            mixer.music.load('asset/bipEffectCheckSound.mp3')
-                            mixer.music.play()       
+                            music.set_volume(float(res))
+                            music.unload()    
+                            music.load('asset/bipEffectCheckSound.mp3')
+                            music.play()       
                             print(self.logger.Log(f" volume changed correctly to {res*100}% "), flush=True)
                     
                     elif("timer" in command or "sveglia" in command):

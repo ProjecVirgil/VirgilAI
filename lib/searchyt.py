@@ -1,6 +1,6 @@
 import requests
 import yt_dlp
-from pygame import mixer
+from pygame.mixer import music
 
 from lib.logger import Logger
 # ---- This file is for search music and video via yt ----
@@ -58,7 +58,7 @@ class MediaPlayer:
     def play(self):
         filename = "music.wav"
         #pygame.mixer.init()
-        playerAudio = mixer.music
+        playerAudio = music
         playerAudio.unload()
         playerAudio.load(filename)
         playerAudio.play()

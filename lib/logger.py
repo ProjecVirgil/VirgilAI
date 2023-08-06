@@ -45,7 +45,3 @@ class Logger:
             except IOError:
                 return log
         return log
-
-
-logger = Logger()
-print(logger.Log("Ciao"))
