@@ -43,7 +43,6 @@ class VocalInput:
                     with sr.Microphone() as source:
                         print(self.logger.Log(" I'm hearing..."), flush=True)
                         voice = self.listener.listen(source,5,15)
-                        print(self.logger.Log(" send command"), flush=True)
                         command = self.listener.recognize_google(voice,language='it-it')
                         print(self.logger.Log(" command acquired"), flush=True)
                         command = command.lower()
