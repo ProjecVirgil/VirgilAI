@@ -145,6 +145,51 @@ Virgilo or Virgil is a virtual assistant like Alexa or Google Home, but integrat
 }                                                                                                                      
 ```
 
+## 🎙️ Guide to Microphone
+
+### **Problem**
+**The recognizer tries to recognize speech even when I’m not speaking, or after I’m done speaking.**
+
+### Solution
+Try increasing the recognizer_instance.energy_threshold property. This is basically how sensitive the recognizer is to when recognition should start. Higher values mean that it will be less sensitive, which is useful if you are in a loud room.
+
+I created this tool for you 💓
+
+```
+import math
+import speech_recognition as sr
+import time
+listener = sr.Recognizer()
+def main(languageChoose:str):
+    print("SAY A WORD OR PHRASE IN YOUR LANGAGE")
+    resultDict = {}
+    for i in range(5):
+        try:
+            with sr.Microphone() as source:
+                print(f"{i}. SPEAK")
+                start_time = time.time()
+                voice = listener.listen(source,3,15)
+                command = listener.recognize_google(voice,language=languageChoose)
+                end_time = time.time()
+                resultDict[i] = [listener.energy_threshold,command,end_time - start_time]
+        except:
+            pass
+    return resultDict
+if __name__ == "__main__":
+    listener.operation_timeout = 2
+    listener.dynamic_energy_threshold = True
+    languageChoose = str(input("Insert your language nation and dialet if is not dialet simple repeate the nation example it-it: "))
+    results  = main(languageChoose)
+    sorted_keys = sorted(results.keys(), key=lambda key: results[key][2])
+    sorted_dict = {key: results[key] for key in sorted_keys}
+    print(f"Recommended value:  {math.ceil(list(sorted_dict.values())[0][0])}")
+```
+
+
+
+
+
+
 ### Why the key of OpenAI,ElevenLabs and Merros❓
 
 - OpenAI: This is in fact the only mandatory key, as GPT covers 50% of the application, and this is the real **difference** to Alexa and Virgil.
