@@ -184,7 +184,7 @@ if __name__ == "__main__":
     sorted_dict = {key: results[key] for key in sorted_keys}
     print(f"Recommended value:  {math.ceil(list(sorted_dict.values())[0][0])}")
 ```
-
+**The tool is not 100% accurate but it is a great way to get a starting idea if you see that virgil is not accurate enough in recognizing when you speak and when you don't try adjustment**
 
 
 
