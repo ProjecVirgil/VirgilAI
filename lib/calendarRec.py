@@ -40,7 +40,7 @@ class Calendar:
         day,month,year = date.split("-")
         day,month = self.clearNumber(day,month)
         indexWeek = self.indexDayOfWeek(year,month,day)
-        week = ["Lunedi","Martedi","Mercoledi","Giovedi","Venerdi","Sabato","Domenica"]
+        week = ["Lunedì","Martedì","Mercoledì","Giovedì","Venerdì","Sabato","Domenica"]
         months=["gennaio","febbraio","marzo","aprile","maggio","giugno","luglio","agosto","settembre","ottobre","novembre","dicembre"]
         print(f"Il {day} di {months[int(month)-1]} del {year} è {week[indexWeek]}", flush=True)
     

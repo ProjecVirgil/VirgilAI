@@ -27,7 +27,7 @@ class MakeRequests:
         try:
             r = requests.put(url)
             UserCreated = r.json()
-            print(self.logger.Log( "User created Correctly"),flush=True)
+            print(self.logger.Log("User created Correctly"),flush=True)
             return UserCreated["userId"]
         except:
             print(self.logger.Log(WARNIGN + "I can't stable connection check the network"),flush=True)
@@ -53,9 +53,9 @@ class MakeRequests:
         url = f'{self.URL_BASE}/calendar/createUser/{id}/'
         r = requests.put(url)
         if(r.status_code == 201):
-            print(self.logger.Log(" User calendar created correcly"),flush=True)
+            print(self.logger.Log("User calendar created correcly"),flush=True)
         else:
-            print(self.logger.Log(" User calendar offline"),flush=True)
+            print(self.logger.Log("User calendar offline"),flush=True)
 
     ## Create Event
     def createEvents(self,event:str,date:str):
