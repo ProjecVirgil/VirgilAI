@@ -115,6 +115,7 @@ Virgilo or Virgil is a virtual assistant like Alexa or Google Home, but integrat
  Before the user on Linux (preferably, but also on Windows it would not be) create an enviroment with venv ```python -m venv name_enviroment``` after writing ```source name_enviroment/bin/activate```.
  Now you can install all the dependencies without putting your PC at risk. 
  To close the environment, just run ```deactivate```.
+ If you use the enviroment try Virgil only whith the text interface 
 
 ## 📖 How to use
 ### When you have installed and downloaded the API you can start using Virgilio 🥡
@@ -153,7 +154,7 @@ Virgilo or Virgil is a virtual assistant like Alexa or Google Home, but integrat
 ### Solution
 Try increasing the recognizer_instance.energy_threshold property. This is basically how sensitive the recognizer is to when recognition should start. Higher values mean that it will be less sensitive, which is useful if you are in a loud room.
 
-I created this tool for you 💓
+I created this tool for you (the tool is included in the repository) 💓
 
 ```
 import math
