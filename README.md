@@ -239,8 +239,8 @@ if __name__ == "__main__":
 - [x] Make a first Version of App
 - [x] Increase the possibility of Virgil
 - [x] Create a website for the Project
+- [x] Improve the command recognition
 - [ ] Improve the code design and make the code more efficent
-- [ ] Improve the command reqcognition
 - [ ] Add more language
 
 
