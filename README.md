@@ -53,7 +53,7 @@ Virgilo or Virgil is a virtual assistant like Alexa or Google Home, but integrat
 
 ## 🔧 Chart on the functioning of Virgil 
 <p align="center">
- <img src="asset/DiagramProject.png" alt="Markdownify" width ="700px" >
+ <img src="asset/DiagrammaProject.png" alt="Markdownify" width ="700px" >
 </p>
 
 ## How VirgilAI works
