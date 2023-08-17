@@ -1,9 +1,13 @@
+<<<<<<< HEAD
 # Virgil AI (Assistent Interface)
 
 <p align="center">
  <img src="asset/BannerVirgil-transformed.png" alt="Markdownify" width ="700px" >
  </p>
  
+=======
+# Virgil AI
+>>>>>>> 44b592756ac91bc6624c11e53ca30f5aec4e72b5
 
 <p align="center">
   <a href="#-key-features">Key Features</a> •
@@ -27,6 +31,38 @@ Virgilo or Virgil is a virtual assistant like Alexa or Google Home, but integrat
 ![GitHub repo size](https://img.shields.io/github/repo-size/Retr0100/ProjectVirgil?style=for-the-badge&logo=github&labelColor=%23282a3&color=%23bd93f9)
 
 
+<<<<<<< HEAD
+=======
+### **Virgil-App** 📱
+
+![VirgilApp](https://img.shields.io/badge/4%2C5k-4%2C5k?style=for-the-badge&logo=visualstudiocode&label=Lines%20of%20code&labelColor=282a3&color=%23164773)
+![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/w/Retr0100/VirgilApp?style=for-the-badge&logo=github&labelColor=%23282a3&color=%231B7F79)
+![GitHub repo size](https://img.shields.io/github/repo-size/Retr0100/VirgilApp?style=for-the-badge&logo=github&labelColor=%23282a3&color=%23bd93f9)
+
+
+
+### **Virgil-API** 🐝
+
+![VirgilAPI](https://img.shields.io/badge/450-450?style=for-the-badge&logo=visualstudiocode&label=Lines%20of%20code&labelColor=282a3&color=%23164773)
+![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/w/Retr0100/VirgilAPI?style=for-the-badge&logo=github&labelColor=%23282a3&color=%231B7F79)
+![GitHub repo size](https://img.shields.io/github/repo-size/Retr0100/VirgilAPI?style=for-the-badge&logo=github&labelColor=%23282a3&color=%23bd93f9)
+
+### **Virgil-WebSite** 🌐
+
+![VirgilWebSite](https://img.shields.io/badge/7%2C5k-7%2C5k?style=for-the-badge&logo=visualstudiocode&label=Lines%20of%20code&labelColor=282a3&color=%23164773)
+![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/w/Retr0100/VirgilWebSite?style=for-the-badge&logo=github&labelColor=%23282a3&color=%231B7F79)
+![Website](https://img.shields.io/website/https/projectvirgil.net?up_message=online&down_message=offline&style=for-the-badge&logo=railway&labelColor=%23282a3&color=%23a6da95)
+![GitHub repo size](https://img.shields.io/github/repo-size/Retr0100/VirgilWebSite?style=for-the-badge&logo=github&labelColor=%23282a3&color=%23bd93f9)
+
+
+
+
+## 🔧 Chart on the functioning of Virgil 
+<p align="center">
+ <img src="asset/DiagrammaProject.svg" alt="Markdownify" width ="80%" >
+</p>
+
+>>>>>>> 44b592756ac91bc6624c11e53ca30f5aec4e72b5
 ## 💻 How VirgilAI works 
 <p align="center">
  <img src="asset/DiagrammaAI.svg" alt="Markdownify" width ="80%" >
