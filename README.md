@@ -1,11 +1,6 @@
 # Virgil AI (Assistent Interface)
 
 <p align="center">
- <img src="asset/BannerVirgil-transformed.png" alt="Markdownify" width ="700px" >
- </p>
- 
-
-<p align="center">
   <a href="#-key-features">Key Features</a> •
   <a href="#-how-to-use">How To Use</a> •
   <a href="#-credits-and-technologies-used">Credits</a> •
