@@ -1,18 +1,19 @@
 # Virgil AI (Assistent Interface)
 
 <p align="center">
-  <a href="#-key-features">Key Features</a> •
-  <a href="#-how-to-use">How To Use</a> •
-  <a href="#-credits-and-technologies-used">Credits</a> •
-  <a href="#-installing">Installing</a> •
-  <a href="#to-be-considered">To be considered!</a> 
+  <a href="#-key-features"><b>Key Features</b></a> •
+  <a href="#-how-to-use"><b>How To Use</b></a> •
+  <a href="#-credits-and-technologies-used"><b>Credits</b></a> •
+  <a href="#-installing"><b>Installing</b></a> •
+  <a href="#to-be-considered"><b>To be considered</b>!</a> •
+  <a href=#-roadmap-for-the-projectvirgil><b>Road map</b></a> 
 </p>
 
 ---
 
 Created principle with [python3.11](https://www.python.org/downloads/) e various library like [SpeechRecognition ](https://pypi.org/project/SpeechRecognition/)  and [TTS library](https://pypi.org/project/gTTS/) 
 
-Virgilo or Virgil is a virtual assistant like Alexa or Google Home, but integrated with an AI (GPT-3.5 turbo).Designed to give the user the ability to use it and do what they want with it from putting it on a rasperry and using it as alexa to integrating it with their device whether it's linux or windowsCon la possibilita di impostare i proprio settaggi a seconda del esigenza da dove e quando si vuole
+Virgilo or Virgil is a virtual assistant like Alexa or Google Home, but integrated with an AI (GPT-3.5 turbo).Designed to give the user the ability to use it and do what they want with it from putting it on a rasperry and using it as alexa to integrating it with their device whether it's linux or windows. With the possibility to set your own settings according to the need from where and when you want
 ㅤㅤ
 ## **Some information** 📋
 ### **Virgil-AI** 🤖
