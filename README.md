@@ -5,7 +5,8 @@
   <a href="#-how-to-use">How To Use</a> •
   <a href="#-credits-and-technologies-used">Credits</a> •
   <a href="#-installing">Installing</a> •
-  <a href="#to-be-considered">To be considered!</a> 
+  <a href="#to-be-considered">To be considered!</a> •
+  <a href=#-roadmap-for-the-projectvirgil><b>Road map</b></a> 
 </p>
 
 ---
