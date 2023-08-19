@@ -1,34 +1,41 @@
+"""_summary_
+
+    Returns:
+        _type_: _description_
+    """
 import datetime
 import time
 
 from lib.logger import Logger
-from lib.utils import Utils 
+from lib.utils import Utils
 
 # ---- This file get the current time and more ----
 
 class Time:
+    """_summary_
+    """
     def __init__(self):
         self.logger = Logger()
         self.utils  = Utils()
-        
+
     def now(self):
         """_summary_
 
         Returns:
             _type_: _description_
         """
-        print(self.logger.Log(" Time function"),flush=True)
-        timeTuple = time.localtime() # get struct_time
-        hours = time.strftime('%H',timeTuple)
-        minuts = time.strftime('%M',timeTuple)
-        hoursToWords = self.utils.numberToWord(hours)
-        minutsToWords = self.utils.numberToWord(minuts)
-        timeString = (f"Sono le {str(hoursToWords)} e {str(minutsToWords)}  minuti")
-        print(time.strftime("\nVirgilio: Sono le %H e %M minuti", timeTuple),flush=True)
-        return timeString
+        print(self.logger.log(" Time function"),flush=True)
+        time_tuple = time.localtime() # get struct_time
+        hours = time.strftime('%H',time_tuple)
+        minuts = time.strftime('%M',time_tuple)
+        hours_to_words = self.utils.number_to_word(hours)
+        minuts_to_words = self.utils.number_to_word(minuts)
+        time_string = f"Sono le {str(hours_to_words)} e {str(minuts_to_words)}  minuti"
+        print(time.strftime("\nVirgilio: Sono le %H e %M minuti", time_tuple),flush=True)
+        return time_string
 
 
-    def diffTime(self,command:str):
+    def diff_time(self,command:str):
         """_summary_
 
         Args:
@@ -37,74 +44,78 @@ class Time:
         Returns:
             _type_: _description_
         """
-        currentTime = datetime.datetime.now().time()
+        current_time = datetime.datetime.now().time()
         #TODO MORE TEST WITH STT
-        if(" al " in command):
+        if " al " in command:
             query=command.split(" al")[1].strip()
-        elif(" alle " in command):
+        elif " alle " in command:
             query=command.split(" alle")[1].strip()
-        elif(" per le " in command):
+        elif " per le " in command:
             query=command.split(" le")[1].strip()
-        numberFind = self.utils.countNumber(command)
-        print(query)
-        if(numberFind > 1):
+        number_find = self.utils.count_number(command)
+        if number_find > 1:
             try:
-                querySplitted = query.split(" e ")
-                hours = querySplitted[0]
-                minuts = querySplitted[1]
-            except:
-                querySplitted = query.split(":")
-                hours = querySplitted[0]
-                minuts = querySplitted[1]
-            
+                query_splitted = query.split(" e ")
+                hours = query_splitted[0]
+                minuts = query_splitted[1]
+            except IndexError:
+                query_splitted = query.split(":")
+                hours = query_splitted[0]
+                minuts = query_splitted[1]
+
         else:
-            if("mezza" in command):
+            if "mezza" in command:
                 query = query.replace("mezza","30")
                 try:
-                    querySplitted = query.split(":")
+                    query_splitted = query.split(":")
                 except:
-                    querySplitted = query.split(" e ")
-                hours = querySplitted[0]
-                minuts = querySplitted[1]
-            elif("meno un quarto" in command):
+                    query_splitted = query.split(" e ")
+                hours = query_splitted[0]
+                minuts = query_splitted[1]
+            elif "meno un quarto" in command:
                 query = query.replace("meno un quarto", "45")
-                query = query.replace(query.split(" ")[0], str(int(query.split(" ")[0])-1) ) #TAKE THE NUMBER OF THE NOW AND REPLACE IT WITH ITSELF MINUS ONE
-                querySplitted = query.split(" ")
-                hours = querySplitted[0]
-                minuts = querySplitted[1]
-            elif("un quarto" in command):
+                query = query.replace(query.split(" ")[0],
+                str(int(query.split(" ")[0])-1) ) #TAKE THE NUMBER OF THE NOW AND REPLACE IT WITH ITSELF MINUS ONE
+                query_splitted = query.split(" ")
+                hours = query_splitted[0]
+                minuts = query_splitted[1]
+            elif "un quarto" in command:
                 query = query.replace("un quarto","15")
                 try:
-                    querySplitted = query.split(":")
+                    query_splitted = query.split(":")
                 except:
-                    querySplitted = query.split(" e ")
-                hours = querySplitted[0]
-                minuts = querySplitted[1]
+                    query_splitted = query.split(" e ")
+                hours = query_splitted[0]
+                minuts = query_splitted[1]
             else:
                 minuts = "00"
                 hours = query.split(" ")[-1]
 
-            
-        timeString = f"{hours}:{minuts}"
-        
-        timeFormatted = datetime.datetime.strptime(timeString, "%H:%M").time()
 
-        data_corrente = datetime.datetime.combine(datetime.date.today(), currentTime)
-        data_specificata = datetime.datetime.combine(datetime.date.today(), timeFormatted)
+        time_string = f"{hours}:{minuts}"
+
+        time_formatted = datetime.datetime.strptime(time_string, "%H:%M").time()
+
+        data_corrente = datetime.datetime.combine(datetime.date.today(), current_time)
+        data_specificata = datetime.datetime.combine(datetime.date.today(), time_formatted)
 
         diff_time = data_specificata - data_corrente
 
-        calculatedHours, rest = divmod(diff_time.seconds, 3600)
-        calculatedMinuts, calculateSeconds = divmod(rest, 60)
+        calculated_hours, rest = divmod(diff_time.seconds, 3600)
+        calculated_minuts, calculate_seconds = divmod(rest, 60)
 
-        if("sveglia" in command):
-            print(self.logger.Log( f" tempo calcolato per la sveglia {calculatedHours},{calculatedMinuts},{calculateSeconds}"),flush=True)
-            return f"{calculatedHours} ore {calculatedMinuts} minuti e {calculateSeconds} secondi"
-        else:
-            print(self.logger.Log(f" alle {self.utils.numberToWord(hours)} e {self.utils.numberToWord(minuts)} mancano {self.utils.numberToWord(calculatedHours)} {self.utils.numberToWord(calculatedMinuts)} {self.utils.numberToWord(calculateSeconds)}"),flush=True)
-            return f" alle {self.utils.numberToWord(hours)} e {self.utils.numberToWord(minuts)} mancano {self.utils.numberToWord(calculatedHours)} ore {self.utils.numberToWord(calculatedMinuts)} minuti e {self.utils.numberToWord(calculateSeconds)} secondi"
+        if "sveglia" in command:
+            print(
+                self.logger.log(
+                f" tempo calcolato per la sveglia {calculated_hours},{calculated_minuts},{calculate_seconds}"),
+                flush=True)
+            return f"{calculated_hours} ore {calculated_minuts} minuti e {calculate_seconds} secondi"
+        print(
+            self.logger.log(
+            f" alle {self.utils.number_to_word(hours)} e {self.utils.number_to_word(minuts)} mancano {self.utils.number_to_word(calculated_hours)} {self.utils.number_to_word(calculated_minuts)} {self.utils.number_to_word(calculate_seconds)}"),flush=True)
+        return f" alle {self.utils.number_to_word(hours)} e {self.utils.number_to_word(minuts)} mancano {self.utils.number_to_word(calculated_hours)} ore {self.utils.number_to_word(calculated_minuts)} minuti e {self.utils.number_to_word(calculate_seconds)} secondi"
         # Stampa la differenza in un formato più comprensibile
-        
+
 
     def conversion(self,command:str):
         """_summary_
@@ -115,42 +126,46 @@ class Time:
         Returns:
             _type_: _description_
         """
-        print(self.logger.Log(" Conversion in progress"),flush=True)
+        print(self.logger.log(" Conversion in progress"),flush=True)
         command=command.replace(","," ")
         command=command.split(" ")
-        
-        if((("ora" in command) or ("ore" in command)) and (("minuto" in command) or ("minuti" in command)) and (("secondo" in command) or ("secondi" in command)) ):
+
+        if(
+            (("ora" in command) or ("ore" in command))
+            and (("minuto" in command) or ("minuti" in command))
+            and (("secondo" in command) or ("secondi" in command))):
             hours=int(command[0])
             minutes = int(command[2])
             seconds = int(command[5])
-            sumSeconds= hours*3600 + minutes * 60 + seconds
-            return sumSeconds
-            
-        elif((("ora" in command) or ("ore" in command)) and (("minuto" in command) or ("minuti" in command))):
+            sum_seconds= hours*3600 + minutes * 60 + seconds
+            return sum_seconds
+
+        if(
+            (("ora" in command) or ("ore" in command))
+            and (("minuto" in command) or ("minuti" in command)) ):
             hours=int(command[0])
             minutes = int(command[3])
-            sumSeconds= hours*3600 + minutes * 60
-            return sumSeconds
-        
-        elif((("minuto" in command) or ("minuti" in command)) and (("secondo" in command) or ("secondi" in command))):
+            sum_seconds= hours*3600 + minutes * 60
+            return sum_seconds
+
+        if(
+            (("minuto" in command) or ("minuti" in command))
+            and (("secondo" in command) or ("secondi" in command))):
             minutes=int(command[0])
             seconds = int(command[3])
-            sumSeconds= minutes * 60 + seconds
-            return sumSeconds
-        
-        elif((("ora" in command) or ("ore" in command)) and (("secondo" in command) or ("secondi" in command))):
+            sum_seconds= minutes * 60 + seconds
+            return sum_seconds
+
+        if(
+            (("ora" in command) or ("ore" in command))
+            and (("secondo" in command) or ("secondi" in command))):
             hours=int(command[0])
             seconds = int(command[3])
-            sumSeconds= hours * 3600 + seconds
-            return sumSeconds
-        else:
-            if(((command[1] == 'ore')) or (command[1] == 'ora')):
-                return int(command[0])*3600
-            elif((command[1] == 'minuti') or (command[1] == 'minuto')):
-                return int(command[0])*60
-            else:
-                return int(command[0])
-        
+            sum_seconds= hours * 3600 + seconds
+            return sum_seconds
 
-
-
+        if(((command[1] == 'ore')) or (command[1] == 'ora')):
+            return int(command[0])*3600
+        if((command[1] == 'minuti') or (command[1] == 'minuto')):
+            return int(command[0])*60
+        return int(command[0])

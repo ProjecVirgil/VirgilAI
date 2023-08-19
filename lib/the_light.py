@@ -1,4 +1,6 @@
-import os
+"""
+_summary_
+"""
 import json
 import asyncio
 
@@ -12,7 +14,7 @@ from lib.logger import Logger
 
 #Open file whith key api openai
 
-with open("setup/settings.json") as f:
+with open("setup/settings.json",encoding="utf8") as f:
     secrets = json.load(f)
     EMAIL = secrets["merrosEmail"]
     PASSWORD = secrets["merrosPassword"]
@@ -20,9 +22,14 @@ with open("setup/settings.json") as f:
 logger = Logger()
 
 async def main(status:bool):
-    print(logger.Log(" Funzione di turn main"))
+    """_summary_
+
+    Args:
+        status (bool): _description_
+    """
+    print(logger.log(" Funzione di turn main"))
     # Setup the HTTP client API from user-password
-    http_api_client = await MerossHttpClient.async_from_user_password(email=EMAIL, password=PASSWORD)
+    http_api_client=await MerossHttpClient.async_from_user_password(email=EMAIL, password=PASSWORD)
 
     # Setup and start the device manager
     manager = MerossManager(http_client=http_api_client)
@@ -44,31 +51,36 @@ async def main(status:bool):
 
 
         # We can now start playing with that
-        if(status):
+        if status:
             print(f"Turning on {dev.name}...")
             await dev.async_turn_on(channel=0)
         else:
             print(f"Turing off {dev.name}")
             await dev.async_turn_off(channel=0)
-        
+
     # Close the manager and logout from http_api
     manager.close()
     await http_api_client.async_logout()
 
-    
+
 def turn(command:str):
-    print(logger.Log(" Funzione di turn"))
-    
-    if("accendi" in command):
+    """_summary_
+
+    Args:
+        command (str): _description_
+    """
+    print(logger.log(" Funzione di turn"))
+
+    if "accendi" in command:
         status = True
-    elif("spegni" in command):
+    elif "spegni" in command:
         status = False
     else:
-        print(logger.Log(" Comando non trovato"))
+        print(logger.log(" Comando non trovato"))
         status =  None
-        
+
     # Create and run a new event loop for this turn() call
-    print(logger.Log(" Creazione chiamata"))
+    print(logger.log(" Creazione chiamata"))
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
     try:
