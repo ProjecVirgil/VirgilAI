@@ -1,0 +1,61 @@
+{
+    "calendar":{
+        "month":["gennaio","febbraio","marzo","aprile","maggio","giugno","luglio","agosto","settembre","ottobre","novembre","dicembre"],
+        "week":["Lunedì","Martedì","Mercoledì","Giovedì","Venerdì","Sabato","Domenica"],
+        "split":["Il","di","del","è","il","l'","L'","sara'","e","sara","era","al","all","che giorno e","che giorno e'","dopo","dopo domani","domani","ieri","oggi","e'"],
+        "phrase":["Al","manca un giorno","mancano","giorni"]
+    },
+    "time":{
+        "split":["al","alle","le","e",":","mezza","meno un quarto","un quarto","sveglia","ora","ore","minuti","minuto","secondo","secondi","per le"],
+        "phrase" :["tempo calcolato per la sveglia","ore","minuti e","secondi","Sono le","minuti","mancano"]
+    },
+    "news":{
+        "split":["di","su","sulle"]
+    },
+    "wheather":{
+        "split":["a","oggi","domani","dopo domani"],
+        "phrase":["Il meteo a","per il","prevede","con una massima di","gradi,una minima di","gradi e una probabilita di precipitazione del","percento"],
+        "WWC" : {
+            "0": "Cielo sereno",
+            "1": "Prevalentemente sereno",
+            "2": "Parzialmente nuvoloso",
+            "3": "Coperto",
+            "45": "Nebbia e brina",
+            "48": "Nebbia e brina",
+            "51": "Pioggerella leggera",
+            "53": "Pioggerella moderata",
+            "55": "Pioggerella intensa",
+            "56": "Pioggerella ghiacciata leggera",
+            "57": "Pioggerella ghiacciata intensa",
+            "61": "Pioggia leggera",
+            "63": "Pioggia moderata",
+            "65": "Pioggia intensa",
+            "66": "Pioggia ghiacciata leggera",
+            "67": "Pioggia ghiacciata intensa",
+            "71": "Nevicata leggera",
+            "73": "Nevicata moderata",
+            "75": "Nevicata intensa",
+            "77": "Granelli di neve",
+            "80": "Rovesci di pioggia leggeri",
+            "81": "Rovesci di pioggia moderati",
+            "82": "Rovesci di pioggia violenti",
+            "85": "Rovesci di neve leggeri",
+            "86": "Rovesci di neve intensi",
+            "95": "Temporale leggero o moderato",
+            "96": "Temporale con grandine leggera",
+            "99": "Temporale con grandine intensa"
+        }
+    },
+
+    "command":{
+        "split":["spegniti","spegnimento","ore","ora","sono","e'","stop",
+                "fermati","basta","volume","imposta","metti","inserisci",
+                "tempo fa","tempo fa a","che tempo fa","che tempo c'è","gradi","temperatura","quanti","quanta","timer",
+                "imposta","metti","crea","sveglia","imposta","metti","crea",
+                "che giorno e","che giorno della settimana e","quanto mancano alle",
+                "quanto manca alle","quanto manca","quanti giorni mancano al","news","novita",
+                "notizie","parlami","dimmi","dammi","play","riproduci","ricordami",
+                "imposta un promemoria","mi ricordi","luce","accendi","spegni"]
+    }
+
+}

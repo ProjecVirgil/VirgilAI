@@ -1,0 +1,61 @@
+{
+    "calendar":{
+        "month":["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+        "week":["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+        "split":["The","of","by","is","the","the","The","will be","is","will be","and","at","at the","what day it is","what day it is","after", "after tomorrow", "tomorrow", "yesterday", "today", "is"],
+        "phrase":["at", "all", "one day", "missing", "days"]
+    },
+    "time":{
+        "split":["at", "at", "the", "and",":", "half", "minus a quarter", "a quarter", "alarm", "hour", "hours", "minutes", "minute", "second", "seconds", "for"],
+        "phrase" :["calculated time for alarm", "hours", "minutes", "and", "seconds", "it's", "minutes", "missing"]
+    },
+    "news":{
+        "split":["of","at","on"]
+    },
+    "wheather":{
+        "split":["to", "today", "tomorrow", "after tomorrow"],
+        "phrase":["The weather at", "for", "forecast", "with a maximum of", "degrees,a minimum of", "degrees and a chance of precipitation of", "percent"],
+        "WWC" : {
+            "0": "Clear skies",
+            "1": "Mostly clear.",
+            "2": "Partly cloudy",
+            "3": "Overcast",
+            "45": "Fog and frost",
+            "48": "Fog and hoarfrost",
+            "51": "Light drizzle",
+            "53": "Moderate drizzle",
+            "55": "Heavy drizzle",
+            "56": "Light icy drizzle",
+            "57": "Icy drizzle inte",
+            "61": "Light rain",
+            "63": "Moderate rain",
+            "65": "Heavy rain",
+            "66": "Light freezing rain",
+            "67": "Intense freezing rain",
+            "71": "Light snowfall",
+            "73": "Moderate snowfall",
+            "75": "Heavy snowfall.",
+            "77": "Snow grains",
+            "80": "Light rain showers",
+            "81": "Moderate rain showers",
+            "82": "Severe rain showers",
+            "85": "Light snow showers",
+            "86": "Intense snow showers",
+            "95": "Light to moderate thunderstorm",
+            "96": "Thunderstorm with light hail",
+            "99": "Thunderstorm with intense hail"
+        }
+    },
+
+    "command":{
+        "split":["turn off", "off", "time", "now", "are", "is", "stop",
+        "stop", "stop", "volume", "set", "put", "insert",
+        "weather ago", "weather to", "what's the weather", "what's the time", "degrees", 
+        "temperature", "how many", "how much", "timer","set", "put", "create", 
+        "alarm", "set", "set", "create","what day it is", "what day of the week it is",
+         "how long until","how long until", "how long until", "how many days until", "news", "news",
+        "news", "talk to me", "tell me", "give me", "play", "play again", "remind me",
+        "set a reminder", "remind me", "light", "turn on", "turn off"]
+    }
+
+}
