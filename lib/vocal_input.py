@@ -73,7 +73,7 @@ class VocalInput:
                         print(self.logger.log(" shutdown in progress"), flush=True)
                         status = False
                     else:
-                        print(self.logger.log(" Microfono dissattivato o qualcosa è andato storto"),
+                        print(self.logger.log(" Microphone unmuted or something went wrong"),
                               flush=True)
                 except UnboundLocalError:
                     pass

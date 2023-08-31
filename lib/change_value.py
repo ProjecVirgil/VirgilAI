@@ -37,19 +37,15 @@ class VolumeMixer:
             _type_: _description_
         """
         print(self.logger.log(" volume function"), flush=True)
-        command_split = command.split(" ")
-        self.__volume = command_split[-1]
-
-        if self.utils.count_number(self.__volume) >= 1:
-            if "%" in self.__volume:
-                self.__volume = self.__volume[:-1]
+        if self.utils.count_number(command) >= 1:
+            search_volume = lambda command: [x for x in command if x.isdigit()]
+            self.__volume = int(search_volume(command)[0])
         else:
             print(self.logger.log(
                 "Mi dispiace c'è stato un errore richiedimi il comando con un valore adeguato"),
                   flush=True)
             self.audio.create(file=True,namefile="ErrorValueVirgil")
             return "104"
-
         try:
             self.__volume = int(self.__volume)/100
             if self.__volume < 0.1 or self.__volume > 1.0 :

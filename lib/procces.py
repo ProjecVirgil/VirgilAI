@@ -7,6 +7,9 @@ import json
 import threading
 
 from colorama import Fore
+import nltk
+#from lib.utils import Utils
+
 
 from lib.logger import Logger
 from lib.choose_command import CommandSelection
@@ -23,6 +26,8 @@ class Process:
         self.data_empty = {
         "0": [None, None, True]
         }
+        nltk.download('punkt')
+        nltk.download('stopwords')
         self.request_maker = MakeRequests()
         self.logger = Logger()
         self.utils = Utils()
@@ -69,8 +74,7 @@ class Process:
             #If command contain only virgil word
             return command
 
-
-    def send(self,command: str):
+    def send(self,command):
         """_summary_
 
         Args:
@@ -102,10 +106,10 @@ class Process:
         def check_event(self):
             """_summary_
             """
-            print(self.logger.Log("  update the reminder"), flush=True)
+            print(self.logger.log("  update the reminder"), flush=True)
             with open("connect/reminder.txt", "w",encoding="utf8") as file:
                 file.write("0")
-            print(self.logger.Log(" check the old events"), flush=True)
+            print(self.logger.log(" check the old events"), flush=True)
             # Esegue altre operazioni specifiche della funzione checkEvent()
             # Nota che qui puoi utilizzare self.logger per accedere al logger
 

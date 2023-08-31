@@ -3,6 +3,7 @@
     Returns:
         _type_: _description_
 """
+import json
 import random
 
 from requests_html import HTMLSession
@@ -10,17 +11,30 @@ from lib.logger import Logger
 
 # ---- This file generate a random news by GoogleNews ----
 
-
-
-
 class Newsletter:
     """_summary_
     """
     def __init__(self) -> None:
-        self.url_random  = "https://news.google.com/rss?oc=5&hl=it&gl=IT&ceid=IT:it"
         self.logger = Logger()
+        with open("setup/settings.json",encoding="utf8") as file:
+            settings = json.load(file)
+            self.lang = settings["language"]
 
-    def get_topic(self,command:str):
+        self.url_random = f"https://news.google.com/rss?oc=5&hl={self.lang}&gl={self.lang.upper()}&ceid={self.lang.upper()}:{self.lang}"
+
+        with open(f'lang/{self.lang}/{self.lang}.json',encoding="utf8") as file:
+            self.script = json.load(file)
+            self.scritp_time = self.script["news"]
+            self.split = self.scritp_time["split"]
+
+        #add to json
+        self.sinonimi = [
+            "novita","avvenimento","evento","aneddoto","fatto","informazione","cronaca",
+            "comunicazione","segnalazione","rapporto","avvenimenti","eventi",
+            "aneddoti","fatti","informazioni","cronache","comunicazioni","segnalazioni","rapporti",
+            "notizie","notizia"]
+
+    def get_topic(self,command):
         """_summary_
 
         Args:
@@ -30,18 +44,13 @@ class Newsletter:
             _type_: _description_
         """
         print(self.logger.log(" specify topic"), flush=True)
-        if " di " in command:
-            topic=command.split(" di ")[1]
-            topic = topic.split(" ")[0]
-        elif " su " in command:
-            topic=command.split(" su ")[1]
-            topic = topic.split(" ")[0]
-        elif " sulle " in command:
-            topic=command.split(" sulle ")[1]
-            topic = topic.split(" ")[0]
-        else:
-            return None
-
+        topic = ""
+        for word in self.sinonimi:
+            if word in command:
+                topic = " ".join(command).split(word)[1]
+                break
+        if topic == "":
+            topic = None
         print(self.logger.log(f" topic scelto: {topic}"), flush=True)
         return topic
 
@@ -76,4 +85,3 @@ class Newsletter:
             print(self.logger.log(f" news scelta {news_selected}"), flush=True)
 
         return news_selected
-    

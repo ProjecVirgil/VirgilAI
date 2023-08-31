@@ -22,7 +22,7 @@ class Utils:
     def __init__(self) -> None:
         self.logger = Logger()
 
-    def count_number(self,command:str):
+    def count_number(self,command):
         """_summary_
 
         Args:
@@ -31,9 +31,10 @@ class Utils:
         Returns:
             _type_: _description_
         """
+        if not isinstance(command, str):
+            command = " ".join(command)
         number_find = re.findall(r'\d+', command)
         return len(number_find)
-
 
     def clean_buffer(self,data_empty:dict,file_name:str):
         """_summary_
@@ -101,7 +102,6 @@ class Utils:
                 remainder = number % 100
                 if remainder == 0:
                     return word_hundreds[hundred]
-                
                 return word_hundreds[hundred] + convert_under_1000(remainder)
 
         if 0 <= number <= 9999:

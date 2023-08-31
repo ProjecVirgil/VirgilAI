@@ -16,38 +16,6 @@ from lib.sound import Audio
 
 # ---- This file get the Meteo of all week ----
 
-
-WWC = {
-    0: "Cielo sereno",
-    1: "Prevalentemente sereno",
-    2: "Parzialmente nuvoloso",
-    3: "Coperto",
-    45: "Nebbia e brina",
-    48: "Nebbia e brina",
-    51: "Pioggerella leggera",
-    53: "Pioggerella moderata",
-    55: "Pioggerella intensa",
-    56: "Pioggerella ghiacciata leggera",
-    57: "Pioggerella ghiacciata intensa",
-    61: "Pioggia leggera",
-    63: "Pioggia moderata",
-    65: "Pioggia intensa",
-    66: "Pioggia ghiacciata leggera",
-    67: "Pioggia ghiacciata intensa",
-    71: "Nevicata leggera",
-    73: "Nevicata moderata",
-    75: "Nevicata intensa",
-    77: "Granelli di neve",
-    80: "Rovesci di pioggia leggeri",
-    81: "Rovesci di pioggia moderati",
-    82: "Rovesci di pioggia violenti",
-    85: "Rovesci di neve leggeri",
-    86: "Rovesci di neve intensi",
-    95: "Temporale leggero o moderato",
-    96: "Temporale con grandine leggera",
-    99: "Temporale con grandine intensa"
-}
-
 class Wheather:
     """_summary_
     """
@@ -58,6 +26,25 @@ class Wheather:
         with open("setup/settings.json",encoding="utf8") as file:
             settings = json.load(file)
             self.city = settings["city"]
+            self.lang = settings["language"]
+        with open(f'lang/{self.lang}/{self.lang}.json',encoding="utf8") as file:
+            self.script = json.load(file)
+            self.script_wheather = self.script["wheather"]
+            self.phrase = self.script_wheather["phrase"]
+            self.split = self.script_wheather["split"]
+            self.wwc = self.script_wheather["WWC"]
+
+        self.parole_significato_domani = [
+            "domani","futuro", "successivo", "imminente", "prossimo", "successivo", 
+            "giorno successivo", "giorno dopo", "prossima giornata", 
+            "avvenire", "imminenza", "previsione", "attesa", "prossimità", 
+            "incognita", "domani", "giorno successivo", "giorno a venire",
+            "dopo","tra due giorni", "il giorno seguente", 
+            "successivo al prossimo giorno", "due giorni dopo",
+            "il giorno a venire", "dopo il giorno successivo",
+            "oggi","in questa giornata", "nella presente giornata", "nella data attuale", 
+            "in questo momento", "in questo giorno", "nella giornata in corso"
+        ]
 
     def get_coordinates(self,city_name):
         """_summary_
@@ -102,15 +89,22 @@ class Wheather:
         Returns:
             _type_: _description_
         """
-        if ' a ' in command:
+        if "fa" in command: #SOSTITUIRE POI CON IL FATTO DELLE LINGUE E STARE ATTENTI ALLE TRADUZIONI
             print(self.logger.log(" city chosen correctly"), flush=True)
-            command=command.split(" a ")[1].strip()
-            city = command.split(" ")[0]
-            print(self.logger.log( " selected city: " + city), flush=True)
-            return city
-        city = self.city
-        print(self.logger.log( " default city selected: " + city), flush=True)
-        return city
+            try:
+                if command[command.index("fa") + 1] in self.parole_significato_domani:
+                    city = command[command.index("fa") + 2]
+                    print(self.logger.log( " selected city: " + city), flush=True)
+                    return city
+                city = command[command.index("fa") + 1]
+                print(self.logger.log( " selected city: " + city), flush=True)
+                return city
+            except IndexError:
+                city = self.city
+                print(self.logger.log( " default city selected: " + city), flush=True)
+                return city
+        else:
+            return self.city #city default
 
     def get_current_week_days(self):
         """_summary_
@@ -153,12 +147,12 @@ class Wheather:
         Returns:
             _type_: _description_
         """
-        days = self.get_current_week_days()
-        if "oggi" in command or str(days[0]) in command :
+        days = self.get_current_week_days() #worka
+        if self.split[1] in command or str(days[0]) in command :
             return 0,days[0]
-        if "domani" in command or str(days[1]) in command:
+        if self.split[2] in command or str(days[1]) in command:
             return 1,days[1]
-        if "dopo domani" in command or str(days[2]) in command:
+        if self.split[3] in command or str(days[2]) in command:
             return 2,days[2]
         if str(days[3]) in command:
             return 3,days[3]
@@ -168,7 +162,7 @@ class Wheather:
             return 5,days[5]
         if str(days[6]) in command:
             return 6,days[6]
-        if any(s.isdigit() for s in command.split()):
+        if any(s.isdigit() for s in command):
             return 404,days[0]
         return 0,days[0]
 
@@ -181,19 +175,19 @@ class Wheather:
         Returns:
             _type_: _description_
         """
-        city = self.recover_city(command)
-        day,week_day = self.recover_day(command)
+        city = self.recover_city(command) #worka
+        day,week_day = self.recover_day(command) #worka
         print(self.logger.log(" weather function"), flush=True)
         response = requests.get(self.get_url(city),timeout=8)
         print(self.logger.log(" Response: " + str(response.status_code)), flush=True)
         if str(response.status_code) != 200:
             response = response.json()
             if day != 404 :
-                main = response["daily"]["weathercode"][day]
+                main = str(response["daily"]["weathercode"][day])
                 max_temp = str(int(response["daily"]["temperature_2m_max"][day]))
                 min_temp =  str(int(response["daily"]["temperature_2m_min"][day]))
                 precipitation = str(response["daily"]["precipitation_probability_max"][day])
-                return f"Il meteo a {city} per il {self.utils.number_to_word(str(week_day))} prevede {WWC[main]} con una massima di {self.utils.number_to_word(max_temp)} gradi,una minima di {self.utils.number_to_word(min_temp)} gradi e una probabilita di precipitazione del {self.utils.number_to_word(precipitation)} percento"
+                return f" {self.phrase[0]} {city} {self.phrase[1]} {self.utils.number_to_word(str(week_day))} {self.phrase[2]} {self.wwc[main]} {self.phrase[3]} {self.utils.number_to_word(max_temp)} {self.phrase[4]} {self.utils.number_to_word(min_temp)} {self.phrase[5]} {self.utils.number_to_word(precipitation)} {self.phrase[6]}"
             self.audio.create(file=True,namefile="ErrorDay")
             return ""
         print(self.logger.log(" repeat the request or wait a few minutes"), flush=True)

@@ -18,6 +18,7 @@ class MediaPlayer:
     """
     def __init__(self) -> None:
         self.logger  = Logger()
+        self.sinonimi = ["play","riproduci"]
 
     def get_topic(self,command:str):
         """_summary_
@@ -28,16 +29,14 @@ class MediaPlayer:
         Returns:
             _type_: _description_
         """
-        try:
-            if "play" in command:
-                topic = command.split("play ")[1]
-            if "riproduci" in command:
-                topic = command.split("riproduci ")[1]
-            return topic
-        except requests.RequestException:
-            return "None"
-            #AUDIO ERROR
 
+        for word in self.sinonimi:
+            if word in command:
+                topic = " ".join(command).split(word)[1]
+                break
+        if topic == "":
+            topic = None
+        return topic
 
     #MODIFICARE TO GET ONLY URL
     def search_on_yt(self,topic:str) -> str:
@@ -97,7 +96,6 @@ class MediaPlayer:
         player_audio.unload()
         player_audio.load(file_name)
         player_audio.play()
-
 
     def play_music(self,command):
         """_summary_
