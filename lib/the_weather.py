@@ -1,15 +1,11 @@
-"""_summary_
-
-    Returns:
-        _type_: _description_
-"""
+""""""
 import calendar
-import json
 import datetime
 
 import requests
 from geopy.geocoders import Nominatim
 
+from lib import Settings
 from lib.utils import Utils
 from lib.logger import Logger
 from lib.sound import Audio
@@ -17,43 +13,27 @@ from lib.sound import Audio
 # ---- This file get the Meteo of all week ----
 
 class Wheather:
-    """_summary_
+    """
+    This class manage to get the wheater for a specific day and time
     """
     def __init__(self) -> None:
         self.logger = Logger()
         self.audio = Audio()
         self.utils  = Utils()
-        with open("setup/settings.json",encoding="utf8") as file:
-            settings = json.load(file)
-            self.city = settings["city"]
-            self.lang = settings["language"]
-        with open(f'lang/{self.lang}/{self.lang}.json',encoding="utf8") as file:
-            self.script = json.load(file)
-            self.script_wheather = self.script["wheather"]
-            self.phrase = self.script_wheather["phrase"]
-            self.split = self.script_wheather["split"]
-            self.wwc = self.script_wheather["WWC"]
+        self.settings = Settings()
 
-        self.parole_significato_domani = [
-            "domani","futuro", "successivo", "imminente", "prossimo", "successivo", 
-            "giorno successivo", "giorno dopo", "prossima giornata", 
-            "avvenire", "imminenza", "previsione", "attesa", "prossimità", 
-            "incognita", "domani", "giorno successivo", "giorno a venire",
-            "dopo","tra due giorni", "il giorno seguente", 
-            "successivo al prossimo giorno", "due giorni dopo",
-            "il giorno a venire", "dopo il giorno successivo",
-            "oggi","in questa giornata", "nella presente giornata", "nella data attuale", 
-            "in questo momento", "in questo giorno", "nella giornata in corso"
-        ]
+        self.city = self.settings.city
+        self.lang = self.settings.language
 
-    def get_coordinates(self,city_name):
-        """_summary_
+    def get_coordinates(self,city_name) -> tuple:
+        """
+        This function return coordinates from city name or address
 
         Args:
-            city_name (_type_): _description_
+            city_name (_type_): the city name to get the coordinates
 
         Returns:
-            _type_: _description_
+           latitude, longitude (int,int) : Return the latitude and langitude or None,None if the cordinate are not found
         """
         geolocator = Nominatim(user_agent="city_locator")
         location = geolocator.geocode(city_name)
@@ -66,33 +46,35 @@ class Wheather:
         return None, None
 
     #Init the api wheather
-    def get_url(self,city):
-        """_summary_
+    def get_url(self,city) -> str:
+        """
+        This function init the url with the parameters to call the API weather
 
         Args:
-            CITY (_type_): _description_
+            city (_type_): The city from which the url is obtained 
 
         Returns:
-            _type_: _description_
+            url: The final url generated
         """
         latitude, longitude = self.get_coordinates(city)
         if latitude is not None and longitude is not None:
             url = f"https://api.open-meteo.com/v1/forecast?latitude={latitude}&longitude={longitude}&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Europe%2FLondon"
         return url
 
-    def recover_city(self,command:str):
-        """_summary_
+    def recover_city(self,command:list) -> str:
+        """
+        This method will be used to recover the city name from sentence
 
         Args:
-            command (str): _description_
+            command (str): sentence
 
         Returns:
-            _type_: _description_
+            str: City chooise if the city not specify
         """
         if "fa" in command: #SOSTITUIRE POI CON IL FATTO DELLE LINGUE E STARE ATTENTI ALLE TRADUZIONI
             print(self.logger.log(" city chosen correctly"), flush=True)
             try:
-                if command[command.index("fa") + 1] in self.parole_significato_domani:
+                if command[command.index("fa") + 1] in self.settings.word_meaning_tomorrow_wheather:
                     city = command[command.index("fa") + 2]
                     print(self.logger.log( " selected city: " + city), flush=True)
                     return city
@@ -106,11 +88,12 @@ class Wheather:
         else:
             return self.city #city default
 
-    def get_current_week_days(self):
-        """_summary_
+    def get_current_week_days(self)  -> list:
+        """
+        This function returns a current week
 
         Returns:
-            _type_: _description_
+            list: the week days
         """
         today = datetime.date.today()
         days_in_month = calendar.monthrange(today.year, today.month)[1]
@@ -124,35 +107,37 @@ class Wheather:
         return week_days
 
     def is_valid_date(self,days,command):
-        """_summary_
+        """
+        This function checks that the date given by user is valid or not and it also check that the day of the month is correct
 
         Args:
-            days (_type_): _description_
-            command (_type_): _description_
+            days (_type_): A list of day in the months
+            command (_type_): 
 
         Returns:
-            _type_: _description_
+            bool: Valid/Not Valid
         """
         for i in days:
             if str(i) in command:
                 return True
         return False
 
-    def recover_day(self,command:str):
-        """_summary_
+    def recover_day(self,command:str) -> tuple:
+        """
+        This function recovers the day from the user input
 
         Args:
-            command (str): _description_
+            command (str): sentence
 
         Returns:
-            _type_: _description_
+            tuple: Index of day and the day
         """
         days = self.get_current_week_days() #worka
-        if self.split[1] in command or str(days[0]) in command :
+        if self.settings.split_wheather[1] in command or str(days[0]) in command :
             return 0,days[0]
-        if self.split[2] in command or str(days[1]) in command:
+        if self.settings.split_wheather[2] in command or str(days[1]) in command:
             return 1,days[1]
-        if self.split[3] in command or str(days[2]) in command:
+        if self.settings.split_wheather[3] in command or str(days[2]) in command:
             return 2,days[2]
         if str(days[3]) in command:
             return 3,days[3]
@@ -166,14 +151,15 @@ class Wheather:
             return 404,days[0]
         return 0,days[0]
 
-    def recover_weather(self,command:str):
-        """_summary_
+    def recover_weather(self,command:str) -> str:
+        """
+        This function give the wheather by use the user input
 
         Args:
-            command (str): _description_
+            command (str): sentence input
 
         Returns:
-            _type_: _description_
+            str: The final generated phrase
         """
         city = self.recover_city(command) #worka
         day,week_day = self.recover_day(command) #worka
@@ -187,7 +173,9 @@ class Wheather:
                 max_temp = str(int(response["daily"]["temperature_2m_max"][day]))
                 min_temp =  str(int(response["daily"]["temperature_2m_min"][day]))
                 precipitation = str(response["daily"]["precipitation_probability_max"][day])
-                return f" {self.phrase[0]} {city} {self.phrase[1]} {self.utils.number_to_word(str(week_day))} {self.phrase[2]} {self.wwc[main]} {self.phrase[3]} {self.utils.number_to_word(max_temp)} {self.phrase[4]} {self.utils.number_to_word(min_temp)} {self.phrase[5]} {self.utils.number_to_word(precipitation)} {self.phrase[6]}"
+                if self.lang != "en":
+                    return f" {self.settings.phrase_wheather[0]} {city} {self.settings.phrase_wheather[1]} {self.utils.number_to_word(str(week_day))} {self.settings.phrase_wheather[2]} {self.settings.wwc_wheather[main]} {self.settings.phrase_wheather[3]} {self.utils.number_to_word(max_temp)} {self.settings.phrase_wheather[4]} {self.utils.number_to_word(min_temp)} {self.settings.phrase_wheather[5]} {self.utils.number_to_word(precipitation)} {self.settings.phrase_wheather[6]}"
+                return f" {self.settings.phrase_wheather[0]} {city} {self.settings.phrase_wheather[1]} {week_day} {self.settings.phrase_wheather[2]} {self.settings.wwc_wheather[main]} {self.settings.phrase_wheather[3]} {max_temp} {self.settings.phrase_wheather[4]} {min_temp} {self.settings.phrase_wheather[5]} {precipitation} {self.settings.phrase_wheather[6]}"
             self.audio.create(file=True,namefile="ErrorDay")
             return ""
         print(self.logger.log(" repeat the request or wait a few minutes"), flush=True)

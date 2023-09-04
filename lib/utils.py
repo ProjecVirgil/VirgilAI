@@ -1,8 +1,4 @@
-"""_summary_
-
-    Returns:
-        _type_: _description_
-    """
+""""""
 import json
 import re
 
@@ -17,44 +13,49 @@ from lib.logger import Logger
 
 class Utils:
     """
-    _summary_
+    
+    A class with utils function
+    
     """
     def __init__(self) -> None:
         self.logger = Logger()
 
-    def count_number(self,command):
-        """_summary_
+    def count_number(self,command) -> int:
+        """
+        Count how many numbers are there in a string
 
         Args:
-            command (str): _description_
+            command (str): input sentence
 
         Returns:
-            _type_: _description_
+            int: The number of numbers in the input sentence
         """
         if not isinstance(command, str):
             command = " ".join(command)
         number_find = re.findall(r'\d+', command)
         return len(number_find)
 
-    def clean_buffer(self,data_empty:dict,file_name:str):
-        """_summary_
+    def clean_buffer(self,data_empty:dict,file_name:str) -> None:
+        """
+        Clean buffer and save it to disk
 
         Args:
-            dataEmpty (dict): _description_
-            fileName (str): _description_
+            dataEmpty (dict): Un templete standard json for restore the file
+            fileName (str): the name of file to restore
         """
         with open(f"connect/{file_name}.json", 'w',encoding="utf8") as commands:
             json.dump(data_empty,commands)
         print(self.logger.log(" cleaned buffer command"), flush=True)
 
-    def number_to_word(self,number):
-        """_summary_
+    def number_to_word(self,number) -> str:
+        """
+        Convert a number into words
 
         Args:
-            number (_type_): _description_
+            number (_type_): the number to convert
 
         Returns:
-            _type_: _description_
+            str: the number converted in word
         """
         number = int(number)
         words_up_to_vents = [
@@ -74,13 +75,14 @@ class Utils:
         ]
 
         def convert_under_1000(number):
-            """_summary_
+            """
+            Convert under 1000
 
             Args:
-                number (_type_): _description_
+                number (int): The number under 1000
 
             Returns:
-                _type_: _description_
+                str: the number under 1000 converted
             """
             if 0 <= number <= 999:
                 if number < 21:

@@ -1,57 +1,52 @@
-"""_summary_
-
-    Returns:
-        _type_: _description_
-    """
+""""""
 import datetime
-import json
 import time
 
+from lib import Settings
 from lib.logger import Logger
 from lib.utils import Utils
 
 # ---- This file get the current time and more ----
 
 class Time:
-    """_summary_
+    """
+    This class is used to return a various things like the Actual time, the time difference and more
     """
     def __init__(self):
         self.logger = Logger()
         self.utils  = Utils()
-        with open('setup/settings.json',encoding="utf8") as file:
-            settings = json.load(file)
+        self.settings = Settings()
 
-        self.lang = settings["language"]
-        with open(f'lang/{self.lang}/{self.lang}.json',encoding="utf8") as file:
-            self.script = json.load(file)
-            self.scritp_time = self.script["time"]
-            self.phrase = self.scritp_time["phrase"]
-            self.split = self.scritp_time["split"]
+        self.lang = self.settings.language
 
-    def now(self):
-        """_summary_
+
+    def now(self) -> str:
+        """
+        Return the current  time
 
         Returns:
-            _type_: _description_
+            str: The current time 
         """
         print(self.logger.log(" Time function"),flush=True)
         time_tuple = time.localtime() # get struct_time
         hours = time.strftime('%H',time_tuple)
         minuts = time.strftime('%M',time_tuple)
-        hours_to_words = self.utils.number_to_word(hours)
-        minuts_to_words = self.utils.number_to_word(minuts)
-        time_string = f"{self.phrase[4]} {str(hours_to_words)} {self.split[3]} {str(minuts_to_words)}  {self.split[11]}"
-        print(time.strftime("\nVirgilio: Sono le %H e %M minuti", time_tuple),flush=True)
+        if self.lang != "en":
+            hours_to_words = self.utils.number_to_word(hours)
+            minuts_to_words = self.utils.number_to_word(minuts)
+        time_string = f"{self.settings.phrase_time[4]} {str(hours_to_words)} {self.settings.split_time[3]} {str(minuts_to_words)}  {self.settings.split_time[11]}"
+        print(time.strftime("\nVirgil: They are the %H and %M minuts", time_tuple),flush=True)
         return time_string
 
     def diff_time(self,index_time:str):
-        """_summary_
+        """
+        This function will take an index time and compare it with the actual time
 
         Args:
-            command (str): _description_
+            index_time (str): the index of the time in the sentence
 
         Returns:
-            _type_: _description_
+            tuple: The complete date about the time and the difference with the current time 
         """
         current_time = datetime.datetime.now().time()
         try:
@@ -76,16 +71,16 @@ class Time:
         calculated_minuts, calculate_seconds = divmod(rest, 60)
 
         return hours,minuts,calculated_hours,calculated_minuts,calculate_seconds
-        # Stampa la differenza in un formato più comprensibile
 
-    def conversion(self,command):
-        """_summary_
+    def conversion(self,command) -> int:
+        """
+        This function try to take the timer time and convert everything to seconds
 
         Args:
-            command (str): _description_
+            command (str): The input sentence
 
         Returns:
-            _type_: _description_
+            int: The time in second
         """
         print(self.logger.log(" Conversion in progress"),flush=True)
 
@@ -97,11 +92,11 @@ class Time:
 
         for index in enumerate(command):
             if command[index].isdigit():
-                if command[index+1] in (self.split[9],self.split[10]):
+                if command[index+1] in (self.settings.split_time[9],self.settings.split_time[10]):
                     hashmap["h"] = command[index]
-                elif command[index+1] in ( self.split[11],self.split[12]):
+                elif command[index+1] in ( self.settings.split_time[11],self.settings.split_time[12]):
                     hashmap["m"] = command[index]
-                elif command[index+1] in (self.split[13],self.split[14]):
+                elif command[index+1] in (self.settings.split_time[13],self.settings.split_time[14]):
                     hashmap["s"] = command[index]
 
         if (hashmap["h"] is not None) and (hashmap["m"] is not None) and (hashmap["s"] is not None ):

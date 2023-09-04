@@ -1,8 +1,4 @@
-"""_summary_
-
-    Returns:
-        _type_: _description_
-"""
+""""""
 import requests
 from colorama import Style,Fore
 
@@ -15,7 +11,8 @@ WARNIGN = Style.BRIGHT + Fore.RED
 # ---- File for make the request at the VirgilAPI ----
 
 class MakeRequests:
-    """_summary_
+    """
+    This class is responsible to make all requests of the application.
     """
     def __init__(self) -> None:
         self.logger = Logger()
@@ -23,11 +20,12 @@ class MakeRequests:
         with open("setup/key.txt","r",encoding="utf8") as file_key:
             self.key_user = file_key.read()
 
-    def create_user(self):
-        """_summary_
+    def create_user(self) -> str:
+        """
+        This function creates a user in the database and returns its id if it was created successfully or an error message otherwise
 
         Returns:
-            _type_: _description_
+            str: Return the result of the request
         """
         #CREAZIONE USER
         url = f'{self.url_base}/createUser'
@@ -41,14 +39,15 @@ class MakeRequests:
                   flush=True)
             return "User not created"
 
-    def get_user(self,key_user):
-        """_summary_
+    def get_user_settings(self,key_user) -> str:
+        """
+        This function makes a GET request to the API and returns the settings
 
         Args:
-            id (_type_): _description_
+            id (_type_): the id of the user
 
         Returns:
-            _type_: _description_
+            str: result of request or the user settings 
         """
         url = f'{self.url_base}/setting/{key_user}/'
         try:
@@ -65,12 +64,12 @@ class MakeRequests:
 
     #CALENDAR
 
-    ## Create user
-    def create_user_event(self,key_user):
-        """_summary_
+    def create_user_event(self,key_user)-> str:
+        """
+        This function creates an event for the user with the key passed as parameter
 
         Args:
-            id (_type_): _description_
+            id (_type_): the id of user
         """
         url = f'{self.url_base}/calendar/createUser/{key_user}/'
         request = requests.put(url,timeout=5)
@@ -79,13 +78,13 @@ class MakeRequests:
         else:
             print(self.logger.log("User calendar offline"),flush=True)
 
-    ## Create Event
-    def create_events(self,event:str,date:str):
-        """_summary_
+    def create_events(self,event:str,date:str)-> str:
+        """
+        This function creates events for the users that are registered on the system
 
         Args:
-            event (str): _description_
-            date (str): _description_
+            event (str): the events to add
+            date (str): the date of events to add
         """
         if "None" in date:
             print(self.logger.log( "Sorry, but there was an error, the request will not be sent"),
@@ -97,12 +96,12 @@ class MakeRequests:
             request = requests.put(url, json=events,headers=headers,timeout=5)
             print(self.logger.log(f" response: {request.status_code}"),flush=True)
 
-    ## Get events
-    def get_events(self):
-        """_summary_
+    def get_events(self)-> str:
+        """
+        Get the events of the day
 
         Returns:
-            _type_: _description_
+            list: list of all events
         """
         url = f'{self.url_base}/calendar/{self.key_user}/'
         request = requests.get(url,timeout=5)
@@ -110,8 +109,9 @@ class MakeRequests:
         events = request.json()
         return events
 
-    def delete_events(self):
-        """_summary_
+    def delete_events(self)-> str:
+        """
+        Delete the old events
         """
         url = f'{self.url_base}/calendar/deleteEvent/{self.key_user}/'
         request = requests.put(url,timeout=5)

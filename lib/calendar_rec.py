@@ -1,93 +1,66 @@
-"""_summary_
+"""
+    - Management of the days of the week
+    - How many days until a given day
 
     Returns:
-        _type_: _description_
+        String: A response at the question concerning calendar or day 
 """
 import calendar
 import datetime
-import json
 
 from lib.sound import Audio
 from lib.logger import Logger
 from lib.utils import Utils
+from lib.__init__ import Settings
 
 # ---- File for get the week of the day ----
 class Calendar:
-    """_summary_
+    """
+    Class for manage the function and settings
     """
     def __init__(self) -> None:
         self.utils =Utils()
         self.logger = Logger()
         self.audio = Audio()
-        with open("setup/settings.json",encoding="utf8") as file:
-            settings = json.load(file)
-        self.lang = settings["language"]
-        with open(f'lang/{self.lang}/{self.lang}.json',encoding="utf8") as file:
-            self.script = json.load(file)
-            self.scritp_time = self.script["calendar"]
-            self.phrase = self.scritp_time["phrase"]
-            self.split = self.scritp_time["split"]
-            self.months = self.scritp_time["month"]
-            self.week = self.scritp_time["week"]
-        #self.utils = Utils()
-        self.parole_significato_domani = [
-            "domani","futuro", "successivo", "imminente", "prossimo", "successivo", 
-            "giorno successivo", "giorno dopo", "prossima giornata", 
-            "avvenire", "imminenza", "previsione", "attesa", "prossimità", 
-            "incognita", "domani", "giorno successivo", "giorno a venire",
-            "dopo",
-        ]
+        self.setting = Settings()
+        self.lang = self.setting.language
 
-        self.mesi_dell_anno = [
-        "gennaio", "febbraio", "marzo", "aprile", "maggio", "giugno",
-        "luglio", "agosto", "settembre", "ottobre", "novembre", "dicembre"
-        ]
 
-        self.parole_significato_dopo_domani = [
-            "dopo domani","tra due giorni", "il giorno seguente", 
-            "successivo al prossimo giorno", "due giorni dopo",
-            "il giorno a venire", "dopo il giorno successivo"
-        ]
 
-        self.parole_significato_ieri = [
-            "ieri","giornata precedente", "il giorno prima", "nell'ultimo giorno", 
-        "giorno scorso", "nel passato giorno", "un giorno fa"
-        ]
+    def clear_number(self,day:str,month:str) -> tuple:
+        """
+        This works by forming the numbers in such a way that they do not contain the 0 in the case of single-digit numbers 
 
-        self.parole_significato_oggi = [
-            "oggi","in questa giornata", "nella presente giornata", "nella data attuale", 
-            "in questo momento", "in questo giorno", "nella giornata in corso"
-        ]
-
-    def clear_number(self,day:str,month:str):
-        """_summary_
+        Example: 09 -> 9
 
         Args:
-            day (str): _description_
-            month (str): _description_
+            day (str): The day to format
+            month (str):The month to format
 
         Returns:
-            _type_: _description_
+            tuple: The two number formatted
         """
+
         day = int(day)
         month = int(month)
         day = str(day)
         month = str(month)
         return day,month
 
-    def gen_phrase(self,date):
-        """_summary_
+    def gen_phrase(self,date:str) -> str or None:
+        """
+        The function generates the final phrase that will then be played back
 
         Args:
-            date (_type_): _description_
+            date (str): The final date calculated
 
         Returns:
-            _type_: _description_
+            str or None: The final phrase that will then be played back
         """
         day,month,year = date.split("-")
         day,month = self.clear_number(day,month)
         index_week = self.index_day_of_week(year,month,day)
-        print(f" {self.split[0]} {day} {self.split[1]} {self.months[int(month)-1]} {self.split[2]} {year} {self.split[3]} {self.week[index_week]}",
+        print(f" {self.setting.split_calendar[0]} {day} {self.setting.split_calendar[1]} {self.setting.months_calendar[int(month)-1]} {self.setting.split_calendar[2]} {year} {self.setting.split_calendar[3]} {self.setting.week_calendar[index_week]}",
               flush=True)
         if (day is None or day == '') or month is None or year is None:
             print("I'm sorry but I couldn't get the date right you can reapply",
@@ -95,20 +68,21 @@ class Calendar:
             self.audio.create(file=True,namefile="ErrorDate")
         else:
             if(day != 1 or day != 11):
-                return f"{self.split[0]} {self.utils.number_to_word(str(day))} {self.split[1]} {self.months[int(month)-1]} {self.split[2]} {self.utils.number_to_word(str(year))} {self.split[3]} {str(self.week[index_week])}"
-            return f"{self.split[6]}{self.utils.number_to_word(str(day))} {self.split[1]} {self.months[int(month)-1]} {self.split[2]} {self.utils.number_to_word(str(year))} {self.split[3]} {str(self.week[index_week])}"
+                return f"{self.setting.split_calendar[0]} {self.utils.number_to_word(str(day))} {self.setting.split_calendar[1]} {self.setting.months_calendar[int(month)-1]} {self.setting.split_calendar[2]} {self.utils.number_to_word(str(year))} {self.setting.split_calendar[3]} {str(self.setting.week_calendar[index_week])}"
+            return f"{self.setting.split_calendar[6]}{self.utils.number_to_word(str(day))} {self.setting.split_calendar[1]} {self.setting.months_calendar[int(month)-1]} {self.setting.split_calendar[2]} {self.utils.number_to_word(str(year))} {self.setting.split_calendar[3]} {str(self.setting.week_calendar[index_week])}"
         return None    
 
-    def index_day_of_week(self,year:int,month:int,day:int):
-        """_summary_
+    def index_day_of_week(self,year:int,month:int,day:int) -> int:
+        """
+        This function calculates which week of the year it belongs and returns its index
 
         Args:
-            year (int): _description_
-            month (int): _description_
-            day (int): _description_
+            year (int): The year 
+            month (int): The month
+            day (int): The day
 
         Returns:
-            _type_: _description_
+            int: The index of the week from 0 to 6
         """
         year = int(year)
         month = int(month)
@@ -120,87 +94,90 @@ class Calendar:
                     index=week.index(days)
         return index
 
-    def recover_date(self,sentence):
-        """_summary_
+    def recover_date(self,sentence) -> str:
+        """
+        This function extracts the dates from a sentence
 
         Args:
-            sentence (_type_): _description_
+            sentence (list): The input sentence
 
         Returns:
-            _type_: _description_
+            str: The date formatted
         """
         count_of_number = self.utils.count_number(sentence)
         if count_of_number == 2:
             year = sentence[-1]
-            month = self.months.index(sentence[len(sentence) - 2]) + 1
+            month = self.setting.months_calendar.index(sentence[len(sentence) - 2]) + 1
             day = sentence[len(sentence) - 3]
             return f"{day}-{month}-{year}"
         if(count_of_number  == 1 and self.check_month(sentence)):
             today_date  = datetime.datetime.now().date()
-            month = self.months.index(sentence[-1]) + 1
+            month = self.setting.months_calendar.index(sentence[-1]) + 1
             day = sentence[len(sentence) - 2]
             return f"{day}-{month}-{today_date.year}"
         if(count_of_number  == 1 and not self.check_month(sentence)):
             today_date  = datetime.datetime.now().date()
             day = sentence[-1]
             return f"{day}-{today_date.month}-{today_date.year}"
-        #TODO DA FARE POI CON AUDIO
-        return "Mi dispiace c'è stato un errore di qualche tipo"
+        return "I'm sorry there was an error of some kind"
 
     def check_month(self,sentence):
-        """_summary_
+        """
+        Checks whether or not the word is part of months list
 
         Args:
-            sentence (_type_): _description_
+            sentence (list): The input sentence
 
         Returns:
-            _type_: _description_
+            bool: if the word is a months
         """
         for word in sentence:
-            if word in self.mesi_dell_anno:
+            if word in self.setting.months_calendar:
                 return True
         return False
 
-    def recov_preset_date(self,command:str):
-        """_summary_
+    def recov_preset_date(self,command:str) -> str or None:
+        """
+        Check if there is a fixed date pattern in the sentence if there is, retrieve the date
 
         Args:
-            command (str): _description_
+            command (str): The input sentence
 
         Returns:
-            _type_: _description_
+            str/none: formatted date or None if in the sentence there is no pattern
         """
         pattern = "%d-%m-%Y"
-        if any(elem in self.parole_significato_dopo_domani  for elem in command):
+        if any(elem in self.setting.words_meaning_after_tomorrow  for elem in command):
             today = datetime.datetime.today()
             after_tomorrow = today + datetime.timedelta(days=2)
             formatted_date = after_tomorrow.strftime(pattern)
             return formatted_date
-        if  any(elem in self.parole_significato_domani  for elem in command):
+        if  any(elem in self.setting.words_meaning_tomorrow  for elem in command):
             today = datetime.datetime.today()
             tomorrow = today + datetime.timedelta(days=1)
             formatted_date = tomorrow.strftime(pattern)
             return formatted_date
-        if any(elem in self.parole_significato_ieri  for elem in command):
+        if any(elem in self.setting.words_meaning_yesterday  for elem in command):
             today = datetime.datetime.today()
             yesterday = today + datetime.timedelta(days=-1)
             formatted_date = yesterday.strftime(pattern)
             return formatted_date
-        if any(elem in self.parole_significato_oggi  for elem in command):
+        if any(elem in self.setting.words_meaning_today  for elem in command):
             today = datetime.datetime.today()
             today = today + datetime.timedelta(days=0)
             formatted_date = today.strftime(pattern)
             return formatted_date
         return None
 
-    def diff_date(self,command):
-        """_summary_
+    def diff_date(self,command:list) -> str:
+        """
+        Try to calculate the difference between the current date and the date in the sentence
 
         Args:
-            command (_type_): _description_
+            command (list): Input
 
         Returns:
-            _type_: _description_
+            str: The final phrase which will then be reproduced 
         """
         preset_date  = self.recov_preset_date(command)
         if preset_date is None:
@@ -217,20 +194,21 @@ class Calendar:
         correct_date = datetime.datetime(int(year), int(month), int(day))
         diff_days = (datetime.datetime.now() - correct_date).days
         print(self.logger.log(
-            f"result: {self.phrase[0]} {day} {month} {year} {self.phrase[2]} {diff_days * -1}"),
+            f"result: {self.setting.phrase_calendar[0]} {day} {month} {year} {self.setting.phrase_calendar[2]} {diff_days * -1}"),
               flush=True)
         if diff_days * -1 == 1:
-            return f" {self.phrase[0]} {self.utils.number_to_word(day)} {self.utils.number_to_word(month)} {self.utils.number_to_word(year)} {self.phrase[1]}"
-        return f" {self.phrase[0]} {self.utils.number_to_word(day)}, {self.utils.number_to_word(month)}, {self.utils.number_to_word(year)} {self.phrase[2]} {self.utils.number_to_word(diff_days * -1)} {self.phrase[3]}"
+            return f" {self.setting.phrase_calendar[0]} {self.utils.number_to_word(day)} {self.utils.number_to_word(month)} {self.utils.number_to_word(year)} {self.setting.phrase_calendar[1]}"
+        return f" {self.setting.phrase_calendar[0]} {self.utils.number_to_word(day)}, {self.utils.number_to_word(month)}, {self.utils.number_to_word(year)} {self.setting.phrase_calendar[2]} {self.utils.number_to_word(diff_days * -1)} {self.setting.phrase_calendar[3]}"
 
-    def get_date(self,command):
-        """_summary_
+    def get_date(self,command:list) -> str:
+        """
+        Try to get the date in the sentence and then calculate which day of the week it falls on
 
         Args:
-            command (str): _description_
+            command (list): input sentence
 
         Returns:
-            _type_: _description_
+            str: The final sentence with the correct information 
         """
         preset_date  = self.recov_preset_date(command)
         if preset_date is None:
