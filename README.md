@@ -22,6 +22,8 @@ Virgilo or Virgil is a virtual assistant like Alexa or Google Home, but integrat
 ![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/w/Retr0100/ProjectVirgil?style=for-the-badge&logo=github&labelColor=%23282a3&color=%231B7F79)
 ![GitHub repo size](https://img.shields.io/github/repo-size/Retr0100/ProjectVirgil?style=for-the-badge&logo=github&labelColor=%23282a3&color=%23bd93f9)
 
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Retr0100/VirgilAI/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Retr0100/VirgilAI/?branch=master)
+
 
 ## 💻 How VirgilAI works 
 <p align="center">
