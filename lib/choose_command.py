@@ -64,9 +64,9 @@ class CommandSelection:
         self.api_key = self.settings.openai
         openai.api_key = self.api_key
 
-    def get_response(self,messages:list) -> None:
-        """
-        Function for communicate whith api GPT-3
+    #function for communicate whith api GPT-3
+    def get_response(self,messages:list):
+        """_summary_
 
         Args:
             messages (list): The contest of conversation
@@ -135,8 +135,10 @@ class CommandSelection:
 
         Args:
             command (str): command cleaned 
+            command (str): command cleaned 
 
         Returns:
+            str: The response at the command 
             str: The response at the command 
         """
         mixer.init()
