@@ -5,13 +5,15 @@ import json
 import sys
 import unicodedata
 
+from lib import Settings
 from lib.logger import Logger
 from lib.utils import Utils
 
 # ----- File to take the input by the console -----
 
 class TextInput:
-    """_summary_
+    """
+    Class that takes a text as an argument and returns it in lowercase, without accents or special characters.
     """
     def __init__(self) -> None:
         self.data_empty = {
@@ -19,16 +21,17 @@ class TextInput:
             }
         self.logger = Logger()
         self.utils = Utils()
-        with open('setup/settings.json',encoding="utf8") as file:
-            settings = json.load(file)
-            self.word_activation = str(settings['wordActivation']).lower()
+        self.settings = Settings()
+
+        self.word_activation = self.settings.word_activation
 
 
     def copy_data(self,command:str):
-        """_summary_
+        """
+        Copy data from a command line and return it as string or list of strings if needed for further processing in other functions
 
         Args:
-            command (str): _description_
+            command (str): Command to copy in the file
         """
         data = {
             command:False
@@ -37,10 +40,10 @@ class TextInput:
         with open("connect/command.json", 'w',encoding="utf8") as comandi:
             json.dump(data, comandi,indent=4)
 
-    #MAIN
+    
     def text(self):
         """
-        _summary_
+        The main file for recover the command from text
         """
         command = ""
         print(self.logger.log(" start hearing function"), flush=True)

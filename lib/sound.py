@@ -1,35 +1,33 @@
-"""
-_summary_
-"""
+""""""
 import os
-import json
 
 import gtts
 from pygame.mixer import music
 from elevenlabs import generate,save,api
 
+from lib import Settings
 from lib.logger import Logger
 
 # ---- This file make the TTS ----
 class Audio:
     """
-    _summary_
+    A class for manage the audio in Virgil
     """
     def __init__(self):
         self.logger = Logger()
-        #Open file whith key api openai
-        with open("setup/settings.json",encoding="utf8") as file:
-            settings = json.load(file)
-            self.volume = settings['volume']
-            self.api_key = settings['elevenlabs']
+        self.settings = Settings()
 
-    def create(self,text:str = "",file:bool = False,namefile:str = ""):
-        """_summary_
+        self.volume = self.settings.volume
+        self.api_key = self.settings.elevenlabs
+
+    def create(self,text:str = "",file:bool = False,namefile:str = "") -> None:
+        """
+        Create a mp3 or wav file with text from tts
 
         Args:
-            text (str, optional): _description_. Defaults to "".
-            file (bool, optional): _description_. Defaults to False.
-            namefile (str, optional): _description_. Defaults to "".
+            text (str, optional): the text to transform in audio. Defaults to "".
+            file (bool, optional): is a file? Defaults to False.
+            namefile (str, optional): the file to play Defaults to "".
         """
         music.unload()
         if music.get_volume != float(self.volume):

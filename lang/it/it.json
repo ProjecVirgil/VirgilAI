@@ -1,18 +1,56 @@
 {
+    "process": {
+            "prompt": "Sei un assistente virtuale che parla italiano e che scrive i numeri a lettere di nome Virgilio. Puoi fare esattamente queste cose:\n- Creare un timer\n- Dire il tempo in questo momento\n- Sai le ultime notizie\n- Cambiare il volume del tuo audio\n- La temperatura esterna\n- Interagisci con la domotica\n- Sai che ore sono\n- Ricordi i miei impegni\n- Poi riprodurre musica da YouTube\n- E sai fare un sacco di altre cose come creare un piano di allenamento, una dieta e tutto ciò che può chiedere un utente.\n\nQuando ti chiedono cosa sai fare, mi spiegherai questi punti con degli esempi:\n- Virgilio imposta un timer di 10 minuti\n- Virgilio Che tempo fa oggi?\n- Virgilio imposta il volume a 10%\n- Virgilio dimmi le ultime notizie\n- Virgilio che temperatura fa?\n- Virgilio accendi la luce\n- Virgilio che ore sono?\n- Virgilio riproduci una canzone a scelta\n- Virgilio ricordami che domani ho un impegno\n- Virgilio che giorno è domani?\nEccetera.\n\nSe faccio domande relative a uno dei comandi sopra elencati e a cui non sai rispondermi, dimmi di provare a dire il comando e usa gli esempi che ti ho elencato prima.\n\nPronto a fingerti Virgilio? Rispondi sì se hai capito, ed ora in poi quando ti faccio una domanda, mi rispondi come se fossi un assistente virtuale."
+        },
     "calendar":{
         "month":["gennaio","febbraio","marzo","aprile","maggio","giugno","luglio","agosto","settembre","ottobre","novembre","dicembre"],
         "week":["Lunedì","Martedì","Mercoledì","Giovedì","Venerdì","Sabato","Domenica"],
         "split":["Il","di","del","è","il","l'","L'","sara'","e","sara","era","al","all","che giorno e","che giorno e'","dopo","dopo domani","domani","ieri","oggi","e'"],
-        "phrase":["Al","manca un giorno","mancano","giorni"]
+        "phrase":["Al","manca un giorno","mancano","giorni"],
+        "words_meaning_tomorrow":[
+            "domani","futuro", "successivo", "imminente", "prossimo", "successivo", 
+            "giorno successivo", "giorno dopo", "prossima giornata", 
+            "avvenire", "imminenza", "previsione", "attesa", "prossimità", 
+            "incognita", "domani", "giorno successivo", "giorno a venire",
+            "dopo"
+        ],
+        "words_meaning_after_tomorrow":[
+            "dopo domani","tra due giorni", "il giorno seguente", 
+            "successivo al prossimo giorno", "due giorni dopo",
+            "il giorno a venire", "dopo il giorno successivo"
+        ],
+        "words_meaning_yesterday":[
+            "ieri","giornata precedente", "il giorno prima", "nell'ultimo giorno", 
+        "giorno scorso", "nel passato giorno", "un giorno fa"
+        ],
+        "words_meaning_today":[
+            "oggi","in questa giornata", "nella presente giornata", "nella data attuale", 
+            "in questo momento", "in questo giorno", "nella giornata in corso"
+        ]
     },
     "time":{
         "split":["al","alle","le","e",":","mezza","meno un quarto","un quarto","sveglia","ora","ore","minuti","minuto","secondo","secondi","per le"],
         "phrase" :["tempo calcolato per la sveglia","ore","minuti e","secondi","Sono le","minuti","mancano"]
     },
     "news":{
-        "split":["di","su","sulle"]
+        "sinonimi": [
+            "novita","avvenimento","evento","aneddoto","fatto","informazione","cronaca",
+            "comunicazione","segnalazione","rapporto","avvenimenti","eventi",
+            "aneddoti","fatti","informazioni","cronache","comunicazioni","segnalazioni","rapporti",
+            "notizie","notizia"]
     },
     "wheather":{
+        "word_meaning_tomorrow":[
+            "domani","futuro", "successivo", "imminente", "prossimo", "successivo", 
+            "giorno successivo", "giorno dopo", "prossima giornata", 
+            "avvenire", "imminenza", "previsione", "attesa", "prossimità", 
+            "incognita", "domani", "giorno successivo", "giorno a venire",
+            "dopo","tra due giorni", "il giorno seguente", 
+            "successivo al prossimo giorno", "due giorni dopo",
+            "il giorno a venire", "dopo il giorno successivo",
+            "oggi","in questa giornata", "nella presente giornata", "nella data attuale", 
+            "in questo momento", "in questo giorno", "nella giornata in corso"
+        ],
         "split":["a","oggi","domani","dopo domani"],
         "phrase":["Il meteo a","per il","prevede","con una massima di","gradi,una minima di","gradi e una probabilita di precipitazione del","percento"],
         "WWC" : {
@@ -56,6 +94,12 @@
                 "quanto manca alle","quanto manca","quanti giorni mancano al","news","novita",
                 "notizie","parlami","dimmi","dammi","play","riproduci","ricordami",
                 "imposta un promemoria","mi ricordi","luce","accendi","spegni"]
+    },
+    "events":{
+        "phrase" : ["Ciao ti ricordo che oggi hai vari impegni: ","Oggi non hai nessun impegno goditi la giornata","Promemoria creato con successo"]
+    },
+    "outputs":{
+        "phrase":["Il timer è partito ci vediamo tra","secondi"],
+        "split":["sveglia"]
     }
-
 }

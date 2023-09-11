@@ -1,9 +1,6 @@
-"""_summary_
-
-    Returns:
-        _type_: _description_
-"""
+""""""
 import datetime
+from lib import Settings
 
 from lib.logger import Logger
 from lib.request import MakeRequests
@@ -11,12 +8,15 @@ from lib.calendar_rec import Calendar
 
 # ----- Calendar Event Function -----
 class EventScheduler:
-    """_summary_
+    """
+    This class is used to schedule calendar events for the user.
+    Using the VirgilAPI and DB
     """
     def __init__(self):
         self.logger = Logger()
         self.request_maker = MakeRequests()
         self.calendar = Calendar()
+        self.setting = Settings()
 
         self.events = self.request_maker.get_events()
         self.current_date = datetime.datetime.now().date()
@@ -25,31 +25,34 @@ class EventScheduler:
         self.formatted_date[1] = self.formatted_date[1].replace("0", "")
         self.formatted_date = "-".join(self.formatted_date)
 
-    def send_notify(self):
-        """_summary_
+        self.lang = self.setting.language
+
+    def send_notify(self) -> str:
+        """
+        This function sends a notification to the users that have an event on today's date, if they are not already notified about it
 
         Returns:
-            _type_: _description_
+            str: The phrase to reproduce
         """
         try:
             today_events = self.events[self.formatted_date]
-            phrase = "Ciao ti ricordo che oggi hai vari impegni: "
+            phrase = self.setting.phrase_events[0]
             for event in today_events:
                 phrase = phrase + event.strip() + " "
-        except ValueError:
-            phrase = "Oggi non hai nessun impegno goditi la giornata"
+        except KeyError:
+            phrase = self.setting.phrase_events[1]
         print(self.logger.log(f" {phrase}"), flush=True)
         return phrase
 
-
-    def get_date(self,command):
-        """_summary_
+    def get_date(self,command) -> str:
+        """
+        This function gets a date from the command line
 
         Args:
-            command (_type_): _description_
+            command (_type_): Sentence
 
         Returns:
-            _type_: _description_
+            str: The date recovered
         """
         preset_date  = self.calendar.recov_preset_date(command)
         if preset_date is None:
@@ -63,17 +66,17 @@ class EventScheduler:
             return date
         return preset_date
 
-    def recognize_date(self,command):
-        """_summary_
+    def recognize_date(self,command) -> tuple:
+        """
+        Take the data and the event for send the request
 
         Args:
-            command (_type_): _description_
+            command (_type_): Sencence
 
         Returns:
-            _type_: _description_
+            tuple: Date for the events and the event
         """
-        months = self.calendar.mesi_dell_anno
-        words = self.calendar.parole_significato_domani + self.calendar.parole_significato_dopo_domani + self.calendar.parole_significato_ieri + self.calendar.parole_significato_oggi
+        words = self.setting.words_meaning_after_tomorrow + self.setting.words_meaning_tomorrow + self.setting.words_meaning_yesterday + self.calendar.self.setting.words_meaning_today
 
         for word in words:
             if word in command:
@@ -84,21 +87,22 @@ class EventScheduler:
 
         date_record = []
         for element in command:
-            if element.isdigit() or element in months:
+            if element.isdigit() or element in self.setting.months_calendar:
                 date_record.append(element)
                 if len(date_record) >= 3:
                     break
         event = " ".join(command).split(date_record[-1])
         return date_record,event
 
-    def add_events(self,command:str):
-        """_summary_
+    def add_events(self,command:str) -> str:
+        """
+        Add an event to a specific date
 
         Args:
-            command (str): _description_
+            command (str): sentence input
 
         Returns:
-            _type_: _description_
+            str: Final phrase to reprocude
         """
         print(self.logger.log(" i will create event"),flush=True)
         date,event = self.recognize_date(command)
@@ -106,4 +110,4 @@ class EventScheduler:
         print(self.logger.log(" i recov the date"),flush=True)
         print(self.logger.log(" send the request"),flush=True)
         self.request_maker.create_events(event,date)
-        return "Promemoria creato con successo"
+        return self.setting.phrase_events[2]

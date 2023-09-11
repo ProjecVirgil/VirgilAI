@@ -1,8 +1,6 @@
 """
-
-    Returns:
-        _type_: _description_
-    """
+    summary: The start file
+"""
 import sys
 import threading
 import time
@@ -24,10 +22,11 @@ from lib.procces import Process
 
 # ---- This file launch all the file for making Virgilio work  ----
 def check_system():
-    """_summary_
+    """
+    Check if system is windows or linux and return a string with it's name clear command
 
     Returns:
-        _type_: _description_
+        str or int: If the system is recognize return a correct command for the OS 
     """
     if SYSTEM == 'Windows':
         return "cls"
@@ -41,11 +40,12 @@ def check_system():
             )
     return 404
 
-def stampa(command_cleaner:str):
-    """_summary_
+def print_banner(command_cleaner:str):
+    """
+    Print the main banner of Virgil
 
     Args:
-        COMMAND_CLEANER (str): _description_
+        COMMAND_CLEANER (str): The command for clear the console
     """
     delay = 0.1
     counter = 0
@@ -67,10 +67,11 @@ def stampa(command_cleaner:str):
     print(Style.RESET_ALL,flush=True)
 
 def rainbow(command_cleanear:str):
-    """_summary_
+    """
+    Animation rainbow on the first banner
 
     Args:
-        commandCleanear (str): _description_
+        commandCleanear (str): The command for clear the console
     """
     delay = 0.1
     colori = [Fore.RED,Fore.YELLOW,Fore.GREEN,Fore.MAGENTA,Fore.CYAN,Fore.WHITE]
@@ -87,8 +88,8 @@ def rainbow(command_cleanear:str):
     print(Style.RESET_ALL,flush=True)
 
 def install_libraries():
-    """_summary_
-    
+    """
+    Install and check all libraries needed by virgil
     """
     print(logger.log(string=ALERT +"START CHECK THE LIBRARY"),flush=True)
     command = "pip install -q -r setup/requirements.txt > logpip.txt"
@@ -100,11 +101,12 @@ def install_libraries():
         )
 
 
-def create_account():
-    """_summary_
+def create_account() -> str:
+    """
+    Create a new account with Virgil API
 
     Returns:
-        _type_: _description_
+        str: return the key of account created
     """
     print(logger.log(OK + "I am creating your synchronization key"),flush=True)
     key = request_maker.create_user()
@@ -120,7 +122,7 @@ def create_account():
         ALERT +
         'Now download the Virgil app on your Android device, go to the configuration page and enter this code in the appropriate field, once done you will be able to change all Virgil settings remotely, once done press any button: '))
     print(logger.log(OK + "Synchronizing your account settings"),flush=True)
-    user = request_maker.get_user(key)
+    user = request_maker.get_user_settings(key)
 
     with open(SETTINGS_FILE,'w',encoding="utf8") as file:
         json.dump(user,file,indent=4)
@@ -134,17 +136,18 @@ def create_account():
         sys.exit(1)
     return key
 
-def log_in():
-    """_summary_
+def log_in() -> str:
+    """
+    Log in to an existing account using its private key saved on disk (setup/key.txt).
 
     Returns:
-        _type_: _description_
+        str: return the key of account created
     """
     with open(KEY_FILE,'r',encoding="utf8") as file_key:
         print(logger.log(OK + "I pick up the key for synchronization"),flush=True)
         key = file_key.readline()
         print(logger.log(OK + "Synchronizing your account settings"),flush=True)
-        user = request_maker.get_user(key)
+        user = request_maker.get_user_settings(key)
     with open(SETTINGS_FILE,'w',encoding="utf8") as file:
         json.dump(user,file,indent=4)
     if user == 'User not found' :
@@ -159,12 +162,11 @@ def log_in():
 def main():
     """
 
-    DocString
-
+    Main function that will be called when running this script from command line
+    
     """
-
     command_cleaner = check_system()
-    stampa(command_cleaner)
+    print_banner(command_cleaner)
     rainbow(command_cleaner)
     install_libraries()
 
@@ -199,7 +201,7 @@ def main():
             valid_choise = True
         elif text_or_speech == 'R':
             # Creazione di tre oggetti thread
-            thread_1 = threading.Thread(target=vocal_input.speech)
+            thread_1 = threading.Thread(target=vocal_input.listening)
             thread_2 = threading.Thread(target=process.main)
             thread_3 = threading.Thread(target=output.out)
             valid_choise = True
@@ -231,6 +233,5 @@ if __name__ == '__main__':
     ALERT = Style.BRIGHT + Fore.YELLOW
     OK = Style.BRIGHT + Fore.CYAN
     WARNIGN = Style.BRIGHT + Fore.RED
-
 
     main()

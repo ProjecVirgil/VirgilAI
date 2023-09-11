@@ -1,8 +1,4 @@
-"""_summary_
-
-    Returns:
-        _type_: _description_
-"""
+""""""
 from lib.logger import Logger
 from lib.sound import Audio
 from lib.utils import Utils
@@ -11,7 +7,8 @@ from lib.utils import Utils
 
 
 class VolumeMixer:
-    """_summary_
+    """
+    Class to control the sound volume of Virgil.
     """
     def __init__(self, volume_value:int = 100):
         self.__volume = volume_value
@@ -19,22 +16,24 @@ class VolumeMixer:
         self.audio = Audio()
         self.utils  = Utils()
 
-    def get_volume(self):
-        """_summary_
+    def get_volume(self) -> float or int:
+        """
+        Get current value from audio mixer.
 
         Returns:
-            _type_: _description_
+            float/int: Volume
         """
         return self.__volume
 
-    def change(self, command:str):
-        """_summary_
+    def change(self, command:str) -> str:
+        """
+        Change the volume of Virgil.
 
         Args:
-            command (str): _description_
+            command (str): The input sentence
 
         Returns:
-            _type_: _description_
+            str: Final message after change the volume
         """
         print(self.logger.log(" volume function"), flush=True)
         if self.utils.count_number(command) >= 1:
@@ -42,7 +41,7 @@ class VolumeMixer:
             self.__volume = int(search_volume(command)[0])
         else:
             print(self.logger.log(
-                "Mi dispiace c'è stato un errore richiedimi il comando con un valore adeguato"),
+                "Sorry there was an error request the command with an appropriate value"),
                   flush=True)
             self.audio.create(file=True,namefile="ErrorValueVirgil")
             return "104"
@@ -53,7 +52,7 @@ class VolumeMixer:
             return str(self.__volume)
         except ValueError:
             print(self.logger.log(
-                "Mi dispiace c'è stato un errore richiedimi il comando con un valore adeguato"),
+                "Sorry there was an error request the command with an appropriate value"),
                   flush=True)
             self.audio.create(file=True,namefile="ErrorValueVirgil")
             return "104"

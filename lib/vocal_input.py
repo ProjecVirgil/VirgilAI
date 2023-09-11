@@ -1,19 +1,18 @@
-"""
-_summary_
-
-"""
+""""""
 import json
 import unicodedata
 
 import speech_recognition as sr
 
+from lib import Settings
 from lib.logger import Logger
 from lib.utils import Utils
 
 
 # ----- File to take the input by the microphone -----
 class VocalInput:
-    """_summary_
+    """
+    Class that takes voice inputs from a user and returns them in text format
     """
     def __init__(self) -> None:
         self.data_empty = {
@@ -22,19 +21,19 @@ class VocalInput:
         self.logger = Logger()
         self.utils = Utils()
         self.listener = sr.Recognizer()
-        with open('setup/settings.json',encoding="utf8") as file:
-            settings = json.load(file)
-            # init the recognizer
-            self.listener.operation_timeout = int(settings['operation_timeout'])
-            self.listener.dynamic_energy_threshold = bool(settings['dynamic_energy_threshold'])
-            self.listener.energy_threshold = int(settings['energy_threshold'])
-            self.word_activation = str(settings['wordActivation']).lower()
+        self.settings = Settings()
+        # init the recognizer
+        self.listener.operation_timeout = int(self.settings.operation_timeout)
+        self.listener.dynamic_energy_threshold = bool(self.settings.dynamic_energy_threshold)
+        self.listener.energy_threshold = int(self.settings.energy_threshold)
+        self.word_activation = self.settings.word_activation
 
-    def copy_data(self,command:str):
-        """_summary_
+    def copy_data(self,command:str) -> None:
+        """
+        Copy data from one command to another
 
         Args:
-            command (str): _description_
+            command (str): The actual command
         """
         data = {
             command:False
@@ -42,9 +41,10 @@ class VocalInput:
         print(self.logger.log(f" data sended - {data}"), flush=True)
         with open("connect/command.json", 'w',encoding="utf8") as comandi:
             json.dump(data, comandi,indent=4)
-    #Main
-    def speech(self):
-        """_summary_
+
+    def listening(self):
+        """
+        Listens for commands using Google Speech Recognition API.It will return the recognized words or phrases.
         """
         command = ""
         print(self.logger.log(" start hearing function"), flush=True)
