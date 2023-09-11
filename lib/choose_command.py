@@ -8,6 +8,7 @@ import openai
 from pygame import mixer
 import joblib
 from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
 
 from lib import Settings
 from lib.logger import Logger
@@ -46,8 +47,13 @@ class CommandSelection:
 
         model_filename = f"model/model_{self.settings.language}.pkl"
         self.loaded_model = joblib.load(model_filename)
-                
+        
         self.lang = self.settings.language
+        
+        if(self.lang == 'it'):
+            self.stop_words = set(stopwords.words("italian"))
+        else:
+            self.stop_words = set(stopwords.words("english"))
         
         # Caratteri di punteggiatura originali
         original_punctuation = string.punctuation
@@ -121,7 +127,7 @@ class CommandSelection:
                 filtered_tokens = []
                 tokens = word_tokenize(command.lower().strip())
                 for word in tokens:
-                    if word not in (",","?"):
+                    if word not in (",","?") and word not in self.stop_words:
                         filtered_tokens.append(word)
                 print(self.logger.log(f" command processed: {filtered_tokens} "), flush=True)
                 return filtered_tokens
