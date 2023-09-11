@@ -165,6 +165,7 @@ def main():
     Main function that will be called when running this script from command line
     
     """
+    FILE_ID = "10xvHThKOXc_ZzmSn0Y8xWF1sXqoA2iSR"
     command_cleaner = check_system()
     print_banner(command_cleaner)
     rainbow(command_cleaner)
@@ -175,6 +176,11 @@ def main():
     else:
         key = log_in()
 
+    if not os.path.exists("model/model_en.pkl"):  
+        print(logger.log(ALERT + " Start the download of english model this operation will take some time, but will only be done once "))
+        request_maker.download_from_google_drive(FILE_ID)
+        print(logger.log(OK + " Download finish"))
+    
 #*  INIT ALL PRINCIPLE CLASS
     output = Output()
     process = Process()

@@ -116,3 +116,32 @@ class MakeRequests:
         url = f'{self.url_base}/calendar/deleteEvent/{self.key_user}/'
         request = requests.put(url,timeout=5)
         print(self.logger.log(f" reponse: {request.status_code}"),flush=True)
+
+
+    def download_from_google_drive(self,file_id):
+        destination = "model/model_en.pkl"
+        URL = "https://docs.google.com/uc?export=download"
+        
+        session = requests.Session()
+        
+        response = session.get(URL, params = {'id': file_id}, stream = True)
+        token = self.get_confirm_token(response)
+        
+        if token:
+            params = {'id': file_id, 'confirm': token}
+            response = session.get(URL, params=params, stream=True)
+            
+        self.save_response_content(response, destination)
+
+    def get_confirm_token(self,response):
+        for key, value in response.cookies.items():
+            if key.startswith('download_warning'):
+                return value
+        return None
+
+    def save_response_content(self,response, destination):
+        chunk_size = 32768
+        with open(destination, "wb") as f:
+            for chunk in response.iter_content(chunk_size):
+                if chunk:
+                    f.write(chunk)

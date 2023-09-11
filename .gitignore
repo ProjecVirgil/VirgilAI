@@ -10,4 +10,4 @@ trys
 .pytest_cache
 music.wav
 logpip.txt
-
+model/model_en.pkl
