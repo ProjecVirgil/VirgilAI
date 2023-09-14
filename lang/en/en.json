@@ -1,19 +1,57 @@
 {
+    "process": {
+        "prompt": "You are a virtual assistant who speaks Italian and writes numbers in letters named Virgilio. You can do exactly these things:\n- Create a timer\n- Tell the time at this moment\n- Know the latest news\n- Change the volume of your audio\n- The temperature outside\n- Interact with home automation\n- Know what time it is\n- Remember my schedule\n- Then play music from YouTube\n- And you can do a lot of other things like create a workout plan, a diet, and anything else a user might ask for. \n- When they ask you what you can do, you'll explain these points with examples:\n- Virgil sets a 10-minute timer\n- Virgil What's the weather like today? \n- Virgil set the volume to 10 percent\n- Virgil tell me the latest news\n- Virgil what's the temperature? \nIf I ask questions related to any of the above commands and you can't answer me, tell me to try to say the command and use the examples I listed earlier.\n- Ready to pretend to be Virgil? Answer yes if you understand, and from now on when I ask you a question, you answer me as if I were a virtual assistant."
+    },
     "calendar":{
         "month":["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
         "week":["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-        "split":["The","of","by","is","the","the","The","will be","is","will be","and","at","at the","what day it is","what day it is","after", "after tomorrow", "tomorrow", "yesterday", "today", "is"],
-        "phrase":["at", "all", "one day", "missing", "days"]
+        "split":["Il","di","del","è","il","l'","L'","sara'","e","sara","era","al","all","che giorno e","che giorno e'","dopo","dopo domani","domani","ieri","oggi","e'"],
+        "phrase":["At", "one day left", "missing", "days"],
+        "words_meaning_tomorrow":[
+            "tomorrow", "future", "next", "upcoming", "next", 
+            "next day", "day after", "next day", 
+            "future", "imminence", "forecast", "expectation", "proximity", 
+            "unknown", "tomorrow", "next day", "coming day",
+            "later"
+        ],
+        "words_meaning_after_tomorrow":[
+            "after tomorrow", "in two days", "next day", 
+            "after next day", "two days after",
+            "the day to come", "after the next day"
+        ],
+        "words_meaning_yesterday":[
+            "yesterday", "previous day", "the day before", "in the last day", 
+        "last day", "in the past day", "a day ago"
+        ],
+        "words_meaning_today":[
+            "today", "on this day", "in the present day", "on the current date", 
+            "at this time", "on this day", "on the current day"
+        ]
     },
     "time":{
         "split":["at", "at", "the", "and",":", "half", "minus a quarter", "a quarter", "alarm", "hour", "hours", "minutes", "minute", "second", "seconds", "for"],
         "phrase" :["calculated time for alarm", "hours", "minutes", "and", "seconds", "it's", "minutes", "missing"]
     },
     "news":{
-        "split":["of","at","on"]
+        "synonyms":[
+            "news", "occurrence", "event", "anecdote", "fact", "information", "news",
+            "communication", "report", "report", "occurrence", "events",
+            "anecdote", "fact", "information", "chronicle", "communication", "report", "report",
+            "news", "news"]
     },
     "wheather":{
-        "split":["to", "today", "tomorrow", "after tomorrow"],
+        "word_meaning_tomorrow":[
+            "tomorrow", "future", "next", "upcoming", "next", "next", 
+            "next day", "day after", "next day", 
+            "future", "imminence", "forecast", "expectation", "proximity", 
+            "unknown", "tomorrow", "next day", "coming day",
+            "after", "in two days", "next day", 
+            "following the next day", "two days after",
+            "the day to come", "after the next day",
+            "today", "on this day", "in the present day", "on the present date", 
+            "at this time", "on this day", "on the current day"
+        ],
+        "split":["at", "today", "tomorrow", "after tomorrow"],
         "phrase":["The weather at", "for", "forecast", "with a maximum of", "degrees,a minimum of", "degrees and a chance of precipitation of", "percent"],
         "WWC" : {
             "0": "Clear skies",
@@ -26,8 +64,8 @@
             "53": "Moderate drizzle",
             "55": "Heavy drizzle",
             "56": "Light icy drizzle",
-            "57": "Icy drizzle inte",
-            "61": "Light rain",
+            "57": "Intense icy drizzle",
+            "61": "Light rain.",
             "63": "Moderate rain",
             "65": "Heavy rain",
             "66": "Light freezing rain",
@@ -46,16 +84,21 @@
             "99": "Thunderstorm with intense hail"
         }
     },
-
     "command":{
-        "split":["turn off", "off", "time", "now", "are", "is", "stop",
-        "stop", "stop", "volume", "set", "put", "insert",
-        "weather ago", "weather to", "what's the weather", "what's the time", "degrees", 
-        "temperature", "how many", "how much", "timer","set", "put", "create", 
-        "alarm", "set", "set", "create","what day it is", "what day of the week it is",
-         "how long until","how long until", "how long until", "how many days until", "news", "news",
-        "news", "talk to me", "tell me", "give me", "play", "play again", "remind me",
-        "set a reminder", "remind me", "light", "turn on", "turn off"]
+        "split":["turn off", "off", "hours", "now", "are", "is", "stop",
+                "stop", "stop", "volume", "set", "put", "insert",
+                "weather ago", "weather to", "what's the weather", "what's the time", "degrees", "temperature", "how many", "how much", "timer",
+                "set", "put", "create", "alarm", "set", "set", "create",
+                "what day it is", "what day of the week it is", "how long until",
+                "how long until", "how long until", "how many days until", "news", "news",
+                "news", "talk to me", "tell me", "give me", "play", "play again", "remind me",
+                "set a reminder", "remind me", "light", "turn on", "turn off"]
+    },
+    "events":{
+        "phrase" : ["Hello I remind you that today you have several commitments: ", "Today you have no commitments enjoy your day", "Reminder successfully created"]
+    },
+    "outputs":{
+        "phrase":["The timer has started see you in", "seconds"],
+        "split":["wake up"]
     }
-
 }
