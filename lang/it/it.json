@@ -33,7 +33,7 @@
         "phrase" :["tempo calcolato per la sveglia","ore","minuti e","secondi","Sono le","minuti","mancano"]
     },
     "news":{
-        "sinonimi": [
+        "synonyms": [
             "novita","avvenimento","evento","aneddoto","fatto","informazione","cronaca",
             "comunicazione","segnalazione","rapporto","avvenimenti","eventi",
             "aneddoti","fatti","informazioni","cronache","comunicazioni","segnalazioni","rapporti",

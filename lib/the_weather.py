@@ -51,6 +51,7 @@ class Wheather:
         Returns:
             str: City chooise if the city not specify
         """
+        #TODO CHECK IF THE CITY EXIST
         MINUM_ACCURACY = 3
         result_list = []
         for word in command:

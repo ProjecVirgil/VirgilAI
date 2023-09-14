@@ -31,7 +31,7 @@ class Newsletter:
         """
         print(self.logger.log(" specify topic"), flush=True)
         topic = ""
-        for word in self.settings.sinonimi_news:
+        for word in self.settings.synonyms_news:
             if word in command:
                 topic = " ".join(command).split(word)[1]
                 break

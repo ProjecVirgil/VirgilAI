@@ -71,7 +71,7 @@ class Settings:
             # ----- News -----
 
             self.script_news = self.script["news"]
-            self.sinonimi_news = self.script_news["sinonimi"]
+            self.synonyms_news = self.script_news["synonyms"]
 
             # ----- Wheather -----
 
