@@ -33,7 +33,7 @@ class Audio:
         if music.get_volume != float(self.volume):
             music.set_volume(float(self.volume))
             if file:
-                file = os.path.join(f"asset/{namefile}.mp3")
+                file = os.path.join(f"asset/{self.settings.language}/{namefile}.mp3")
                 music.load(file)
                 music.play()
                 return
