@@ -27,6 +27,7 @@ from lib.utils import Utils #addEvents
 # - Check some bugs
 # - Test the englis version
 
+
 # ---- File for manage all the preset command ----
 class CommandSelection:
     """

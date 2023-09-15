@@ -47,7 +47,7 @@ class Audio:
                 save(sound,'audio.mp3')
             except api.error.APIError:
                 print(self.logger.log(" Google text to speech has started the cause could be a missing valid key or the end of the elevenLabs plan if you are aware of this you can ignore the message"), flush=True)
-                sound = gtts.gTTS(text,lang="it")
+                sound = gtts.gTTS(text,lang=self.settings.language)
                 sound.save("audio.mp3")
 
         file = os.path.join("audio.mp3")

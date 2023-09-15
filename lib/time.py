@@ -32,9 +32,9 @@ class Time:
         hours = time.strftime('%H',time_tuple)
         minuts = time.strftime('%M',time_tuple)
         if self.lang != "en":
-            hours_to_words = self.utils.number_to_word(hours)
-            minuts_to_words = self.utils.number_to_word(minuts)
-        time_string = f"{self.settings.phrase_time[4]} {str(hours_to_words)} {self.settings.split_time[3]} {str(minuts_to_words)}  {self.settings.split_time[11]}"
+            hours = self.utils.number_to_word(hours)
+            minuts = self.utils.number_to_word(minuts)
+        time_string = f"{self.settings.phrase_time[4]} {str(hours)} {self.settings.split_time[3]} {str(minuts)}  {self.settings.split_time[11]}"
         print(time.strftime("\nVirgil: They are the %H and %M minuts", time_tuple),flush=True)
         return time_string
 

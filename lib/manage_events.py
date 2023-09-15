@@ -76,7 +76,7 @@ class EventScheduler:
         Returns:
             tuple: Date for the events and the event
         """
-        words = self.setting.words_meaning_after_tomorrow + self.setting.words_meaning_tomorrow + self.setting.words_meaning_yesterday + self.calendar.self.setting.words_meaning_today
+        words = self.setting.words_meaning_after_tomorrow + self.setting.words_meaning_tomorrow + self.setting.words_meaning_yesterday + self.setting.words_meaning_today
 
         for word in words:
             if word in command:

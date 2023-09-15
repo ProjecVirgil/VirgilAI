@@ -118,30 +118,11 @@ class MakeRequests:
         print(self.logger.log(f" reponse: {request.status_code}"),flush=True)
 
 
-    def download_from_google_drive(self,file_id):
-        destination = "model/model_en.pkl"
-        URL = "https://docs.google.com/uc?export=download"
+    def download_model_en(self):
+        # Inizializza un client S3
+        url = "https://filemodelen.s3.eu-north-1.amazonaws.com/model_en.pkl"
+        destination = 'model/model_en.pkl'
+        response = requests.get(url,stream=True)
+        with open(destination, 'wb') as f:
+            f.write(response.content)  
         
-        session = requests.Session()
-        
-        response = session.get(URL, params = {'id': file_id}, stream = True)
-        token = self.get_confirm_token(response)
-        
-        if token:
-            params = {'id': file_id, 'confirm': token}
-            response = session.get(URL, params=params, stream=True)
-            
-        self.save_response_content(response, destination)
-
-    def get_confirm_token(self,response):
-        for key, value in response.cookies.items():
-            if key.startswith('download_warning'):
-                return value
-        return None
-
-    def save_response_content(self,response, destination):
-        chunk_size = 32768
-        with open(destination, "wb") as f:
-            for chunk in response.iter_content(chunk_size):
-                if chunk:
-                    f.write(chunk)

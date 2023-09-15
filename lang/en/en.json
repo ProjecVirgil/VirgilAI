@@ -85,7 +85,7 @@
         }
     },
     "command":{
-        "split":["turn off", "off", "hours", "now", "are", "is", "stop",
+        "split":["turn off", "shutdown", "hours", "now", "are", "is", "stop",
                 "stop", "stop", "volume", "set", "put", "insert",
                 "weather ago", "weather to", "what's the weather", "what's the time", "degrees", "temperature", "how many", "how much", "timer",
                 "set", "put", "create", "alarm", "set", "set", "create",

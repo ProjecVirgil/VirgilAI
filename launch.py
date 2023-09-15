@@ -13,6 +13,7 @@ import json
 import pyfiglet
 from colorama import Fore,Style
 
+from lib.word2vec import GloVeVectorizer,sentence_to_vec
 from lib.request import MakeRequests
 from lib.logger import Logger
 from lib.output import Output
@@ -165,7 +166,6 @@ def main():
     Main function that will be called when running this script from command line
     
     """
-    FILE_ID = "10xvHThKOXc_ZzmSn0Y8xWF1sXqoA2iSR"
     command_cleaner = check_system()
     print_banner(command_cleaner)
     rainbow(command_cleaner)
@@ -178,7 +178,7 @@ def main():
 
     if not os.path.exists("model/model_en.pkl"):  
         print(logger.log(ALERT + " Start the download of english model this operation will take some time, but will only be done once "))
-        request_maker.download_from_google_drive(FILE_ID)
+        request_maker.download_model_en()
         print(logger.log(OK + " Download finish"))
     
 #*  INIT ALL PRINCIPLE CLASS
