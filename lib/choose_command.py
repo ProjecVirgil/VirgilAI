@@ -85,7 +85,7 @@ class CommandSelection:
         response = openai.ChatCompletion.create(
             model = "gpt-3.5-turbo",
             messages = messages,
-            temperature = float(self.temeperature), # 0.0 - 2.0
+            temperature = float(self.temperature), # 0.0 - 2.0
             max_tokens = int(self.max_token)
         )
         return response.choices[0].message
@@ -150,8 +150,8 @@ class CommandSelection:
         """
         mixer.init()
         predictions = self.loaded_model.predict([self.clean(command,"model")])
-        command = self.clean(command,"work")
-        if (self.settings.split_command[0] in command) or (self.settings.split_command[1] in command): #WORKA
+        command_worked = self.clean(command,"work")
+        if (self.settings.split_command[0] in command_worked) or (self.settings.split_command[1] in command_worked): #WORKA
             print(self.logger.log(" pre shut function"),flush=True)
             self.off()
             return
@@ -159,13 +159,13 @@ class CommandSelection:
             print(self.logger.log(" pre time function"),flush=True)
             response = self.time.now()
             return response
-        if self.settings.split_command[6] in command or self.settings.split_command[7] in command or self.settings.split_command[8] in command: #work
+        if self.settings.split_command[6] in command_worked or self.settings.split_command[7] in command_worked or self.settings.split_command[8] in command_worked: #work
             print(self.logger.log(" Audio stopped succesflully"),flush=True)
             mixer.music.stop()
             return
         if predictions == 'VL': #WORKA
             print(self.logger.log(" pre volume function"),flush=True)
-            response = self.volume_mixer.change(command)
+            response = self.volume_mixer.change(command_worked)
             if response == "104":
                 print("\nVirgil: You cannot give a value less than 10, you can only give values from 100 to 10",
                       flush=True)
@@ -174,10 +174,10 @@ class CommandSelection:
             return response
         if predictions == 'MT': #WORKA
             print(self.logger.log(" pre wheather function"),flush=True)
-            response = self.wheather.recover_weather(command)
+            response = self.wheather.recover_weather(command_worked)
             return response
         if predictions == 'TM': #WORKA
-            for i in command:
+            for i in command_worked:
                 if self.utils.count_number(i) >= 2:
                     print(self.logger.log(" pre clock function"), flush=True)
                     hours,minuts,calculated_hours,calculated_minuts,calculate_seconds = self.time.diff_time(i)
@@ -186,7 +186,7 @@ class CommandSelection:
                     return str(my_time)
             print(self.logger.log(" pre timer function"), flush=True)
             try:
-                my_time = self.time.conversion(command)
+                my_time = self.time.conversion(command_worked)
                 return str(my_time)
             except IndexError:
                 print("Please try the command again", flush=True)
@@ -194,36 +194,38 @@ class CommandSelection:
                 return None
         if predictions == "GDS":#WORKA
             print(self.logger.log(" pre recovery function"),flush=True)
-            response=self.calendar.get_date(command)
+            response=self.calendar.get_date(command_worked)
             return response
         if predictions == "MC": #WORKA
-            for i in command:
+            for i in command_worked:
                 if self.utils.count_number(i) >= 2:
                     hours,minuts,calculated_hours,calculated_minuts,calculate_seconds = self.time.diff_time(i)
                     print(
                     self.logger.log(
                     f" {self.settings.split_time[1]} {self.utils.number_to_word(hours)} {self.settings.split_time[3]} {self.utils.number_to_word(minuts)} {self.settings.phrase_time[6]} {self.utils.number_to_word(calculated_hours)} {self.utils.number_to_word(calculated_minuts)} {self.utils.number_to_word(calculate_seconds)}"),flush=True)
                     return f" {self.settings.split_time[1]} {self.utils.number_to_word(hours)} {self.settings.split_time[3]} {self.utils.number_to_word(minuts)} {self.settings.phrase_time[6]} {self.utils.number_to_word(calculated_hours)} {self.settings.phrase_time[1]} {self.utils.number_to_word(calculated_minuts)} {self.settings.phrase_time[2]} {self.utils.number_to_word(calculate_seconds)} {self.settings.phrase_time[3]}"
-            result = self.calendar.diff_date(command)
+            result = self.calendar.diff_date(command_worked)
             print("Manca giorno")
             return result
         if predictions == "NW": #worka
             print(self.logger.log(" pre news function"),flush=True)
-            response = self.news_letter.create_news(command)
+            response = self.news_letter.create_news(command_worked)
             return response
         if predictions == "MU": #worka
             print(self.logger.log(" pre yt function"),flush=True)
-            self.media_player.play_music(command)
+            self.media_player.play_music(command_worked)
             return
         if predictions == "EV": #worka
             print(self.logger.log(" pre create events function"),flush=True)
-            return self.event_scheduler.add_events(command)
+            return self.event_scheduler.add_events(command_worked)
+        
         print(self.logger.log(" GPT function"), flush=True)
         self.start_prompt.append({"role": "user", "content": "".join(command)})
         try:
             new_message = self.get_response(messages=self.start_prompt)
-        except:
+        except Exception as e :
             print(self.logger.log("Unfortunately the key of openAI you entered is invalid or not present if you don't know how to get a key check the guide on github"), flush=True)
+            print(e,flush=True)
             self.audio.create(file=True,namefile="ErrorOpenAi")
             return#TO REG
         print(self.logger.log(" response created"),flush=True)
