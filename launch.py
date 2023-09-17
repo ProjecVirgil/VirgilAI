@@ -13,13 +13,11 @@ import json
 import pyfiglet
 from colorama import Fore,Style
 
-from lib.word2vec import GloVeVectorizer,sentence_to_vec
-from lib.request import MakeRequests
-from lib.logger import Logger
-from lib.output import Output
-from lib.text_input import TextInput
-from lib.vocal_input import VocalInput
-from lib.procces import Process
+from lib import Settings
+from lib.packages_utility.vectorize import GloVeVectorizer,sentence_to_vec
+from lib.packages_utility.request import MakeRequests
+from lib.packages_utility.logger import Logger
+
 
 # ---- This file launch all the file for making Virgilio work  ----
 def check_system():
@@ -162,10 +160,13 @@ def log_in() -> str:
 
 def main():
     """
-
     Main function that will be called when running this script from command line
-    
     """
+    from lib.packages_main.output import Output
+    from lib.packages_main.text_input import TextInput
+    from lib.packages_main.vocal_input import VocalInput
+    from lib.packages_main.procces import Process
+    
     command_cleaner = check_system()
     print_banner(command_cleaner)
     rainbow(command_cleaner)
@@ -181,12 +182,11 @@ def main():
         request_maker.download_model_en()
         print(logger.log(OK + " Download finish"))
     
-#*  INIT ALL PRINCIPLE CLASS
-    output = Output()
-    process = Process()
-    text_input = TextInput()
-    vocal_input = VocalInput()
-
+    #*INIT ALL PRINCIPLE CLASS
+    output = Output(settings)
+    process = Process(settings)
+    text_input = TextInput(word_activation=settings.word_activation)
+    vocal_input = VocalInput(settings)
 
     print(logger.log(OK + f"KEEP YOUR KEY {key} DON'T GIVE IT TO ANYONE"), flush=True)
 
@@ -226,9 +226,61 @@ def main():
 
 if __name__ == '__main__':
      #*  INIT LOGGER AND REQUEST_MAKER
+    with open("setup/settings.json",encoding="utf8") as file_settings:
+        #INIT FILE  
+        settings_file = json.load(file_settings)
+        language = settings_file["language"]
+        with open(f'lang/{language}/{language}.json',encoding="utf8") as file_scripts:
+            #INIT FILE      
+            script = json.load(file_scripts)
+            script_calendar = script["calendar"]
+            script_command = script["command"]
+            script_time = script["time"]
+            script_process = script["process"]
+            script_events = script["events"]
+            script_output = script["outputs"]
+            script_news = script["news"]
+            script_wheather = script["wheather"]
+            script_mediaplayer = script["mediaplayer"]
+            settings = Settings(
+                    language=language,
+                    word_activation=settings_file["wordActivation"].lower(),
+                    volume=settings_file["volume"],
+                    city=settings_file["city"],
+                    operation_timeout=settings_file["operation_timeout"],
+                    dynamic_energy_threshold=settings_file["dynamic_energy_threshold"],
+                    energy_threshold=settings_file["energy_threshold"],
+                    elevenlabs=settings_file["elevenlabs"],
+                    openai=settings_file["openAI"],
+                    merros_email=settings_file["merrosEmail"],
+                    merros_password=settings_file["merrosPassword"],
+                    temperature=settings_file["temperature"],
+                    max_tokens=settings_file["max_tokens"],
+                    phrase_calendar=script_calendar["phrase"],
+                    split_calendar=script_calendar["split"],
+                    months_calendar=script_calendar["month"],
+                    week_calendar=script_calendar["week"],
+                    words_meaning_tomorrow=script_calendar["words_meaning_tomorrow"],
+                    words_meaning_after_tomorrow=script_calendar["words_meaning_after_tomorrow"],
+                    words_meaning_yesterday=script_calendar["words_meaning_yesterday"],
+                    words_meaning_today=script_calendar["words_meaning_today"],
+                    split_command=script_command["split"],
+                    phrase_time=script_time["phrase"],
+                    split_time=script_time["split"],
+                    prompt=script_process["prompt"],
+                    phrase_events=script_events["phrase"],
+                    phrase_output=script_output["phrase"],
+                    split_output=script_output["split"],
+                    synonyms_news=script_news["synonyms"],
+                    phrase_wheather=script_wheather["phrase"],
+                    split_wheather=script_wheather["split"],
+                    wwc_wheather=script_wheather["WWC"],
+                    word_meaning_tomorrow_wheather=script_wheather["word_meaning_tomorrow"],
+                    synonyms_mediaplayer=script_mediaplayer["synonyms"]
+                )
+            
     logger = Logger()
     request_maker = MakeRequests()
-
     #* CONST
     BANNER_MESSAGE = ['W','We','Wel','Welc','Welco','Welcom','Welcome','Welcome ',
                       'Welcome t','Welcome to','Welcome to ','Welcome to V','Welcome to Vi',

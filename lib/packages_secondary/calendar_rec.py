@@ -8,28 +8,28 @@
 import calendar
 import datetime
 
-from lib.sound import Audio
-from lib.logger import Logger
-from lib.utils import Utils
-from lib.__init__ import Settings
+from lib.packages_utility.sound import Audio
+from lib.packages_utility.logger import Logger
+from lib.packages_utility.utils import Utils
 
 # ---- File for get the week of the day ----
 class Calendar:
     """
     Class for manage the function and settings
     """
-    def __init__(self) -> None:
+    def __init__(self,settings) -> None:
+
         self.utils =Utils()
         self.logger = Logger()
-        self.audio = Audio()
-        self.setting = Settings()
-        self.lang = self.setting.language
+        self.audio = Audio(settings.volume,settings.elevenlabs,settings.language)
+        self.lang = settings.language
 
-
+        self.settings = settings
 
     def clear_number(self,day:str,month:str) -> tuple:
         """
-        This works by forming the numbers in such a way that they do not contain the 0 in the case of single-digit numbers 
+        This works by forming the numbers in such a way that they 
+        do not contain the 0 in the case of single-digit numbers 
 
         Example: 09 -> 9
 
@@ -60,7 +60,7 @@ class Calendar:
         day,month,year = date.split("-")
         day,month = self.clear_number(day,month)
         index_week = self.index_day_of_week(year,month,day)
-        print(f" {self.setting.split_calendar[0]} {day} {self.setting.split_calendar[1]} {self.setting.months_calendar[int(month)-1]} {self.setting.split_calendar[2]} {year} {self.setting.split_calendar[3]} {self.setting.week_calendar[index_week]}",
+        print(f" {self.settings.split_calendar[0]} {day} {self.settings.split_calendar[1]} {self.settings.months_calendar[int(month)-1]} {self.settings.split_calendar[2]} {year} {self.settings.split_calendar[3]} {self.settings.week_calendar[index_week]}",
               flush=True)
         if (day is None or day == '') or month is None or year is None:
             print("I'm sorry but I couldn't get the date right you can reapply",
@@ -68,9 +68,9 @@ class Calendar:
             self.audio.create(file=True,namefile="ErrorDate")
         else:
             if(day != 1 or day != 11):
-                return f"{self.setting.split_calendar[0]} {self.utils.number_to_word(str(day))} {self.setting.split_calendar[1]} {self.setting.months_calendar[int(month)-1]} {self.setting.split_calendar[2]} {self.utils.number_to_word(str(year))} {self.setting.split_calendar[3]} {str(self.setting.week_calendar[index_week])}"
-            return f"{self.setting.split_calendar[6]}{self.utils.number_to_word(str(day))} {self.setting.split_calendar[1]} {self.setting.months_calendar[int(month)-1]} {self.setting.split_calendar[2]} {self.utils.number_to_word(str(year))} {self.setting.split_calendar[3]} {str(self.setting.week_calendar[index_week])}"
-        return None    
+                return f"{self.settings.split_calendar[0]} {self.utils.number_to_word(str(day))} {self.settings.split_calendar[1]} {self.settings.months_calendar[int(month)-1]} {self.settings.split_calendar[2]} {self.utils.number_to_word(str(year))} {self.settings.split_calendar[3]} {str(self.settings.week_calendar[index_week])}"
+            return f"{self.settings.split_calendar[6]}{self.utils.number_to_word(str(day))} {self.settings.split_calendar[1]} {self.settings.months_calendar[int(month)-1]} {self.settings.split_calendar[2]} {self.utils.number_to_word(str(year))} {self.settings.split_calendar[3]} {str(self.settings.week_calendar[index_week])}"
+        return None
 
     def index_day_of_week(self,year:int,month:int,day:int) -> int:
         """
@@ -107,12 +107,12 @@ class Calendar:
         count_of_number = self.utils.count_number(sentence)
         if count_of_number == 2:
             year = sentence[-1]
-            month = self.setting.months_calendar.index(sentence[len(sentence) - 2]) + 1
+            month = self.settings.months_calendar.index(sentence[len(sentence) - 2]) + 1
             day = sentence[len(sentence) - 3]
             return f"{day}-{month}-{year}"
         if(count_of_number  == 1 and self.check_month(sentence)):
             today_date  = datetime.datetime.now().date()
-            month = self.setting.months_calendar.index(sentence[-1]) + 1
+            month = self.settings.months_calendar.index(sentence[-1]) + 1
             day = sentence[len(sentence) - 2]
             return f"{day}-{month}-{today_date.year}"
         if(count_of_number  == 1 and not self.check_month(sentence)):
@@ -132,7 +132,7 @@ class Calendar:
             bool: if the word is a months
         """
         for word in sentence:
-            if word in self.setting.months_calendar:
+            if word in self.settings.months_calendar:
                 return True
         return False
 
@@ -147,22 +147,22 @@ class Calendar:
             str/none: formatted date or None if in the sentence there is no pattern
         """
         pattern = "%d-%m-%Y"
-        if any(elem in self.setting.words_meaning_after_tomorrow  for elem in command):
+        if any(elem in self.settings.words_meaning_after_tomorrow  for elem in command):
             today = datetime.datetime.today()
             after_tomorrow = today + datetime.timedelta(days=2)
             formatted_date = after_tomorrow.strftime(pattern)
             return formatted_date
-        if  any(elem in self.setting.words_meaning_tomorrow  for elem in command):
+        if  any(elem in self.settings.words_meaning_tomorrow  for elem in command):
             today = datetime.datetime.today()
             tomorrow = today + datetime.timedelta(days=1)
             formatted_date = tomorrow.strftime(pattern)
             return formatted_date
-        if any(elem in self.setting.words_meaning_yesterday  for elem in command):
+        if any(elem in self.settings.words_meaning_yesterday  for elem in command):
             today = datetime.datetime.today()
             yesterday = today + datetime.timedelta(days=-1)
             formatted_date = yesterday.strftime(pattern)
             return formatted_date
-        if any(elem in self.setting.words_meaning_today  for elem in command):
+        if any(elem in self.settings.words_meaning_today  for elem in command):
             today = datetime.datetime.today()
             today = today + datetime.timedelta(days=0)
             formatted_date = today.strftime(pattern)
@@ -194,11 +194,11 @@ class Calendar:
         correct_date = datetime.datetime(int(year), int(month), int(day))
         diff_days = (datetime.datetime.now() - correct_date).days
         print(self.logger.log(
-            f"result: {self.setting.phrase_calendar[0]} {day} {month} {year} {self.setting.phrase_calendar[2]} {diff_days * -1}"),
+            f"result: {self.settings.phrase_calendar[0]} {day} {month} {year} {self.settings.phrase_calendar[2]} {diff_days * -1}"),
               flush=True)
         if diff_days * -1 == 1:
-            return f" {self.setting.phrase_calendar[0]} {self.utils.number_to_word(day)} {self.utils.number_to_word(month)} {self.utils.number_to_word(year)} {self.setting.phrase_calendar[1]}"
-        return f" {self.setting.phrase_calendar[0]} {self.utils.number_to_word(day)}, {self.utils.number_to_word(month)}, {self.utils.number_to_word(year)} {self.setting.phrase_calendar[2]} {self.utils.number_to_word(diff_days * -1)} {self.setting.phrase_calendar[3]}"
+            return f" {self.settings.phrase_calendar[0]} {self.utils.number_to_word(day)} {self.utils.number_to_word(month)} {self.utils.number_to_word(year)} {self.settings.phrase_calendar[1]}"
+        return f" {self.settings.phrase_calendar[0]} {self.utils.number_to_word(day)}, {self.utils.number_to_word(month)}, {self.utils.number_to_word(year)} {self.settings.phrase_calendar[2]} {self.utils.number_to_word(diff_days * -1)} {self.settings.phrase_calendar[3]}"
 
     def get_date(self,command:list) -> str:
         """

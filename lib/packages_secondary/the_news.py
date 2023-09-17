@@ -3,8 +3,7 @@ import random
 
 from requests_html import HTMLSession
 
-from lib import Settings
-from lib.logger import Logger
+from lib.packages_utility.logger import Logger
 
 # ---- This file generate a random news by GoogleNews ----
 
@@ -12,12 +11,12 @@ class Newsletter:
     """
     This class is used to recover a news from google api.
     """
-    def __init__(self) -> None:
+    def __init__(self,language,synonyms_news) -> None:
         self.logger = Logger()
-        self.settings = Settings()
-        self.lang = self.settings.language
-        self.url_random = f"https://news.google.com/rss?oc=5&hl={self.lang}&gl={self.lang.upper()}&ceid={self.lang.upper()}:{self.lang}"
 
+        self.lang = language
+        self.url_random = f"https://news.google.com/rss?oc=5&hl={self.lang}&gl={self.lang.upper()}&ceid={self.lang.upper()}:{self.lang}"
+        self.synonyms_news = synonyms_news
 
     def get_topic(self,command) -> None or str:
         """
@@ -31,7 +30,7 @@ class Newsletter:
         """
         print(self.logger.log(" specify topic"), flush=True)
         topic = ""
-        for word in self.settings.synonyms_news:
+        for word in self.synonyms_news:
             if word in command:
                 topic = " ".join(command).split(word)[1]
                 break
@@ -50,9 +49,7 @@ class Newsletter:
         Returns:
             str: The news generated
         """
-        print(self.logger.log(" news function"), flush=True)
         session=HTMLSession()
-        print(self.logger.log(" session created"), flush=True)
         news= []
         topic = self.get_topic(command)
 
@@ -64,7 +61,6 @@ class Newsletter:
             news_selected = random.choice(news)
             print(self.logger.log(f" news choise {news_selected}"), flush=True)
         else:
-            print(self.logger.log(" general topic"), flush=True)
             request=session.get(self.url_random)
             for title in request.html.find('title'):
                 news.append(title.text)

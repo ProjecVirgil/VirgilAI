@@ -101,5 +101,8 @@
     "outputs":{
         "phrase":["Il timer è partito ci vediamo tra","secondi"],
         "split":["sveglia"]
+    },
+    "mediaplayer":{
+        "synonyms" : ["play","riproduci"]
     }
 }

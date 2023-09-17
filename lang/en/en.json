@@ -100,5 +100,8 @@
     "outputs":{
         "phrase":["The timer has started see you in", "seconds"],
         "split":["wake up"]
+    },
+    "mediaplayer":{
+        "synonyms" : ["play","reproduce"]
     }
 }

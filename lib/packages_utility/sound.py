@@ -5,20 +5,19 @@ import gtts
 from pygame.mixer import music
 from elevenlabs import generate,save,api
 
-from lib import Settings
-from lib.logger import Logger
+from lib.packages_utility.logger import Logger
 
 # ---- This file make the TTS ----
 class Audio:
     """
     A class for manage the audio in Virgil
     """
-    def __init__(self):
+    def __init__(self,volume,elevenlabs,language):
         self.logger = Logger()
-        self.settings = Settings()
 
-        self.volume = self.settings.volume
-        self.api_key = self.settings.elevenlabs
+        self.volume = volume
+        self.api_key = elevenlabs
+        self.language = language
 
     def create(self,text:str = "",file:bool = False,namefile:str = "") -> None:
         """
@@ -33,7 +32,7 @@ class Audio:
         if music.get_volume != float(self.volume):
             music.set_volume(float(self.volume))
             if file:
-                file = os.path.join(f"asset/{self.settings.language}/{namefile}.mp3")
+                file = os.path.join(f"asset/{self.language}/{namefile}.mp3")
                 music.load(file)
                 music.play()
                 return
@@ -47,7 +46,7 @@ class Audio:
                 save(sound,'audio.mp3')
             except api.error.APIError:
                 print(self.logger.log(" Google text to speech has started the cause could be a missing valid key or the end of the elevenLabs plan if you are aware of this you can ignore the message"), flush=True)
-                sound = gtts.gTTS(text,lang=self.settings.language)
+                sound = gtts.gTTS(text,lang=self.language)
                 sound.save("audio.mp3")
 
         file = os.path.join("audio.mp3")

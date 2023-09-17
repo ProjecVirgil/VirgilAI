@@ -3,16 +3,16 @@ import requests
 import yt_dlp
 from pygame.mixer import music
 
-from lib.logger import Logger
+from lib.packages_utility.logger import Logger
 # ---- This file is for search music and video via yt ----
 
 class MediaPlayer:
     """
     This class will be used to play media files like audio,video or playlist in the background using pygme mixer library
     """
-    def __init__(self) -> None:
+    def __init__(self,synonimus) -> None:
         self.logger  = Logger()
-        self.sinonimi = ["play","riproduci"]
+        self.synonimus = synonimus
 
     def get_topic(self,command:str) -> str or None:
         """
@@ -25,7 +25,7 @@ class MediaPlayer:
             str: topic
         """
 
-        for word in self.sinonimi:
+        for word in self.synonimus:
             if word in command:
                 topic = " ".join(command).split(word)[1]
                 break

@@ -2,7 +2,7 @@
 import requests
 from colorama import Style,Fore
 
-from lib.logger import Logger
+from lib.packages_utility.logger import Logger
 
 ALERT = Style.BRIGHT + Fore.YELLOW
 OK = Style.BRIGHT + Fore.CYAN
@@ -61,9 +61,7 @@ class MakeRequests:
                   ,flush=True)
             return "Error in the request sorry"
 
-
     #CALENDAR
-
     def create_user_event(self,key_user)-> str:
         """
         This function creates an event for the user with the key passed as parameter
@@ -117,12 +115,12 @@ class MakeRequests:
         request = requests.put(url,timeout=5)
         print(self.logger.log(f" reponse: {request.status_code}"),flush=True)
 
-
     def download_model_en(self):
-        # Inizializza un client S3
+        """
+        Download model english
+        """
         url = "https://filemodelen.s3.eu-north-1.amazonaws.com/model_en.pkl"
         destination = 'model/model_en.pkl'
-        response = requests.get(url,stream=True)
-        with open(destination, 'wb') as f:
-            f.write(response.content)  
-        
+        response = requests.get(url,stream=True,timeout=None)
+        with open(destination, 'wb') as file:
+            file.write(response.content)

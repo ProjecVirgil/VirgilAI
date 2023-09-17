@@ -3,15 +3,13 @@ import json
 import re
 from math import sin, cos, sqrt, atan2, radians
 
-from lib.logger import Logger
 from geopy.geocoders import Nominatim
 
+from lib.packages_utility.logger import Logger
 
 # ---- This file convert all the number in word ----
 
 # Because the ElevenLabs TTS read the number only in english
-
-
 
 class Utils:
     """
@@ -47,34 +45,51 @@ class Utils:
         """
         with open(f"connect/{file_name}.json", 'w',encoding="utf8") as commands:
             json.dump(data_empty,commands)
-        print(self.logger.log(" cleaned buffer command"), flush=True)
-        
 
-    def get_coordinates(self,city_name):
+    def get_coordinates(self,city_name:str) -> tuple:
+        """
+        Get coordinates from city name
+
+        Args:
+            city_name (str): _description_
+
+        Returns:
+            tuple: The lat and long of a city
+        """
         geolocator = Nominatim(user_agent="VirgilAI")
         location = geolocator.geocode(city_name)
 
         if location:
             return location.latitude, location.longitude
-        else:
-            return None, None
-        
-    def haversine_distance(self,coord1, coord2):
-        R = 6371  # Radius of Earth in kilometers
+
+        return None, None
+
+    def haversine_distance(self,coord1:tuple, coord2:tuple) -> float:
+        """
+        Haversine distance between two points on earth
+
+        Args:
+            coord1 (tuple): Cordinate of first point (lat and lon)
+            coord2 (tuple): Cordinate of second point (lat and lon)
+
+        Returns:
+            float: distance
+        """
+        radius_earth = 6371  # Radius of Earth in kilometers
         lat1, lon1 = coord1
         lat2, lon2 = coord2
-        
+
         # Conversion to radians
         lat1, lon1, lat2, lon2 = map(radians, [lat1, lon1, lat2, lon2])
-        
+
         # Haversine formula
         dlat = lat2 - lat1
         dlon = lon2 - lon1
         a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
         c = 2 * atan2(sqrt(a), sqrt(1-a))
-        distance = R * c
-        
-        return distance 
+        distance = radius_earth * c
+
+        return distance
 
     def number_to_word(self,number) -> str:
         """

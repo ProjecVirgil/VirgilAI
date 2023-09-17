@@ -5,10 +5,9 @@ import datetime
 import csv
 import requests
 
-from lib import Settings
-from lib.utils import Utils
-from lib.logger import Logger
-from lib.sound import Audio
+from lib.packages_utility.utils import Utils
+from lib.packages_utility.logger import Logger
+from lib.packages_utility.sound import Audio
 
 # ---- This file get the Meteo of all week ----
 
@@ -16,14 +15,16 @@ class Wheather:
     """
     This class manage to get the wheater for a specific day and time
     """
-    def __init__(self) -> None:
+    def __init__(self,settings) -> None:
         self.logger = Logger()
-        self.audio = Audio()
+        self.audio = Audio(settings.volume,settings.elevenlabs,settings.language)
         self.utils  = Utils()
-        self.settings = Settings()
 
-        self.city = self.settings.city
-        self.lang = self.settings.language
+        self.city = settings.city
+        self.lang = settings.language
+        self.split_wheather = settings.split_wheather
+        self.phrase_wheather = settings.phrase_wheather
+        self.wwc_wheather = settings.wwc_wheather
 
     #Init the api wheather
     def get_url(self,city) -> str:
@@ -51,33 +52,33 @@ class Wheather:
         Returns:
             str: City chooise if the city not specify
         """
-        #TODO CHECK IF THE CITY EXIST
-        MINUM_ACCURACY = 3
+        MINIMUM_ACCURACY = 3
         result_list = []
         for word in command:
-            min = 100000000
+            min_distance = 100000000
             city = ""
             latitude, longitude = self.utils.get_coordinates(word)
             if latitude is not None and longitude is not None:
                 with open("assets/worldcities.csv", 'r',encoding='utf-8') as csvfile:
                     csvreader = csv.reader(csvfile, delimiter=';')
                     for row in csvreader:
-                        if(row[0] == "city"):
+                        if row[0] == "city":
                             continue
+                        if row[0].lower() == city:
+                            return city
                         result = self.utils.haversine_distance((latitude,longitude), (float(row[2]),float(row[3])))
-                        if(result < min):
-                            min = result
+                        if result < min_distance:
+                            min_distance = result
                             city = row[1]
-                    result_list.append((city,min))
+                    result_list.append((city,min_distance))
         result_list = sorted(result_list, key=lambda x: x[1])
-        
-        if(result_list[0][1] < MINUM_ACCURACY):
+
+        if result_list[0][1] < MINIMUM_ACCURACY:
             city_correct = result_list[0][0]
             print(self.logger.log(f" City in the phrase choosen: {city_correct}"))
             return city_correct
-        else:
-            print(self.logger.log(" Default city choose"))
-            return self.city
+        print(self.logger.log(" Default city choose"))
+        return self.city
 
     def get_current_week_days(self)  -> list:
         """
@@ -124,11 +125,11 @@ class Wheather:
             tuple: Index of day and the day
         """
         days = self.get_current_week_days() #worka
-        if self.settings.split_wheather[1] in command or str(days[0]) in command :
+        if self.split_wheather[1] in command or str(days[0]) in command :
             return 0,days[0]
-        if self.settings.split_wheather[2] in command or str(days[1]) in command:
+        if self.split_wheather[2] in command or str(days[1]) in command:
             return 1,days[1]
-        if self.settings.split_wheather[3] in command or str(days[2]) in command:
+        if self.split_wheather[3] in command or str(days[2]) in command:
             return 2,days[2]
         if str(days[3]) in command:
             return 3,days[3]
@@ -154,7 +155,6 @@ class Wheather:
         """
         city = self.recover_city(command) #worka
         day,week_day = self.recover_day(command) #worka
-        print(self.logger.log(" weather function"), flush=True)
         response = requests.get(self.get_url(city),timeout=8)
         print(self.logger.log(" Response: " + str(response.status_code)), flush=True)
         if str(response.status_code) != 200:
@@ -165,8 +165,8 @@ class Wheather:
                 min_temp =  str(int(response["daily"]["temperature_2m_min"][day]))
                 precipitation = str(response["daily"]["precipitation_probability_max"][day])
                 if self.lang != "en":
-                    return f" {self.settings.phrase_wheather[0]} {city} {self.settings.phrase_wheather[1]} {self.utils.number_to_word(str(week_day))} {self.settings.phrase_wheather[2]} {self.settings.wwc_wheather[main]} {self.settings.phrase_wheather[3]} {self.utils.number_to_word(max_temp)} {self.settings.phrase_wheather[4]} {self.utils.number_to_word(min_temp)} {self.settings.phrase_wheather[5]} {self.utils.number_to_word(precipitation)} {self.settings.phrase_wheather[6]}"
-                return f" {self.settings.phrase_wheather[0]} {city} {self.settings.phrase_wheather[1]} {week_day} {self.settings.phrase_wheather[2]} {self.settings.wwc_wheather[main]} {self.settings.phrase_wheather[3]} {max_temp} {self.settings.phrase_wheather[4]} {min_temp} {self.settings.phrase_wheather[5]} {precipitation} {self.settings.phrase_wheather[6]}"
+                    return f" {self.phrase_wheather[0]} {city} {self.phrase_wheather[1]} {self.utils.number_to_word(str(week_day))} {self.phrase_wheather[2]} {self.wwc_wheather[main]} {self.phrase_wheather[3]} {self.utils.number_to_word(max_temp)} {self.phrase_wheather[4]} {self.utils.number_to_word(min_temp)} {self.phrase_wheather[5]} {self.utils.number_to_word(precipitation)} {self.phrase_wheather[6]}"
+                return f" {self.phrase_wheather[0]} {city} {self.phrase_wheather[1]} {week_day} {self.phrase_wheather[2]} {self.wwc_wheather[main]} {self.phrase_wheather[3]} {max_temp} {self.phrase_wheather[4]} {min_temp} {self.phrase_wheather[5]} {precipitation} {self.phrase_wheather[6]}"
             self.audio.create(file=True,namefile="ErrorDay")
             return ""
         print(self.logger.log(" repeat the request or wait a few minutes"), flush=True)

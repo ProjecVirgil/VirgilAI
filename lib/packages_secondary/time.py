@@ -2,9 +2,8 @@
 import datetime
 import time
 
-from lib import Settings
-from lib.logger import Logger
-from lib.utils import Utils
+from lib.packages_utility.logger import Logger
+from lib.packages_utility.utils import Utils
 
 # ---- This file get the current time and more ----
 
@@ -12,13 +11,13 @@ class Time:
     """
     This class is used to return a various things like the Actual time, the time difference and more
     """
-    def __init__(self):
+    def __init__(self,settings):
         self.logger = Logger()
         self.utils  = Utils()
-        self.settings = Settings()
 
-        self.lang = self.settings.language
-
+        self.lang = settings.language
+        self.split_time = settings.split_time
+        self.phrase_time = settings.phrase_time
 
     def now(self) -> str:
         """
@@ -27,14 +26,13 @@ class Time:
         Returns:
             str: The current time 
         """
-        print(self.logger.log(" Time function"),flush=True)
         time_tuple = time.localtime() # get struct_time
         hours = time.strftime('%H',time_tuple)
         minuts = time.strftime('%M',time_tuple)
         if self.lang != "en":
             hours = self.utils.number_to_word(hours)
             minuts = self.utils.number_to_word(minuts)
-        time_string = f"{self.settings.phrase_time[4]} {str(hours)} {self.settings.split_time[3]} {str(minuts)}  {self.settings.split_time[11]}"
+        time_string = f"{self.phrase_time[4]} {str(hours)} {self.split_time[3]} {str(minuts)}  {self.split_time[11]}"
         print(time.strftime("\nVirgil: They are the %H and %M minuts", time_tuple),flush=True)
         return time_string
 
@@ -82,8 +80,6 @@ class Time:
         Returns:
             int: The time in second
         """
-        print(self.logger.log(" Conversion in progress"),flush=True)
-
         hashmap = {
             "s":None,
             "m":None,
@@ -92,11 +88,11 @@ class Time:
 
         for index in enumerate(command):
             if command[index].isdigit():
-                if command[index+1] in (self.settings.split_time[9],self.settings.split_time[10]):
+                if command[index+1] in (self.split_time[9],self.split_time[10]):
                     hashmap["h"] = command[index]
-                elif command[index+1] in ( self.settings.split_time[11],self.settings.split_time[12]):
+                elif command[index+1] in ( self.split_time[11],self.split_time[12]):
                     hashmap["m"] = command[index]
-                elif command[index+1] in (self.settings.split_time[13],self.settings.split_time[14]):
+                elif command[index+1] in (self.split_time[13],self.split_time[14]):
                     hashmap["s"] = command[index]
 
         if (hashmap["h"] is not None) and (hashmap["m"] is not None) and (hashmap["s"] is not None ):

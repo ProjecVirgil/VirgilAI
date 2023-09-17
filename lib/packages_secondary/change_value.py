@@ -1,7 +1,7 @@
 """"""
-from lib.logger import Logger
-from lib.sound import Audio
-from lib.utils import Utils
+from lib.packages_utility.logger import Logger
+from lib.packages_utility.sound import Audio
+from lib.packages_utility.utils import Utils
 
 # ---- File for change the volume of Virgil ----
 
@@ -10,10 +10,10 @@ class VolumeMixer:
     """
     Class to control the sound volume of Virgil.
     """
-    def __init__(self, volume_value:int = 100):
+    def __init__(self,volume_value:int = 100,settings = None):
         self.__volume = volume_value
         self.logger = Logger()
-        self.audio = Audio()
+        self.audio = Audio(settings.volume,settings.elevenlabs,settings.language)
         self.utils  = Utils()
 
     def get_volume(self) -> float or int:
@@ -35,7 +35,6 @@ class VolumeMixer:
         Returns:
             str: Final message after change the volume
         """
-        print(self.logger.log(" volume function"), flush=True)
         if self.utils.count_number(command) >= 1:
             search_volume = lambda command: [x for x in command if x.isdigit()]
             self.__volume = int(search_volume(command)[0])

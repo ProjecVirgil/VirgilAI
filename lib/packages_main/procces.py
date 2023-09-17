@@ -5,13 +5,11 @@ import threading
 from colorama import Fore
 import nltk
 
+from lib.packages_utility.logger import Logger
+from lib.packages_utility.request import MakeRequests
+from lib.packages_utility.utils import Utils
 
-from lib import Settings
-from lib.logger import Logger
-from lib.choose_command import CommandSelection
-from lib.request import MakeRequests
-from lib.utils import Utils
-
+from lib.packages_main.choose_command import CommandSelection
 
 # ----- File to elaborate the input  -----
 
@@ -19,19 +17,20 @@ class Process:
     """
     This class is responsible for processing the user's command and returning a response from Virgil API and other APIs.
     """
-    def __init__(self) -> None:
+    def __init__(self,settings) -> None:
         self.data_empty = {
         "0": [None, None, True]
         }
         nltk.download('punkt')
         nltk.download('stopwords')
+
         self.request_maker = MakeRequests()
         self.logger = Logger()
         self.utils = Utils()
-        self.command_selection = CommandSelection()
-        self.settings = Settings()
 
-        self.word_activation = self.settings.word_activation
+        self.command_selection = CommandSelection(settings)
+
+        self.word_activation = settings.word_activation
 
     def update_json_value(self,key:str, new_value:bool) -> None:
         """
@@ -49,7 +48,6 @@ class Process:
             print(self.logger.log(f"The key '{key}' dont exist in the file JSON."), flush=True)
         with open("connect/command.json", 'w',encoding="utf8") as file:
             json.dump(data, file, indent=4)
-
 
     def clean_command(self,command:str) -> str:
         """
@@ -77,16 +75,12 @@ class Process:
             command (str): the command to send
         """
         command = self.clean_command(command)
-        print(self.logger.log(" command heard correctly"), flush=True)
-        print(self.logger.log(" command in process"), flush=True)
         res = self.command_selection.send_command(command)
-        print(self.logger.log(" command processed updating file with the result"), flush=True)
         with open("connect/res.json", 'w',encoding="utf8") as file:
             data = {
                 "0": [command, res, False]
             }
             json.dump(data, file, indent=4)
-
 
     class EventThread(threading.Thread):
         """
@@ -107,9 +101,6 @@ class Process:
             print(self.logger.log("  update the reminder"), flush=True)
             with open("connect/reminder.txt", "w",encoding="utf8") as file:
                 file.write("0")
-            print(self.logger.log(" check the old events"), flush=True)
-            # Esegue altre operazioni specifiche della funzione checkEvent()
-            # Nota che qui puoi utilizzare self.logger per accedere al logger
 
         def run(self) -> None:
             """
@@ -123,7 +114,6 @@ class Process:
         """
         print(self.logger.log(Fore.GREEN + " THE ASSISTENT IS ONLINE  "), flush=True)
         self.utils.clean_buffer(data_empty=self.data_empty,file_name="res")
-        print(self.logger.log(" Start check event"), flush=True)
         thread = self.EventThread(self.logger)
         thread.start()
         while True:
@@ -136,7 +126,6 @@ class Process:
             if "false" in command and command != None:
                 print(self.logger.log(f" command processed: {command_to_elaborate}"), flush=True)
                 self.send(command_to_elaborate)
-                print(self.logger.log(" updating the command"), flush=True)
                 self.update_json_value(command_to_elaborate, True)
             else:
                 pass

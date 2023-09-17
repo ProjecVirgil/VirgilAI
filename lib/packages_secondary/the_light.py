@@ -7,7 +7,7 @@ import asyncio
 from meross_iot.http_api import MerossHttpClient
 from meross_iot.manager import MerossManager
 
-from lib.logger import Logger
+from lib.packages_utility.logger import Logger
 
 # ---- This file controll the domotic meross ----
 

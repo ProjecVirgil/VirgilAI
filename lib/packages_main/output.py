@@ -8,27 +8,27 @@ from colorama import Style,Fore
 import pyfiglet
 from pygame import mixer
 
-from lib import Settings
-from lib.sound import Audio
-from lib.logger import Logger
-from lib.utils  import Utils
-from lib.manage_events import EventScheduler
+from lib.packages_utility.sound import Audio
+from lib.packages_utility.logger import Logger
+from lib.packages_utility.utils  import Utils
 
+from lib.packages_secondary.manage_events import EventScheduler
 
 class Output:
     """
     Output class for the bot to output messages and errors on console or file.
     """
-    def __init__(self) -> None:
-        self.event_scheduler = EventScheduler()
-        self.logger = Logger()
-        self.utils = Utils()
-        self.audio = Audio()
-        self.settings = Settings()
+    def __init__(self,settings) -> None:
         mixer.init()
 
-        self.lang = self.settings.language
+        self.settings = settings
 
+        self.logger = Logger()
+        self.utils = Utils()
+        self.event_scheduler = EventScheduler(settings)
+        self.audio = Audio(settings.volume,settings.elevenlabs,settings.language)
+
+        self.lang = settings.language
 
     def update_json_value(self,key:str, new_value:bool) -> None:
         """
@@ -63,7 +63,6 @@ class Output:
                 return False
             return True
 
-
     def timer(self, my_time:int, command:str) -> None:
         """
         Timer function that runs every 3 seconds
@@ -73,14 +72,9 @@ class Output:
             command (_type_): The command
         """
         if self.settings.phrase_outputs[0] in command:
-            print(self.logger.log(" timer function"), flush=True)
-            print(self.logger.log(" alarm clock actived"), flush=True)
             time.sleep(my_time)
         else:
-            print(self.logger.log(" timer function"), flush=True)
-            print(self.logger.log(" start timer"), flush=True)
             time.sleep(my_time)
-            print(self.logger.log(" end timer"), flush=True)
             self.audio.create(file=True, namefile="timerEndVirgil")
 
     class TimerThread(threading.Thread):
@@ -102,7 +96,7 @@ class Output:
             Function tu run the timer
             
             """
-            output_instance = Output()
+            output_instance = Output(settings=self.settings)
             output_instance.timer(self.interval, self.command)
 
     def recover_data(self) -> tuple:
@@ -173,7 +167,6 @@ class Output:
                         print(result, flush=True)
                     self.update_json_value(2, True)
 
-                    print(self.logger.log(" check the reminder"),flush=True)
                     if not self.check_reminder():
                         print(self.logger.log(" send notify for today event"),flush=True)
                         result = self.event_scheduler.send_notify()

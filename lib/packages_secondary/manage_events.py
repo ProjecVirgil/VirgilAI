@@ -1,10 +1,9 @@
 """"""
 import datetime
-from lib import Settings
 
-from lib.logger import Logger
-from lib.request import MakeRequests
-from lib.calendar_rec import Calendar
+from lib.packages_utility.logger import Logger
+from lib.packages_utility.request import MakeRequests
+from lib.packages_secondary.calendar_rec import Calendar
 
 # ----- Calendar Event Function -----
 class EventScheduler:
@@ -12,11 +11,10 @@ class EventScheduler:
     This class is used to schedule calendar events for the user.
     Using the VirgilAPI and DB
     """
-    def __init__(self):
+    def __init__(self,settings):
         self.logger = Logger()
         self.request_maker = MakeRequests()
-        self.calendar = Calendar()
-        self.setting = Settings()
+        self.calendar = Calendar(settings)
 
         self.events = self.request_maker.get_events()
         self.current_date = datetime.datetime.now().date()
@@ -25,22 +23,25 @@ class EventScheduler:
         self.formatted_date[1] = self.formatted_date[1].replace("0", "")
         self.formatted_date = "-".join(self.formatted_date)
 
-        self.lang = self.setting.language
+        self.lang = settings.language
+        self.settings = settings
+        self.phrase_events = settings.phrase_events
 
     def send_notify(self) -> str:
         """
-        This function sends a notification to the users that have an event on today's date, if they are not already notified about it
+        This function sends a notification to the users that have an 
+        event on today's date, if they are not already notified about it
 
         Returns:
             str: The phrase to reproduce
         """
         try:
             today_events = self.events[self.formatted_date]
-            phrase = self.setting.phrase_events[0]
+            phrase = self.phrase_events[0]
             for event in today_events:
                 phrase = phrase + event.strip() + " "
         except KeyError:
-            phrase = self.setting.phrase_events[1]
+            phrase = self.phrase_events[1]
         print(self.logger.log(f" {phrase}"), flush=True)
         return phrase
 
@@ -76,7 +77,7 @@ class EventScheduler:
         Returns:
             tuple: Date for the events and the event
         """
-        words = self.setting.words_meaning_after_tomorrow + self.setting.words_meaning_tomorrow + self.setting.words_meaning_yesterday + self.setting.words_meaning_today
+        words = self.settings.words_meaning_after_tomorrow + self.settings.words_meaning_tomorrow + self.settings.words_meaning_yesterday + self.settings.words_meaning_today
 
         for word in words:
             if word in command:
@@ -87,7 +88,7 @@ class EventScheduler:
 
         date_record = []
         for element in command:
-            if element.isdigit() or element in self.setting.months_calendar:
+            if element.isdigit() or element in self.settings.months_calendar:
                 date_record.append(element)
                 if len(date_record) >= 3:
                     break
@@ -104,10 +105,7 @@ class EventScheduler:
         Returns:
             str: Final phrase to reprocude
         """
-        print(self.logger.log(" i will create event"),flush=True)
         date,event = self.recognize_date(command)
         date = self.get_date(date)
-        print(self.logger.log(" i recov the date"),flush=True)
-        print(self.logger.log(" send the request"),flush=True)
         self.request_maker.create_events(event,date)
-        return self.setting.phrase_events[2]
+        return self.phrase_events[2]
