@@ -177,12 +177,6 @@ if __name__ == "__main__":
     ```
     And replace the voice whith the one you want (if after the TTS dont'work try another voice on whatch a video on YT on how to use default entries )
 5.  Restart Virgil
-
-## 📃 Configuration without app
-
-**not updated to revision**
-1. In the main directory there is a file call ```settings.json``` in this file is present all the setting of Virgil open it
-2. Now you can modify all the setting like API key, location etc
  
 ## 🔁 Change the key
 
@@ -191,8 +185,8 @@ if __name__ == "__main__":
 ## ⚠️ TO BE CONSIDERED 
 1. The entire project is only at the albor and is not 100% complete
 2. Virgilio without the API insert and without the connection will not function fully 
-3. **FOR NOW** many command works only in italian except for the question at GPT (so any questions not covered by the default commands)
-4. The api for GPT is almost free but is necessary inser the credit/debit card (sorry i know is annoying) 💸
+3. The api for GPT is almost free but is necessary inser the credit/debit card (sorry i know is annoying) 💸
+4. I do not guarantee the robustness of the code and software at100% for now also the ML models are still under development and study and may not be 100% accurate 
 
 
 ## 💎 RoadMap for the ProjectVirgil
@@ -202,21 +196,17 @@ if __name__ == "__main__":
 - [x] Increase the possibility of Virgil
 - [x] Create a website for the Project
 - [x] Improve the command recognition
+- [x] Add more language
 - [ ] Improve the code design and make the code more efficent
-- [ ] Add more language
 
 
 ## 💸 Credits and technologies used
-Only me 💻 and
 
- - openAI API
- - OpenMeteo API
- - Merros API
- - MongoDB for Database of the setting
- - Flask for create the API
- - Flutter for create the mobile app (only android for now)
- - Firebase for the manage of account
- - EvenLabs API 
+Developer: Only me for now
+Technologies:
+ - Python
+ - Bash and Batch (for the setup)
+ - Python library like: Request,SpeechRecognize,Pygame etc
 
 ps: follow me on [instagram](https://www.instagram.com/akiidjk) and [twitter](https://twitter.com/R3tr0_fj) contact me for help or support
 
