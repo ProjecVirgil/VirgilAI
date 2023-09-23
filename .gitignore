@@ -9,7 +9,8 @@ __pycache__
 htmlcov
 
 # File always in the directory
-connect
+connect/command.json
+connect/res.json
 tests
 trys 
 audio.mp3
