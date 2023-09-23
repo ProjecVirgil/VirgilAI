@@ -1,14 +1,29 @@
-#Config file for project Virgil
 
+# ---- STANDARD CONFIG ----
+[project]
+name = "VirgilAI"
+description = "Virgil is an advanced virtual assistant that is based on the powerful GPT-3.5 artificial intelligence developed by OpenAI. This virtual assistant is designed to offer a wide range of features and capabilities similar to those of well-known virtual assistants such as Amazon's Alexa."
+version = "v2.2.0"
+readme = "README.md"
+requires-python = ">=3.11"
+
+[project.license]
+file = "LICENSE"
+
+[tool.path]
+key_path = "setup/key.txt"
+setting_path = "setup/settings.json"
+
+# ------ CONFIG FOR POETRY ------
 [tool.poetry]
 name = "Virgil AI"
 version = "2.2.0"
 description = "Virgil is an advanced virtual assistant that is based on the powerful GPT-3.5 artificial intelligence developed by OpenAI. This virtual assistant is designed to offer a wide range of features and capabilities similar to those of well-known virtual assistants such as Amazon's Alexa."
-authors = ["Retr0100"]
+authors = ["Retr0100 <dragonfaiver@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = ">=3.11.5,<3.12"
 scikit-learn = "1.2.2"
 colorama = "^0.4.6"
 pyfiglet = "^1.0.2"
@@ -22,13 +37,17 @@ gtts = "^2.3.2"
 elevenlabs = "^0.2.26"
 geopy = "^2.4.0"
 requests-html = "^0.10.0"
+scipy = "1.10.0"
+tomli = "^2.0.1"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.0.291"
 
-# Config of ruff 
+# ------ CONFIG OF RUFF  --------
 [tool.ruff]
 ignore = ["E501"]
+extend-include = ["*.pyw"]
+select = ["E","F","N","D","UP","PYI","SLOT","SIM","TD","FIX","W"]
 exclude = [
     ".git",
     ".git-rewrite",
@@ -36,5 +55,13 @@ exclude = [
     "__pypackages__",
     "venv",
 ]
+respect-gitignore = true
+target-version = "py311"
 
-target-version = "py310"
+[tool.ruff.pydocstyle]
+convention = "google"
+
+
+
+
+
