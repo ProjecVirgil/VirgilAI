@@ -1,4 +1,4 @@
-""""""
+"""This module is mutch importante because manage all the class and procces the command."""
 import string
 import sys
 import json
@@ -11,29 +11,28 @@ from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 
 from lib.packages_utility.logger import Logger
-from lib.packages_utility.sound import Audio # Create
-from lib.packages_utility.utils import Utils #addEvents
+from lib.packages_utility.sound import Audio
+from lib.packages_utility.utils import Utils
 
-from lib.packages_secondary.time import Time  #now,diffTime,conversion
-from lib.packages_secondary.change_value import  VolumeMixer  #change
-from lib.packages_secondary.the_weather import Wheather  #recoverWeather
+from lib.packages_secondary.time import Time
+from lib.packages_secondary.change_value import  VolumeMixer
+from lib.packages_secondary.the_weather import Wheather
 from lib.packages_secondary.calendar_rec import Calendar
-from lib.packages_secondary.the_news import  Newsletter #createNews
-from lib.packages_secondary.searchyt import   MediaPlayer #playMusic
+from lib.packages_secondary.the_news import  Newsletter
+from lib.packages_secondary.searchyt import   MediaPlayer
 from lib.packages_secondary.manage_events import EventScheduler
 #from lib.the_light import turn
 
-# TODO LIST:
-# - Check some bugs
-# - Test the englis version
-
 # ---- File for manage all the preset command ----
 class CommandSelection:
-    """
-    This class is used to select a specific function of the assistant.
-    """
-    def __init__(self,settings) -> None:
+    """This class is used to select a specific function of the assistant."""
 
+    def __init__(self,settings) -> None:
+        """Init all the settings for manage all classes.
+
+        Args:
+            settings (Settings): the dataclasses with all settings
+        """
         self.settings = settings
 
         self.logger = Logger()
@@ -70,9 +69,8 @@ class CommandSelection:
         self.api_key = settings.openai
         openai.api_key = self.api_key
 
-    #function for communicate whith api GPT-3
     def get_response(self,messages:list):
-        """_summary_
+        """Function for communicate whith api GPT-3.5.
 
         Args:
             messages (list): The contest of conversation
@@ -90,9 +88,7 @@ class CommandSelection:
         return response.choices[0].message
 
     def off(self) -> None:
-        """
-        Function to shutdown all services and close connection with database
-        """
+        """Function to shutdown all services and close connection with database."""
         print("\nVirgil: Shutdown in progress...", flush=True)
         with open("connect/res.json", 'w',encoding="utf8") as file:
             data = {
@@ -103,12 +99,11 @@ class CommandSelection:
         sys.exit(0)
 
     def clean(self,command:str,type:str) -> str:
-        """
-        Function that cleans a command 
+        """Function that cleans a command.
 
         Args:
             command (str): the command to clean
-            type (str): type of cleaning model(cleaning the command for 
+            type (str): type of cleaning model(cleaning the command for
             work with the models) work (cleaning the command for work with the my code)
 
         Returns:
@@ -135,16 +130,15 @@ class CommandSelection:
             return command
 
     def send_command(self,command) -> str:
-        """
-        Function to process a command received by user
+        """Function to process a command received by user.
 
         Args:
-            command (str): command cleaned 
-            command (str): command cleaned 
+            command (str): command cleaned
+            command (str): command cleaned
 
         Returns:
-            str: The response at the command 
-            str: The response at the command 
+            str: The response at the command
+            str: The response at the command
         """
         mixer.init()
         predictions = self.loaded_model.predict([self.clean(command,"model")])
@@ -218,9 +212,9 @@ class CommandSelection:
         self.start_prompt.append(new_message)
         return new_message['content']
 
-#TODO ADD THE DOMOTIC FUNCTION
-'''if self.split[46] in command and ((self.split[47] in command) 
-or (self.split[48] in command)): 
+#TODO ADD THE DOMOTIC FUNCTION  # noqa: TD002, TD004, TD003, FIX002
+'''if self.split[46] in command and ((self.split[47] in command)
+or (self.split[48] in command)):
             print(self.logger.log(" pre light function"),flush=True)
             turn(command)
             return "Ok"'''

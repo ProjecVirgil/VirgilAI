@@ -1,6 +1,4 @@
-"""
-_summary_
-"""
+"""_summary_."""
 import json
 import asyncio
 
@@ -22,7 +20,7 @@ with open("setup/settings.json",encoding="utf8") as f:
 logger = Logger()
 
 async def main(status:bool):
-    """_summary_
+    """_summary_.
 
     Args:
         status (bool): _description_
@@ -64,7 +62,7 @@ async def main(status:bool):
 
 
 def turn(command:str):
-    """_summary_
+    """_summary_.
 
     Args:
         command (str): _description_

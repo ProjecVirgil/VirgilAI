@@ -1,4 +1,4 @@
-""""""
+"""Search a song on yt and reproduce it."""
 import requests
 import yt_dlp
 from pygame.mixer import music
@@ -7,17 +7,22 @@ from lib.packages_utility.logger import Logger
 # ---- This file is for search music and video via yt ----
 
 class MediaPlayer:
+    """This class will be used to play media files.
+
+    This class will be used to play media files.like audio,
+    video or playlist in the background using pygme mixer library.
     """
-    This class will be used to play media files like audio,video
-    or playlist in the background using pygme mixer library
-    """
-    def __init__(self,synonimus) -> None:
+    def __init__(self,synonimus:list) -> None:
+        """Init the class and the logger class.
+
+        Args:
+            synonimus (list): a list of synonimus
+        """
         self.logger  = Logger()
         self.synonimus = synonimus
 
     def get_topic(self,command:str) -> str or None:
-        """
-        Get the topic for search on yt
+        """Get the topic for search on yt.
 
         Args:
             command (str): sentence
@@ -25,7 +30,6 @@ class MediaPlayer:
         Returns:
             str: topic
         """
-
         for word in self.synonimus:
             if word in command:
                 topic = " ".join(command).split(word)[1]
@@ -34,10 +38,8 @@ class MediaPlayer:
             topic = None
         return topic
 
-    #MODIFICARE TO GET ONLY URL
     def search_on_yt(self,topic:str) -> str:
-        """
-        Search a song/video on youtube
+        """Search a song/video on youtube.
 
         Args:
             topic (str): the topic for the search
@@ -65,8 +67,7 @@ class MediaPlayer:
         return None
 
     def download(self,url:str):
-        """
-        Download the audio from Youtube
+        """Download the audio from Youtube.
 
         Args:
             url (str): The url for the download
@@ -86,9 +87,7 @@ class MediaPlayer:
             return error_code
 
     def play(self):
-        """
-        Play the music file
-        """
+        """Play the music file."""
         file_name = "music.wav"
         player_audio = music
         player_audio.unload()
@@ -96,11 +95,10 @@ class MediaPlayer:
         player_audio.play()
 
     def play_music(self,command):
-        """
-        Play Music based on command
+        """Play Music based on command.
 
         Args:
-            command (_type_): the input sentence
+            command (str): the input sentence
         """
         topic = self.get_topic(command)
         print(self.logger.log(f" topic selected: {topic}"),flush=True)

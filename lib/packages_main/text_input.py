@@ -1,4 +1,4 @@
-""""""
+"""The input file for the text."""
 import json
 import sys
 import unicodedata
@@ -9,11 +9,13 @@ from lib.packages_utility.utils import Utils
 # ----- File to take the input by the console -----
 
 class TextInput:
-    """
-    Class that takes a text as an argument and returns 
-    it in lowercase, without accents or special characters.
-    """
+    """Class that takes a text as an argument and returns it in lowercase, without accents or special characters."""
     def __init__(self,word_activation) -> None:
+        """Init func.
+
+        Args:
+            word_activation (str): The word for the activation of Virgil
+        """
         self.data_empty = {
             None:True
             }
@@ -23,9 +25,9 @@ class TextInput:
         self.word_activation = word_activation
 
     def copy_data(self,command:str):
-        """
-        Copy data from a command line and return it as string or list of strings 
-        if needed for further processing in other functions
+        """Copy data from a command line.
+
+        and return it as string or list of strings if needed for further processing in other functions.
 
         Args:
             command (str): Command to copy in the file
@@ -38,9 +40,7 @@ class TextInput:
             json.dump(data, comandi,indent=4)
 
     def text(self):
-        """
-        The main file for recover the command from text
-        """
+        """The main file for recover the command from text."""
         command = ""
         print(self.logger.log(" start input function"), flush=True)
         self.utils.clean_buffer(data_empty=self.data_empty,file_name="command")

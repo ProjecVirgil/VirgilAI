@@ -1,14 +1,12 @@
-"""
-File for the configuration of the other classes
-"""
+"""File for the configuration of the other classes."""
 from dataclasses import dataclass
 
 @dataclass(slots=True,frozen=True)
 class Settings:
-    """
-    Settings dataclass for the application. 
-    This is a singleton object that holds all of our 
-    settings and can be accessed anywhere in the app through this single instance
+    """Settings dataclass for the application.
+
+    This is a singleton object that holds all of our
+    settings and can be accessed anywhere in the app through this single instance.
     """
     #******************** Setting ********************
     language: str

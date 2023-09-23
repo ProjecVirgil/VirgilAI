@@ -1,4 +1,4 @@
-""""""
+"""File to format and send events to DB."""
 import datetime
 
 from lib.packages_utility.logger import Logger
@@ -7,11 +7,9 @@ from lib.packages_secondary.calendar_rec import Calendar
 
 # ----- Calendar Event Function -----
 class EventScheduler:
-    """
-    This class is used to schedule calendar events for the user.
-    Using the VirgilAPI and DB
-    """
+    """This class is used to schedule calendar events for the user using the VirgilAPI and DB."""
     def __init__(self,settings):
+        """Init the class."""
         self.logger = Logger()
         self.request_maker = MakeRequests()
         self.calendar = Calendar(settings)
@@ -28,9 +26,10 @@ class EventScheduler:
         self.phrase_events = settings.phrase_events
 
     def send_notify(self) -> str:
-        """
-        This function sends a notification to the users that have an 
-        event on today's date, if they are not already notified about it
+        """This function sends a notification.
+
+        This function sends a notification to the users that have an
+        event on today's date, if they are not already notified about it.
 
         Returns:
             str: The phrase to reproduce
@@ -46,8 +45,7 @@ class EventScheduler:
         return phrase
 
     def get_date(self,command) -> str:
-        """
-        This function gets a date from the command line
+        """This function gets a date from the command line.
 
         Args:
             command (_type_): Sentence
@@ -68,8 +66,7 @@ class EventScheduler:
         return preset_date
 
     def recognize_date(self,command) -> tuple:
-        """
-        Take the data and the event for send the request
+        """Take the data and the event for send the request.
 
         Args:
             command (_type_): Sencence
@@ -81,7 +78,7 @@ class EventScheduler:
 
         for word in words:
             if word in command:
-                with open("connect/command.json", 'r',encoding="utf8") as commands:
+                with open("connect/command.json",encoding="utf8") as commands:
                     command_complete = commands.read()
                     event = "".join("".join(command_complete.split(word)[1]).split('":'))[:-7]
                 return word.split(" "),event
@@ -96,8 +93,7 @@ class EventScheduler:
         return date_record,event
 
     def add_events(self,command:str) -> str:
-        """
-        Add an event to a specific date
+        """Add an event to a specific date.
 
         Args:
             command (str): sentence input

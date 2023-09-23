@@ -1,4 +1,4 @@
-""""""
+"""This file manage the call at the API for the wheather."""
 import calendar
 import datetime
 
@@ -12,10 +12,13 @@ from lib.packages_utility.sound import Audio
 # ---- This file get the Meteo of all week ----
 
 class Wheather:
-    """
-    This class manage to get the wheater for a specific day and time
-    """
+    """This class manage to get the wheater for a specific day and time."""
     def __init__(self,settings) -> None:
+        """Init file for the wheather manage.
+
+        Args:
+            settings (Settings): The dataclasses with all the settings
+        """
         self.logger = Logger()
         self.audio = Audio(settings.volume,settings.elevenlabs,settings.language)
         self.utils  = Utils()
@@ -28,11 +31,10 @@ class Wheather:
 
     #Init the api wheather
     def get_url(self,city) -> str:
-        """
-        This function init the url with the parameters to call the API weather
+        """This function init the url with the parameters to call the API weather.
 
         Args:
-            city (_type_): The city from which the url is obtained 
+            city (_type_): The city from which the url is obtained
 
         Returns:
             url: The final url generated
@@ -43,8 +45,7 @@ class Wheather:
         return url
 
     def recover_city(self,command:list) -> str:
-        """
-        This method will be used to recover the city name from sentence
+        """This method will be used to recover the city name from sentence.
 
         Args:
             command (str): sentence
@@ -59,7 +60,7 @@ class Wheather:
             city = ""
             latitude, longitude = self.utils.get_coordinates(word)
             if latitude is not None and longitude is not None:
-                with open("assets/worldcities.csv", 'r',encoding='utf-8') as csvfile:
+                with open("assets/worldcities.csv",encoding='utf-8') as csvfile:
                     csvreader = csv.reader(csvfile, delimiter=';')
                     for row in csvreader:
                         if row[0] == "city":
@@ -81,8 +82,7 @@ class Wheather:
         return self.city
 
     def get_current_week_days(self)  -> list:
-        """
-        This function returns a current week
+        """This function returns a current week.
 
         Returns:
             list: the week days
@@ -99,25 +99,21 @@ class Wheather:
         return week_days
 
     def is_valid_date(self,days,command):
-        """
-        This function checks that the date given by user is 
-        valid or not and it also check that the day of the month is correct
+        """This function checks that the date given by user.
+
+        Is valid or not and it also check that the day of the month is correct.
 
         Args:
             days (_type_): A list of day in the months
-            command (_type_): 
+            command (_type_): The input command
 
         Returns:
             bool: Valid/Not Valid
         """
-        for i in days:
-            if str(i) in command:
-                return True
-        return False
+        return any(str(i) in command for i in days)
 
     def recover_day(self,command:str) -> tuple:
-        """
-        This function recovers the day from the user input
+        """This function recovers the day from the user input.
 
         Args:
             command (str): sentence
@@ -145,8 +141,7 @@ class Wheather:
         return 0,days[0]
 
     def recover_weather(self,command:str) -> str:
-        """
-        This function give the wheather by use the user input
+        """This function give the wheather by use the user input.
 
         Args:
             command (str): sentence input

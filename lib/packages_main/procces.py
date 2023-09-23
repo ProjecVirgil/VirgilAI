@@ -1,4 +1,4 @@
-""""""
+"""The procces file for the command."""
 import json
 import threading
 
@@ -14,11 +14,13 @@ from lib.packages_main.choose_command import CommandSelection
 # ----- File to elaborate the input  -----
 
 class Process:
-    """
-    This class is responsible for processing the user's 
-    command and returning a response from Virgil API and other APIs.
-    """
+    """This class is responsible for processing the user's command and returning a response from Virgil API and other APIs."""
     def __init__(self,settings) -> None:
+        """Init the class.
+
+        Args:
+            settings (Settings): The dataclasses of settings
+        """
         self.data_empty = {
         "0": [None, None, True]
         }
@@ -34,14 +36,13 @@ class Process:
         self.word_activation = settings.word_activation
 
     def update_json_value(self,key:str, new_value:bool) -> None:
-        """
-        This function is responsible for updating the value of a key in the json file.
+        """This function is responsible for updating the value of a key in the json file.
 
         Args:
-            key (str): the command 
+            key (str): the command
             new_value (bool): True or false
         """
-        with open("connect/command.json", 'r',encoding="utf8") as file:
+        with open("connect/command.json",encoding="utf8") as file:
             data = json.load(file)
         if key in data:
             data[key] = new_value
@@ -52,8 +53,7 @@ class Process:
             json.dump(data, file, indent=4)
 
     def clean_command(self,command:str) -> str:
-        """
-        Delete the word activation and strip from the command
+        """Delete the word activation and strip from the command.
 
         Args:
             command (_type_): _description_
@@ -70,8 +70,7 @@ class Process:
             return command
 
     def send(self,command) -> None:
-        """
-        Send the command in the process file (choose_command.py) for the elaboration
+        """Send the command in the process file (choose_command.py) for the elaboration.
 
         Args:
             command (str): the command to send
@@ -85,41 +84,39 @@ class Process:
             json.dump(data, file, indent=4)
 
     class EventThread(threading.Thread):
-        """
-        Class that manage the event of a thread
+        """Class that manage the event of a thread.
 
         Args:
             threading (Thread)
         """
         def __init__(self, logger):
+            """Init the class.
+
+            Args:
+                logger (logger): The class for print the log (temporary)
+            """
             threading.Thread.__init__(self)
             self.daemon = True
             self.logger = logger
 
         def check_event(self) -> None:
-            """
-            Check if there is an event
-            """
+            """Check if there is an event."""
             print(self.logger.log("  update the reminder"), flush=True)
             with open("connect/reminder.txt", "w",encoding="utf8") as file:
                 file.write("0")
 
         def run(self) -> None:
-            """
-            Run the function
-            """
+            """Run the function."""
             self.check_event()
 
     def main(self) -> None:
-        """
-        Main method of the program
-        """
+        """Main method of the program."""
         print(self.logger.log(Fore.GREEN + " THE ASSISTENT IS ONLINE  "), flush=True)
         self.utils.clean_buffer(data_empty=self.data_empty,file_name="res")
         thread = self.EventThread(self.logger)
         thread.start()
         while True:
-            with open("connect/command.json", 'r',encoding="utf8") as commands:
+            with open("connect/command.json",encoding="utf8") as commands:
                 command = commands.read()
                 if "spegniti" in command:
                     command_to_elaborate = "virgilio spegniti"

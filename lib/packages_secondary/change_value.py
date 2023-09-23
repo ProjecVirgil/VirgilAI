@@ -1,24 +1,19 @@
-""""""
+"""File to manage the volume of Virgil."""
 from lib.packages_utility.logger import Logger
 from lib.packages_utility.sound import Audio
 from lib.packages_utility.utils import Utils
 
-# ---- File for change the volume of Virgil ----
-
-
 class VolumeMixer:
-    """
-    Class to control the sound volume of Virgil.
-    """
+    """Class to control the sound volume of Virgil."""
     def __init__(self,volume_value:int = 100,settings = None):
+        """Init file for class."""
         self.__volume = volume_value
         self.logger = Logger()
         self.audio = Audio(settings.volume,settings.elevenlabs,settings.language)
         self.utils  = Utils()
 
     def get_volume(self) -> float or int:
-        """
-        Get current value from audio mixer.
+        """Get current value from audio mixer.
 
         Returns:
             float/int: Volume
@@ -26,8 +21,7 @@ class VolumeMixer:
         return self.__volume
 
     def change(self, command:str) -> str:
-        """
-        Change the volume of Virgil.
+        """Change the volume of Virgil.
 
         Args:
             command (str): The input sentence

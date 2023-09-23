@@ -1,4 +1,4 @@
-""""""
+"""A file for manage and reproduce the last news by google news."""
 import random
 
 from requests_html import HTMLSession
@@ -8,10 +8,14 @@ from lib.packages_utility.logger import Logger
 # ---- This file generate a random news by GoogleNews ----
 
 class Newsletter:
-    """
-    This class is used to recover a news from google api.
-    """
+    """This class is used to recover a news from google api."""
     def __init__(self,language,synonyms_news) -> None:
+        """Init the language,logger class and some synonymus.
+
+        Args:
+            language (_type_): _description_
+            synonyms_news (_type_): _description_
+        """
         self.logger = Logger()
 
         self.lang = language
@@ -19,8 +23,7 @@ class Newsletter:
         self.synonyms_news = synonyms_news
 
     def get_topic(self,command) -> None or str:
-        """
-        This function return the topic of the command received as parameter
+        """This function return the topic of the command received as parameter.
 
         Args:
             command (str): sentence
@@ -40,8 +43,7 @@ class Newsletter:
         return topic
 
     def create_news(self,command:str) -> str:
-        """
-        This method will be called when you want to retrieve some news about something.
+        """This method will be called when you want to retrieve some news about something.
 
         Args:
             command (str): sentence input

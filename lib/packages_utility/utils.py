@@ -1,9 +1,10 @@
-""""""
+"""File with some utils function."""
 import json
 import re
 from math import sin, cos, sqrt, atan2, radians
 
 from geopy.geocoders import Nominatim
+from lib import Settings
 
 from lib.packages_utility.logger import Logger
 
@@ -12,17 +13,13 @@ from lib.packages_utility.logger import Logger
 # Because the ElevenLabs TTS read the number only in english
 
 class Utils:
-    """
-    
-    A class with utils function
-    
-    """
+    """A class with utils function."""
     def __init__(self) -> None:
+        """Init the logger class."""
         self.logger = Logger()
 
     def count_number(self,command) -> int:
-        """
-        Count how many numbers are there in a string
+        """Count how many numbers are there in a string.
 
         Args:
             command (str): input sentence
@@ -36,19 +33,17 @@ class Utils:
         return len(number_find)
 
     def clean_buffer(self,data_empty:dict,file_name:str) -> None:
-        """
-        Clean buffer and save it to disk
+        """Clean buffer and save it to disk.
 
         Args:
-            dataEmpty (dict): Un templete standard json for restore the file
-            fileName (str): the name of file to restore
+            data_empty (dict): Un templete standard json for restore the file
+            file_name (str): the name of file to restore
         """
         with open(f"connect/{file_name}.json", 'w',encoding="utf8") as commands:
             json.dump(data_empty,commands)
 
     def get_coordinates(self,city_name:str) -> tuple:
-        """
-        Get coordinates from city name
+        """Get coordinates from city name.
 
         Args:
             city_name (str): _description_
@@ -65,8 +60,7 @@ class Utils:
         return None, None
 
     def haversine_distance(self,coord1:tuple, coord2:tuple) -> float:
-        """
-        Haversine distance between two points on earth
+        """Haversine distance between two points on earth.
 
         Args:
             coord1 (tuple): Cordinate of first point (lat and lon)
@@ -92,8 +86,7 @@ class Utils:
         return distance
 
     def number_to_word(self,number) -> str:
-        """
-        Convert a number into words
+        """Convert a number into words.
 
         Args:
             number (_type_): the number to convert
@@ -103,24 +96,23 @@ class Utils:
         """
         number = int(number)
         words_up_to_vents = [
-            "zero", "uno", "due", "tre", "quattro", "cinque", "sei", "sette", 
-            "otto", "nove","dieci", "undici", "dodici", "tredici", "quattordici", 
+            "zero", "uno", "due", "tre", "quattro", "cinque", "sei", "sette",
+            "otto", "nove","dieci", "undici", "dodici", "tredici", "quattordici",
             "quindici", "sedici", "diciassette", "diciotto", "diciannove", "venti"
         ]
 
         word_dozens = [
-            "", "", "venti", "trenta", "quaranta", "cinquanta", 
+            "", "", "venti", "trenta", "quaranta", "cinquanta",
             "sessanta", "settanta", "ottanta", "novanta"
         ]
 
         word_hundreds = [
-            "", "cento", "duecento", "trecento", "quattrocento", 
+            "", "cento", "duecento", "trecento", "quattrocento",
             "cinquecento", "seicento", "settecento", "ottocento", "novecento"
         ]
 
         def convert_under_1000(number):
-            """
-            Convert under 1000
+            """Convert under 1000.
 
             Args:
                 number (int): The number under 1000
@@ -167,3 +159,63 @@ class Utils:
                 result += convert_under_1000(remainder)
             return result
         return "Unmanaged number"
+
+
+def init_settings() -> Settings:
+    """Initialize settings for all the modules.
+
+    Returns:
+        Settings: Dataclasses
+    """
+    with open("setup/settings.json",encoding="utf8") as file_settings:
+        #INIT FILE
+        settings_file = json.load(file_settings)
+        language = settings_file["language"]
+        with open(f'lang/{language}/{language}.json',encoding="utf8") as file_scripts:
+            #INIT FILE
+            script = json.load(file_scripts)
+            script_calendar = script["calendar"]
+            script_command = script["command"]
+            script_time = script["time"]
+            script_process = script["process"]
+            script_events = script["events"]
+            script_output = script["outputs"]
+            script_news = script["news"]
+            script_wheather = script["wheather"]
+            script_mediaplayer = script["mediaplayer"]
+            return Settings(
+                    language=language,
+                    word_activation=settings_file["wordActivation"].lower(),
+                    volume=settings_file["volume"],
+                    city=settings_file["city"],
+                    operation_timeout=settings_file["operation_timeout"],
+                    dynamic_energy_threshold=settings_file["dynamic_energy_threshold"],
+                    energy_threshold=settings_file["energy_threshold"],
+                    elevenlabs=settings_file["elevenlabs"],
+                    openai=settings_file["openAI"],
+                    merros_email=settings_file["merrosEmail"],
+                    merros_password=settings_file["merrosPassword"],
+                    temperature=settings_file["temperature"],
+                    max_tokens=settings_file["max_tokens"],
+                    phrase_calendar=script_calendar["phrase"],
+                    split_calendar=script_calendar["split"],
+                    months_calendar=script_calendar["month"],
+                    week_calendar=script_calendar["week"],
+                    words_meaning_tomorrow=script_calendar["words_meaning_tomorrow"],
+                    words_meaning_after_tomorrow=script_calendar["words_meaning_after_tomorrow"],
+                    words_meaning_yesterday=script_calendar["words_meaning_yesterday"],
+                    words_meaning_today=script_calendar["words_meaning_today"],
+                    split_command=script_command["split"],
+                    phrase_time=script_time["phrase"],
+                    split_time=script_time["split"],
+                    prompt=script_process["prompt"],
+                    phrase_events=script_events["phrase"],
+                    phrase_output=script_output["phrase"],
+                    split_output=script_output["split"],
+                    synonyms_news=script_news["synonyms"],
+                    phrase_wheather=script_wheather["phrase"],
+                    split_wheather=script_wheather["split"],
+                    wwc_wheather=script_wheather["WWC"],
+                    word_meaning_tomorrow_wheather=script_wheather["word_meaning_tomorrow"],
+                    synonyms_mediaplayer=script_mediaplayer["synonyms"]
+                )

@@ -1,4 +1,13 @@
-""""""
+"""This file manage all the time function.
+
+like:
+
+- The time
+- Timer
+- Clock
+- more
+
+"""
 import datetime
 import time
 
@@ -8,11 +17,13 @@ from lib.packages_utility.utils import Utils
 # ---- This file get the current time and more ----
 
 class Time:
-    """
-    This class is used to return a various 
-    things like the Actual time, the time difference and more
-    """
+    """This class is used to return a various things like the Actual time, the time difference and more."""
     def __init__(self,settings):
+        """Init function for the classes.
+
+        Args:
+            settings (Settings): Settings dataclasses for set the settings
+        """
         self.logger = Logger()
         self.utils  = Utils()
 
@@ -21,11 +32,10 @@ class Time:
         self.phrase_time = settings.phrase_time
 
     def now(self) -> str:
-        """
-        Return the current  time
+        """Return the current  time.
 
         Returns:
-            str: The current time 
+            str: The current time
         """
         time_tuple = time.localtime() # get struct_time
         hours = time.strftime('%H',time_tuple)
@@ -38,15 +48,14 @@ class Time:
         return time_string
 
     def diff_time(self,index_time:str):
-        """
-        This function will take an index time and compare it with the actual time
+        """This function will take an index time and compare it with the actual time.
 
         Args:
             index_time (str): the index of the time in the sentence
 
         Returns:
             tuple: The complete date about the time and
-            the difference with the current time 
+            the difference with the current time
         """
         current_time = datetime.datetime.now().time()
         try:
@@ -73,8 +82,7 @@ class Time:
         return hours,minuts,calculated_hours,calculated_minuts,calculate_seconds
 
     def conversion(self,command) -> int:
-        """
-        This function try to take the timer time and convert everything to seconds
+        """This function try to take the timer time and convert everything to seconds.
 
         Args:
             command (str): The input sentence

@@ -1,4 +1,4 @@
-""""""
+"""Class for print the log (temporany function)."""
 
 import inspect
 import time
@@ -10,10 +10,9 @@ from colorama import Fore,Back
 # ---- This file make the preset for Log ----
 
 class Logger:
-    """
-    This class is used to log all messages in a specific format.
-    """
+    """This class is used to log all messages in a specific format."""
     def __init__(self):
+        """Init the logger class."""
         self.current_call_stack = ''
         self.last_caller = ''
         self.__update_call_stack()
@@ -22,8 +21,7 @@ class Logger:
         self.lang = settings["language"]
 
     def check_system(self) -> str:
-        """
-        This function checks if you are using Windows or Linux and returns it's name.
+        """This function checks if you are using Windows or Linux and returns it's name.
 
         Returns:
             str: Windows or Linux
@@ -34,9 +32,7 @@ class Logger:
         return "lin"
 
     def __update_call_stack(self) -> None:
-        """
-        This method updates call stack of current caller (function that called this one)
-        """
+        """This method updates call stack of current caller (function that called this one)."""
         system = self.check_system()
         if system == "win":
             self.current_call_stack = inspect.stack()[2]
@@ -47,8 +43,7 @@ class Logger:
             self.last_caller = self.last_caller.split("from")[1].split("/")[-1]
 
     def log(self, string: str, filepath: str = None) -> str:
-        """
-        This function logs message into console and saves it inside .log files.
+        """This function logs message into console and saves it inside .log files.
 
         Args:
             string (str): The string to insert in the log message
@@ -67,6 +62,6 @@ class Logger:
                 with open(filepath, "w",encoding="utf8") as file:
                     file.write(log)
                 return ''
-            except IOError:
+            except OSError:
                 return log
         return log

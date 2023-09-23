@@ -1,4 +1,4 @@
-""""""
+"""The input file for the voice with mic."""
 import json
 import unicodedata
 
@@ -9,10 +9,13 @@ from lib.packages_utility.utils import Utils
 
 # ----- File to take the input by the microphone -----
 class VocalInput:
-    """
-    Class that takes voice inputs from a user and returns them in text format
-    """
+    """Class that takes voice inputs from a user and returns them in text format."""
     def __init__(self,settings) -> None:
+        """Init func for some settings.
+
+        Args:
+            settings (Settings): settings dataclasses
+        """
         self.data_empty = {
             None:True
             }
@@ -27,8 +30,7 @@ class VocalInput:
         self.word_activation = settings.word_activation
 
     def copy_data(self,command:str) -> None:
-        """
-        Copy data from one command to another
+        """Copy data from one command to another.
 
         Args:
             command (str): The actual command
@@ -41,10 +43,7 @@ class VocalInput:
             json.dump(data, comandi,indent=4)
 
     def listening(self):
-        """
-        Listens for commands using Google Speech Recognition
-        API.It will return the recognized words or phrases.
-        """
+        """Listens for commands using Google Speech Recognition API.It will return the recognized words or phrases."""
         command = ""
         print(self.logger.log(" start input function"), flush=True)
         self.utils.clean_buffer(data_empty=self.data_empty,file_name="command")

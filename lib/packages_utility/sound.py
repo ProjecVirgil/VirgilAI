@@ -1,4 +1,4 @@
-""""""
+"""File so manage the audio and the STT."""
 import os
 
 import gtts
@@ -9,10 +9,15 @@ from lib.packages_utility.logger import Logger
 
 # ---- This file make the TTS ----
 class Audio:
-    """
-    A class for manage the audio in Virgil
-    """
+    """A class for manage the audio in Virgil."""
     def __init__(self,volume,elevenlabs,language):
+        """Init the settings for the audio class.
+
+        Args:
+            volume (str): the volume of audio
+            elevenlabs (str): the key of elevenlabs API
+            language (str): the language of Virgil
+        """
         self.logger = Logger()
 
         self.volume = volume
@@ -20,8 +25,7 @@ class Audio:
         self.language = language
 
     def create(self,text:str = "",file:bool = False,namefile:str = "") -> None:
-        """
-        Create a mp3 or wav file with text from tts
+        """Create a mp3 or wav file with text from tts.
 
         Args:
             text (str, optional): the text to transform in audio. Defaults to "".

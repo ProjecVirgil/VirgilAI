@@ -1,9 +1,10 @@
-"""
-    - Management of the days of the week
-    - How many days until a given day
+"""Calendar file manage.
 
-    Returns:
-        String: A response at the question concerning calendar or day 
+- Management of the days of the week
+- How many days until a given day.
+
+Returns:
+        String: A response at the question concerning calendar or day
 """
 import calendar
 import datetime
@@ -14,11 +15,9 @@ from lib.packages_utility.utils import Utils
 
 # ---- File for get the week of the day ----
 class Calendar:
-    """
-    Class for manage the function and settings
-    """
+    """Class for manage the function and settings."""
     def __init__(self,settings) -> None:
-
+        """Init the calendar class."""
         self.utils =Utils()
         self.logger = Logger()
         self.audio = Audio(settings.volume,settings.elevenlabs,settings.language)
@@ -27,9 +26,10 @@ class Calendar:
         self.settings = settings
 
     def clear_number(self,day:str,month:str) -> tuple:
-        """
-        This works by forming the numbers in such a way that they 
-        do not contain the 0 in the case of single-digit numbers 
+        """Format the number.
+
+        This works by forming the numbers in such a way that they
+        do not contain the 0 in the case of single-digit numbers.
 
         Example: 09 -> 9
 
@@ -40,7 +40,6 @@ class Calendar:
         Returns:
             tuple: The two number formatted
         """
-
         day = int(day)
         month = int(month)
         day = str(day)
@@ -48,8 +47,7 @@ class Calendar:
         return day,month
 
     def gen_phrase(self,date:str) -> str or None:
-        """
-        The function generates the final phrase that will then be played back
+        """The function generates the final phrase that will then be played back.
 
         Args:
             date (str): The final date calculated
@@ -73,11 +71,10 @@ class Calendar:
         return None
 
     def index_day_of_week(self,year:int,month:int,day:int) -> int:
-        """
-        This function calculates which week of the year it belongs and returns its index
+        """This function calculates which week of the year it belongs and returns its index.
 
         Args:
-            year (int): The year 
+            year (int): The year
             month (int): The month
             day (int): The day
 
@@ -95,8 +92,7 @@ class Calendar:
         return index
 
     def recover_date(self,sentence) -> str:
-        """
-        This function extracts the dates from a sentence
+        """This function extracts the dates from a sentence.
 
         Args:
             sentence (list): The input sentence
@@ -122,8 +118,7 @@ class Calendar:
         return "I'm sorry there was an error of some kind"
 
     def check_month(self,sentence):
-        """
-        Checks whether or not the word is part of months list
+        """Checks whether or not the word is part of months list.
 
         Args:
             sentence (list): The input sentence
@@ -131,15 +126,10 @@ class Calendar:
         Returns:
             bool: if the word is a months
         """
-        for word in sentence:
-            if word in self.settings.months_calendar:
-                return True
-        return False
+        return any(word in self.settings.months_calendar for word in sentence)
 
     def recov_preset_date(self,command:str) -> str or None:
-        """
-        Check if there is a fixed date pattern in the sentence 
-        if there is, retrieve the date
+        """Check if there is a fixed date pattern in the sentence if there is, retrieve the date.
 
         Args:
             command (str): The input sentence
@@ -171,15 +161,13 @@ class Calendar:
         return None
 
     def diff_date(self,command:list) -> str:
-        """
-        Try to calculate the difference between the 
-        current date and the date in the sentence
+        """Try to calculate the difference between the current date and the date in the sentence.
 
         Args:
             command (list): Input
 
         Returns:
-            str: The final phrase which will then be reproduced 
+            str: The final phrase which will then be reproduced
         """
         preset_date  = self.recov_preset_date(command)
         if preset_date is None:
@@ -203,15 +191,16 @@ class Calendar:
         return f" {self.settings.phrase_calendar[0]} {self.utils.number_to_word(day)}, {self.utils.number_to_word(month)}, {self.utils.number_to_word(year)} {self.settings.phrase_calendar[2]} {self.utils.number_to_word(diff_days * -1)} {self.settings.phrase_calendar[3]}"
 
     def get_date(self,command:list) -> str:
-        """
-        Try to get the date in the sentence and then
-        calculate which day of the week it falls on
+        """Try to get the date.
+
+        Try to get the date in the sentence and
+        then calculate which day of the week it falls on.
 
         Args:
             command (list): input sentence
 
         Returns:
-            str: The final sentence with the correct information 
+            str: The final sentence with the correct information
         """
         preset_date  = self.recov_preset_date(command)
         if preset_date is None:

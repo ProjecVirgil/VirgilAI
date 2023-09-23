@@ -1,4 +1,4 @@
-""""""
+"""Class for manage the output of command."""
 import json
 import time
 import threading
@@ -15,10 +15,13 @@ from lib.packages_utility.utils  import Utils
 from lib.packages_secondary.manage_events import EventScheduler
 
 class Output:
-    """
-    Output class for the bot to output messages and errors on console or file.
-    """
+    """Output class for the bot to output messages and errors on console or file."""
     def __init__(self,settings) -> None:
+        """Init all classes for the Output function.
+
+        Args:
+            settings (Settings): settings dataclasses with all settings
+        """
         mixer.init()
 
         self.settings = settings
@@ -31,15 +34,14 @@ class Output:
         self.lang = settings.language
 
     def update_json_value(self,key:str, new_value:bool) -> None:
-        """
-        Update a value in settings JSON file with given key name
+        """Update a value in settings JSON file with given key name.
 
         Args:
             key (str): Command to change value
             new_value (bool): True/False
         """
         # Apri il file JSON e carica i dati
-        with open("connect/res.json", 'r',encoding="utf8") as file:
+        with open("connect/res.json",encoding="utf8") as file:
             data = json.load(file)
 
         # Modifica il valore desiderato
@@ -50,14 +52,12 @@ class Output:
             json.dump(data, file, indent=4)
 
     def check_reminder(self) -> bool:
-        """
-        Check if there is any reminder setted up 
-        by user. If so it will send him a message.
+        """Check if there is any reminder setted up by user. If so it will send him a message.
 
         Returns:
             bool: Rimender send?
         """
-        with open("connect/reminder.txt","r",encoding="utf8") as file:
+        with open("connect/reminder.txt",encoding="utf8") as file:
             if file.read() == "0":
                 with open("connect/reminder.txt","w",encoding="utf8") as file:
                     file.write("1")
@@ -65,8 +65,7 @@ class Output:
             return True
 
     def timer(self, my_time:int, command:str) -> None:
-        """
-        Timer function that runs every 3 seconds
+        """Timer function that runs every 3 seconds.
 
         Args:
             my_time (int): The time in second
@@ -79,34 +78,35 @@ class Output:
             self.audio.create(file=True, namefile="timerEndVirgil")
 
     class TimerThread(threading.Thread):
-        """
-        Timer thread class to run the timer function and stop when needed
+        """Timer thread class to run the timer function and stop when needed.
 
         Args:
             threading (_type_): _description_
         """
         def __init__(self, interval, command):
+            """Init file for the class of Thread.
+
+            Args:
+                interval (int): the duration of time.sleep
+                command (_type_): the command
+            """
             threading.Thread.__init__(self)
             self.interval = interval
             self.daemon = True
             self.command = command
 
         def run(self) -> None:
-            """
-            
-            Function tu run the timer
-            
-            """
+            """Function tu run the timer."""
             output_instance = Output(settings=self.settings)
             output_instance.timer(self.interval, self.command)
 
     def recover_data(self) -> tuple:
-        """
-        Function to recover data from a previous session
+        """Function to recover data from a previous session.
+
         Returns:
-            tuple: The data recovered
+            tuple: The data recovered.
         """
-        with open("connect/res.json", 'r',encoding="utf8") as file:
+        with open("connect/res.json",encoding="utf8") as file:
             data = json.load(file)
             res = data["0"][1]
             command = data["0"][0]
@@ -114,9 +114,7 @@ class Output:
             return res,command,is_used
 
     def shutdown(self) -> None:
-        """
-        Function to shut down the programm
-        """
+        """Function to shut down the programm."""
         print(self.logger.log(" shutdown in progress..."), flush=True)
         self.audio.create(file=True,namefile="FinishVirgil")
         print(Style.BRIGHT +Fore.MAGENTA + pyfiglet.figlet_format("Thanks for using Virgil",
@@ -130,9 +128,7 @@ class Output:
         sys.exit(0)
 
     def out(self):
-        """
-        Main function
-        """
+        """Main function."""
         self.audio.create(file=True,namefile="EntryVirgil")
         time.sleep(5)
         while True:
@@ -155,7 +151,7 @@ class Output:
                         if "timer" in command:
                             if self.lang != "en":
                                 self.audio.create(
-                                    f"{self.settings.phrase_output[0]} {self.utils.number_to_word(result)} {self.settings.phrase_output[1]}")  
+                                    f"{self.settings.phrase_output[0]} {self.utils.number_to_word(result)} {self.settings.phrase_output[1]}")
                             else:
                                 self.audio.create(
                                     f"{self.settings.phrase_output[0]} {result} {self.settings.phrase_output[1]}")

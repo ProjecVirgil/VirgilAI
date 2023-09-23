@@ -1,10 +1,9 @@
-"""
------- PACKAGE SECONDARY DOCS -----
+"""------ PACKAGE SECONDARY DOCS -----.
 
-This package is responsible for containing all the modules that 
+This package is responsible for containing all the modules that
 deal with the various virgil commands such as weather, timer etc.
 
-[-] calendar_rec.py    
+[-] calendar_rec.py
 [-] change_value.py
 [-] manage_events.py
 [-] searchyt.py
@@ -12,6 +11,6 @@ deal with the various virgil commands such as weather, timer etc.
 [-] the_news.py
 [-] the_wheather.py
 [-] time.py
-    
+
 ------ END DOCS ------
 """
