@@ -51,7 +51,8 @@ class Output:
 
     def check_reminder(self) -> bool:
         """
-        Check if there is any reminder setted up by user. If so it will send him a message.
+        Check if there is any reminder setted up 
+        by user. If so it will send him a message.
 
         Returns:
             bool: Rimender send?
@@ -137,7 +138,7 @@ class Output:
         while True:
             try:
                 result,command,is_used = self.recover_data()
-                if result != None and is_used is False:
+                if result is not None and is_used is False:
                     if "spento" in result:
                         self.shutdown()
                     if "volume" in command:
@@ -148,13 +149,13 @@ class Output:
                         print(self.logger.log(f" volume changed correctly to {result*100}% "),
                               flush=True)
 
-                    elif "timer" in command or  self.settings.split_output[0] in command:
+                    elif "timer" in command or self.settings.split_output[0] in command:
                         print(self.logger.log(f" the timer is started see you in {result} second"),
                               flush=True)
                         if "timer" in command:
                             if self.lang != "en":
                                 self.audio.create(
-                                    f"{self.settings.phrase_output[0]} {self.utils.number_to_word(result)} {self.settings.phrase_output[1]}")
+                                    f"{self.settings.phrase_output[0]} {self.utils.number_to_word(result)} {self.settings.phrase_output[1]}")  
                             else:
                                 self.audio.create(
                                     f"{self.settings.phrase_output[0]} {result} {self.settings.phrase_output[1]}")
@@ -168,7 +169,8 @@ class Output:
                     self.update_json_value(2, True)
 
                     if not self.check_reminder():
-                        print(self.logger.log(" send notify for today event"),flush=True)
+                        print(self.logger.log(" send notify for today event")
+                              ,flush=True)
                         result = self.event_scheduler.send_notify()
                         time.sleep(10)
                         self.audio.create(result)

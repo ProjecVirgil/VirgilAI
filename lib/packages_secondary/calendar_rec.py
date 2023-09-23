@@ -138,7 +138,8 @@ class Calendar:
 
     def recov_preset_date(self,command:str) -> str or None:
         """
-        Check if there is a fixed date pattern in the sentence if there is, retrieve the date
+        Check if there is a fixed date pattern in the sentence 
+        if there is, retrieve the date
 
         Args:
             command (str): The input sentence
@@ -171,7 +172,8 @@ class Calendar:
 
     def diff_date(self,command:list) -> str:
         """
-        Try to calculate the difference between the current date and the date in the sentence
+        Try to calculate the difference between the 
+        current date and the date in the sentence
 
         Args:
             command (list): Input
@@ -202,7 +204,8 @@ class Calendar:
 
     def get_date(self,command:list) -> str:
         """
-        Try to get the date in the sentence and then calculate which day of the week it falls on
+        Try to get the date in the sentence and then
+        calculate which day of the week it falls on
 
         Args:
             command (list): input sentence

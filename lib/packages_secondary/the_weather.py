@@ -100,7 +100,8 @@ class Wheather:
 
     def is_valid_date(self,days,command):
         """
-        This function checks that the date given by user is valid or not and it also check that the day of the month is correct
+        This function checks that the date given by user is 
+        valid or not and it also check that the day of the month is correct
 
         Args:
             days (_type_): A list of day in the months

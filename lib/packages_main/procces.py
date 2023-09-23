@@ -15,7 +15,8 @@ from lib.packages_main.choose_command import CommandSelection
 
 class Process:
     """
-    This class is responsible for processing the user's command and returning a response from Virgil API and other APIs.
+    This class is responsible for processing the user's 
+    command and returning a response from Virgil API and other APIs.
     """
     def __init__(self,settings) -> None:
         self.data_empty = {
@@ -45,7 +46,8 @@ class Process:
         if key in data:
             data[key] = new_value
         else:
-            print(self.logger.log(f"The key '{key}' dont exist in the file JSON."), flush=True)
+            print(self.logger.log(f"The key '{key}' dont exist in the file JSON."),
+                  flush=True)
         with open("connect/command.json", 'w',encoding="utf8") as file:
             json.dump(data, file, indent=4)
 
@@ -123,7 +125,7 @@ class Process:
                     command_to_elaborate = "virgilio spegniti"
                 else:
                     command_to_elaborate = "".join(command.split('":')[0])[7:]
-            if "false" in command and command != None:
+            if "false" in command and command is not None:
                 print(self.logger.log(f" command processed: {command_to_elaborate}"), flush=True)
                 self.send(command_to_elaborate)
                 self.update_json_value(command_to_elaborate, True)

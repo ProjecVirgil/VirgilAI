@@ -108,8 +108,8 @@ class CommandSelection:
 
         Args:
             command (str): the command to clean
-            type (str): type of cleaning model(cleaning the command for work with the models) 
-            work (cleaning the command for work with the my code)
+            type (str): type of cleaning model(cleaning the command for 
+            work with the models) work (cleaning the command for work with the my code)
 
         Returns:
             str: The command cleaned
@@ -156,7 +156,7 @@ class CommandSelection:
         if predictions  == 'OR':
             response = self.time.now()
             return response
-        if self.settings.split_command[6] in command_worked or self.settings.split_command[7] in command_worked or self.settings.split_command[8] in command_worked: #work
+        if self.settings.split_command[6] in command_worked or self.settings.split_command[7] in command_worked or self.settings.split_command[8] in command_worked:
             mixer.music.stop()
             return
         if predictions == 'VL':
@@ -219,7 +219,8 @@ class CommandSelection:
         return new_message['content']
 
 #TODO ADD THE DOMOTIC FUNCTION
-'''if self.split[46] in command and ((self.split[47] in command) or (self.split[48] in command)):
+'''if self.split[46] in command and ((self.split[47] in command) 
+or (self.split[48] in command)): 
             print(self.logger.log(" pre light function"),flush=True)
             turn(command)
             return "Ok"'''

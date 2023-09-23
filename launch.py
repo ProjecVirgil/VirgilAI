@@ -14,7 +14,7 @@ import pyfiglet
 from colorama import Fore,Style
 
 from lib import Settings
-from lib.packages_utility.vectorize import GloVeVectorizer,sentence_to_vec
+import lib.packages_utility.vectorize   # noqa: F401
 from lib.packages_utility.request import MakeRequests
 from lib.packages_utility.logger import Logger
 
@@ -34,7 +34,7 @@ def check_system():
         return "clear"
     print(
         logger.log(
-            WARNIGN + " Sistema operativo non riconosciuto.Impossibile avviare il terminale corrispondente."),
+            WARNIGN + " Unrecognized operating system.Unable to start the corresponding terminal"),
             flush=True
             )
     return 404
@@ -83,21 +83,17 @@ def rainbow(command_cleanear:str):
         )
         time.sleep(delay)
     subprocess.run(command_cleanear, shell=True,check=False)
-    print(Style.BRIGHT +  Fore.MAGENTA  + pyfiglet.figlet_format(BANNER_MESSAGE[-1]),flush=True)
+    print(Style.BRIGHT +  Fore.MAGENTA  + pyfiglet.figlet_format(BANNER_MESSAGE[-1]),
+          flush=True)
     print(Style.RESET_ALL,flush=True)
 
 def install_libraries():
     """
     Install and check all libraries needed by virgil
+    
+    #TODO to change on a check update function
     """
     print(logger.log(string=ALERT +"START CHECK THE LIBRARY"),flush=True)
-    command = "pip install -q -r setup/requirements.txt > logpip.txt"
-    subprocess.run(command, shell=True,check=False)
-    print(
-        logger.log(
-            OK +"LIBRARY INSTALLED CORRECTLY IN CASE OF PROBLEMS, CHECK THE logpip.txt FILE"),
-            flush=True
-        )
 
 
 def create_account() -> str:
@@ -283,8 +279,9 @@ if __name__ == '__main__':
     request_maker = MakeRequests()
     #* CONST
     BANNER_MESSAGE = ['W','We','Wel','Welc','Welco','Welcom','Welcome','Welcome ',
-                      'Welcome t','Welcome to','Welcome to ','Welcome to V','Welcome to Vi',
-                      'Welcome to Vir','Welcome to Virg','Welcome to Virgi','Welcome to Virgil']
+                      'Welcome t','Welcome to','Welcome to ','Welcome to V',
+                      'Welcome to Vi','Welcome to Vir','Welcome to Virg',
+                      'Welcome to Virgi','Welcome to Virgil']
     SYSTEM = platform.system()
     SETTINGS_FILE = "setup/settings.json"
     KEY_FILE = "setup/key.txt"

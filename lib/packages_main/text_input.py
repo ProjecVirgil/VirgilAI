@@ -10,7 +10,8 @@ from lib.packages_utility.utils import Utils
 
 class TextInput:
     """
-    Class that takes a text as an argument and returns it in lowercase, without accents or special characters.
+    Class that takes a text as an argument and returns 
+    it in lowercase, without accents or special characters.
     """
     def __init__(self,word_activation) -> None:
         self.data_empty = {
@@ -23,7 +24,8 @@ class TextInput:
 
     def copy_data(self,command:str):
         """
-        Copy data from a command line and return it as string or list of strings if needed for further processing in other functions
+        Copy data from a command line and return it as string or list of strings 
+        if needed for further processing in other functions
 
         Args:
             command (str): Command to copy in the file

@@ -9,7 +9,8 @@ from lib.packages_utility.utils import Utils
 
 class Time:
     """
-    This class is used to return a various things like the Actual time, the time difference and more
+    This class is used to return a various 
+    things like the Actual time, the time difference and more
     """
     def __init__(self,settings):
         self.logger = Logger()
@@ -44,7 +45,8 @@ class Time:
             index_time (str): the index of the time in the sentence
 
         Returns:
-            tuple: The complete date about the time and the difference with the current time 
+            tuple: The complete date about the time and
+            the difference with the current time 
         """
         current_time = datetime.datetime.now().time()
         try:

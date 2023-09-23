@@ -42,7 +42,8 @@ class VocalInput:
 
     def listening(self):
         """
-        Listens for commands using Google Speech Recognition API.It will return the recognized words or phrases.
+        Listens for commands using Google Speech Recognition
+        API.It will return the recognized words or phrases.
         """
         command = ""
         print(self.logger.log(" start input function"), flush=True)
@@ -57,7 +58,8 @@ class VocalInput:
                     command = command.lower()
                     command = unicodedata.normalize('NFKD', command)
                     command = command.encode('ascii', 'ignore').decode('ascii')
-                    print(self.logger.log(f" command rude acquired: {command} "), flush=True)
+                    print(self.logger.log(f" command rude acquired: {command} "),
+                          flush=True)
                     if self.word_activation in command:
                         self.copy_data(command)
                         if "spegniti" in command:

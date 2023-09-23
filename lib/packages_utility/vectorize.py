@@ -18,7 +18,8 @@ def sentence_to_vec(sentence, model):
 
 class GloVeVectorizer(TransformerMixin):
     """
-    This class is used to convert a list of sentences into their respective vector representations using the pretrained glove word embeddings
+    This class is used to convert a list of sentences into their respective vector 
+    representations using the pretrained glove word embeddings
 
     Args:
         TransformerMixin (TransformerMixin): The transformer for the model

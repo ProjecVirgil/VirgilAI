@@ -8,7 +8,8 @@ from lib.packages_utility.logger import Logger
 
 class MediaPlayer:
     """
-    This class will be used to play media files like audio,video or playlist in the background using pygme mixer library
+    This class will be used to play media files like audio,video
+    or playlist in the background using pygme mixer library
     """
     def __init__(self,synonimus) -> None:
         self.logger  = Logger()

@@ -36,7 +36,8 @@ class VolumeMixer:
             str: Final message after change the volume
         """
         if self.utils.count_number(command) >= 1:
-            search_volume = lambda command: [x for x in command if x.isdigit()]
+            def search_volume(command):
+                return [x for x in command if x.isdigit()]
             self.__volume = int(search_volume(command)[0])
         else:
             print(self.logger.log(

@@ -35,7 +35,7 @@ class Logger:
 
     def __update_call_stack(self) -> None:
         """
-        This method updates call stack of current caller (function that called this one).
+        This method updates call stack of current caller (function that called this one)
         """
         system = self.check_system()
         if system == "win":

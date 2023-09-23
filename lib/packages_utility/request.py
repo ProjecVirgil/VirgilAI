@@ -22,7 +22,8 @@ class MakeRequests:
 
     def create_user(self) -> str:
         """
-        This function creates a user in the database and returns its id if it was created successfully or an error message otherwise
+        This function creates a user in the database and returns its id if it was 
+        created successfully or an error message otherwise
 
         Returns:
             str: Return the result of the request

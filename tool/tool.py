@@ -14,7 +14,7 @@ def main(languageChoose:str):
                 command = listener.recognize_google(voice,language=languageChoose)
                 end_time = time.time()
                 resultDict[i] = [listener.energy_threshold,command,end_time - start_time]
-        except:
+        except sr.exceptions.WaitTimeoutError:
             pass
     return resultDict
 if __name__ == "__main__":
