@@ -1,13 +1,22 @@
-tests
+#Standard file
 .vscode
 __pycache__
-connect
-audio.mp3
-setup/key.txt
+.ruff_cache
+
+# Pytest file
+.pytest_cache
 .coverage
 htmlcov
-trys
-.pytest_cache
+
+# File always in the directory
+connect
+tests
+trys 
+audio.mp3
+setup/key.txt
 music.wav
-logpip.txt
 model/model_en.pkl
+
+
+
+
