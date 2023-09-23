@@ -1,0 +1,40 @@
+#Config file for project Virgil
+
+[tool.poetry]
+name = "Virgil AI"
+version = "2.2.0"
+description = "Virgil is an advanced virtual assistant that is based on the powerful GPT-3.5 artificial intelligence developed by OpenAI. This virtual assistant is designed to offer a wide range of features and capabilities similar to those of well-known virtual assistants such as Amazon's Alexa."
+authors = ["Retr0100"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+scikit-learn = "1.2.2"
+colorama = "^0.4.6"
+pyfiglet = "^1.0.2"
+openai = "^0.28.0"
+requests = "^2.31.0"
+speechrecognition = "^3.10.0"
+nltk = "^3.8.1"
+pygame = "^2.5.2"
+yt-dlp = "^2023.7.6"
+gtts = "^2.3.2"
+elevenlabs = "^0.2.26"
+geopy = "^2.4.0"
+requests-html = "^0.10.0"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.0.291"
+
+# Config of ruff 
+[tool.ruff]
+ignore = ["E501"]
+exclude = [
+    ".git",
+    ".git-rewrite",
+    ".venv",
+    "__pypackages__",
+    "venv",
+]
+
+target-version = "py310"
