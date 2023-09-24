@@ -11,11 +11,17 @@ htmlcov
 # File always in the directory
 connect/command.json
 connect/res.json
+setup/key.txt
+
+# Test with test files
 tests
 trys 
+
+# Some audio file
 audio.mp3
-setup/key.txt
 music.wav
+
+# English model 
 model/model_en.pkl
 
 
