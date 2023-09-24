@@ -146,6 +146,25 @@ def log_in() -> str:
         sys.exit(1)
     return key
 
+def choise_input():
+    """This function is used when you want to choose between the text input or Voice input.
+
+    Returns:
+        str: the type of input
+    """
+    while True:
+        text_or_speech = str(input(
+            logger.log(
+                ALERT + "You want a text interface (T) or recognise interface(R) T/R: "
+                ))).upper()
+        if text_or_speech == 'T':
+            return 1
+        elif text_or_speech == 'R':
+            # Creazione di tre oggetti thread
+            return 0
+        else:
+            print(logger.log(WARNIGN + " Select a valid choice please"),flush=True)
+
 def main():
     """Main function that will be called when running this script from command line."""
     from lib.packages_main.output import Output
@@ -158,12 +177,13 @@ def main():
     rainbow(command_cleaner)
     install_libraries()
 
-    key = create_account() if os.path.getsize(KEY_FILE) == 0 else log_in()
+    key = create_account() if (os.path.getsize(KEY_FILE)  == 0 ) or not os.path.exists(KEY_FILE) else log_in()
 
     if not os.path.exists("model/model_en.pkl"):
         print(logger.log(ALERT + " Start the download of english model this operation will take some time, but will only be done once "))
         request_maker.download_model_en()
         print(logger.log(OK + " Download finish"))
+
 
     #*INIT ALL PRINCIPLE CLASS
     output = Output(settings)
@@ -177,25 +197,27 @@ def main():
     thread_2 = 0
     thread_3 = 0
 
-    valid_choise = False
-    while not valid_choise:
-        text_or_speech = str(input(
-            logger.log(
-                ALERT + "You want a text interface (T) or recognise interface(R) T/R: "
-                ))).upper()
-        if text_or_speech == 'T':
-            thread_1 = threading.Thread(target=text_input.text)
-            thread_2 = threading.Thread(target=process.main)
-            thread_3 = threading.Thread(target=output.out)
-            valid_choise = True
-        elif text_or_speech == 'R':
-            # Creazione di tre oggetti thread
-            thread_1 = threading.Thread(target=vocal_input.listening)
-            thread_2 = threading.Thread(target=process.main)
-            thread_3 = threading.Thread(target=output.out)
-            valid_choise = True
+    # IF THE DISPLAY IS FALSE NON MOSTRI QUESTO INPUT E PRENDI QUELLO DI DEFAULT
+    if(defaul_start == 'N'):
+        text_or_speech = choise_input()
+        if text_or_speech == 1:
+                thread_1 = threading.Thread(target=text_input.text)
+                thread_2 = threading.Thread(target=process.main)
+                thread_3 = threading.Thread(target=output.out)
+        elif text_or_speech == 0:
+                thread_1 = threading.Thread(target=vocal_input.listening)
+                thread_2 = threading.Thread(target=process.main)
+                thread_3 = threading.Thread(target=output.out)
         else:
-            print(logger.log(WARNIGN + " Select a valid choice please"),flush=True)
+                print(logger.log(WARNIGN + " Select a valid choice please"),flush=True)
+    elif(defaul_start == 'T'):
+         thread_1 = threading.Thread(target=text_input.text)
+         thread_2 = threading.Thread(target=process.main)
+         thread_3 = threading.Thread(target=output.out)
+    else:
+        thread_1 = threading.Thread(target=vocal_input.listening)
+        thread_2 = threading.Thread(target=process.main)
+        thread_3 = threading.Thread(target=output.out)
 
     print(logger.log(OK +"PROGRAM IN EXECUTION"), flush=True)
     print("\n",flush=True)
@@ -210,13 +232,21 @@ def main():
 
 if __name__ == '__main__':
 
+    # Ottieni il percorso assoluto della directory in cui si trova lo script
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    # Cambia il percorso di lavoro corrente alla directory dello script
+    os.chdir(script_dir)
     toml_path = 'pyproject.toml'
+
     with open(toml_path,"rb") as file:
         metadata = tomli.load(file)
         SETTINGS_FILE = metadata["tool"]["path"]["setting_path"]
         KEY_FILE = metadata["tool"]["path"]["key_path"]
+        launch_start = metadata["tool"]["config_system"]["launch_start"]
+        defaul_start = metadata["tool"]["config_system"]["defaul_start"]
+        display_console = metadata["tool"]["config_system"]["display_console"]
 
-     #*  INIT LOGGER AND REQUEST_MAKER
+    #*  INIT LOGGER AND REQUEST_MAKER
     settings = init_settings()
     logger = Logger()
     request_maker = MakeRequests()
