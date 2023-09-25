@@ -232,9 +232,7 @@ def main():
 
 if __name__ == '__main__':
 
-    # Ottieni il percorso assoluto della directory in cui si trova lo script
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    # Cambia il percorso di lavoro corrente alla directory dello script
     os.chdir(script_dir)
     toml_path = 'pyproject.toml'
 

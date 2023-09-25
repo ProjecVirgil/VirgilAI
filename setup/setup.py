@@ -21,6 +21,79 @@ import pyfiglet
 # - NEL FILE DI LAUNCH GESTIRE LA QUESTIONE NASCOSTO SIA PER LINUX CHE PER WIN
 #
 
+
+
+
+# ------ WINDOWS -------
+
+def windows_function(path_directory,display=True):
+    """Function to with command for Windows."""
+    if display:
+        with open("launch_start.bat","w")as file:
+            file.write(f"python {path_directory}\\launch.py")
+    else:
+        with open("launch_start.bat","w")as file:
+            file.write(f"python {path_directory}\\launch.pyw")
+
+    source_path = f"{path_directory}\\setup\\launch_start.bat"
+    current_user = os.getlogin()
+    source_path = 'F:\\ProjectVirgil\\VirgilAI\\setup\\launch_start.bat'
+    destination_folder = f'C:\\Users\\{current_user}\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup'
+    shutil.copy2(source_path, destination_folder)
+    os.remove(source_path)
+
+def modify_start_startup_win(launch_start):
+    """This function is used for modifying the startup file of start.py.
+
+    Args:
+        launch_start (_type_): _description_
+    """
+    current_user = os.getlogin()
+    if(launch_start):
+        try:
+            destination_folder = f'C:\\Users\\{current_user}\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\launch_start.bat'
+            os.remove(destination_folder)
+        except FileNotFoundError:
+            print("FILE NOT FOUND")
+    else:
+        current_folder = os.getcwd()
+        parent_folder = os.path.dirname(current_folder)
+        windows_function(parent_folder)
+    print(colorama.Fore.GREEN + colorama.Style.BRIGHT +"\n ***** Successfully executed changes *****")
+    update_toml("launch_start",not launch_start)
+    return
+
+def modify_display():
+    """This function is used for modifying the configuration of the display."""
+    toml_path = '../pyproject.toml'
+    with open(toml_path, "rb") as file:
+        metadata = tomli.load(file)
+        defaul_start = metadata["tool"]["config_system"]["defaul_start"]
+        display_console = metadata["tool"]["config_system"]["display_console"]
+
+    path = get_path()
+    if(defaul_start in ('T','N') and display_console is not True):
+            if(platform.system() == "Windows"):
+                update_toml("display_console",not display_console)
+                os.rename("../launch.pyw","../launch.py")
+                windows_function(path,display=True)
+                print(colorama.Fore.GREEN + colorama.Style.BRIGHT +"\n ***** Successfully executed changes *****")
+            else:
+                linux_function(path,display=True)
+                print(colorama.Fore.GREEN + colorama.Style.BRIGHT +"\n ***** Successfully executed changes *****")
+    elif(defaul_start in ('T','N') and display_console is True):
+            print(colorama.Fore.RED + colorama.Style.BRIGHT +"\n You can't set the display to False with default startup to Text \n if you can set to display true first set the interface to text or remove the dafault ") #TODO TEST
+    else:
+        if platform.system() == "Windows":
+            os.rename("../launch.py","../launch.pyw")
+            windows_function(path,display=False)
+            update_toml("display_console",not display_console)
+            print(colorama.Fore.GREEN + colorama.Style.BRIGHT +"\n ***** Successfully executed changes *****")
+        else:
+            linux_function(path,display=False)
+            print(colorama.Fore.GREEN + colorama.Style.BRIGHT +"\n ***** Successfully executed changes *****")
+
+# ----- SYSTEM ------
 def check_system() -> str:
     """Check on what platform the script was run on.
 
@@ -32,9 +105,6 @@ def check_system() -> str:
     if (platform.system() == "Linux"):
         return "L"
     return "N"
-
-# Verifica se l'applicazione è in esecuzione come amministratore
-
 
 def is_admin(system: str):
     """Verifies whether or not this application has been started as an administrator.
@@ -52,25 +122,6 @@ def is_admin(system: str):
             return True
         return False
 
-
-def windows_function(path_directory):
-    """Function to with command for Windows."""
-    with open("launch_start.bat","w")as file:
-        file.write(f"python {path_directory}\\launch.py")
-    source_path = f"{path_directory}\\setup\\launch_start.bat"
-    current_user = os.getlogin()
-    source_path = 'F:\\ProjectVirgil\\VirgilAI\\setup\\launch_start.bat'
-    destination_folder = f'C:\\Users\\{current_user}\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup'
-    shutil.copy2(source_path, destination_folder)
-    os.remove(source_path)
-
-
-
-def linux_function(command, path_directory=None,):
-    """Function to with command for Linux."""
-    print("Workin in progess")
-
-
 def update_toml(params: str, new_value: str):
     """Update TOML file from params dictonary.
 
@@ -86,6 +137,60 @@ def update_toml(params: str, new_value: str):
     new_content = dumps(doc)
     with open(file_path, "w") as file:
         file.write(new_content)
+
+def show_settings():
+    """This function shows all settings."""
+    toml_path = '../pyproject.toml'
+    with open(toml_path, "rb") as file:
+        metadata = tomli.load(file)
+        launch_start = metadata["tool"]["config_system"]["launch_start"]
+        defaul_start = metadata["tool"]["config_system"]["defaul_start"]
+        display_console = metadata["tool"]["config_system"]["display_console"]
+    mss_list = ["The option for the launch start with the system is: ","The option for the default launch is: ","The option for the show of display is: ",]
+    value = [launch_start,defaul_start,display_console]
+    print(colorama.Fore.BLUE + colorama.Style.BRIGHT + "\n\t    ------ [SETTINGS] -------\n")
+    for mss in mss_list:
+        print(colorama.Fore.CYAN + colorama.Style.BRIGHT + " - " + mss + colorama.Fore.GREEN + str(value[mss_list.index(mss)]))
+
+# ----- LINUX -------
+
+
+def linux_function(path_directory=None,display=True):
+    """Function to with command for Linux."""
+    # PER LINUX GENERARE SOLO IL COMANDO E FARLO ESEGUIRE ALL UTENTE
+    # Comando per aggiungere un lavoro Crontab che si esegue all'avvio
+    if display:
+        job = f"@reboot screen -dmS virgil /usr/bin/python3 {path_directory}/launch.py"
+        print("\n" + colorama.Fore.RED +colorama.Style.BRIGHT +"For connect to the terminal execute this command: screen -r virgil")
+    else:
+        job = f"@reboot /usr/bin/python3 {path_directory}/launch.py"
+
+    command = f"echo {job} | crontab -"  # Comando completo
+    try:
+        subprocess.run(command, shell=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error on Crontab: {e}")
+
+
+def modify_start_startup_lin(launch_start,display):
+    """Modify the start of Virgil on startup.
+
+    Args:
+        launch_start (_type_): _description_
+        display (_type_): _description_
+    """
+    if launch_start:
+        command = "echo  | crontab -"
+        try:
+            subprocess.run(command, shell=True)
+        except subprocess.CalledProcessError as e:
+            print(f"Error on Crontab: {e}")
+            update_toml("launch_start",not launch_start)
+    else:
+        linux_function(get_path,display=display)
+        update_toml("launch_start",not launch_start)
+
+# ---- FIRST START ------
 
 def first_start(cli,parent_folder):
     """First start of the project.
@@ -111,14 +216,13 @@ def first_start(cli,parent_folder):
 
     if(choise =="Y"):
         update_toml("launch_start",True)
-        cli(parent_folder) #COMANDO CREATION TASK
+        cli(parent_folder)
     else:
         update_toml("launch_start",False)
 
-    # PASS 2
     while(True):
         sys.stdout.write(colorama.Fore.CYAN + colorama.Style.BRIGHT +
-                        '''\n(-) 2. Do you want to specify a default interleaving type? (default no) (Y/N): ''')
+                        '''\n(-) 2. Do you want to specify a default interface type? (default no) (Y/N): ''')
         sys.stdout.flush()
         choise = sys.stdin.readline().strip().upper()
         if(choise in ('N','Y')):
@@ -129,7 +233,6 @@ def first_start(cli,parent_folder):
     sys.stdout.write(colorama.Fore.GREEN + colorama.Style.BRIGHT +'\x1b[A' + f"(-) 2. Do you want to specify a default interleaving type? (default no) (Y/N): {choise}" + '\r')
     sys.stdout.flush()
     if choise == 'Y':
-        # PASS 3
         while(True):
             sys.stdout.write(colorama.Fore.CYAN + colorama.Style.BRIGHT +
                             '''\n(-) 2.1 Text interface or voice interface? (T/R):''')
@@ -148,7 +251,7 @@ def first_start(cli,parent_folder):
             # PASS 4
             while(True):
                 sys.stdout.write(colorama.Fore.CYAN + colorama.Style.BRIGHT +
-                                '''\n(-) 2.2 You want it to show the display (default no) (Y/N):''')
+                                '''\n(-) 2.2 You want it to show the display (default yes) (Y/N):''')
                 sys.stdout.flush()
                 choise = sys.stdin.readline().strip().upper()
                 if(choise in ('N','Y')):
@@ -156,64 +259,18 @@ def first_start(cli,parent_folder):
                 sys.stdout.write(colorama.Fore.RED + colorama.Style.BRIGHT +'\x1b[A' + '''(/) SELECT A VALID CHOISE'''+ " "*100 + '\r')
                 sys.stdout.flush()
 
-            sys.stdout.write(colorama.Fore.GREEN + colorama.Style.BRIGHT +'\x1b[A' + f"(-) 2.2 You want it to show the display (default no) (Y/N): {choise}" + '\r')
+            sys.stdout.write(colorama.Fore.GREEN + colorama.Style.BRIGHT +'\x1b[A' + f"(-) 2.2 You want it to show the display (default yes) (Y/N): {choise}" + '\r\n')
             sys.stdout.flush()
 
             if(choise =="Y"):
+                linux_function(get_path(),display=True)
                 update_toml("display_console",True)
             else:
+                linux_function(get_path(),display=False)
                 update_toml("display_console",False)
     update_toml("first_setup",False)
 
-def modify_display(defaul_start,display_console):
-    """This function is used for modifying the configuration of the display."""
-    if(platform.system() == "Windows"):
-        if(defaul_start in ('T','N') and display_console is not True):
-            update_toml("display_console",not display_console)
-            os.rename("../launch.pyw","../launch.py")
-            print(colorama.Fore.GREEN + colorama.Style.BRIGHT +"\n ***** Successfully executed changes *****")
-        elif(defaul_start in ('T','N') and display_console is True):
-            print(colorama.Fore.RED + colorama.Style.BRIGHT +"\n You can't set the display to False with default startup to Text \n if you can set to display true first set the interface to text or remove the dafault ") #TODO TEST
-        else:
-            os.rename("../launch.py","../launch.pyw")
-            update_toml("display_console",not display_console)
-    else:
-        print("OPERATION FOR LINUX") #QUA BISOGNEREBBE MODIFICARE IL COMANDO CON CUI VIENE RUNNATO QUINDI MODIFICARE SIA LA ROUTINE CHE IL LAUNCHER
 
-def modify_start_startup(launch_start):
-    """This function is used for modifying the startup file of start.py.
-
-    Args:
-        launch_start (_type_): _description_
-    """
-    current_user = os.getlogin()
-    if(launch_start):
-        try:
-            destination_folder = f'C:\\Users\\{current_user}\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\launch_start.bat'
-            os.remove(destination_folder)
-        except FileNotFoundError:
-            print("FILE NOT FOUND")
-    else:
-        current_folder = os.getcwd()
-        parent_folder = os.path.dirname(current_folder)
-        windows_function(parent_folder)
-    print(colorama.Fore.GREEN + colorama.Style.BRIGHT +"\n ***** Successfully executed changes *****")
-    update_toml("launch_start",not launch_start)
-    return
-
-def show_settings():
-    """This function shows all settings."""
-    toml_path = '../pyproject.toml'
-    with open(toml_path, "rb") as file:
-        metadata = tomli.load(file)
-        launch_start = metadata["tool"]["config_system"]["launch_start"]
-        defaul_start = metadata["tool"]["config_system"]["defaul_start"]
-        display_console = metadata["tool"]["config_system"]["display_console"]
-    mss_list = ["The option for the launch start with the system is: ","The option for the default launch is: ","The option for the show of display is: ",]
-    value = [launch_start,defaul_start,display_console]
-    print(colorama.Fore.BLUE + colorama.Style.BRIGHT + "\n\t    ------ [SETTINGS] -------\n")
-    for mss in mss_list:
-        print(colorama.Fore.CYAN + colorama.Style.BRIGHT + " - " + mss + colorama.Fore.GREEN + str(value[mss_list.index(mss)]))
 
 def setup(launch_start,defaul_start,display_console):
     """This function is used for setting up all of the things that are needed before running the programm. It will create a config file and also check whether.
@@ -248,7 +305,10 @@ colorama.Fore.BLUE +'''
         if(choise == '0'):
             show_settings()
         elif(choise == '1'):
-            modify_start_startup(launch_start)
+            if(platform.system == "Windows"):
+                modify_start_startup_win(launch_start)
+            else:
+                modify_start_startup_lin(launch_start,display_console)
         elif(choise == '2'):
             while(True):
                 choise = input("You want to eliminate the possibility of a default startup (Y/N): ").upper()
@@ -267,16 +327,21 @@ colorama.Fore.BLUE +'''
             print(colorama.Fore.GREEN + colorama.Style.BRIGHT +"\n ***** Successfully executed changes *****")
 
         elif(choise == '3'):
-            modify_display(defaul_start,display_console)
+            modify_display()
         elif(choise == '-1'):
             return
         else:
             sys.stdout.write(colorama.Fore.RED + colorama.Style.BRIGHT +'\x1b[A' + '''(/) SELECT A VALID CHOISE'''+ " "*100 + '\r')
             sys.stdout.flush()
 
+def get_path():
+    current_folder = os.getcwd()
+    parent_folder = os.path.dirname(current_folder)
+    return parent_folder
 
 def main():
     """Main function."""
+
     subprocess.run("poetry install",shell=True)
     print(colorama.Style.BRIGHT + colorama.Fore.MAGENTA +
           pyfiglet.figlet_format("  Virgil", font="doh", width=200), flush=True)
@@ -290,19 +355,21 @@ def main():
         defaul_start = metadata["tool"]["config_system"]["defaul_start"]
         display_console = metadata["tool"]["config_system"]["display_console"]
 
-    current_folder = os.getcwd()
-    parent_folder = os.path.dirname(current_folder)
+    parent_folder = get_path()
 
     system = check_system()
     if (system == "N"):
         print("Virgil AI is only supported in Windows and Linux.")
         return SystemError
+    
 
-    if not is_admin(system):
-        print(colorama.Fore.RED+ '''\n\nPlease to do a proper configuration run the script with admin privileges,
-for more information and why administrator is needed go to https://github.com/Retr0100/VirgilAI''')
-        sys.exit(0)
 
+#if not is_admin(system):
+#       print(colorama.Fore.RED+ '''\n\nPlease to do a proper configuration run the script with admin privileges,
+#for more information and why administrator is needed go to https://github.com/Retr0100/VirgilAI''')
+#        sys.exit(0)
+
+    print(system)
     cli = windows_function if system == "W" else linux_function
 
     print(colorama.Fore.GREEN + pyfiglet.figlet_format("WELCOME",
@@ -316,6 +383,8 @@ for more information and why administrator is needed go to https://github.com/Re
     # ------- END SETUP -----
 
     if(first_setup):
+        if(system == "L"):
+            subprocess.run("sudo apt install python3-pyaudio;sudo apt install ffmpeg;sudo apt install screen",shell=True)
         first_start(cli,parent_folder)
     else:
         setup(launch_start,defaul_start,display_console)
