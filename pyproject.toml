@@ -54,7 +54,7 @@ ruff = "^0.0.291"
 [tool.ruff]
 ignore = ["E501"]
 extend-include = ["*.pyw"]
-select = ["E","F","N","D","UP","PYI","SLOT","SIM","TD","FIX","W"]
+select = ["E","F","N","D","UP","PYI","SLOT","SIM","TD","FIX","W","PL"]
 exclude = [
     ".git",
     ".git-rewrite",
