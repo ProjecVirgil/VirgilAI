@@ -1,6 +1,4 @@
 """This file take care of configuring the entire environment for the use of Virgilio."""
-
-import ctypes
 import os
 import platform
 import sys
@@ -10,8 +8,6 @@ import colorama
 import tomli
 from tomlkit import parse, dumps
 import pyfiglet
-import string
-import secrets
 
 #TODO(Retr0) MAKE THE LINUX VERSION
 #* -  ADD the command for enable and remove the function to startup
