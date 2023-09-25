@@ -10,6 +10,8 @@ import colorama
 import tomli
 from tomlkit import parse, dumps
 import pyfiglet
+import string
+import secrets
 
 #TODO(Retr0) MAKE THE LINUX VERSION
 #* -  ADD the command for enable and remove the function to startup
@@ -106,21 +108,37 @@ def check_system() -> str:
         return "L"
     return "N"
 
-def is_admin(system: str):
-    """Verifies whether or not this application has been started as an administrator.
 
-    Returns:
-        bool: SUDO?
-    """
-    if system == 'W':
-        try:
-            return ctypes.windll.shell32.IsUserAnAdmin()
-        except OSError:
-            return False
-    else:
-        if os.geteuid() == 0:
-            return True
-        return False
+
+def windows_function(path_directory):
+    """Function to with command for Windows."""
+    print(path_directory)
+    with open("launch_start.bat","w")as file:
+        file.write(f"python {path_directory}\\launch.py")
+    source_path = f"{path_directory}\\setup\\launch_start.bat"
+    print(source_path)
+    current_user = os.getlogin()
+    source_path = 'F:\\ProjectVirgil\\VirgilAI\\setup\\launch_start.bat'
+    destination_folder = f'C:\\Users\\{current_user}\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup'
+    print(source_path)
+    print(destination_folder)
+    try:
+        shutil.copy2(source_path, destination_folder)
+    except OSError:
+        print(colorama.Fore.RED+ colorama.Style.BRIGHT + '''
+ Oops your antivirus doesn't like Virgilio to start automatically please
+ give the green light to the antivirus to run the bat file (If you have
+ any doubts about security I invite you to analyze the whole source code
+ and check its security and if you still don't trust it you can simply
+ don't run it at startup)''')
+    os.remove(source_path)
+
+
+
+def linux_function(command, path_directory=None,):
+    """Function to with command for Linux."""
+    print("Workin in progess")
+
 
 def update_toml(params: str, new_value: str):
     """Update TOML file from params dictonary.
@@ -343,6 +361,7 @@ def main():
     """Main function."""
 
     subprocess.run("poetry install",shell=True)
+
     print(colorama.Style.BRIGHT + colorama.Fore.MAGENTA +
           pyfiglet.figlet_format("  Virgil", font="doh", width=200), flush=True)
 
@@ -361,15 +380,7 @@ def main():
     if (system == "N"):
         print("Virgil AI is only supported in Windows and Linux.")
         return SystemError
-    
 
-
-#if not is_admin(system):
-#       print(colorama.Fore.RED+ '''\n\nPlease to do a proper configuration run the script with admin privileges,
-#for more information and why administrator is needed go to https://github.com/Retr0100/VirgilAI''')
-#        sys.exit(0)
-
-    print(system)
     cli = windows_function if system == "W" else linux_function
 
     print(colorama.Fore.GREEN + pyfiglet.figlet_format("WELCOME",
