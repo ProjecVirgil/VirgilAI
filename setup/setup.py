@@ -8,6 +8,12 @@ import colorama
 import tomli
 from tomlkit import parse, dumps
 import pyfiglet
+
+
+# --- CONST
+
+SUCCESS = colorama.Fore.GREEN + colorama.Style.BRIGHT +"\n ***** Successfully executed changes *****"
+
 # ------ WINDOWS -------
 
 def windows_function(path_directory):
@@ -46,7 +52,7 @@ def modify_start_startup_win(launch_start):
         current_folder = os.getcwd()
         parent_folder = os.path.dirname(current_folder)
         windows_function(parent_folder)
-    print(colorama.Fore.GREEN + colorama.Style.BRIGHT +"\n ***** Successfully executed changes *****",flush=True)
+    print(SUCCESS,flush=True)
     update_toml("launch_start",not launch_start)
 
 def modify_display():
@@ -58,10 +64,10 @@ def modify_display():
             update_toml("display_console",not display_console)
             os.rename("../launch.pyw","../launch.py")
             windows_function(path)
-            print(colorama.Fore.GREEN + colorama.Style.BRIGHT +"\n ***** Successfully executed changes *****",flush=True)
+            print(SUCCESS,flush=True)
         else:
             linux_function(path,display=True)
-            print(colorama.Fore.GREEN + colorama.Style.BRIGHT +"\n ***** Successfully executed changes *****",flush=True)
+            print(SUCCESS,flush=True)
     elif(defaul_start in ('T','N') and display_console is True):
         print(colorama.Fore.RED + colorama.Style.BRIGHT +"\n You can't set the display to False with default startup to Text \n if you can set to display true first set the interface to text or remove the dafault ",flush=True)
     else:
@@ -69,10 +75,10 @@ def modify_display():
             os.rename("../launch.py","../launch.pyw")
             windows_function(path)
             update_toml("display_console",not display_console)
-            print(colorama.Fore.GREEN + colorama.Style.BRIGHT +"\n ***** Successfully executed changes *****",flush=True)
+            print(SUCCESS,flush=True)
         else:
             linux_function(path,display=False)
-            print(colorama.Fore.GREEN + colorama.Style.BRIGHT +"\n ***** Successfully executed changes *****",flush=True)
+            print(SUCCESS,flush=True)
 
 # ----- SYSTEM ------
 def check_system() -> str:
@@ -297,7 +303,7 @@ colorama.Fore.BLUE +'''
                     update_toml("defaul_start",'T')
             else:
                 update_toml("defaul_start",'N')
-            print(colorama.Fore.GREEN + colorama.Style.BRIGHT +"\n ***** Successfully executed changes *****",flush=True)
+            print(SUCCESS,flush=True)
 
         elif choise == '3':
             modify_display()
