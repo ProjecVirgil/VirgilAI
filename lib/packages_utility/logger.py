@@ -1,67 +1,70 @@
 """Class for print the log (temporany function)."""
-
-import inspect
-import time
-import json
-
-import platform
-from colorama import Fore,Back
+import logging
+from colorama import Fore, Style, init
+import tomli
 
 # ---- This file make the preset for Log ----
 
-class Logger:
-    """This class is used to log all messages in a specific format."""
-    def __init__(self):
-        """Init the logger class."""
-        self.current_call_stack = ''
-        self.last_caller = ''
-        self.__update_call_stack()
-        with open("setup/settings.json",encoding="utf8") as file:
-            settings = json.load(file)
-        self.lang = settings["language"]
+class CustomFormatter(logging.Formatter):
+    """Custom Formatter class to format the output of logger in a nice way!
 
-    def check_system(self) -> str:
-        """This function checks if you are using Windows or Linux and returns it's name.
+    Args:
+        logging (logging): The logging formatter
 
-        Returns:
-            str: Windows or Linux
-        """
-        system = platform.system()
-        if system == 'Windows':
-            return "win"
-        return "lin"
+    """
+    grey = Fore.LIGHTBLACK_EX
+    yellow = Fore.YELLOW
+    red = Fore.RED
+    blue = Fore.BLUE
+    bold_red = Style.BRIGHT + Fore.RED
+    format ="%(asctime)s - %(levelname)s - %(message)s (%(filename)s:%(lineno)d)"
 
-    def __update_call_stack(self) -> None:
-        """This method updates call stack of current caller (function that called this one)."""
-        system = self.check_system()
-        if system == "win":
-            self.current_call_stack = inspect.stack()[2]
-            self.last_caller = str(inspect.getmodule(self.current_call_stack[0])).split("\\")[-1]
-        else:
-            self.current_call_stack = inspect.stack()[2]
-            self.last_caller = str(inspect.getmodule(self.current_call_stack[0])).split("\\")[-1]
-            self.last_caller = self.last_caller.split("from")[1].split("/")[-1]
+    FORMATS = {
+        logging.DEBUG: grey + format,
+        logging.INFO: blue + format,
+        logging.WARNING: yellow + format,
+        logging.ERROR: red + format,
+        logging.CRITICAL: bold_red + format,
+    }
 
-    def log(self, string: str, filepath: str = None) -> str:
-        """This function logs message into console and saves it inside .log files.
+    def format(self, record):
+        """Format the message with custom colors and styles.
 
         Args:
-            string (str): The string to insert in the log message
-            filepath (str, optional): File path for save the log Defaults to None.
+            record (_type_): _description_
 
         Returns:
-            str: Return the log formatted
+            str: The log formatted
         """
-        self.__update_call_stack()
-        prfx = Fore.GREEN + f"(in module {self.last_caller[:-2]}) " + time.strftime("%H:%M:%S UTC LOG", time.localtime()) + Back.RESET + Fore.WHITE
+        log_fmt = self.FORMATS.get(record.levelno)
+        formatter = logging.Formatter(log_fmt)
+        return formatter.format(record)
 
-        prfx = prfx + " | "
-        log = prfx + string
-        if filepath is not None:
-            try:
-                with open(filepath, "w",encoding="utf8") as file:
-                    file.write(log)
-                return ''
-            except OSError:
-                return log
-        return log
+# Initialize colorama
+init(autoreset=True)
+
+# Clear any existing handlers on the root logger
+for handler in logging.root.handlers[:]:
+    logging.root.removeHandler(handler)
+
+toml_path = 'pyproject.toml'
+with open(toml_path,"rb") as file:
+    metadata = tomli.load(file)
+    LEVEL = metadata["tool"]["debug"]["level_debug"].upper()
+    in_file = metadata["tool"]["debug"]["logs_file"]
+
+# Set the logging level
+level_num = logging.getLevelName(LEVEL)
+logging.getLogger().setLevel(level_num)
+
+# Create a FileHandler to log messages to a file
+if in_file:
+    file_handler = logging.FileHandler("file.log")
+    file_handler.setFormatter(logging.Formatter("%(asctime)s - %(levelname)s - %(message)s (%(filename)s:%(lineno)d)"))
+    logging.getLogger().addHandler(file_handler)
+else:
+    handler = logging.StreamHandler()
+    handler.setFormatter(CustomFormatter())
+    logging.getLogger().addHandler(handler)
+
+
