@@ -6,8 +6,6 @@ from math import sin, cos, sqrt, atan2, radians
 from geopy.geocoders import Nominatim
 from lib import Settings
 
-from lib.packages_utility.logger import Logger
-
 # ---- This file convert all the number in word ----
 
 # Because the ElevenLabs TTS read the number only in english
@@ -16,7 +14,6 @@ class Utils:
     """A class with utils function."""
     def __init__(self) -> None:
         """Init the logger class."""
-        self.logger = Logger()
 
     def count_number(self,command) -> int:
         """Count how many numbers are there in a string.

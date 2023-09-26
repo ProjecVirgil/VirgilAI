@@ -3,7 +3,7 @@ import json
 import sys
 import unicodedata
 
-from lib.packages_utility.logger import Logger
+from lib.packages_utility.logger import logging
 from lib.packages_utility.utils import Utils
 
 # ----- File to take the input by the console -----
@@ -19,7 +19,6 @@ class TextInput:
         self.data_empty = {
             None:True
             }
-        self.logger = Logger()
         self.utils = Utils()
 
         self.word_activation = word_activation
@@ -35,14 +34,14 @@ class TextInput:
         data = {
             command:False
             }
-        print(self.logger.log(f" data sended - {data}"), flush=True)
+        logging.debug(f" data sended - {data}")
         with open("connect/command.json", 'w',encoding="utf8") as comandi:
             json.dump(data, comandi,indent=4)
 
     def text(self):
         """The main file for recover the command from text."""
         command = ""
-        print(self.logger.log(" start input function"), flush=True)
+        logging.info(" start input function")
         self.utils.clean_buffer(data_empty=self.data_empty,file_name="command")
         status  = True
         while status:
@@ -51,10 +50,10 @@ class TextInput:
             command = unicodedata.normalize('NFKD', command)
             command = command.encode('ascii', 'ignore').decode('ascii')
             if self.word_activation in command:
-                print(self.logger.log(" command speech correctly "), flush=True)
+                logging.debug(" command speech correctly ")
                 self.copy_data(command)
                 if "spegniti" in command:
                     status = False
             else:
-                print(self.logger.log("Remember to use the key word"), flush=True)
+                logging.warning("Remember to use the key word")
         sys.exit()

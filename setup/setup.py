@@ -344,7 +344,7 @@ def main():
 
     print(colorama.Fore.GREEN + pyfiglet.figlet_format("WELCOME",
           justify="center", font="digital"),flush=True)
-    print(colorama.Style.RESET_ALL + '''
+    print('''
 
  Welcome to''' + colorama.Fore.GREEN + colorama.Style.BRIGHT + " Virgil AI" + colorama.Fore.WHITE + ''' i remind you that AI does not stand for Aritificial Intelligence
  but for  ''' + colorama.Fore.RED + colorama.Style.BRIGHT + "Assistant Interface" + colorama.Fore.WHITE + ''' after this premise we can start with the setup
@@ -363,5 +363,5 @@ def main():
 
 
 if __name__ == '__main__':
-    colorama.init()
+    colorama.init(autoreset=True)
     main()

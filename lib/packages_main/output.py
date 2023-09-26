@@ -9,7 +9,7 @@ import pyfiglet
 from pygame import mixer
 
 from lib.packages_utility.sound import Audio
-from lib.packages_utility.logger import Logger
+from lib.packages_utility.logger import logging
 from lib.packages_utility.utils  import Utils
 
 from lib.packages_secondary.manage_events import EventScheduler
@@ -26,7 +26,6 @@ class Output:
 
         self.settings = settings
 
-        self.logger = Logger()
         self.utils = Utils()
         self.event_scheduler = EventScheduler(settings)
         self.audio = Audio(settings.volume,settings.elevenlabs,settings.language)
@@ -115,7 +114,7 @@ class Output:
 
     def shutdown(self) -> None:
         """Function to shut down the programm."""
-        print(self.logger.log(" shutdown in progress..."), flush=True)
+        logging.info(" shutdown in progress...")
         self.audio.create(file=True,namefile="FinishVirgil")
         print(Style.BRIGHT +Fore.MAGENTA + pyfiglet.figlet_format("Thanks for using Virgil",
                                                                   font = "digital",
@@ -123,7 +122,6 @@ class Output:
                                                                   width = 110 ),
             flush=True)
         print(Fore.LIGHTMAGENTA_EX + " - credit: @retr0", flush=True)
-        print(Style.RESET_ALL, flush=True)
         time.sleep(2)
         sys.exit(0)
 
@@ -142,12 +140,9 @@ class Output:
                         mixer.music.unload()
                         mixer.music.load('asset/bipEffectCheckSound.mp3')
                         mixer.music.play()
-                        print(self.logger.log(f" volume changed correctly to {result*100}% "),
-                              flush=True)
-
+                        logging.info(f" volume changed correctly to {result*100}% ")
                     elif "timer" in command or self.settings.split_output[0] in command:
-                        print(self.logger.log(f" the timer is started see you in {result} second"),
-                              flush=True)
+                        logging.debug(f" the timer is started see you in {result} second"),
                         if "timer" in command:
                             if self.lang != "en":
                                 self.audio.create(
@@ -161,16 +156,15 @@ class Output:
                         thread.start()
                     else:
                         self.audio.create(result)
-                        print(result, flush=True)
+                        logging.debug(result)
                     self.update_json_value(2, True)
 
                     if not self.check_reminder():
-                        print(self.logger.log(" send notify for today event")
-                              ,flush=True)
+                        logging.info(" send notify for today event")
                         result = self.event_scheduler.send_notify()
                         time.sleep(10)
                         self.audio.create(result)
                 else:
                     pass
             except json.decoder.JSONDecodeError:
-                print(self.logger.log("Nothing was found in the json"), flush=True)
+                logging.debug("Nothing was found in the json")

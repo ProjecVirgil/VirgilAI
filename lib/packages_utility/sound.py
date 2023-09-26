@@ -5,7 +5,7 @@ import gtts
 from pygame.mixer import music
 from elevenlabs import generate,save,api
 
-from lib.packages_utility.logger import Logger
+from lib.packages_utility.logger import logging
 
 # ---- This file make the TTS ----
 class Audio:
@@ -18,8 +18,6 @@ class Audio:
             elevenlabs (str): the key of elevenlabs API
             language (str): the language of Virgil
         """
-        self.logger = Logger()
-
         self.volume = volume
         self.api_key = elevenlabs
         self.language = language
@@ -49,7 +47,7 @@ class Audio:
                 )
                 save(sound,'audio.mp3')
             except api.error.APIError:
-                print(self.logger.log(" Google text to speech has started the cause could be a missing valid key or the end of the elevenLabs plan if you are aware of this you can ignore the message"), flush=True)
+                logging.warning(" Google text to speech has started the cause could be a missing valid key or the end of the elevenLabs plan if you are aware of this you can ignore the message")
                 sound = gtts.gTTS(text,lang=self.language)
                 sound.save("audio.mp3")
 

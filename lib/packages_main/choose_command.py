@@ -10,7 +10,7 @@ import joblib
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 
-from lib.packages_utility.logger import Logger
+from lib.packages_utility.logger import logging
 from lib.packages_utility.sound import Audio
 from lib.packages_utility.utils import Utils
 
@@ -21,7 +21,6 @@ from lib.packages_secondary.calendar_rec import Calendar
 from lib.packages_secondary.the_news import  Newsletter
 from lib.packages_secondary.searchyt import   MediaPlayer
 from lib.packages_secondary.manage_events import EventScheduler
-#from lib.the_light import turn
 
 # ---- File for manage all the preset command ----
 class CommandSelection:
@@ -35,7 +34,6 @@ class CommandSelection:
         """
         self.settings = settings
 
-        self.logger = Logger()
         self.utils = Utils()
         self.audio = Audio(settings.volume,settings.elevenlabs,settings.language)
 
@@ -78,7 +76,7 @@ class CommandSelection:
         Returns:
             str: The response at the message from gpt
         """
-        print(self.logger.log(" I am creating the answer..."), flush=True)
+        logging.info(" I am creating the answer...")
         response = openai.ChatCompletion.create(
             model = "gpt-3.5-turbo",
             messages = messages,
@@ -124,7 +122,7 @@ class CommandSelection:
                 for word in tokens:
                     if word not in (",","?") and word not in self.stop_words:
                         filtered_tokens.append(word)
-                print(self.logger.log(f" command processed: {filtered_tokens} "), flush=True)
+                logging.debug(f" command processed: {filtered_tokens} ")
                 return filtered_tokens
         except IndexError:
             return command
@@ -143,7 +141,7 @@ class CommandSelection:
         mixer.init()
         predictions = self.loaded_model.predict([self.clean(command,"model")])
         command_worked = self.clean(command,"work")
-        print(self.logger.log(f"Classes choised by alghorithm is {predictions}"),flush=True)
+        logging.debug(f"Classes choised by alghorithm is {predictions}")
         if (self.settings.split_command[0] in command_worked) or (self.settings.split_command[1] in command_worked):
             self.off()
             return
@@ -185,9 +183,8 @@ class CommandSelection:
             for i in command_worked:
                 if self.utils.count_number(i) >= 2:
                     hours,minuts,calculated_hours,calculated_minuts,calculate_seconds = self.time.diff_time(i)
-                    print(
-                    self.logger.log(
-                    f" {self.settings.split_time[1]} {self.utils.number_to_word(hours)} {self.settings.split_time[3]} {self.utils.number_to_word(minuts)} {self.settings.phrase_time[6]} {self.utils.number_to_word(calculated_hours)} {self.utils.number_to_word(calculated_minuts)} {self.utils.number_to_word(calculate_seconds)}"),flush=True)
+                    logging.info(
+                    f" {self.settings.split_time[1]} {self.utils.number_to_word(hours)} {self.settings.split_time[3]} {self.utils.number_to_word(minuts)} {self.settings.phrase_time[6]} {self.utils.number_to_word(calculated_hours)} {self.utils.number_to_word(calculated_minuts)} {self.utils.number_to_word(calculate_seconds)}")
                     return f" {self.settings.split_time[1]} {self.utils.number_to_word(hours)} {self.settings.split_time[3]} {self.utils.number_to_word(minuts)} {self.settings.phrase_time[6]} {self.utils.number_to_word(calculated_hours)} {self.settings.phrase_time[1]} {self.utils.number_to_word(calculated_minuts)} {self.settings.phrase_time[2]} {self.utils.number_to_word(calculate_seconds)} {self.settings.phrase_time[3]}"
             result = self.calendar.diff_date(command_worked)
             print("Manca giorno")
@@ -204,17 +201,10 @@ class CommandSelection:
         try:
             new_message = self.get_response(messages=self.start_prompt)
         except Exception as error :
-            print(self.logger.log("Unfortunately the key of openAI you entered is invalid or not present if you don't know how to get a key check the guide on github"), flush=True)
-            print(error,flush=True)
+            logging.error("Unfortunately the key of openAI you entered is invalid or not present if you don't know how to get a key check the guide on github")
+            logging.error(error)
             self.audio.create(file=True,namefile="ErrorOpenAi")
-            return#TO REG
-        print(f"\nVirgilio: {new_message['content']}",flush=True)
+            return
+        print(f"\nVirgilio: {new_message['content']}")
         self.start_prompt.append(new_message)
         return new_message['content']
-
-#TODO ADD THE DOMOTIC FUNCTION  # noqa: TD002, TD004, TD003, FIX002
-'''if self.split[46] in command and ((self.split[47] in command)
-or (self.split[48] in command)):
-            print(self.logger.log(" pre light function"),flush=True)
-            turn(command)
-            return "Ok"'''

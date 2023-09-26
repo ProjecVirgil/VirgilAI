@@ -5,7 +5,7 @@ import threading
 from colorama import Fore
 import nltk
 
-from lib.packages_utility.logger import Logger
+from lib.packages_utility.logger import logging
 from lib.packages_utility.request import MakeRequests
 from lib.packages_utility.utils import Utils
 
@@ -28,7 +28,6 @@ class Process:
         nltk.download('stopwords')
 
         self.request_maker = MakeRequests()
-        self.logger = Logger()
         self.utils = Utils()
 
         self.command_selection = CommandSelection(settings)
@@ -47,8 +46,7 @@ class Process:
         if key in data:
             data[key] = new_value
         else:
-            print(self.logger.log(f"The key '{key}' dont exist in the file JSON."),
-                  flush=True)
+            logging.warning(f"The key '{key}' dont exist in the file JSON."),
         with open("connect/command.json", 'w',encoding="utf8") as file:
             json.dump(data, file, indent=4)
 
@@ -63,7 +61,7 @@ class Process:
         """
         try:
             command = str(command).split(f"{self.word_activation} ")[1].strip()
-            print(self.logger.log(f" command processed: {command} "), flush=True)
+            logging.debug(f" command processed: {command} ")
             return command
         except IndexError:
             #If command contain only virgil word
@@ -101,7 +99,7 @@ class Process:
 
         def check_event(self) -> None:
             """Check if there is an event."""
-            print(self.logger.log("  update the reminder"), flush=True)
+            logging.debug("update the reminder")
             with open("connect/reminder.txt", "w",encoding="utf8") as file:
                 file.write("0")
 
@@ -111,9 +109,9 @@ class Process:
 
     def main(self) -> None:
         """Main method of the program."""
-        print(self.logger.log(Fore.GREEN + " THE ASSISTENT IS ONLINE  "), flush=True)
+        logging.info(Fore.GREEN + " THE ASSISTENT IS ONLINE  " + Fore.BLUE)
         self.utils.clean_buffer(data_empty=self.data_empty,file_name="res")
-        thread = self.EventThread(self.logger)
+        thread = self.EventThread(logging)
         thread.start()
         while True:
             with open("connect/command.json",encoding="utf8") as commands:
@@ -123,7 +121,7 @@ class Process:
                 else:
                     command_to_elaborate = "".join(command.split('":')[0])[7:]
             if "false" in command and command is not None:
-                print(self.logger.log(f" command processed: {command_to_elaborate}"), flush=True)
+                logging.debug(f" command processed: {command_to_elaborate}")
                 self.send(command_to_elaborate)
                 self.update_json_value(command_to_elaborate, True)
             else:

@@ -6,7 +6,7 @@ import csv
 import requests
 
 from lib.packages_utility.utils import Utils
-from lib.packages_utility.logger import Logger
+from lib.packages_utility.logger import logging
 from lib.packages_utility.sound import Audio
 
 # ---- This file get the Meteo of all week ----
@@ -19,7 +19,6 @@ class Wheather:
         Args:
             settings (Settings): The dataclasses with all the settings
         """
-        self.logger = Logger()
         self.audio = Audio(settings.volume,settings.elevenlabs,settings.language)
         self.utils  = Utils()
 
@@ -53,14 +52,14 @@ class Wheather:
         Returns:
             str: City chooise if the city not specify
         """
-        MINIMUM_ACCURACY = 3
+        minimum_accuracy = 3
         result_list = []
         for word in command:
             min_distance = 100000000
             city = ""
             latitude, longitude = self.utils.get_coordinates(word)
             if latitude is not None and longitude is not None:
-                with open("assets/worldcities.csv",encoding='utf-8') as csvfile:
+                with open("asset/worldcities.csv",encoding='utf-8') as csvfile:
                     csvreader = csv.reader(csvfile, delimiter=';')
                     for row in csvreader:
                         if row[0] == "city":
@@ -74,11 +73,11 @@ class Wheather:
                     result_list.append((city,min_distance))
         result_list = sorted(result_list, key=lambda x: x[1])
 
-        if result_list[0][1] < MINIMUM_ACCURACY:
+        if result_list[0][1] < minimum_accuracy:
             city_correct = result_list[0][0]
-            print(self.logger.log(f" City in the phrase choosen: {city_correct}"))
+            logging.debug(f" City in the phrase choosen: {city_correct}")
             return city_correct
-        print(self.logger.log(" Default city choose"))
+        logging.debug(" Default city choose")
         return self.city
 
     def get_current_week_days(self)  -> list:
@@ -149,10 +148,10 @@ class Wheather:
         Returns:
             str: The final generated phrase
         """
-        city = self.recover_city(command) #worka
-        day,week_day = self.recover_day(command) #worka
+        city = self.recover_city(command)
+        day,week_day = self.recover_day(command)
         response = requests.get(self.get_url(city),timeout=8)
-        print(self.logger.log(" Response: " + str(response.status_code)), flush=True)
+        logging.debug(" Response: " + str(response.status_code))
         if str(response.status_code) != 200:
             response = response.json()
             if day != 404 :
@@ -165,6 +164,6 @@ class Wheather:
                 return f" {self.phrase_wheather[0]} {city} {self.phrase_wheather[1]} {week_day} {self.phrase_wheather[2]} {self.wwc_wheather[main]} {self.phrase_wheather[3]} {max_temp} {self.phrase_wheather[4]} {min_temp} {self.phrase_wheather[5]} {precipitation} {self.phrase_wheather[6]}"
             self.audio.create(file=True,namefile="ErrorDay")
             return ""
-        print(self.logger.log(" repeat the request or wait a few minutes"), flush=True)
+        logging.error(" repeat the request or wait a few minutes")
         self.audio.create(file=True,namefile="ErrorMeteo")
         return ""

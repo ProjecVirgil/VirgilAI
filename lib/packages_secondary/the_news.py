@@ -3,7 +3,7 @@ import random
 
 from requests_html import HTMLSession
 
-from lib.packages_utility.logger import Logger
+from lib.packages_utility.logger import logging
 
 # ---- This file generate a random news by GoogleNews ----
 
@@ -16,8 +16,6 @@ class Newsletter:
             language (_type_): _description_
             synonyms_news (_type_): _description_
         """
-        self.logger = Logger()
-
         self.lang = language
         self.url_random = f"https://news.google.com/rss?oc=5&hl={self.lang}&gl={self.lang.upper()}&ceid={self.lang.upper()}:{self.lang}"
         self.synonyms_news = synonyms_news
@@ -31,7 +29,7 @@ class Newsletter:
         Returns:
             str: The topic in the phrase
         """
-        print(self.logger.log(" specify topic"), flush=True)
+        logging.debug(" specify topic")
         topic = ""
         for word in self.synonyms_news:
             if word in command:
@@ -39,7 +37,7 @@ class Newsletter:
                 break
         if topic == "":
             topic = None
-        print(self.logger.log(f" topic choised: {topic}"), flush=True)
+        logging.debug(f" topic choised: {topic}")
         return topic
 
     def create_news(self,command:str) -> str:
@@ -61,12 +59,11 @@ class Newsletter:
             for title in request.html.find('title'):
                 news.append(title.text)
             news_selected = random.choice(news)
-            print(self.logger.log(f" news choise {news_selected}"), flush=True)
         else:
             request=session.get(self.url_random)
             for title in request.html.find('title'):
                 news.append(title.text)
             news_selected = random.choice(news)
-            print(self.logger.log(f" news choise {news_selected}"), flush=True)
 
+        logging.info(f" news choise {news_selected}")
         return news_selected

@@ -3,7 +3,7 @@ import requests
 import yt_dlp
 from pygame.mixer import music
 
-from lib.packages_utility.logger import Logger
+from lib.packages_utility.logger import logging
 # ---- This file is for search music and video via yt ----
 
 class MediaPlayer:
@@ -18,7 +18,6 @@ class MediaPlayer:
         Args:
             synonimus (list): a list of synonimus
         """
-        self.logger  = Logger()
         self.synonimus = synonimus
 
     def get_topic(self,command:str) -> str or None:
@@ -101,8 +100,8 @@ class MediaPlayer:
             command (str): the input sentence
         """
         topic = self.get_topic(command)
-        print(self.logger.log(f" topic selected: {topic}"),flush=True)
+        logging.debug(f" topic selected: {topic}")
         url = self.search_on_yt(topic)
-        print(self.logger.log(f" url gererater: {url}"),flush=True)
+        logging.debug(f" url gererater: {url}")
         self.download(url)
         self.play()

@@ -11,7 +11,7 @@ like:
 import datetime
 import time
 
-from lib.packages_utility.logger import Logger
+from lib.packages_utility.logger import logging
 from lib.packages_utility.utils import Utils
 
 # ---- This file get the current time and more ----
@@ -24,7 +24,6 @@ class Time:
         Args:
             settings (Settings): Settings dataclasses for set the settings
         """
-        self.logger = Logger()
         self.utils  = Utils()
 
         self.lang = settings.language
@@ -44,7 +43,7 @@ class Time:
             hours = self.utils.number_to_word(hours)
             minuts = self.utils.number_to_word(minuts)
         time_string = f"{self.phrase_time[4]} {str(hours)} {self.split_time[3]} {str(minuts)}  {self.split_time[11]}"
-        print(time.strftime("\nVirgil: They are the %H and %M minuts", time_tuple),flush=True)
+        logging.info(time.strftime("\nVirgil: They are the %H and %M minuts", time_tuple))
         return time_string
 
     def diff_time(self,index_time:str):

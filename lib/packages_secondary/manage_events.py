@@ -1,7 +1,7 @@
 """File to format and send events to DB."""
 import datetime
 
-from lib.packages_utility.logger import Logger
+from lib.packages_utility.logger import logging
 from lib.packages_utility.request import MakeRequests
 from lib.packages_secondary.calendar_rec import Calendar
 
@@ -10,7 +10,6 @@ class EventScheduler:
     """This class is used to schedule calendar events for the user using the VirgilAPI and DB."""
     def __init__(self,settings):
         """Init the class."""
-        self.logger = Logger()
         self.request_maker = MakeRequests()
         self.calendar = Calendar(settings)
 
@@ -41,7 +40,7 @@ class EventScheduler:
                 phrase = phrase + event.strip() + " "
         except KeyError:
             phrase = self.phrase_events[1]
-        print(self.logger.log(f" {phrase}"), flush=True)
+        logging.info(f" {phrase}")
         return phrase
 
     def get_date(self,command) -> str:

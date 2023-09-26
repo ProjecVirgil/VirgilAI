@@ -1,12 +1,7 @@
 """File to manage all the request at the VirgilAPI."""
 import requests
-from colorama import Style,Fore
 
-from lib.packages_utility.logger import Logger
-
-ALERT = Style.BRIGHT + Fore.YELLOW
-OK = Style.BRIGHT + Fore.CYAN
-WARNIGN = Style.BRIGHT + Fore.RED
+from lib.packages_utility.logger import logging
 
 # ---- File for make the request at the VirgilAPI ----
 
@@ -14,7 +9,6 @@ class MakeRequests:
     """This class is responsible to make all requests of the application."""
     def __init__(self) -> None:
         """Init file for sett the url and init the logger class."""
-        self.logger = Logger()
         self.url_base = "https://fastapi-production-cd01.up.railway.app" + "/api"
         with open("setup/key.txt",encoding="utf8") as file_key:
             self.key_user = file_key.read()
@@ -33,11 +27,10 @@ class MakeRequests:
         try:
             request = requests.put(url,timeout=5)
             user_created = request.json()
-            print(self.logger.log("User created Correctly"),flush=True)
+            logging.info("User created Correctly")
             return user_created["userId"]
         except requests.RequestException:
-            print(self.logger.log(WARNIGN + "I can't stable connection check the network"),
-                  flush=True)
+            logging.critical("I can't stable connection check the network")
             return "User not created"
 
     def get_user_settings(self,key_user) -> str:
@@ -57,8 +50,7 @@ class MakeRequests:
                 return 'User not found'
             return user['setting']
         except requests.RequestException:
-            print(self.logger.log(WARNIGN + "I can't stable connection check the network")
-                  ,flush=True)
+            logging.critical("I can't stable connection check the network")
             return "Error in the request sorry"
 
     #CALENDAR
@@ -70,10 +62,12 @@ class MakeRequests:
         """
         url = f'{self.url_base}/calendar/createUser/{key_user}/'
         request = requests.put(url,timeout=5)
-        if request.status_code == 201:
-            print(self.logger.log("User calendar created correcly"),flush=True)
+        value_success = 201
+
+        if request.status_code == value_success:
+            logging.info("User calendar created correcly")
         else:
-            print(self.logger.log("User calendar offline"),flush=True)
+            logging.warning("User calendar offline")
 
     def create_events(self,event:str,date:str)-> str:
         """This function creates events for the users that are registered on the system.
@@ -83,14 +77,13 @@ class MakeRequests:
             date (str): the date of events to add
         """
         if "None" in date:
-            print(self.logger.log( "Sorry, but there was an error, the request will not be sent"),
-                  flush=True)
+            logging.error( "Sorry, but there was an error, the request will not be sent")
         else:
             url = f'{self.url_base}/calendar/createEvent/{self.key_user}/{date}/'
             events = [event]
             headers = {'Content-Type': 'application/json'}
             request = requests.put(url, json=events,headers=headers,timeout=5)
-            print(self.logger.log(f" response: {request.status_code}"),flush=True)
+            logging.debug(f" response: {request.status_code}")
 
     def get_events(self)-> str:
         """Get the events of the day.
@@ -100,7 +93,7 @@ class MakeRequests:
         """
         url = f'{self.url_base}/calendar/{self.key_user}/'
         request = requests.get(url,timeout=5)
-        print(self.logger.log(f" reponse: {request.status_code}"),flush=True)
+        logging.debug(f" reponse: {request.status_code}")
         events = request.json()
         return events
 
@@ -108,7 +101,7 @@ class MakeRequests:
         """Delete the old events."""
         url = f'{self.url_base}/calendar/deleteEvent/{self.key_user}/'
         request = requests.put(url,timeout=5)
-        print(self.logger.log(f" reponse: {request.status_code}"),flush=True)
+        logging.debug(f" reponse: {request.status_code}")
 
     def download_model_en(self):
         """Download model english."""

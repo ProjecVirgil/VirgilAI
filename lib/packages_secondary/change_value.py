@@ -1,5 +1,5 @@
 """File to manage the volume of Virgil."""
-from lib.packages_utility.logger import Logger
+from lib.packages_utility.logger import logging
 from lib.packages_utility.sound import Audio
 from lib.packages_utility.utils import Utils
 
@@ -8,7 +8,6 @@ class VolumeMixer:
     def __init__(self,volume_value:int = 100,settings = None):
         """Init file for class."""
         self.__volume = volume_value
-        self.logger = Logger()
         self.audio = Audio(settings.volume,settings.elevenlabs,settings.language)
         self.utils  = Utils()
 
@@ -34,9 +33,7 @@ class VolumeMixer:
                 return [x for x in command if x.isdigit()]
             self.__volume = int(search_volume(command)[0])
         else:
-            print(self.logger.log(
-                "Sorry there was an error request the command with an appropriate value"),
-                  flush=True)
+            logging.error("Sorry there was an error request the command with an appropriate value"),
             self.audio.create(file=True,namefile="ErrorValueVirgil")
             return "104"
         try:
@@ -45,8 +42,6 @@ class VolumeMixer:
                 return "104"
             return str(self.__volume)
         except ValueError:
-            print(self.logger.log(
-                "Sorry there was an error request the command with an appropriate value"),
-                  flush=True)
+            logging.error("Sorry there was an error request the command with an appropriate value"),
             self.audio.create(file=True,namefile="ErrorValueVirgil")
             return "104"

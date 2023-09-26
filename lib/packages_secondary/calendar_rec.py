@@ -10,7 +10,7 @@ import calendar
 import datetime
 
 from lib.packages_utility.sound import Audio
-from lib.packages_utility.logger import Logger
+from lib.packages_utility.logger import logging
 from lib.packages_utility.utils import Utils
 
 # ---- File for get the week of the day ----
@@ -19,7 +19,6 @@ class Calendar:
     def __init__(self,settings) -> None:
         """Init the calendar class."""
         self.utils =Utils()
-        self.logger = Logger()
         self.audio = Audio(settings.volume,settings.elevenlabs,settings.language)
         self.lang = settings.language
 
@@ -58,11 +57,9 @@ class Calendar:
         day,month,year = date.split("-")
         day,month = self.clear_number(day,month)
         index_week = self.index_day_of_week(year,month,day)
-        print(f" {self.settings.split_calendar[0]} {day} {self.settings.split_calendar[1]} {self.settings.months_calendar[int(month)-1]} {self.settings.split_calendar[2]} {year} {self.settings.split_calendar[3]} {self.settings.week_calendar[index_week]}",
-              flush=True)
+        logging.info(f" {self.settings.split_calendar[0]} {day} {self.settings.split_calendar[1]} {self.settings.months_calendar[int(month)-1]} {self.settings.split_calendar[2]} {year} {self.settings.split_calendar[3]} {self.settings.week_calendar[index_week]}")
         if (day is None or day == '') or month is None or year is None:
-            print("I'm sorry but I couldn't get the date right you can reapply",
-                  flush=True)
+            logging.error("I'm sorry but I couldn't get the date right you can reapply")
             self.audio.create(file=True,namefile="ErrorDate")
         else:
             if(day != 1 or day != 11):
@@ -183,9 +180,7 @@ class Calendar:
         day,month = self.clear_number(day,month)
         correct_date = datetime.datetime(int(year), int(month), int(day))
         diff_days = (datetime.datetime.now() - correct_date).days
-        print(self.logger.log(
-            f"result: {self.settings.phrase_calendar[0]} {day} {month} {year} {self.settings.phrase_calendar[2]} {diff_days * -1}"),
-              flush=True)
+        logging.info(f"result: {self.settings.phrase_calendar[0]} {day} {month} {year} {self.settings.phrase_calendar[2]} {diff_days * -1}")
         if diff_days * -1 == 1:
             return f" {self.settings.phrase_calendar[0]} {self.utils.number_to_word(day)} {self.utils.number_to_word(month)} {self.utils.number_to_word(year)} {self.settings.phrase_calendar[1]}"
         return f" {self.settings.phrase_calendar[0]} {self.utils.number_to_word(day)}, {self.utils.number_to_word(month)}, {self.utils.number_to_word(year)} {self.settings.phrase_calendar[2]} {self.utils.number_to_word(diff_days * -1)} {self.settings.phrase_calendar[3]}"
