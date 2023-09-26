@@ -20,8 +20,11 @@ launch_start = false
 defaul_start = "N" # T (text) or R (voice) N (Lo chiede)
 display_console = true # If the interface is voice do i have to show the console?
 
+[tool.debug]
+level_debug = "info" # (debug,info,warning,error,critical)
+logs_file = false
+
 # ------ CONFIG FOR POETRY ------
-start_launch = true
 [tool.poetry]
 name = "Virgil AI"
 version = "2.2.0"
