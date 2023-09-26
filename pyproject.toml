@@ -5,7 +5,7 @@ name = "VirgilAI"
 description = "Virgil is an advanced virtual assistant that is based on the powerful GPT-3.5 artificial intelligence developed by OpenAI. This virtual assistant is designed to offer a wide range of features and capabilities similar to those of well-known virtual assistants such as Amazon's Alexa."
 version = "v2.2.0"
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.10"
 
 [project.license]
 file = "LICENSE"
@@ -30,7 +30,7 @@ authors = ["Retr0100 <dragonfaiver@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = ">=3.11.5,<3.12"
+python = ">=3.10,<3.12"
 scikit-learn = "1.2.2"
 colorama = "^0.4.6"
 pyfiglet = "^1.0.2"
@@ -54,7 +54,7 @@ ruff = "^0.0.291"
 [tool.ruff]
 ignore = ["E501"]
 extend-include = ["*.pyw"]
-select = ["E","F","N","D","UP","PYI","SLOT","SIM","TD","FIX","W"]
+select = ["E","F","N","D","UP","PYI","SLOT","SIM","TD","FIX","W","PL"]
 exclude = [
     ".git",
     ".git-rewrite",
