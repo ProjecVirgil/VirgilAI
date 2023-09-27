@@ -1,36 +1,40 @@
 # Virgil AI (Assistent Interface)
 
-<p align="center">
-  <a href="#-key-features"><b>Key Features</b></a> •
-  <a href="#-how-to-use"><b>How To Use</b></a> •
-  <a href="#-credits-and-technologies-used"><b>Credits</b></a> •
-  <a href="#-installing"><b>Installing</b></a> •
-  <a href="#to-be-considered"><b>To be considered</b>!</a> •
-  <a href=#-roadmap-for-the-projectvirgil><b>Road map</b></a> 
-</p>
+## Index
+#ADD THE LINKS
+- **[Introduction]()**
+- **[How Virgil Works]()**
+- **[Installing]()**
+- **[Setup]()**
+    - [Guide to settings]()
+    - [ElevenLabs]()
+- **[First start]()**
+    - [How to use]()
+- **[Problem with mic?]()**
+- **[Why all this key]()**
+- **[Security?]()**
+- **[Notes]()**
+- **[Other]()**
+    - [App]()
+    - [Websites]()
+    - [Model of ML]()
+- **[Credits]()**
+    - [Contact me]()
 
 ---
-
-Created principle with [python3.11](https://www.python.org/downloads/) e various library like [SpeechRecognition ](https://pypi.org/project/SpeechRecognition/)  and [TTS library](https://pypi.org/project/gTTS/) 
-
-Virgilo or Virgil is a virtual assistant like Alexa or Google Home, but integrated with an AI (GPT-3.5 turbo).Designed to give the user the ability to use it and do what they want with it from putting it on a rasperry and using it as alexa to integrating it with their device whether it's linux or windows. With the possibility to set your own settings according to the need from where and when you want
-ㅤㅤ
-## **Some information** 📋
-### **Virgil-AI** 🤖
 
 ![VirgilAI](https://img.shields.io/badge/2%2C1k-2%2C1k?style=for-the-badge&logo=visualstudiocode&label=Lines%20of%20code&labelColor=282a3&color=%23164773)
 ![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/w/Retr0100/VirgilAI?style=for-the-badge&logo=github&labelColor=%23282a3&color=%231B7F79)
 ![GitHub repo size](https://img.shields.io/github/repo-size/Retr0100/VirgilAI?style=for-the-badge&logo=github&labelColor=%23282a3&color=%23bd93f9)
 [![Scrutinizer Code Quality](https://img.shields.io/badge/9,6-9,6?style=for-the-badge&logo=scrutinizerci&label=Scrutinizer&labelColor=282a3&color=%23008000)](https://scrutinizer-ci.com/g/Retr0100/VirgilAI/?branch=master)
 
+## Introduction 
 
-## 💻 How VirgilAI works 
-<p align="center">
- <img src="asset/DiagrammaAI.svg" alt="Markdownify" width ="80%" >
-</p>
+Created principle with [python3.11](https://www.python.org/downloads/) e various library like [SpeechRecognition ](https://pypi.org/project/SpeechRecognition/)  and [TTS library](https://pypi.org/project/gTTS/) 
 
+Virgilo or Virgil is a virtual assistant like Alexa or Google Home, but integrated with an AI (GPT-3.5 turbo).Designed to give the user the ability to use it and do what they want with it from putting it on a rasperry and using it as alexa to integrating it with their device whether it's linux or windows. With the possibility to set your own settings according to the need from where and when you want
 
-## 🔑 Key features
+### 🔑 Key features
 **You can ask lots of questions at Virgilio, like us:**
 - The time ⏲️
 - The weather 🌧️
@@ -49,11 +53,16 @@ Virgilo or Virgil is a virtual assistant like Alexa or Google Home, but integrat
   
 **Portable:**
 - You can put it on any linux/windows device including mac 🌐
-  
+
+
+## 💻 How VirgilAI works  # TO REMAKE
+<p align="center">
+ <img src="asset/DiagrammaAI.svg" alt="Markdownify" width ="80%" >
+</p>
 
 
 
-## 📋 Installing
+## 📋 Installing  #TO UPDATE
 
 1. The first part of the installation is to download all the files from the repository
    - command linee ```git clone https://github.com/Retr0100/VirgilApp.git```
@@ -71,7 +80,7 @@ Virgilo or Virgil is a virtual assistant like Alexa or Google Home, but integrat
 
    
 
-## Notes ❗
+## Notes ❗ #TO  UPDATE
 
 **THIS IS NOT OBLIGATORY.**  
  Before the user on Linux (preferably, but also on Windows it would not be) create an enviroment with venv ```python -m venv name_enviroment``` after writing ```source name_enviroment/bin/activate```.
@@ -87,7 +96,7 @@ Virgilo or Virgil is a virtual assistant like Alexa or Google Home, but integrat
  4. Now you can change the **settings** of Virgil on the corresponding page (Each time you change a setting in order to have the settings updated, you will have to restart Virgil)
  5. At the end of this initial configuration, which you only need to do once, you can press any key and choose to use a **text interface** (recommended for debugging) or a **voice interface** (recommended for personal use).
 
-## 📚 Guide to setting
+## 📚 Guide to setting #ADD LOCAL SETTINGS
 
 ```
 // THE VALUES ON THE JSON ARE THE DEFAULT
@@ -161,7 +170,7 @@ if __name__ == "__main__":
  and it's not the best choice 😅. 
 - Meross: This credential an required **ONLY** if you can use a domotic Meross but if you dont have a domotic Meross don't waste time ⏲️
 
-### How to change the voice for TTS ElevenLabs:
+### How to change the voice for TTS ElevenLabs: # ADD THE WARNING SU THE PRESET FILES OR REMOVE THIS PARAGRAM
 
 1. Go in this file ```lib/sound.py```
 2. Go on the site of [ElevenLabs](https://elevenlabs.io/speech-synthesis) create an account (You should already have it)
@@ -178,7 +187,7 @@ if __name__ == "__main__":
     And replace the voice whith the one you want (if after the TTS dont'work try another voice on whatch a video on YT on how to use default entries )
 5.  Restart Virgil
  
-## 🔁 Change the key
+## 🔁 Change the key #ADD NOTES ONLY 5 KEY
 
 > Go in the directory call setup and search the key.txt (remeber the key is a hexadecimal string of 32 characters),delete it and relaunch Virgil
 
@@ -189,18 +198,11 @@ if __name__ == "__main__":
 4. I do not guarantee the robustness of the code and software at100% for now also the ML models are still under development and study and may not be 100% accurate 
 
 
-## 💎 RoadMap for the ProjectVirgil
-
-- [x] Make a beta of VirgilAI
-- [x] Make a first Version of App
-- [x] Increase the possibility of Virgil
-- [x] Create a website for the Project
-- [x] Improve the command recognition
-- [x] Add more language
-- [ ] Improve the code design and make the code more efficent
+## Other #ADD THE OTHER THINGS
 
 
-## 💸 Credits and technologies used
+
+## 💸 Credits and technologies used #REMAKE
 
 Developer: Only me for now
 Technologies:
