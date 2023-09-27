@@ -10,7 +10,7 @@ from tomlkit import parse, dumps
 import pyfiglet
 
 
-# --- CONST
+# --- CONST -----
 
 SUCCESS_MESSAGE = colorama.Fore.GREEN + colorama.Style.BRIGHT +"\n ***** Successfully executed changes *****"
 
