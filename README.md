@@ -1,6 +1,16 @@
 # Virgil AI (Assistent Interface)
 
+<style>
+r { color: Red }
+o { color: Orange }
+g { color: Green }
+b { color: Blue }
+v { color: Purple }
+c { color: Cyan }
+y { color: Yellow }
+</style>
 ## Index
+
 #ADD THE LINKS
 - **[Introduction]()**
 - **[How Virgil Works]()**
@@ -11,7 +21,7 @@
 - **[First start]()**
     - [How to use]()
 - **[Problem with mic?]()**
-- **[Why all this key]()**
+- **[Why all this key?]()**
 - **[Security?]()**
 - **[Notes]()**
 - **[Other]()**
@@ -62,41 +72,64 @@ Virgilo or Virgil is a virtual assistant like Alexa or Google Home, but integrat
 
 
 
-## 📋 Installing  #TO UPDATE
 
-1. The first part of the installation is to download all the files from the repository
+## 📋 Installing 
+
+
+### Obligatory prerequisites 
+
+ - <c>Python 3.11>=</c>
+ - <c>Key of GPT3.5>=</c>
+
+### Installation 
+
+1. The first part of the installation is to **download** all the files from the repository
    - command linee ```git clone https://github.com/Retr0100/VirgilApp.git```
    - or download the zip
-2. Now we need the api (for now i am not rich and i do not pay for everything) so
- we are need of 3 api keys (the keys marked with * are mandatory for operation)
-   - API for OpenAI and GPT, 
+2. Now we need the **api** (for now i am not rich and i do not pay for everything) so
+ we are need of 3 api keys (the keys marked with * **are mandatory** for operation)
+   - <y>API for OpenAI and GPT</y>, 
           i recommend this [video tutorial](https://www.youtube.com/watch?v=u-LeLPBZr2k) *
-   - API for Merros (domotic socket),
+   - <y>API for Merros</y> (domotic socket),
           just create a [Merros account](https://www.meross.com/en-gc) and insert the credential 
-   - API for ElevenLabs
+   - <y>API for ElevenLabs</y>
        This API is not required, but if you want a [BEST EXPERIENCE](https://elevenlabs.io/speech-synthesis) i raccomand you to get
 
-3. When you have all the keys/accounts, save them on any file
+1. When you have all the keys/accounts, save them on any file
 
    
 
 ## Notes ❗ #TO  UPDATE
 
-**THIS IS NOT OBLIGATORY.**  
+<r>**THIS IS NOT OBBLIGATORY.**</r>  
  Before the user on Linux (preferably, but also on Windows it would not be) create an enviroment with venv ```python -m venv name_enviroment``` after writing ```source name_enviroment/bin/activate```.
  Now you can install all the dependencies without putting your PC at risk. 
  To close the environment, just run ```deactivate```.
  If you use the enviroment try Virgil only whith the text interface 
 
-## 📖 How to use
-### When you have installed and downloaded the API you can start using Virgilio 🥡
- 1. Open a terminal to the directory ProjectVirgil/setupAndLaunch and run the file with   ```setup.bat``` for windows or run the file bash ```bash setup.sh``` on linux (first make it execuble) instead for the fast start launch   ```python launch.py``` or  ```python3 launch.py```
- 2. At a certain point you will be asked to install the dedicated app [**VirgilApp**](https://github.com/Retr0100/VirgilApp), this app will allow you to configure Virgilio and change the associated settings **BUT BEWARE IT IS NOT ESSENTIAL FOR THE USE OF VIRGILIO, VIRGILIO CAN ALSO BE USED WITHOUT THE USE OF THE APP** if you do not want to use the app [click here](#-configuration-without-app) 
- 3. In the app, you will have to search for the **configuration page** (it will not be difficult to find it) and you will have to enter the **key** that will be shown to you on the screen when Virgilio is launched (you only have to do this step the first time, but you can **repeat** it if you want to [change the key](#-change-the-key))
- 4. Now you can change the **settings** of Virgil on the corresponding page (Each time you change a setting in order to have the settings updated, you will have to restart Virgil)
- 5. At the end of this initial configuration, which you only need to do once, you can press any key and choose to use a **text interface** (recommended for debugging) or a **voice interface** (recommended for personal use).
+## 📖 Setup
+### When you have installed and downloaded the API you can start setup Virgilio 🥡
+ 1. Open a terminal to the directory VirgilAI/setup run the command ` pip install -r requirements.txt ` this install some requirements for run the setup file
+ 2. Now still in the VirgilAI folder, run the command `python or python3 setup.py`
+ 3. Once we have finished setting up the environment through the setup programme, we can run virgilio **BUT BEWARE THERE ARE SO MANY OTHER THINGS WE CAN SET**
+   
+### 📚 Guide to **LOCAL** setting #
 
-## 📚 Guide to setting #ADD LOCAL SETTINGS
+- **<g>Virgil settings</g>**
+   - <o>**Launch Startup**</o>: The programme will be started every time the PC is started.
+   - **<o>Default interface type**</o>: You can choose whether to start virgilio with a text or voice interface by default (if you do not wish to set a default interface, you will be asked each time).
+   - **<o>Run without console (background)**</o>: Virgil will be started and run in the background, without a console (This option is only available if voice intercom is used).
+ - <g>**Debug settings** (You can also ignore them)</g>
+   - **<o>Debug level**</o>: You can decide which debug level can be displayed on the screen by default it is set to info (So all logs above and equal to info will be shown, at first not advisable)
+   - **<o>Write in file**</o>: Scrittura dei logs in un file (Se saranno scritti un in file non verranno visualizzati a schermo)
+
+
+### 📚 Guide to **ONLINE** setting #
+
+<o>**Difference between online and local settings**</o>
+
+- <g>**Local**</g>: Local settings are obviously not synchronised on each device and will have to be setup for each environment, and some settings such as debugging settings can be set directly from code and without too much effort 
+- <g>**Online**</g>:Online settings will be synchronised on each device but can only and only be changed via the APP, which unfortunately is only available for android. 
 
 ```
 // THE VALUES ON THE JSON ARE THE DEFAULT
