@@ -10,7 +10,7 @@ import json
 
 import tomli
 import pyfiglet
-from colorama import Fore,Style,init
+from colorama import Fore,Style
 
 import lib.packages_utility.logger
 import logging
@@ -101,7 +101,6 @@ def create_account() -> str:
     with open(KEY_FILE,'w',encoding="utf8") as file_key:
         file_key.write(str(key))
     _ = input(logging.warning(
-         +
         'Now download the Virgil app on your Android device, go to the configuration page and enter this code in the appropriate field, once done you will be able to change all Virgil settings remotely, once done press any button: '))
     logging.info("Synchronizing your account settings")
     user = request_maker.get_user_settings(key)
@@ -145,7 +144,6 @@ def choise_input():
         if text_or_speech == 'T':
             return 1
         elif text_or_speech == 'R':
-            # Creazione di tre oggetti thread
             return 0
         else:
             logging.warning(" Select a valid choice please")
@@ -182,7 +180,6 @@ def main():
     thread_2 = 0
     thread_3 = 0
 
-    # IF THE DISPLAY IS FALSE NON MOSTRI QUESTO INPUT E PRENDI QUELLO DI DEFAULT
     if(defaul_start == 'N'):
         text_or_speech = choise_input()
         if text_or_speech == 1:
