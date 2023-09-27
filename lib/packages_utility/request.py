@@ -10,8 +10,13 @@ class MakeRequests:
     def __init__(self) -> None:
         """Init file for sett the url and init the logger class."""
         self.url_base = "https://fastapi-production-cd01.up.railway.app" + "/api"
-        with open("setup/key.txt",encoding="utf8") as file_key:
-            self.key_user = file_key.read()
+        try:
+            with open("setup/key.txt",encoding="utf8") as file_key:
+                self.key_user = file_key.read()
+        except FileNotFoundError:
+            open("setup/key.txt","w")
+            with open("setup/key.txt",encoding="utf8") as file_key:
+                self.key_user = file_key.read()
 
     def create_user(self) -> str:
         """This function creates a user in the database.
