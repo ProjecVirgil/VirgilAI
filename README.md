@@ -59,10 +59,19 @@ Virgilo or Virgil is a virtual assistant like Alexa or Google Home, but integrat
 
 - You can use it on any linux/windows 🌐
 
-## 💻 How VirgilAI works  # TO REMAKE
+## 💻 How VirgilAI works  
+
+**white text**
+### Example of communication with API and APP
 
 <p align="center">
- <img src="asset/DiagrammaAI.svg" alt="Markdownify" width ="80%" >
+ <img src="asset/exampleVirgil.svg" alt="Markdownify" width ="80%" >
+</p>
+
+### Structure of Virgil
+
+<p align="center">
+ <img src="asset/HowVirgilWorks.svg" alt="Markdownify" width ="80%" >
 </p>
 
 ## 📋 Installation
@@ -120,15 +129,15 @@ Virgilo or Virgil is a virtual assistant like Alexa or Google Home, but integrat
     "wordActivation": "Virgilio", //The word on Virgil can Activate
     "volume": "100.0", // Set the start volume of Virgil
     "city": "Salerno", // City default for the Meteo
-    "operation_timeout": "3", // Listening time if you don't tal
+    "operation_timeout": "3", // Listening time if you don't talk
     "dynamic_energy_threshold": "true", // Automatic and dynamic microphone sensitivity
-    "energy_threshold": "3500", //Sensitivy of microphone     
+    "energy_threshold": "3500", //Sensitivy of microphone
     "elevenlabs": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", //Key for elevenlabs
     "openAI": "sk-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", //Key for openAI
-    "merrosEmail": "email", //Credential for merros                           
+    "merrosEmail": "email", //Credential for merros                     
     "merrosPassword": "password", //Credential for merros                          
     "temperature": "0.9", //Randomness of GPT responses
-    "max_tokens": "30" //Max lenght phrase of GPT                                
+    "max_tokens": "30" //Max lenght phrase of GPT
 }                                                                                                                      
 ```
 
