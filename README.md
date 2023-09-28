@@ -1,15 +1,5 @@
 # Virgil AI (Assistent Interface)
 
-<style>
-r { color: Red }
-o { color: Orange }
-g { color: Green }
-b { color: Blue }
-v { color: Purple }
-c { color: Cyan }
-y { color: Yellow }
-</style>
-
 ## Index
 
 - **[Introduction](#introduction)**
@@ -79,8 +69,8 @@ Virgilo or Virgil is a virtual assistant like Alexa or Google Home, but integrat
 
 ### Obligatory prerequisites
 
-- <c>Python 3.11>=</c>
-- <c>Key of GPT3.5>=</c>
+- Python 3.11>=
+- Key of GPT3.5>=
 
 ### Installation
 
@@ -89,18 +79,18 @@ Virgilo or Virgil is a virtual assistant like Alexa or Google Home, but integrat
    - or download the zip
 2. Now we need the **api** (for now i am not rich and i do not pay for everything) so
  we are need of 3 api keys (the keys marked with * **are mandatory** for operation)
-   - <y>API for OpenAI and GPT</y>,
+   - API for OpenAI and GPT,
           i recommend this [video tutorial](https://www.youtube.com/watch?v=u-LeLPBZr2k) *
-   - <y>API for Merros</y> (domotic socket),
+   - API for Merros (domotic socket),
           just create a [Merros account](https://www.meross.com/en-gc) and insert the credential
-   - <y>API for ElevenLabs</y>
+   - API for ElevenLabs
        This API is not required, but if you want a [BEST EXPERIENCE](https://elevenlabs.io/speech-synthesis) i raccomand you to get
 
 3. When you have all the keys/accounts, save them on any file
 
 ## Notes ❗ #TO  UPDATE
 
-<r>**THIS IS NOT OBBLIGATORY.**</r>  
+**THIS IS NOT OBBLIGATORY.**  
  Before the user on Linux (preferably, but also on Windows it would not be) create an enviroment with venv ```python -m venv name_enviroment``` after writing ```source name_enviroment/bin/activate```.
  Now you can install all the dependencies without putting your PC at risk.
  To close the environment, just run ```deactivate```.
@@ -116,20 +106,20 @@ Virgilo or Virgil is a virtual assistant like Alexa or Google Home, but integrat
 
 ### 📚 Guide to **LOCAL** setting
 
-- **<g>Virgil settings</g>**
-  - <o>**Launch Startup**</o>: The programme will be started every time the PC is started.
-  - **<o>Default interface type**</o>: You can choose whether to start virgilio with a text or voice interface by default (if you do not wish to set a default interface, you will be asked each time).
-  - **<o>Run without console (background)**</o>: Virgil will be started and run in the background, without a console (This option is only available if voice intercom is used).
-- <g>**Debug settings** (You can also ignore them)</g>
-  - **<o>Debug level**</o>: You can decide which debug level can be displayed on the screen by default it is set to info (So all logs above and equal to info will be shown, at first not advisable)
-  - **<o>Write in file**</o>: Scrittura dei logs in un file (Se saranno scritti un in file non verranno visualizzati a schermo)
+- **Virgil settings**
+  - **Launch Startup**: The programme will be started every time the PC is started.
+  - **Default interface type**: You can choose whether to start virgilio with a text or voice interface by default (if you do not wish to set a default interface, you will be asked each time).
+  - **Run without console (background)**: Virgil will be started and run in the background, without a console (This option is only available if voice intercom is used).
+- **Debug settings** (You can also ignore them)
+  - **Debug level**: You can decide which debug level can be displayed on the screen by default it is set to info (So all logs above and equal to info will be shown, at first not advisable)
+  - **Write in file**: Scrittura dei logs in un file (Se saranno scritti un in file non verranno visualizzati a schermo)
 
 ### 📚 Guide to **ONLINE** setting
 
-<o>**Difference between online and local settings**</o>
+**Difference between online and local settings**
 
-- <g>**Local**</g>: Local settings are obviously not synchronised on each device and will have to be setup for each environment, and some settings such as debugging settings can be set directly from code and without too much effort
-- <g>**Online**</g>:Online settings will be synchronised on each device but can only and only be changed via the APP, which unfortunately is only available for android.
+- **Local**: Local settings are obviously not synchronised on each device and will have to be setup for each environment, and some settings such as debugging settings can be set directly from code and without too much effort
+- **Online**:Online settings will be synchronised on each device but can only and only be changed via the APP, which unfortunately is only available for android.
 
 ``` json
 // THE VALUES ON THE JSON ARE THE DEFAULT
@@ -153,15 +143,15 @@ Virgilo or Virgil is a virtual assistant like Alexa or Google Home, but integrat
 ### Guide to ElevenLabs
 
 Elevenlabs is a service to reproduce tts by deeplearning and the key is free but is necessery an account but the token are very few...
-**But is there a trick** to having <o>**UNLIMITED**</o> accounts with the same email
+**But is there a trick** to having **UNLIMITED** accounts with the same email
 
-<c>**Explanation:**</c>
+**Explanation:**
 
   1. Take a any gmail
   2. add a dot anywhere in the email
   3. And the email of confirmation will be sent
 
-<c>**Example:**</c>
+**Example:**
 
 Original email: `example@gmail.com`
 Email with dots added: `example.@gmail.com` or `e.xample@gmail.com`
@@ -170,10 +160,10 @@ Email with dots added: `example.@gmail.com` or `e.xample@gmail.com`
 
 The first start-up of Virgilio will be quite important because you will be generated an **IMPORTANT** key for configuring Virgilio via the APP
 
-<o>**Important notes:**</o>
+**Important notes:**
 
 - The first start will be the **same for all**, without taking into account the settings previously made with the setup.py programme, so once you have taken the key and **saved** it in a file for safety, you will need to restart virgilio.
-- You can only generate a <r>**MAXIMUM**</r> of 5 keys per machine
+- You can only generate a **MAXIMUM** of 5 keys per machine
 - The first time you start Virgil immediately after booting, it will be much slower than a normal start. This is because Python, and Virgil in general, is **optimised** so that the more starts it has in a session, the faster it will start.
 
 ### How to use
@@ -220,15 +210,15 @@ if __name__ == "__main__":
     print(f"Recommended value:  {math.ceil(list(sorted_dict.values())[0][0])}")
 ```
 
-The tool is not **100%** accurate but it is a great way to get a <g>**starting**</g> idea if you see that virgil is not accurate enough in recognizing when you speak and when you don't try adjustment
+The tool is not **100%** accurate but it is a great way to get a **starting** idea if you see that virgil is not accurate enough in recognizing when you speak and when you don't try adjustment
 
 ### Why the key of OpenAI,ElevenLabs and Merros❓
 
-- <g>**Virgil**</g>: The Virgilio configuration key is used to synchronise all online settings... <r> **DO NOT GIVE THE KEY TO ANYONE AND DO NOT EXPORT IT TO ANYONE OR YOU WILL GET ALL YOUR KEYS**</r> (OpenAI,Elevenlabs etc)
-- <g>**OpenAI**</g>: This is in fact the only mandatory key, as GPT covers 50% of the application, and this is the real **difference** to Alexa and Virgil.
-- <g>**ElevenLabs**</g>: This key is not mandatory but it makes the experience more pleasant because ElevenLabs implements a more natural Speech To Text (TTS) and also allows you to choose your own voice. If you can't use the key, Virgil will still work, but with Google's TTS
+- **Virgil**: The Virgilio configuration key is used to synchronise all online settings...  **DO NOT GIVE THE KEY TO ANYONE AND DO NOT EXPORT IT TO ANYONE OR YOU WILL GET ALL YOUR KEYS** (OpenAI,Elevenlabs etc)
+- **OpenAI**: This is in fact the only mandatory key, as GPT covers 50% of the application, and this is the real **difference** to Alexa and Virgil.
+- **ElevenLabs**: This key is not mandatory but it makes the experience more pleasant because ElevenLabs implements a more natural Speech To Text (TTS) and also allows you to choose your own voice. If you can't use the key, Virgil will still work, but with Google's TTS
  and it's not the best choice 😅.
-- <g>**Meross**</g>: This credential an required **ONLY** if you can use a domotic Meross but if you dont have a domotic Meross don't waste time ⏲️
+- **Meross**: This credential an required **ONLY** if you can use a domotic Meross but if you dont have a domotic Meross don't waste time ⏲️
 
 ### How to change the voice for TTS ElevenLabs
 
@@ -250,13 +240,13 @@ The tool is not **100%** accurate but it is a great way to get a <g>**starting**
     And replace the voice whith the one you want (if after the TTS dont'work try another voice on whatch a video on YT on how to use default entries )
 5. Restart Virgil
 
-<y>**WARNING!!:**</y> In order to save ElevenLabs tokens and increase efficiency, many phrases are pre-recorded, so there will be a difference between the voice you type and the pre-recorded voice.
+**WARNING!!:** In order to save ElevenLabs tokens and increase efficiency, many phrases are pre-recorded, so there will be a difference between the voice you type and the pre-recorded voice.
 
 ### 🔁 Change the key
 
 > Go in the directory call setup and search the key.txt (remeber the key is a hexadecimal string of 32 characters),delete it and relaunch Virgil
 
-<y>**WARNING!!:**</y> You can generate only 5 key for device (sorry this is for limiter the spam)
+**WARNING!!:** You can generate only 5 key for device (sorry this is for limiter the spam)
 
 ## Security
 
