@@ -4,14 +4,14 @@
 
 - **[Introduction](#introduction)**
 - **[How Virgil Works](#💻-how-virgilai-works)**
-- **[Installing](#installation)**
+- **[Installation](#installation)**
 - **[Setup](#📖-setup)**
-  - [Guide to settings](#📚-guide-to-local-setting)
+  - [Guide to settings](#guide-to-local-settings)
   - [ElevenLabs](#guide-to-elevenlabs)
 - **[First start](#first-start)**
   - [How to use](#how-to-use)
-- **[Problem with mic?](#🎙️-guide-to-microphone)**
-- **[Why all this key?](#why-the-key-of-openaielevenlabs-and-merros❓)**
+- **[Problem with mic?](#🎙️-guide-to-microphones)**
+- **[Why all this key?](#why-the-key-of-openai-elevenlabs-and-merros❓)**
   - [Generate other key](#🔁-change-the-key)
 - **[Security](#security)**
 - **[Notes](#notes)**
@@ -20,7 +20,7 @@
   - [Websites](#website)
   - [Model of ML](#analysis-of-ml)
 - **[Credits](#credits)**
-  - [Contact me]()
+  - [Contact me](#contact-me)
 
 ---
 
@@ -65,16 +65,9 @@ Virgilo or Virgil is a virtual assistant like Alexa or Google Home, but integrat
  <img src="asset/DiagrammaAI.svg" alt="Markdownify" width ="80%" >
 </p>
 
-## 📋 Installing
-
-### Obligatory prerequisites
-
-- Python 3.11>=
-- Key of GPT3.5>=
-
 ## 📋 Installation
 
-### Mandatory requirements
+### Obligatory requirements
 
 - Python 3.11>= Key
 - Key from GPT3.5>=
