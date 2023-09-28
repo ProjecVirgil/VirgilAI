@@ -12,12 +12,12 @@ y { color: Yellow }
 ## Index
 
 #ADD THE LINKS
-- **[Introduction]()**
-- **[How Virgil Works]()**
-- **[Installing]()**
-- **[Setup]()**
-    - [Guide to settings]()
-    - [ElevenLabs]()
+- **[Introduction](#introduction)**
+- **[How Virgil Works](#💻-how-virgilai-works)**
+- **[Installing](#installation)**
+- **[Setup](#📖-setup)**
+    - [Guide to settings](#📚-guide-to-local-setting)
+    - [ElevenLabs](#guide-to-elevenlabs)
 - **[First start]()**
     - [How to use]()
 - **[Problem with mic?]()**
@@ -149,6 +149,37 @@ Virgilo or Virgil is a virtual assistant like Alexa or Google Home, but integrat
     "max_tokens": "30" //Max lenght phrase of GPT                                                                       
 }                                                                                                                      
 ```
+
+### Guide to ElevenLabs
+
+Elevenlabs is a service to reproduce tts by deeplearning and the key is free but is necessery an account but the token are very few...
+**But is there a trick** to having <o>**UNLIMITED**</o> accounts with the same email
+
+<c>**Explanation:**</c>
+
+  1. Take a any gmail 
+  2. add a dot anywhere in the email
+  3. And the email of confirmation will be sent
+
+<c>**Example:**</c>
+
+Original email: `example@gmail.com`
+Email with dots added: `example.@gmail.com` or `e.xample@gmail.com`
+
+## First start
+
+The first start-up of Virgilio will be quite important because you will be generated an IMPORTANT key for configuring Virgilio via the APP 
+
+Important notes: 
+
+- The first start will be the **same for all**, without taking into account the settings previously made with the setup.py programme, so once you have taken the key and **saved** it in a file for safety, you will need to restart virgilio.
+- You can only generate a <r>**MAXIMUM**</r> of 5 keys per machine
+- The first time you start Virgil immediately after booting, it will be much slower than a normal start. This is because Python, and Virgil in general, is **optimised** so that the more starts it has in a session, the faster it will start.
+
+### How to use
+
+
+
 
 ## 🎙️ Guide to Microphone
 
