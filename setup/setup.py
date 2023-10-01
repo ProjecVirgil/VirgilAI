@@ -11,18 +11,41 @@ import pyfiglet
 
 
 # --- CONST -----
+ERROR_MESSAGE = colorama.Fore.RED + colorama.Style.BRIGHT +'\x1b[A' + '''(/) SELECT A VALID CHOISE'''+ " "*100 + '\r'
+MENU_BANNER = colorama.Fore.LIGHTCYAN_EX + colorama.Style.BRIGHT + f'''
+
+ - CURRENT SYSTEM: [{platform.system()}]
+----- [WHAT DO YOU WISH TO MODIFY] -----
+'''
++ colorama.Fore.BLUE +'''
+[-1 ] EXIT
+[ 0 ] Display the settings
+[ 1 ] Launch script at system startup?
+[ 2 ] Default startup?
+[ 3 ] Show diplay?
+
+'''
+MAIN_BANNER = '''
+
+ Welcome to''' + colorama.Fore.GREEN + colorama.Style.BRIGHT + " Virgil AI" + colorama.Fore.WHITE + ''' i remind you that AI does not stand for Aritificial Intelligence
+ but for  ''' + colorama.Fore.RED + colorama.Style.BRIGHT + "Assistant Interface" + colorama.Fore.WHITE + ''' after this premise we can start with the setup
+ read carefully the description and if you have doubts go here ''' + colorama.Fore.BLUE + "https://github.com/Retr0100/VirgilAI"
 
 SUCCESS_MESSAGE = colorama.Fore.GREEN + colorama.Style.BRIGHT +"\n ***** Successfully executed changes *****"
 
 # ------ WINDOWS -------
 
-def windows_function(path_directory):
+def windows_function(path_directory,display:bool):
     """Function to with command for Windows."""
+    name_file = 'launch.py' if display else 'launch.pyw'
+
     with open("launch_start.bat","w",encoding='utf-8')as file:
-        file.write(f"python {path_directory}\\launch.py")
+        file.write(f'''
+cd {path_directory}
+poetry run python {name_file}
+''')
     source_path = f"{path_directory}\\setup\\launch_start.bat"
     current_user = os.getlogin()
-    source_path = 'F:\\ProjectVirgil\\VirgilAI\\setup\\launch_start.bat'
     destination_folder = f'C:\\Users\\{current_user}\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup'
     try:
         shutil.copy2(source_path, destination_folder)
@@ -57,23 +80,27 @@ def modify_start_startup_win(launch_start):
 
 def modify_display():
     """This function is used for modifying the configuration of the display."""
-    _,_,defaul_start,display_console = get_data()
+    _,launch_start,defaul_start,display_console = get_data()
     path = get_path()
     if(defaul_start in ('T','N') and display_console is not True):
         if platform.system() == "Windows":
-            update_toml("display_console",not display_console)
             os.rename("../launch.pyw","../launch.py")
-            windows_function(path)
+            if launch_start:
+                windows_function(path,display=True)
             print(SUCCESS_MESSAGE,flush=True)
         else:
-            linux_function(path,display=True)
+            if launch_start:
+                linux_function(path,display=True)
             print(SUCCESS_MESSAGE,flush=True)
+        update_toml("display_console",not display_console)
+        update_toml("logs_file",True,True)
+
     elif(defaul_start in ('T','N') and display_console is True):
         print(colorama.Fore.RED + colorama.Style.BRIGHT +"\n You can't set the display to False with default startup to Text \n if you can set to display true first set the interface to text or remove the dafault ",flush=True)
     else:
         if platform.system() == "Windows":
             os.rename("../launch.py","../launch.pyw")
-            windows_function(path)
+            windows_function(path,display = False)
             update_toml("display_console",not display_console)
             print(SUCCESS_MESSAGE,flush=True)
         else:
@@ -110,7 +137,7 @@ def get_data():
 
     return first_setup,launch_start,defaul_start,display_console
 
-def update_toml(params: str, new_value: str):
+def update_toml(params: str, new_value: str,debug:bool =False):
     """Update TOML file from params dictonary.
 
     Args:
@@ -121,7 +148,10 @@ def update_toml(params: str, new_value: str):
     with open(file_path,encoding='utf-8') as file:
         content = file.read()
     doc = parse(content)
-    doc["tool"]["config_system"][params] = new_value
+    if debug:
+        doc["tool"]["debug"][params] = new_value
+    else:
+        doc["tool"]["config_system"][params] = new_value
     new_content = dumps(doc)
     with open(file_path, "w",encoding='utf-8') as file:
         file.write(new_content)
@@ -170,6 +200,30 @@ def linux_function(path_directory=None,display=True):
     except subprocess.CalledProcessError as error:
         print(f"Error on Crontab: {error}",flush=True)
 
+
+def take_value(question:str,option:tuple) -> str:
+    """This function display the string and take the input for the setup.
+
+    Args:
+        question (str): the question to take
+        option (tuple): the option for response
+
+    Returns:
+        str: the response choised
+    """
+    while True:
+        sys.stdout.write(colorama.Fore.CYAN + colorama.Style.BRIGHT +
+                        f'''\n{question} ''')
+        sys.stdout.flush()
+        choise = sys.stdin.readline().strip().upper()
+        if choise in option:
+            break
+        sys.stdout.write(ERROR_MESSAGE)
+        sys.stdout.flush()
+    sys.stdout.write(colorama.Fore.GREEN + colorama.Style.BRIGHT + '\x1b[A' + f"{question} {choise}" + '\r')
+    sys.stdout.flush()
+    return choise
+
 # ---- FIRST START ------
 
 def first_start(cli,parent_folder):
@@ -181,74 +235,26 @@ def first_start(cli,parent_folder):
     """
     print(f"\nCURRENT SYSTEM: [{platform.system()}]",flush=True)
      # PASS 1
-    while True:
-        sys.stdout.write(colorama.Fore.CYAN + colorama.Style.BRIGHT +
-                        '''\n(-) 1. Do you want virgil to be started at system startup? (default no) (Y/N): ''')
-        sys.stdout.flush()
-        choise = sys.stdin.readline().strip().upper()
-        if choise in ('N','Y'):
-            break
-        sys.stdout.write(colorama.Fore.RED + colorama.Style.BRIGHT +'\x1b[A' + '''(/) SELECT A VALID CHOISE'''+ " "*100 + '\r')
-        sys.stdout.flush()
-
-    sys.stdout.write(colorama.Fore.GREEN + colorama.Style.BRIGHT + '\x1b[A' + f"(-) 1. Do you want virgil to be started at system startup? (default no) (Y/N): {choise}" + '\r')
-    sys.stdout.flush()
-
+    choise = take_value("(-) 1. Do you want virgil to be started at system startup? (default no) (Y/N):",('N','Y'))
     if choise =="Y":
         update_toml("launch_start",True)
         cli(parent_folder)
     else:
         update_toml("launch_start",False)
-
-    while True:
-        sys.stdout.write(colorama.Fore.CYAN + colorama.Style.BRIGHT +
-                        '''\n(-) 2. Do you want to specify a default interface type? (default no) (Y/N): ''')
-        sys.stdout.flush()
-        choise = sys.stdin.readline().strip().upper()
-        if choise in ('N','Y'):
-            break
-        sys.stdout.write(colorama.Fore.RED + colorama.Style.BRIGHT +'\x1b[A' + '''(/) SELECT A VALID CHOISE'''+ " "*100 + '\r')
-        sys.stdout.flush()
-
-    sys.stdout.write(colorama.Fore.GREEN + colorama.Style.BRIGHT +'\x1b[A' + f"(-) 2. Do you want to specify a default interleaving type? (default no) (Y/N): {choise}" + '\r')
-    sys.stdout.flush()
     if choise == 'Y':
-        while True:
-            sys.stdout.write(colorama.Fore.CYAN + colorama.Style.BRIGHT +
-                            '''\n(-) 2.1 Text interface or voice interface? (T/R):''')
-            sys.stdout.flush()
-            choise = sys.stdin.readline().strip().upper()
-            if choise in ('T','R'):
-                break
-            sys.stdout.write(colorama.Fore.RED + colorama.Style.BRIGHT +'\x1b[A' + '''(/) SELECT A VALID CHOISE'''+ " "*100 + '\r')
-            sys.stdout.flush()
-
-        sys.stdout.write(colorama.Fore.GREEN + colorama.Style.BRIGHT +'\x1b[A' + f"(-) 2.1 Text interface or voice interface? (T/R): {choise}" + '\r')
-        sys.stdout.flush()
+        choise  = take_value("(-) 2.1 Text interface or voice interface? (T/R): ",('T','R'))
         update_toml("defaul_start",choise)
-
         if choise == 'R':
             # PASS 4
-            while True:
-                sys.stdout.write(colorama.Fore.CYAN + colorama.Style.BRIGHT +
-                                '''\n(-) 2.2 You want it to show the display (default yes) (Y/N):''')
-                sys.stdout.flush()
-                choise = sys.stdin.readline().strip().upper()
-                if choise in ('N','Y'):
-                    break
-                sys.stdout.write(colorama.Fore.RED + colorama.Style.BRIGHT +'\x1b[A' + '''(/) SELECT A VALID CHOISE'''+ " "*100 + '\r')
-                sys.stdout.flush()
-
-            sys.stdout.write(colorama.Fore.GREEN + colorama.Style.BRIGHT +'\x1b[A' + f"(-) 2.2 You want it to show the display (default yes) (Y/N): {choise}" + '\r\n')
-            sys.stdout.flush()
-
+            choise = take_value("(-) 2.2 You want it to show the display (default yes) (Y/N): ",('N','Y'))
             if choise =="Y":
-                linux_function(get_path(),display=True)
+                modify_display()
                 update_toml("display_console",True)
             else:
-                linux_function(get_path(),display=False)
                 update_toml("display_console",False)
+
     update_toml("first_setup",False)
+
 
 
 def setup(launch_start,defaul_start,display_console):
@@ -260,40 +266,28 @@ def setup(launch_start,defaul_start,display_console):
         display_console (bool): _description_
     """
     while True:
-        sys.stdout.write(colorama.Fore.LIGHTCYAN_EX + colorama.Style.BRIGHT + f'''
-
- - CURRENT SYSTEM: [{platform.system()}]
------ [WHAT DO YOU WISH TO MODIFY] -----
-'''
-+
-colorama.Fore.BLUE +'''
-[-1 ] EXIT
-[ 0 ] Display the settings
-[ 1 ] Launch script at system startup?
-[ 2 ] Default startup?
-[ 3 ] Show diplay?
-
-''')
+        sys.stdout.write(MENU_BANNER)
         sys.stdout.flush()
 
         sys.stdout.write(colorama.Fore.CYAN + colorama.Style.BRIGHT + '''[ - ] Input: ''')
         sys.stdout.flush()
         choise = sys.stdin.readline().strip().upper()
 
-
         if choise == '0':
             show_settings()
+
         elif choise == '1':
             if platform.system() == "Windows":
                 modify_start_startup_win(launch_start)
             else:
                 modify_start_startup_lin(launch_start,display_console)
+
         elif choise == '2':
             while True:
                 choise = input("You want to eliminate the possibility of a default startup (Y/N): ").upper()
-                if choise in ('Y','N'):
+                if choise == 'Y':
                     break
-                sys.stdout.write(colorama.Fore.RED + colorama.Style.BRIGHT +'\x1b[A' + '''(/) SELECT A VALID CHOISE'''+ " "*100 + '\r')
+                sys.stdout.write(ERROR_MESSAGE)
                 sys.stdout.flush()
 
             if choise == 'N':
@@ -310,7 +304,7 @@ colorama.Fore.BLUE +'''
         elif choise == '-1':
             return
         else:
-            sys.stdout.write(colorama.Fore.RED + colorama.Style.BRIGHT +'\x1b[A' + '''(/) SELECT A VALID CHOISE'''+ " "*100 + '\r')
+            sys.stdout.write(ERROR_MESSAGE)
             sys.stdout.flush()
 
 def get_path():
@@ -326,16 +320,14 @@ def get_path():
 def main():
     """Main function."""
     subprocess.run("poetry install",shell=True,check=True)
-
     print(colorama.Style.BRIGHT + colorama.Fore.MAGENTA +
           pyfiglet.figlet_format("  Virgil", font="doh", width=200), flush=True)
 
     # ------ SETUP -------
     first_setup,launch_start,defaul_start,display_console = get_data()
-
     parent_folder = get_path()
-
     system = check_system()
+
     if system == "N":
         print("Virgil AI is only supported in Windows and Linux.",flush=True)
         return SystemError
@@ -344,17 +336,12 @@ def main():
 
     print(colorama.Fore.GREEN + pyfiglet.figlet_format("WELCOME",
           justify="center", font="digital"),flush=True)
-    print('''
-
- Welcome to''' + colorama.Fore.GREEN + colorama.Style.BRIGHT + " Virgil AI" + colorama.Fore.WHITE + ''' i remind you that AI does not stand for Aritificial Intelligence
- but for  ''' + colorama.Fore.RED + colorama.Style.BRIGHT + "Assistant Interface" + colorama.Fore.WHITE + ''' after this premise we can start with the setup
- read carefully the description and if you have doubts go here ''' + colorama.Fore.BLUE + "https://github.com/Retr0100/VirgilAI", flush=True)
+    print(MAIN_BANNER, flush=True)
 
     # ------- END SETUP -----
 
     if first_setup :
         if system == "L":
-            #DOWNLOAD OFF SOME PACKET
             subprocess.run("sudo apt install python3-pyaudio;sudo apt install ffmpeg;sudo apt install screen",shell=True,check=True)
         first_start(cli,parent_folder)
     else:
@@ -365,3 +352,6 @@ def main():
 if __name__ == '__main__':
     colorama.init(autoreset=True)
     main()
+    subprocess.run("poetry shell",shell=True,check=True)
+
+
