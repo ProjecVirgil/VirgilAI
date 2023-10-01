@@ -15,7 +15,7 @@ from colorama import Fore,Style
 import lib.packages_utility.logger
 import logging
 from lib.packages_utility.utils import init_settings
-import lib.packages_utility.vectorize   # noqa: F401
+from lib.packages_utility.vectorize import GloVeVectorizer,sentence_to_vec   # noqa: F401
 from lib.packages_utility.request import MakeRequests
 
 
@@ -96,7 +96,7 @@ def create_account() -> str:
     key = request_maker.create_user()
     request_maker.create_user_event(key)
 
-    logging.info(f"KEY {Fore.RED + str(key)} CREATED CORRECTLY IN setup/key.txt "),
+    logging.warning(f"KEEP YOUR KEY {key} DON'T GIVE IT TO ANYONE")
 
     with open(KEY_FILE,'w',encoding="utf8") as file_key:
         file_key.write(str(key))
@@ -174,7 +174,6 @@ def main():
     text_input = TextInput(word_activation=settings.word_activation)
     vocal_input = VocalInput(settings)
 
-    logging.warning(f"KEEP YOUR KEY {key} DON'T GIVE IT TO ANYONE")
 
     thread_1 = 0
     thread_2 = 0
