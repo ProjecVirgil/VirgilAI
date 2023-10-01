@@ -16,8 +16,15 @@ class CustomFormatter(logging.Formatter):
     yellow = Fore.YELLOW
     red = Fore.RED
     blue = Fore.BLUE
+    green = Fore.GREEN
     bold_red = Style.BRIGHT + Fore.RED
+
     format ="%(asctime)s - %(levelname)s - %(message)s (%(filename)s:%(lineno)d)"
+
+    date = "%(asctime)s"
+    level_name= "%(levelname)s"
+    message  = "%(message)s"
+    filename = "(%(filename)s:%(lineno)d)"
 
     FORMATS = {
         logging.DEBUG: grey + format,
