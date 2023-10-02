@@ -187,18 +187,20 @@ def linux_function(path_directory=None,display=True):
     """Function to with command for Linux."""
     # PER LINUX GENERARE SOLO IL COMANDO E FARLO ESEGUIRE ALL UTENTE
     # Comando per aggiungere un lavoro Crontab che si esegue all'avvio
-    with open("boot.sh","w") as file:
-        file.write(f'''
-cd {path_directory}
-poetry shell
-python3 launch.py
-                   ''')
-    if display:
-        job = f"@reboot {path_directory}/setup/boot.sh"
-        print("\n" + colorama.Fore.RED +colorama.Style.BRIGHT +"For connect to the terminal execute this command: screen -r virgil",flush=True)
-    else:
-        job = f"@reboot {path_directory}/setup/boot.sh&"
 
+    if display:
+        with open("boot.sh","w") as file:
+            file.write(f'''
+cd {path_directory}
+gnome-terminal -- poetry run python3 launch.py
+''')
+    else:
+        with open("boot.sh","w") as file:
+            file.write(f'''
+cd {path_directory}
+gnome-terminal -- poetry run python3 launch.py &
+''')
+    job = f"@reboot bash {path_directory}/setup/boot.sh"
     command = f"echo {job} | crontab -"
     try:
         subprocess.run(command, shell=True,check=True)
