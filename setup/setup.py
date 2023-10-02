@@ -190,6 +190,7 @@ def linux_function(path_directory=None,display=True):
     with open("boot.sh","w") as file:
         file.write(f'''
 cd {path_directory}
+poetry shell
 python3 launch.py
                    ''')
     if display:
