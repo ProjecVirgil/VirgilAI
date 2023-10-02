@@ -12,26 +12,26 @@ class CustomFormatter(logging.Formatter):
         logging (logging): The logging formatter
 
     """
-    grey = Fore.LIGHTBLACK_EX
-    yellow = Fore.YELLOW
+    grey = Style.BRIGHT + Fore.LIGHTBLACK_EX
+    yellow = Style.BRIGHT + Fore.YELLOW
     red = Fore.RED
-    blue = Fore.BLUE
-    green = Fore.GREEN
+    blue = Style.BRIGHT + Fore.BLUE
+    green = Style.BRIGHT + Fore.GREEN
+    black = Style.BRIGHT + Fore.BLACK
     bold_red = Style.BRIGHT + Fore.RED
+    white = Style.BRIGHT +Fore.WHITE
 
-    format ="%(asctime)s - %(levelname)s - %(message)s (%(filename)s:%(lineno)d)"
-
-    date = "%(asctime)s"
-    level_name= "%(levelname)s"
-    message  = "%(message)s"
+    date = "%(asctime)s - "
+    level_name= "%(levelname)s - "
+    message  = "%(message)s - "
     filename = "(%(filename)s:%(lineno)d)"
 
     FORMATS = {
-        logging.DEBUG: grey + format,
-        logging.INFO: blue + format,
-        logging.WARNING: yellow + format,
-        logging.ERROR: red + format,
-        logging.CRITICAL: bold_red + format,
+        logging.DEBUG: black + date +  grey + level_name + white + message + green + filename,
+        logging.INFO: black + date +  blue + level_name + white + message + green + filename,
+        logging.WARNING:black + date + yellow + level_name + white + message + green + filename,
+        logging.ERROR: black + date + red + level_name + white + message + green + filename,
+        logging.CRITICAL: black + date + bold_red + level_name + white + message + green + filename,
     }
 
     def format(self, record):
