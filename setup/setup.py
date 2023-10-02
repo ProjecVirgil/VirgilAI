@@ -16,8 +16,7 @@ MENU_BANNER = colorama.Fore.LIGHTCYAN_EX + colorama.Style.BRIGHT + f'''
 
  - CURRENT SYSTEM: [{platform.system()}]
 ----- [WHAT DO YOU WISH TO MODIFY] -----
-'''
-+ colorama.Fore.BLUE +'''
+''' + colorama.Fore.BLUE +'''
 [-1 ] EXIT
 [ 0 ] Display the settings
 [ 1 ] Launch script at system startup?
