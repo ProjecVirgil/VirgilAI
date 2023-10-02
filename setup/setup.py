@@ -180,20 +180,25 @@ def modify_start_startup_lin(launch_start,display):
             print(f"Error on Crontab: {error}",flush=True)
             update_toml("launch_start",not launch_start)
     else:
-        linux_function(get_path,display=display)
+        linux_function(get_path(),display=display)
         update_toml("launch_start",not launch_start)
 
 def linux_function(path_directory=None,display=True):
     """Function to with command for Linux."""
     # PER LINUX GENERARE SOLO IL COMANDO E FARLO ESEGUIRE ALL UTENTE
     # Comando per aggiungere un lavoro Crontab che si esegue all'avvio
+    with open("boot.sh","w") as file:
+        file.write(f'''
+cd {path_directory}
+python3 launch.py
+                   ''')
     if display:
-        job = f"@reboot screen -dmS virgil /usr/bin/python3 {path_directory}/launch.py"
+        job = f"@reboot {path_directory}/setup/boot.sh"
         print("\n" + colorama.Fore.RED +colorama.Style.BRIGHT +"For connect to the terminal execute this command: screen -r virgil",flush=True)
     else:
-        job = f"@reboot /usr/bin/python3 {path_directory}/launch.py"
+        job = f"@reboot {path_directory}/setup/boot.sh&"
 
-    command = f"echo {job} | crontab -"  # Comando completo
+    command = f"echo {job} | crontab -"
     try:
         subprocess.run(command, shell=True,check=True)
     except subprocess.CalledProcessError as error:
