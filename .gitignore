@@ -15,7 +15,8 @@ setup/key.txt
 
 # Test with test files
 tests
-trys 
+trys
+nohup.out
 
 # Some audio file
 audio.mp3
