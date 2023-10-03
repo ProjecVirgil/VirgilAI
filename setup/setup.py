@@ -292,7 +292,7 @@ def first_start(cli,parent_folder):
 
 
 
-def setup(launch_start,defaul_start,display_console):
+def setup():
     """This function is used for setting up all of the things that are needed before running the programm. It will create a config file and also check whether.
 
     Args:
@@ -301,6 +301,7 @@ def setup(launch_start,defaul_start,display_console):
         display_console (bool): _description_
     """
     while True:
+        _,launch_start,defaul_start,display_console = get_data()
         sys.stdout.write(MENU_BANNER)
         sys.stdout.flush()
 
@@ -316,24 +317,19 @@ def setup(launch_start,defaul_start,display_console):
                 modify_start_startup_win(launch_start)
             else:
                 modify_start_startup_lin(launch_start,display_console)
-
         elif choise == '2':
             while True:
                 choise = input("You want to eliminate the possibility of a default startup (Y/N): ").upper()
-                if choise == 'Y':
-                    break
                 sys.stdout.write(ERROR_MESSAGE)
                 sys.stdout.flush()
-
-            if choise == 'N':
-                if defaul_start == 'T':
-                    update_toml("defaul_start",'R')
+                if choise == 'N':
+                    if defaul_start == 'T':
+                        update_toml("defaul_start",'R')
+                    else:
+                        update_toml("defaul_start",'T')
                 else:
-                    update_toml("defaul_start",'T')
-            else:
-                update_toml("defaul_start",'N')
-            print(SUCCESS_MESSAGE,flush=True)
-
+                    update_toml("defaul_start",'N')
+                print(SUCCESS_MESSAGE,flush=True)
         elif choise == '3':
             modify_display()
         elif choise == '-1':
@@ -359,7 +355,7 @@ def main():
           pyfiglet.figlet_format("  Virgil", font="doh", width=200), flush=True)
 
     # ------ SETUP -------
-    first_setup,launch_start,defaul_start,display_console = get_data()
+    first_setup,_,_,_ = get_data()
     parent_folder = get_path()
     system = check_system()
 
@@ -380,13 +376,13 @@ def main():
             subprocess.run("sudo apt install python3-pyaudio;sudo apt install ffmpeg",shell=True,check=True)
         first_start(cli,parent_folder)
     else:
-        setup(launch_start,defaul_start,display_console)
+        setup()
 
 
 
 if __name__ == '__main__':
     colorama.init(autoreset=True)
     main()
-    subprocess.run("poetry shell",shell=True,check=True)
+    subprocess.run("cd ..;poetry run python launch.py ",shell=True,check=True)
 
 
