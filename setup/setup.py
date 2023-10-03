@@ -175,12 +175,16 @@ def create_bash(display,path_directory):
     if display:
         with open("boot.sh","w") as file:
             file.write(f'''
+#!/bin/bash
+echo Virgil is starting up
 cd {path_directory}
 gnome-terminal -- poetry run python3 launch.py
 ''')
     else:
         with open("boot.sh","w") as file:
             file.write(f'''
+#!/bin/bash
+echo Virgil is starting up
 cd {path_directory}
 nohup poetry run python3 launch.py
 ''')
@@ -222,12 +226,12 @@ def modify_start_startup_lin(launch_start,display):
         display (_type_): _description_
     """
     if launch_start:
-        command = f"echo >> home/{os.getlogin()}/.config/autostart/virgil.desktop"
+        command = f"rm /home/{os.getlogin()}/.config/autostart/virgil.desktop"
         try:
             subprocess.run(command, shell=True,check=True)
         except subprocess.CalledProcessError as error:
             print(f"Error on Crontab: {error}",flush=True)
-            update_toml("launch_start",not launch_start)
+        update_toml("launch_start",not launch_start)
     else:
         linux_function(get_path(),display=display)
         update_toml("launch_start",not launch_start)
