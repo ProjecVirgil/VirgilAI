@@ -93,7 +93,6 @@ def modify_display():
             print(SUCCESS_MESSAGE,flush=True)
         update_toml("display_console",not display_console)
         update_toml("logs_file",True,True)
-
     elif(defaul_start in ('T','N') and display_console is True):
         print(colorama.Fore.RED + colorama.Style.BRIGHT +"\n You can't set the display to False with default startup to Text \n if you can set to display true first set the interface to text or remove the dafault ",flush=True)
     else:
@@ -172,16 +171,15 @@ def create_bash(display,path_directory):
         display (_type_): _description_
         path_directory (_type_): _description_
     """
-    if display:
-        with open("boot.sh","w") as file:
+    with open("boot.sh","w") as file:
+        if not display:
             file.write(f'''
 #!/bin/bash
 echo Virgil is starting up
 cd {path_directory}
 gnome-terminal -- poetry run python3 launch.py
 ''')
-    else:
-        with open("boot.sh","w") as file:
+        else:
             file.write(f'''
 #!/bin/bash
 echo Virgil is starting up
