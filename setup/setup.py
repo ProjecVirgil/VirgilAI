@@ -63,10 +63,9 @@ def modify_start_startup_win(launch_start):
     Args:
         launch_start (_type_): _description_
     """
-    current_user = os.getlogin()
     if launch_start:
         try:
-            destination_folder = f'C:\\Users\\{current_user}\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\launch_start.bat'
+            destination_folder = os.path.join('C:\\Users', os.getlogin(), 'AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup', 'launch_start.bat')
             os.remove(destination_folder)
         except FileNotFoundError:
             print("FILE NOT FOUND",flush=True)
@@ -119,7 +118,7 @@ def invalid_choice():
     sys.stdout.write(ERROR_MESSAGE)
     sys.stdout.flush()
 
-def modify_startup(launch_start, *args, **kwargs):
+def modify_startup(launch_start,display_console, *args, **kwargs):
     """Modify startup settings for text and speech interfaces.
 
     Args:
@@ -128,14 +127,14 @@ def modify_startup(launch_start, *args, **kwargs):
     if platform.system() == "Windows":
         modify_start_startup_win(launch_start)
     else:
-        modify_start_startup_lin(launch_start, kwargs['display_console'])
+        modify_start_startup_lin(launch_start, display_console)
 
 def exit_setup(*args, **kwargs):
     """Exit Setup."""
     return
 
 
-def modify_default_startup(defaul_start, *args, **kwargs):
+def modify_default_startup(defaul_start,*args, **kwargs):
     """Modify the default startup.
 
     Args:
@@ -208,7 +207,7 @@ def update_toml(params: str, new_value: str,debug:bool =False):
     with open(file_path, "w",encoding='utf-8') as file:
         file.write(new_content)
 
-def show_settings():
+def show_settings(*args, **kwargs):
     """This function shows all settings."""
     _,launch_start,defaul_start,display_console = get_data()
     mss_list = ["The option for the launch start with the system is: ","The option for the default launch is: ","The option for the show of display is: ",]
@@ -354,7 +353,8 @@ def setup():
     }
 
     while True:
-        _, launch_start, defaul_start, display_console = get_data()
+        _, launch_start,defaul_start,display_console = get_data()
+        print(display_console)
         sys.stdout.write(MENU_BANNER)
         sys.stdout.flush()
 
@@ -400,6 +400,6 @@ def main():
 if __name__ == '__main__':
     colorama.init(autoreset=True)
     main()
-    subprocess.run("cd ..;poetry run python launch.py ",shell=True,check=True)
+    subprocess.run("poetry shell",shell=True,check=True)
 
 
