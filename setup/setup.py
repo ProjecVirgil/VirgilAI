@@ -142,12 +142,16 @@ def modify_default_startup(defaul_start,*args, **kwargs):
     """
     while True:
         choice = input("You want to eliminate the possibility of a default startup (Y/N): ").upper()
-        if choice == 'N':
-            new_val = 'R' if defaul_start == 'T' else 'T'
-            update_toml("defaul_start", new_val)
+        if(choice in ('Y','N')):
+            if choice == 'N':
+                new_val = 'R' if defaul_start == 'T' else 'T'
+                update_toml("defaul_start", new_val)
+            else:
+                update_toml("defaul_start", 'N')
+            print(SUCCESS_MESSAGE, flush=True)
+            return
         else:
-            update_toml("defaul_start", 'N')
-        print(SUCCESS_MESSAGE, flush=True)
+            invalid_choice()
 
 def check_system() -> str:
     """Check on what platform the script was run on.
@@ -286,6 +290,8 @@ def modify_start_startup_lin(launch_start,display):
     else:
         linux_function(get_path(),display=display)
         update_toml("launch_start",not launch_start)
+    print(SUCCESS_MESSAGE,flush=True)
+
 
 def take_value(question:str,option:tuple) -> str:
     """This function display the string and take the input for the setup.
@@ -354,7 +360,6 @@ def setup():
 
     while True:
         _, launch_start,defaul_start,display_console = get_data()
-        print(display_console)
         sys.stdout.write(MENU_BANNER)
         sys.stdout.flush()
 
