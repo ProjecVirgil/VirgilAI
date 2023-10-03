@@ -165,29 +165,13 @@ def show_settings():
         print(colorama.Fore.CYAN + colorama.Style.BRIGHT + " - " + mss + colorama.Fore.GREEN + str(value[mss_list.index(mss)]),flush=True)
 
 # ----- LINUX ------
-def modify_start_startup_lin(launch_start,display):
-    """Modify the start of Virgil on startup.
+def create_bash(display,path_directory):
+    """Create bash script to run virgil and add it into cronjob.
 
     Args:
-        launch_start (_type_): _description_
         display (_type_): _description_
+        path_directory (_type_): _description_
     """
-    if launch_start:
-        command = "echo  | crontab -"
-        try:
-            subprocess.run(command, shell=True,check=True)
-        except subprocess.CalledProcessError as error:
-            print(f"Error on Crontab: {error}",flush=True)
-            update_toml("launch_start",not launch_start)
-    else:
-        linux_function(get_path(),display=display)
-        update_toml("launch_start",not launch_start)
-
-def linux_function(path_directory=None,display=True):
-    """Function to with command for Linux."""
-    # PER LINUX GENERARE SOLO IL COMANDO E FARLO ESEGUIRE ALL UTENTE
-    # Comando per aggiungere un lavoro Crontab che si esegue all'avvio
-
     if display:
         with open("boot.sh","w") as file:
             file.write(f'''
@@ -198,15 +182,55 @@ gnome-terminal -- poetry run python3 launch.py
         with open("boot.sh","w") as file:
             file.write(f'''
 cd {path_directory}
-gnome-terminal -- poetry run python3 launch.py &
+nohup poetry run python3 launch.py
 ''')
-    job = f"@reboot bash {path_directory}/setup/boot.sh"
-    command = f"echo {job} | crontab -"
-    try:
-        subprocess.run(command, shell=True,check=True)
-    except subprocess.CalledProcessError as error:
-        print(f"Error on Crontab: {error}",flush=True)
 
+def create_task(path_directory):
+    """Add task into Schedule.
+
+    Args:
+        path_directory (_type_): _description_
+    """
+    with open(f"/home/{os.getlogin()}/.config/autostart/virgil.desktop","w")as file:
+        file.write(f'''
+
+[Desktop Entry]
+Type=Application
+Exec=bash {path_directory}/setup/boot.sh
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name[en_US]=VirgilAI
+Name=VirgilAI
+''')
+
+def linux_function(path_directory=None,display=True):
+    """Function to with command for Linux."""
+    # PER LINUX GENERARE SOLO IL COMANDO E FARLO ESEGUIRE ALL UTENTE
+    # Comando per aggiungere un lavoro Crontab che si esegue all'avvio
+
+    create_bash(display,path_directory)
+    subprocess.run("mkdir -p ~/.config/autostart;touch ~/.config/autostart/virgil.desktop",shell=True,check=True)
+    create_task(path_directory)
+    subprocess.run("chmod +x ~/.config/autostart/virgil.desktop",shell=True,check=True)
+
+def modify_start_startup_lin(launch_start,display):
+    """Modify the start of Virgil on startup.
+
+    Args:
+        launch_start (_type_): _description_
+        display (_type_): _description_
+    """
+    if launch_start:
+        command = f"echo >> home/{os.getlogin()}/.config/autostart/virgil.desktop"
+        try:
+            subprocess.run(command, shell=True,check=True)
+        except subprocess.CalledProcessError as error:
+            print(f"Error on Crontab: {error}",flush=True)
+            update_toml("launch_start",not launch_start)
+    else:
+        linux_function(get_path(),display=display)
+        update_toml("launch_start",not launch_start)
 
 def take_value(question:str,option:tuple) -> str:
     """This function display the string and take the input for the setup.
@@ -349,7 +373,7 @@ def main():
 
     if first_setup :
         if system == "L":
-            subprocess.run("sudo apt install python3-pyaudio;sudo apt install ffmpeg;sudo apt install screen",shell=True,check=True)
+            subprocess.run("sudo apt install python3-pyaudio;sudo apt install ffmpeg",shell=True,check=True)
         first_start(cli,parent_folder)
     else:
         setup(launch_start,defaul_start,display_console)
