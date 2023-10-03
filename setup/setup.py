@@ -10,7 +10,7 @@ from tomlkit import parse, dumps
 import pyfiglet
 
 
-# --- CONST -----
+#* --- CONST -----
 ERROR_MESSAGE = colorama.Fore.RED + colorama.Style.BRIGHT +'\x1b[A' + '''(/) SELECT A VALID CHOISE'''+ " "*100 + '\r'
 MENU_BANNER = colorama.Fore.LIGHTCYAN_EX + colorama.Style.BRIGHT + f'''
 
@@ -32,7 +32,7 @@ MAIN_BANNER = '''
 
 SUCCESS_MESSAGE = colorama.Fore.GREEN + colorama.Style.BRIGHT +"\n ***** Successfully executed changes *****"
 
-# ------ WINDOWS -------
+#* ------ WINDOWS -------
 
 def windows_function(path_directory,display:bool):
     """Function to with command for Windows."""
@@ -77,7 +77,7 @@ def modify_start_startup_win(launch_start):
     print(SUCCESS_MESSAGE,flush=True)
     update_toml("launch_start",not launch_start)
 
-def modify_display():
+def modify_display(*args, **kwargs):
     """This function is used for modifying the configuration of the display."""
     _,launch_start,defaul_start,display_console = get_data()
     path = get_path()
@@ -105,7 +105,51 @@ def modify_display():
             linux_function(path,display=False)
             print(SUCCESS_MESSAGE,flush=True)
 
-# ----- SYSTEM ------
+#* ----- SYSTEM ------
+
+def get_user_input():
+    """Retrieve user input."""
+    sys.stdout.write(colorama.Fore.CYAN + colorama.Style.BRIGHT + '''[ - ] Input: ''')
+    sys.stdout.flush()
+    return sys.stdin.readline().strip().upper()
+
+
+def invalid_choice():
+    """Invalid Choice Error Message."""
+    sys.stdout.write(ERROR_MESSAGE)
+    sys.stdout.flush()
+
+def modify_startup(launch_start, *args, **kwargs):
+    """Modify startup settings for text and speech interfaces.
+
+    Args:
+        launch_start (_type_): _description_
+    """
+    if platform.system() == "Windows":
+        modify_start_startup_win(launch_start)
+    else:
+        modify_start_startup_lin(launch_start, kwargs['display_console'])
+
+def exit_setup(*args, **kwargs):
+    """Exit Setup."""
+    return
+
+
+def modify_default_startup(defaul_start, *args, **kwargs):
+    """Modify the default startup.
+
+    Args:
+        defaul_start (bool): the default startup
+    """
+    while True:
+        choice = input("You want to eliminate the possibility of a default startup (Y/N): ").upper()
+        if choice == 'N':
+            new_val = 'R' if defaul_start == 'T' else 'T'
+            update_toml("defaul_start", new_val)
+        else:
+            update_toml("defaul_start", 'N')
+        print(SUCCESS_MESSAGE, flush=True)
+
 def check_system() -> str:
     """Check on what platform the script was run on.
 
@@ -134,6 +178,16 @@ def get_data():
         file.close()
 
     return first_setup,launch_start,defaul_start,display_console
+
+def get_path():
+    """Get path to current dir.
+
+    Returns:
+        str: Path
+    """
+    current_folder = os.getcwd()
+    parent_folder = os.path.dirname(current_folder)
+    return parent_folder
 
 def update_toml(params: str, new_value: str,debug:bool =False):
     """Update TOML file from params dictonary.
@@ -288,63 +342,28 @@ def first_start(cli,parent_folder):
 
     update_toml("first_setup",False)
 
-
-
+#* ---- SETUP ------
 def setup():
-    """This function is used for setting up all of the things that are needed before running the programm. It will create a config file and also check whether.
+    """This function sets up various configurations based on user input."""
+    commands = {
+        '0': show_settings,
+        '1': modify_startup,
+        '2': modify_default_startup,
+        '3': modify_display,
+        '-1': exit_setup
+    }
 
-    Args:
-        launch_start (bool): _description_
-        defaul_start (str): _description_
-        display_console (bool): _description_
-    """
     while True:
-        _,launch_start,defaul_start,display_console = get_data()
+        _, launch_start, defaul_start, display_console = get_data()
         sys.stdout.write(MENU_BANNER)
         sys.stdout.flush()
 
-        sys.stdout.write(colorama.Fore.CYAN + colorama.Style.BRIGHT + '''[ - ] Input: ''')
-        sys.stdout.flush()
-        choise = sys.stdin.readline().strip().upper()
+        choice = get_user_input()
 
-        if choise == '0':
-            show_settings()
+        action = commands.get(choice, invalid_choice)
+        action(launch_start, defaul_start, display_console)
 
-        elif choise == '1':
-            if platform.system() == "Windows":
-                modify_start_startup_win(launch_start)
-            else:
-                modify_start_startup_lin(launch_start,display_console)
-        elif choise == '2':
-            while True:
-                choise = input("You want to eliminate the possibility of a default startup (Y/N): ").upper()
-                sys.stdout.write(ERROR_MESSAGE)
-                sys.stdout.flush()
-                if choise == 'N':
-                    if defaul_start == 'T':
-                        update_toml("defaul_start",'R')
-                    else:
-                        update_toml("defaul_start",'T')
-                else:
-                    update_toml("defaul_start",'N')
-                print(SUCCESS_MESSAGE,flush=True)
-        elif choise == '3':
-            modify_display()
-        elif choise == '-1':
-            return
-        else:
-            sys.stdout.write(ERROR_MESSAGE)
-            sys.stdout.flush()
 
-def get_path():
-    """Get path to current dir.
-
-    Returns:
-        str: Path
-    """
-    current_folder = os.getcwd()
-    parent_folder = os.path.dirname(current_folder)
-    return parent_folder
 
 def main():
     """Main function."""
@@ -367,7 +386,7 @@ def main():
           justify="center", font="digital"),flush=True)
     print(MAIN_BANNER, flush=True)
 
-    # ------- END SETUP -----
+    #* ------- END SETUP -----
 
     if first_setup :
         if system == "L":
