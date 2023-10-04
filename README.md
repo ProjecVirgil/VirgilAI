@@ -6,11 +6,12 @@
 - **[How Virgil Works](#💻-how-virgilai-works)**
 - **[Installation](#installation)**
 - **[Setup](#📖-setup)**
-  - [Poetry Shell]() 
+  - [Poetry Shell](#poetry-shell)
   - [Guide to settings](#guide-to-local-settings)
   - [ElevenLabs](#guide-to-elevenlabs)
 - **[First start](#first-start)**
   - [How to use](#how-to-use)
+  - [Possible python bugs](#python-bugs)
 - **[Problem with mic?](#🎙️-guide-to-microphones)**
 - **[Why all this key?](#why-the-key-of-openai-elevenlabs-and-merros❓)**
   - [Generate other key](#🔁-change-the-key)
@@ -230,6 +231,11 @@ if __name__ == "__main__":
 
 The tool is not **100%** accurate, but it's a good way to get a **starting** idea if you see that Virgil is not accurate enough in recognising when you speak and when you don't try to adjust.
 
+### Python Bugs
+
+If Python give this error `ImportError: DLL load failed while importing _argkmin: File name or extension too long.`
+
+Try to using an [venv](https://docs.python.org/3/library/venv.html) **environment** to work around the path error, so activate the env and **run everything from there.**
 ### Why the key of OpenAI, ElevenLabs and Merros❓
 
 - **Virgil**: The Virgilio configuration key is used to synchronise all online settings...  **DO NOT GIVE THE KEY TO ANYONE OR EXPORT IT TO ANYONE OR YOU WILL GET ALL YOUR KEYS** (OpenAI,Elevenlabs etc)
