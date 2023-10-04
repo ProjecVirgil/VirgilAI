@@ -131,7 +131,7 @@ def modify_startup(launch_start,display_console, *args, **kwargs):
 
 def exit_setup(*args, **kwargs):
     """Exit Setup."""
-    return
+    sys.exit(0)
 
 
 def modify_default_startup(defaul_start,*args, **kwargs):
@@ -330,9 +330,10 @@ def first_start(cli,parent_folder):
     choise = take_value("(-) 1. Do you want virgil to be started at system startup? (default no) (Y/N):",('N','Y'))
     if choise =="Y":
         update_toml("launch_start",True)
-        cli(parent_folder)
+        cli(parent_folder,True)
     else:
         update_toml("launch_start",False)
+    choise  = take_value("(-) 2. Do you want to specify a default interface type? (default no) (Y/N): ",('T','R'))
     if choise == 'Y':
         choise  = take_value("(-) 2.1 Text interface or voice interface? (T/R): ",('T','R'))
         update_toml("defaul_start",choise)
