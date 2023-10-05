@@ -10,7 +10,7 @@ from tomlkit import parse, dumps
 import pyfiglet
 
 
-# --- CONST -----
+#* --- CONST -----
 ERROR_MESSAGE = colorama.Fore.RED + colorama.Style.BRIGHT +'\x1b[A' + '''(/) SELECT A VALID CHOISE'''+ " "*100 + '\r'
 MENU_BANNER = colorama.Fore.LIGHTCYAN_EX + colorama.Style.BRIGHT + f'''
 
@@ -32,7 +32,7 @@ MAIN_BANNER = '''
 
 SUCCESS_MESSAGE = colorama.Fore.GREEN + colorama.Style.BRIGHT +"\n ***** Successfully executed changes *****"
 
-# ------ WINDOWS -------
+#* ------ WINDOWS -------
 
 def windows_function(path_directory,display:bool):
     """Function to with command for Windows."""
@@ -106,7 +106,41 @@ def modify_display():
             linux_function(path,display=False)
             print(SUCCESS_MESSAGE,flush=True)
 
-# ----- SYSTEM ------
+#* ----- SYSTEM ------
+
+def take_value(question:str,option:tuple) -> str:
+    """This function display the string and take the input for the setup.
+
+    Args:
+        question (str): the question to take
+        option (tuple): the option for response
+
+    Returns:
+        str: the response choised
+    """
+    while True:
+        sys.stdout.write(colorama.Fore.CYAN + colorama.Style.BRIGHT +
+                        f'''\n{question} ''')
+        sys.stdout.flush()
+        choise = sys.stdin.readline().strip().upper()
+        if choise in option:
+            break
+        sys.stdout.write(ERROR_MESSAGE)
+        sys.stdout.flush()
+    sys.stdout.write(colorama.Fore.GREEN + colorama.Style.BRIGHT + '\x1b[A' + f"{question} {choise}" + '\r')
+    sys.stdout.flush()
+    return choise
+
+def get_path():
+    """Get path to current dir.
+
+    Returns:
+        str: Path
+    """
+    current_folder = os.getcwd()
+    parent_folder = os.path.dirname(current_folder)
+    return parent_folder
+
 def check_system() -> str:
     """Check on what platform the script was run on.
 
@@ -164,7 +198,7 @@ def show_settings():
     for mss in mss_list:
         print(colorama.Fore.CYAN + colorama.Style.BRIGHT + " - " + mss + colorama.Fore.GREEN + str(value[mss_list.index(mss)]),flush=True)
 
-# ----- LINUX ------
+#* ----- LINUX ------
 def create_bash(display,path_directory):
     """Create bash script to run virgil and add it into cronjob.
 
@@ -232,30 +266,9 @@ def modify_start_startup_lin(launch_start,display):
         linux_function(get_path(),display=display)
         update_toml("launch_start",not launch_start)
 
-def take_value(question:str,option:tuple) -> str:
-    """This function display the string and take the input for the setup.
 
-    Args:
-        question (str): the question to take
-        option (tuple): the option for response
 
-    Returns:
-        str: the response choised
-    """
-    while True:
-        sys.stdout.write(colorama.Fore.CYAN + colorama.Style.BRIGHT +
-                        f'''\n{question} ''')
-        sys.stdout.flush()
-        choise = sys.stdin.readline().strip().upper()
-        if choise in option:
-            break
-        sys.stdout.write(ERROR_MESSAGE)
-        sys.stdout.flush()
-    sys.stdout.write(colorama.Fore.GREEN + colorama.Style.BRIGHT + '\x1b[A' + f"{question} {choise}" + '\r')
-    sys.stdout.flush()
-    return choise
-
-# ---- FIRST START ------
+#* ---- FIRST START ------
 
 def first_start(cli,parent_folder):
     """First start of the project.
@@ -338,15 +351,7 @@ def setup(launch_start,defaul_start,display_console):
             sys.stdout.write(ERROR_MESSAGE)
             sys.stdout.flush()
 
-def get_path():
-    """Get path to current dir.
 
-    Returns:
-        str: Path
-    """
-    current_folder = os.getcwd()
-    parent_folder = os.path.dirname(current_folder)
-    return parent_folder
 
 def main():
     """Main function."""
