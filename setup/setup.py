@@ -63,10 +63,9 @@ def modify_start_startup_win(launch_start):
     Args:
         launch_start (_type_): _description_
     """
-    current_user = os.getlogin()
     if launch_start:
         try:
-            destination_folder = f'C:\\Users\\{current_user}\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\launch_start.bat'
+            destination_folder = os.path.join('C:\\Users', os.getlogin(), 'AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup', 'launch_start.bat')
             os.remove(destination_folder)
         except FileNotFoundError:
             print("FILE NOT FOUND",flush=True)
@@ -77,7 +76,7 @@ def modify_start_startup_win(launch_start):
     print(SUCCESS_MESSAGE,flush=True)
     update_toml("launch_start",not launch_start)
 
-def modify_display():
+def modify_display(*args, **kwargs):
     """This function is used for modifying the configuration of the display."""
     _,launch_start,defaul_start,display_console = get_data()
     path = get_path()
@@ -93,7 +92,6 @@ def modify_display():
             print(SUCCESS_MESSAGE,flush=True)
         update_toml("display_console",not display_console)
         update_toml("logs_file",True,True)
-
     elif(defaul_start in ('T','N') and display_console is True):
         print(colorama.Fore.RED + colorama.Style.BRIGHT +"\n You can't set the display to False with default startup to Text \n if you can set to display true first set the interface to text or remove the dafault ",flush=True)
     else:
@@ -108,38 +106,52 @@ def modify_display():
 
 #* ----- SYSTEM ------
 
-def take_value(question:str,option:tuple) -> str:
-    """This function display the string and take the input for the setup.
+def get_user_input():
+    """Retrieve user input."""
+    sys.stdout.write(colorama.Fore.CYAN + colorama.Style.BRIGHT + '''[ - ] Input: ''')
+    sys.stdout.flush()
+    return sys.stdin.readline().strip().upper()
+
+
+def invalid_choice():
+    """Invalid Choice Error Message."""
+    sys.stdout.write(ERROR_MESSAGE)
+    sys.stdout.flush()
+
+def modify_startup(launch_start,display_console, *args, **kwargs):
+    """Modify startup settings for text and speech interfaces.
 
     Args:
-        question (str): the question to take
-        option (tuple): the option for response
+        launch_start (_type_): _description_
+    """
+    if platform.system() == "Windows":
+        modify_start_startup_win(launch_start)
+    else:
+        modify_start_startup_lin(launch_start, display_console)
 
-    Returns:
-        str: the response choised
+def exit_setup(*args, **kwargs):
+    """Exit Setup."""
+    sys.exit(0)
+
+
+def modify_default_startup(defaul_start,*args, **kwargs):
+    """Modify the default startup.
+
+    Args:
+        defaul_start (bool): the default startup
     """
     while True:
-        sys.stdout.write(colorama.Fore.CYAN + colorama.Style.BRIGHT +
-                        f'''\n{question} ''')
-        sys.stdout.flush()
-        choise = sys.stdin.readline().strip().upper()
-        if choise in option:
-            break
-        sys.stdout.write(ERROR_MESSAGE)
-        sys.stdout.flush()
-    sys.stdout.write(colorama.Fore.GREEN + colorama.Style.BRIGHT + '\x1b[A' + f"{question} {choise}" + '\r')
-    sys.stdout.flush()
-    return choise
-
-def get_path():
-    """Get path to current dir.
-
-    Returns:
-        str: Path
-    """
-    current_folder = os.getcwd()
-    parent_folder = os.path.dirname(current_folder)
-    return parent_folder
+        choice = input("You want to eliminate the possibility of a default startup (Y/N): ").upper()
+        if(choice in ('Y','N')):
+            if choice == 'N':
+                new_val = 'R' if defaul_start == 'T' else 'T'
+                update_toml("defaul_start", new_val)
+            else:
+                update_toml("defaul_start", 'N')
+            print(SUCCESS_MESSAGE, flush=True)
+            return
+        else:
+            invalid_choice()
 
 def check_system() -> str:
     """Check on what platform the script was run on.
@@ -170,6 +182,16 @@ def get_data():
 
     return first_setup,launch_start,defaul_start,display_console
 
+def get_path():
+    """Get path to current dir.
+
+    Returns:
+        str: Path
+    """
+    current_folder = os.getcwd()
+    parent_folder = os.path.dirname(current_folder)
+    return parent_folder
+
 def update_toml(params: str, new_value: str,debug:bool =False):
     """Update TOML file from params dictonary.
 
@@ -189,7 +211,7 @@ def update_toml(params: str, new_value: str,debug:bool =False):
     with open(file_path, "w",encoding='utf-8') as file:
         file.write(new_content)
 
-def show_settings():
+def show_settings(*args, **kwargs):
     """This function shows all settings."""
     _,launch_start,defaul_start,display_console = get_data()
     mss_list = ["The option for the launch start with the system is: ","The option for the default launch is: ","The option for the show of display is: ",]
@@ -206,15 +228,18 @@ def create_bash(display,path_directory):
         display (_type_): _description_
         path_directory (_type_): _description_
     """
-    if display:
-        with open("boot.sh","w") as file:
+    with open("boot.sh","w") as file:
+        if not display:
             file.write(f'''
+#!/bin/bash
+echo Virgil is starting up
 cd {path_directory}
 gnome-terminal -- poetry run python3 launch.py
 ''')
-    else:
-        with open("boot.sh","w") as file:
+        else:
             file.write(f'''
+#!/bin/bash
+echo Virgil is starting up
 cd {path_directory}
 nohup poetry run python3 launch.py
 ''')
@@ -256,19 +281,41 @@ def modify_start_startup_lin(launch_start,display):
         display (_type_): _description_
     """
     if launch_start:
-        command = f"echo >> home/{os.getlogin()}/.config/autostart/virgil.desktop"
+        command = f"rm /home/{os.getlogin()}/.config/autostart/virgil.desktop"
         try:
             subprocess.run(command, shell=True,check=True)
         except subprocess.CalledProcessError as error:
             print(f"Error on Crontab: {error}",flush=True)
-            update_toml("launch_start",not launch_start)
+        update_toml("launch_start",not launch_start)
     else:
         linux_function(get_path(),display=display)
         update_toml("launch_start",not launch_start)
+    print(SUCCESS_MESSAGE,flush=True)
 
+def take_value(question:str,option:tuple) -> str:
+    """This function display the string and take the input for the setup.
 
+    Args:
+        question (str): the question to take
+        option (tuple): the option for response
 
-#* ---- FIRST START ------
+    Returns:
+        str: the response choised
+    """
+    while True:
+        sys.stdout.write(colorama.Fore.CYAN + colorama.Style.BRIGHT +
+                        f'''\n{question} ''')
+        sys.stdout.flush()
+        choise = sys.stdin.readline().strip().upper()
+        if choise in option:
+            break
+        sys.stdout.write(ERROR_MESSAGE)
+        sys.stdout.flush()
+    sys.stdout.write(colorama.Fore.GREEN + colorama.Style.BRIGHT + '\x1b[A' + f"{question} {choise}" + '\r')
+    sys.stdout.flush()
+    return choise
+
+# ---- FIRST START ------
 
 def first_start(cli,parent_folder):
     """First start of the project.
@@ -282,9 +329,10 @@ def first_start(cli,parent_folder):
     choise = take_value("(-) 1. Do you want virgil to be started at system startup? (default no) (Y/N):",('N','Y'))
     if choise =="Y":
         update_toml("launch_start",True)
-        cli(parent_folder)
+        cli(parent_folder,True)
     else:
         update_toml("launch_start",False)
+    choise  = take_value("(-) 2. Do you want to specify a default interface type? (default no) (Y/N): ",('T','R'))
     if choise == 'Y':
         choise  = take_value("(-) 2.1 Text interface or voice interface? (T/R): ",('T','R'))
         update_toml("defaul_start",choise)
@@ -299,57 +347,26 @@ def first_start(cli,parent_folder):
 
     update_toml("first_setup",False)
 
+#* ---- SETUP ------
+def setup():
+    """This function sets up various configurations based on user input."""
+    commands = {
+        '0': show_settings,
+        '1': modify_startup,
+        '2': modify_default_startup,
+        '3': modify_display,
+        '-1': exit_setup
+    }
 
-
-def setup(launch_start,defaul_start,display_console):
-    """This function is used for setting up all of the things that are needed before running the programm. It will create a config file and also check whether.
-
-    Args:
-        launch_start (bool): _description_
-        defaul_start (str): _description_
-        display_console (bool): _description_
-    """
     while True:
+        _, launch_start,defaul_start,display_console = get_data()
         sys.stdout.write(MENU_BANNER)
         sys.stdout.flush()
 
-        sys.stdout.write(colorama.Fore.CYAN + colorama.Style.BRIGHT + '''[ - ] Input: ''')
-        sys.stdout.flush()
-        choise = sys.stdin.readline().strip().upper()
+        choice = get_user_input()
 
-        if choise == '0':
-            show_settings()
-
-        elif choise == '1':
-            if platform.system() == "Windows":
-                modify_start_startup_win(launch_start)
-            else:
-                modify_start_startup_lin(launch_start,display_console)
-
-        elif choise == '2':
-            while True:
-                choise = input("You want to eliminate the possibility of a default startup (Y/N): ").upper()
-                if choise == 'Y':
-                    break
-                sys.stdout.write(ERROR_MESSAGE)
-                sys.stdout.flush()
-
-            if choise == 'N':
-                if defaul_start == 'T':
-                    update_toml("defaul_start",'R')
-                else:
-                    update_toml("defaul_start",'T')
-            else:
-                update_toml("defaul_start",'N')
-            print(SUCCESS_MESSAGE,flush=True)
-
-        elif choise == '3':
-            modify_display()
-        elif choise == '-1':
-            return
-        else:
-            sys.stdout.write(ERROR_MESSAGE)
-            sys.stdout.flush()
+        action = commands.get(choice, invalid_choice)
+        action(launch_start, defaul_start, display_console)
 
 
 
@@ -360,7 +377,7 @@ def main():
           pyfiglet.figlet_format("  Virgil", font="doh", width=200), flush=True)
 
     # ------ SETUP -------
-    first_setup,launch_start,defaul_start,display_console = get_data()
+    first_setup,_,_,_ = get_data()
     parent_folder = get_path()
     system = check_system()
 
@@ -374,14 +391,14 @@ def main():
           justify="center", font="digital"),flush=True)
     print(MAIN_BANNER, flush=True)
 
-    # ------- END SETUP -----
+    #* ------- END SETUP -----
 
     if first_setup :
         if system == "L":
             subprocess.run("sudo apt install python3-pyaudio;sudo apt install ffmpeg",shell=True,check=True)
         first_start(cli,parent_folder)
     else:
-        setup(launch_start,defaul_start,display_console)
+        setup()
 
 
 

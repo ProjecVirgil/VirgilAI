@@ -6,10 +6,12 @@
 - **[How Virgil Works](#💻-how-virgilai-works)**
 - **[Installation](#installation)**
 - **[Setup](#📖-setup)**
+  - [Poetry Shell](#poetry-shell)
   - [Guide to settings](#guide-to-local-settings)
   - [ElevenLabs](#guide-to-elevenlabs)
 - **[First start](#first-start)**
   - [How to use](#how-to-use)
+  - [Possible python bugs](#python-bugs)
 - **[Problem with mic?](#🎙️-guide-to-microphones)**
 - **[Why all this key?](#why-the-key-of-openai-elevenlabs-and-merros❓)**
   - [Generate other key](#🔁-change-the-key)
@@ -62,6 +64,7 @@ Virgilo or Virgil is a virtual assistant like Alexa or Google Home, but integrat
 ## 💻 How VirgilAI works  
 
 **white text**
+
 ### Example of communication with API and APP
 
 <p align="center">
@@ -104,6 +107,21 @@ Virgilo or Virgil is a virtual assistant like Alexa or Google Home, but integrat
  1. Open a terminal to the VirgilAI/setup directory and run the command ` pip install -r requirements.txt ` This will install some requirements for running the setup file.
  2. Still in the VirgilAI folder, run the command `python or python3 setup.py`.
  3. Once we have set up the environment through the setup programme, we can run virgilio **BUT BE AWARE THERE ARE SO MANY OTHER THINGS WE CAN SET UP**.
+
+### Poetry Shell
+
+The poetry shell is a shell that allows you to use the dependencies installed via pyproject.toml and setup [(you can find more information here)](https://python-poetry.org/docs/).
+
+If you happen to find yourself with the terminal like this:
+![img](/asset/img_example_terminal.jpg)
+
+It means that in you are using the poetry shell and you have certain **dependencies** installed in the **poetry environment** dedicated to that particular configuration file (ex: pyproject.toml)
+
+**NOTES AND OPERATION**
+
+You can use any command in your operating system as if you were using a normal terminal, such as: ls,cd,mkdir,etc.
+**And for exit from this shell use the command `exit`**
+
 
 ### Guide to **LOCAL** settings
 
@@ -213,6 +231,11 @@ if __name__ == "__main__":
 
 The tool is not **100%** accurate, but it's a good way to get a **starting** idea if you see that Virgil is not accurate enough in recognising when you speak and when you don't try to adjust.
 
+### Python Bugs
+
+If Python give this error `ImportError: DLL load failed while importing _argkmin: File name or extension too long.`
+
+Try to using an [venv](https://docs.python.org/3/library/venv.html) **environment** to work around the path error, so activate the env and **run everything from there.**
 ### Why the key of OpenAI, ElevenLabs and Merros❓
 
 - **Virgil**: The Virgilio configuration key is used to synchronise all online settings...  **DO NOT GIVE THE KEY TO ANYONE OR EXPORT IT TO ANYONE OR YOU WILL GET ALL YOUR KEYS** (OpenAI,Elevenlabs etc)
