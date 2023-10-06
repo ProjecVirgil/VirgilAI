@@ -3,6 +3,7 @@ import logging
 from colorama import Fore, Style, init
 import tomli
 
+
 # ---- This file make the preset for Log ----
 
 class CustomFormatter(logging.Formatter):
@@ -19,17 +20,17 @@ class CustomFormatter(logging.Formatter):
     green = Style.BRIGHT + Fore.GREEN
     black = Style.BRIGHT + Fore.BLACK
     bold_red = Style.BRIGHT + Fore.RED
-    white = Style.BRIGHT +Fore.WHITE
+    white = Style.BRIGHT + Fore.WHITE
 
     date = "%(asctime)s - "
-    level_name= "%(levelname)s - "
-    message  = "%(message)s - "
+    level_name = "%(levelname)s - "
+    message = "%(message)s - "
     filename = "(%(filename)s:%(lineno)d)"
 
     FORMATS = {
-        logging.DEBUG: black + date +  grey + level_name + white + message + green + filename,
-        logging.INFO: black + date +  blue + level_name + white + message + green + filename,
-        logging.WARNING:black + date + yellow + level_name + white + message + green + filename,
+        logging.DEBUG: black + date + grey + level_name + white + message + green + filename,
+        logging.INFO: black + date + blue + level_name + white + message + green + filename,
+        logging.WARNING: black + date + yellow + level_name + white + message + green + filename,
         logging.ERROR: black + date + red + level_name + white + message + green + filename,
         logging.CRITICAL: black + date + bold_red + level_name + white + message + green + filename,
     }
@@ -47,6 +48,7 @@ class CustomFormatter(logging.Formatter):
         formatter = logging.Formatter(log_fmt)
         return formatter.format(record)
 
+
 # Initialize colorama
 init(autoreset=True)
 
@@ -55,7 +57,7 @@ for handler in logging.root.handlers[:]:
     logging.root.removeHandler(handler)
 
 toml_path = 'pyproject.toml'
-with open(toml_path,"rb") as file:
+with open(toml_path, "rb") as file:
     metadata = tomli.load(file)
     LEVEL = metadata["tool"]["debug"]["level_debug"].upper()
     in_file = metadata["tool"]["debug"]["logs_file"]
@@ -73,5 +75,3 @@ else:
     handler = logging.StreamHandler()
     handler.setFormatter(CustomFormatter())
     logging.getLogger().addHandler(handler)
-
-

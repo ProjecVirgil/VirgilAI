@@ -11,18 +11,44 @@ from lib.packages_utility.utils import Utils
 
 from lib.packages_main.choose_command import CommandSelection
 
+
 # ----- File to elaborate the input  -----
+
+def update_json_value(key: str, new_value: bool) -> None:
+    """This function is responsible for updating the value of a key in the json file.
+
+    Args:
+        key (str): the command
+        new_value (bool): True or false
+    """
+    with open("connect/command.json", encoding="utf8") as file:
+        data = json.load(file)
+    if key in data:
+        data[key] = new_value
+    else:
+        logging.warning(f"The key '{key}' dont exist in the file JSON."),
+    with open("connect/command.json", 'w', encoding="utf8") as file:
+        json.dump(data, file, indent=4)
+
+
+def check_event() -> None:
+    """Check if there is an event."""
+    logging.debug("update the reminder")
+    with open("connect/reminder.txt", "w", encoding="utf8") as file:
+        file.write("0")
+
 
 class Process:
     """This class is responsible for processing the user's command and returning a response from Virgil API and other APIs."""
-    def __init__(self,settings) -> None:
+
+    def __init__(self, settings) -> None:
         """Init the class.
 
         Args:
             settings (Settings): The dataclasses of settings
         """
         self.data_empty = {
-        "0": [None, None, True]
+            "0": [None, None, True]
         }
         nltk.download('punkt')
         nltk.download('stopwords')
@@ -34,23 +60,7 @@ class Process:
 
         self.word_activation = settings.word_activation
 
-    def update_json_value(self,key:str, new_value:bool) -> None:
-        """This function is responsible for updating the value of a key in the json file.
-
-        Args:
-            key (str): the command
-            new_value (bool): True or false
-        """
-        with open("connect/command.json",encoding="utf8") as file:
-            data = json.load(file)
-        if key in data:
-            data[key] = new_value
-        else:
-            logging.warning(f"The key '{key}' dont exist in the file JSON."),
-        with open("connect/command.json", 'w',encoding="utf8") as file:
-            json.dump(data, file, indent=4)
-
-    def clean_command(self,command:str) -> str:
+    def clean_command(self, command: str) -> str:
         """Delete the word activation and strip from the command.
 
         Args:
@@ -64,10 +74,10 @@ class Process:
             logging.debug(f" command processed: {command} ")
             return command
         except IndexError:
-            #If command contain only virgil word
+            # If command contain only virgil word
             return command
 
-    def send(self,command) -> None:
+    def send(self, command) -> None:
         """Send the command in the process file (choose_command.py) for the elaboration.
 
         Args:
@@ -75,7 +85,7 @@ class Process:
         """
         command = self.clean_command(command)
         res = self.command_selection.send_command(command)
-        with open("connect/res.json", 'w',encoding="utf8") as file:
+        with open("connect/res.json", 'w', encoding="utf8") as file:
             data = {
                 "0": [command, res, False]
             }
@@ -87,6 +97,7 @@ class Process:
         Args:
             threading (Thread)
         """
+
         def __init__(self, logger):
             """Init the class.
 
@@ -97,24 +108,18 @@ class Process:
             self.daemon = True
             self.logger = logger
 
-        def check_event(self) -> None:
-            """Check if there is an event."""
-            logging.debug("update the reminder")
-            with open("connect/reminder.txt", "w",encoding="utf8") as file:
-                file.write("0")
-
         def run(self) -> None:
             """Run the function."""
-            self.check_event()
+            check_event()
 
     def main(self) -> None:
         """Main method of the program."""
         logging.info(Fore.GREEN + " THE ASSISTENT IS ONLINE  " + Fore.BLUE)
-        self.utils.clean_buffer(data_empty=self.data_empty,file_name="res")
+        self.utils.clean_buffer(data_empty=self.data_empty, file_name="res")
         thread = self.EventThread(logging)
         thread.start()
         while True:
-            with open("connect/command.json",encoding="utf8") as commands:
+            with open("connect/command.json", encoding="utf8") as commands:
                 command = commands.read()
                 if "spegniti" in command:
                     command_to_elaborate = "virgilio spegniti"
@@ -123,6 +128,6 @@ class Process:
             if "false" in command and command is not None:
                 logging.debug(f" command processed: {command_to_elaborate}")
                 self.send(command_to_elaborate)
-                self.update_json_value(command_to_elaborate, True)
+                update_json_value(command_to_elaborate, True)
             else:
                 pass

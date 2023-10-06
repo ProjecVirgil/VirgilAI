@@ -10,19 +10,20 @@ import json
 
 import tomli
 import pyfiglet
-from colorama import Fore,Style
+from colorama import Fore, Style
 
 import lib.packages_utility.logger
 import logging
 from lib.packages_utility.utils import init_settings
-from lib.packages_utility.vectorize import GloVeVectorizer,sentence_to_vec   # noqa: F401
+from lib.packages_utility.vectorize import GloVeVectorizer, sentence_to_vec  # noqa: F401
 from lib.packages_utility.request import MakeRequests
 
 
-
 # ---- This file launch all the file for making Virgilio work  ----
+
+
 def check_system():
-    """Check if system is windows or linux and return a string with it's name clear command.
+    """Check if system is windows or linux and return a string with it is name clear command.
 
     Returns:
         str or int: If the system is recognize return a correct command for the OS
@@ -30,12 +31,12 @@ def check_system():
     if SYSTEM == 'Windows':
         return "cls"
     if SYSTEM in ('Darwin', 'Linux'):
-        # Esecuzione su macOS
         return "clear"
     logging.critical(" Unrecognized operating system.Unable to start the corresponding terminal"),
     return 404
 
-def print_banner(command_cleaner:str):
+
+def print_banner(command_cleaner: str):
     """Print the main banner of Virgil.
 
     Args: COMMAND_CLEANER (str): The command for clear the console
@@ -43,39 +44,41 @@ def print_banner(command_cleaner:str):
     delay = 0.1
     counter = 0
     for i in BANNER_MESSAGE:
-        subprocess.run(command_cleaner, shell=True,check=False)
-        print(Style.BRIGHT+ Fore.MAGENTA + pyfiglet.figlet_format(i),flush=True)
+        subprocess.run(command_cleaner, shell=True, check=False)
+        print(Style.BRIGHT + Fore.MAGENTA + pyfiglet.figlet_format(i), flush=True)
         if counter == 11:
-            delay  = 0.2
+            delay = 0.2
         elif counter == 12:
-            delay  = 0.25
+            delay = 0.25
         elif counter == 13:
-            delay  = 0.3
+            delay = 0.3
         elif counter == 14:
-            delay  = 0.35
+            delay = 0.35
         elif counter == 15:
-            delay  = 0.4
+            delay = 0.4
         time.sleep(delay)
-        counter+=1
+        counter += 1
 
-def rainbow(command_cleanear:str):
+
+def rainbow(command_cleaner: str):
     """Animation rainbow on the first banner.
 
-    Args: commandCleanear (str): The command for clear the console
+    Args: command cleaner (str): The command for clear the console
     """
     delay = 0.1
-    colori = [Fore.RED,Fore.YELLOW,Fore.GREEN,Fore.MAGENTA,Fore.CYAN,Fore.WHITE]
+    color = [Fore.RED, Fore.YELLOW, Fore.GREEN, Fore.MAGENTA, Fore.CYAN, Fore.WHITE]
     for _ in range(16):
-        subprocess.run(command_cleanear,shell=True,check=False)
+        subprocess.run(command_cleaner, shell=True, check=False)
         print(
-        Style.BRIGHT +
-        random.choice(colori) +
-        pyfiglet.figlet_format(BANNER_MESSAGE[-1]),flush=True
+            Style.BRIGHT +
+            random.choice(color) +
+            pyfiglet.figlet_format(BANNER_MESSAGE[-1]), flush=True
         )
         time.sleep(delay)
-    subprocess.run(command_cleanear, shell=True,check=False)
-    print(Style.BRIGHT +  Fore.MAGENTA  + pyfiglet.figlet_format(BANNER_MESSAGE[-1]),
+    subprocess.run(command_cleaner, shell=True, check=False)
+    print(Style.BRIGHT + Fore.MAGENTA + pyfiglet.figlet_format(BANNER_MESSAGE[-1]),
           flush=True)
+
 
 def install_libraries():
     """Install and check all libraries needed by virgil.
@@ -98,21 +101,23 @@ def create_account() -> str:
 
     logging.warning(f"KEEP YOUR KEY {key} DON'T GIVE IT TO ANYONE")
 
-    with open(KEY_FILE,'w',encoding="utf8") as file_key:
+    with open(KEY_FILE, 'w', encoding="utf8") as file_key:
         file_key.write(str(key))
     _ = input(logging.warning(
         'Now download the Virgil app on your Android device, go to the configuration page and enter this code in the appropriate field, once done you will be able to change all Virgil settings remotely, once done press any button: '))
     logging.info("Synchronizing your account settings")
     user = request_maker.get_user_settings(key)
 
-    with open(SETTINGS_FILE,'w',encoding="utf8") as file:
-        json.dump(user,file,indent=4)
+    with open(SETTINGS_FILE, 'w', encoding="utf8") as file_setting:
+        json.dump(user, file_setting, indent=4)
 
     if user == 'User not found':
         logging.error("User not found")
-        logging.error("There is a problem with your key try deleting it and restarting the launcher if the problem persists contact support")
+        logging.error(
+            "There is a problem with your key try deleting it and restarting the launcher if the problem persists contact support")
         sys.exit(1)
     return key
+
 
 def log_in() -> str:
     """Log in to an existing account using its private key saved on disk (setup/key.txt).
@@ -120,18 +125,20 @@ def log_in() -> str:
     Returns:
         str: return the key of account created
     """
-    with open(KEY_FILE,encoding="utf8") as file_key:
+    with open(KEY_FILE, encoding="utf8") as file_key:
         logging.info("I pick up the key for synchronization")
         key = file_key.readline()
         logging.info("Synchronizing your account settings")
         user = request_maker.get_user_settings(key)
-    with open(SETTINGS_FILE,'w',encoding="utf8") as file:
-        json.dump(user,file,indent=4)
-    if user == 'User not found' :
+    with open(SETTINGS_FILE, 'w', encoding="utf8") as file_setting:
+        json.dump(user, file_setting, indent=4)
+    if user == 'User not found':
         logging.error("User not found")
-        logging.error("There is a problem with your key try deleting it and restarting the launcher if the problem persists contact support"),
+        logging.error(
+            "There is a problem with your key try deleting it and restarting the launcher if the problem persists contact support"),
         sys.exit(1)
     return key
+
 
 def choise_input():
     """This function is used when you want to choose between the text input or Voice input.
@@ -140,13 +147,15 @@ def choise_input():
         str: the type of input
     """
     while True:
-        text_or_speech = str(input(Fore.GREEN + Style.BRIGHT + "You want a text interface (T) or recognise interface(R) T/R: " + Style.RESET_ALL)).upper()
+        text_or_speech = str(input(
+            Fore.GREEN + Style.BRIGHT + "You want a text interface (T) or recognise interface(R) T/R: " + Style.RESET_ALL)).upper()
         if text_or_speech == 'T':
             return 1
         elif text_or_speech == 'R':
             return 0
         else:
             logging.warning(" Select a valid choice please")
+
 
 def main():
     """Main function that will be called when running this script from command line."""
@@ -160,41 +169,39 @@ def main():
     rainbow(command_cleaner)
     install_libraries()
 
-    key = create_account() if (os.path.getsize(KEY_FILE)  == 0 ) or not os.path.exists(KEY_FILE) else log_in()
+    key = create_account() if os.path.getsize(KEY_FILE) == 0 or not os.path.exists(KEY_FILE) else log_in()
 
     if not os.path.exists("model/model_en.pkl"):
-        logging.info(" Start the download of english model this operation will take some time, but will only be done once ")
+        logging.info("Start the download of english model this operation will take some time, but will only be done "
+                     "once ")
         request_maker.download_model_en()
         logging.info(" Download finish")
 
+    # *INIT ALL PRINCIPLE CLASS
 
-    #*INIT ALL PRINCIPLE CLASS
     output = Output(settings)
     process = Process(settings)
     text_input = TextInput(word_activation=settings.word_activation)
     vocal_input = VocalInput(settings)
-
-
     thread_1 = 0
     thread_2 = 0
     thread_3 = 0
-
-    if(defaul_start == 'N'):
+    if default_start == 'N':
         text_or_speech = choise_input()
         if text_or_speech == 1:
-                thread_1 = threading.Thread(target=text_input.text)
-                thread_2 = threading.Thread(target=process.main)
-                thread_3 = threading.Thread(target=output.out)
+            thread_1 = threading.Thread(target=text_input.text)
+            thread_2 = threading.Thread(target=process.main)
+            thread_3 = threading.Thread(target=output.out)
         elif text_or_speech == 0:
-                thread_1 = threading.Thread(target=vocal_input.listening)
-                thread_2 = threading.Thread(target=process.main)
-                thread_3 = threading.Thread(target=output.out)
+            thread_1 = threading.Thread(target=vocal_input.listening)
+            thread_2 = threading.Thread(target=process.main)
+            thread_3 = threading.Thread(target=output.out)
         else:
-                logging.warning(" Select a valid choice please")
-    elif(defaul_start == 'T'):
-         thread_1 = threading.Thread(target=text_input.text)
-         thread_2 = threading.Thread(target=process.main)
-         thread_3 = threading.Thread(target=output.out)
+            logging.warning(" Select a valid choice please")
+    elif default_start == 'T':
+        thread_1 = threading.Thread(target=text_input.text)
+        thread_2 = threading.Thread(target=process.main)
+        thread_3 = threading.Thread(target=output.out)
     else:
         thread_1 = threading.Thread(target=vocal_input.listening)
         thread_2 = threading.Thread(target=process.main)
@@ -215,21 +222,21 @@ if __name__ == '__main__':
     os.chdir(script_dir)
 
     toml_path = 'pyproject.toml'
-    with open(toml_path,"rb") as file:
+    with open(toml_path, "rb") as file:
         metadata = tomli.load(file)
         SETTINGS_FILE = metadata["tool"]["path"]["setting_path"]
         KEY_FILE = metadata["tool"]["path"]["key_path"]
         launch_start = metadata["tool"]["config_system"]["launch_start"]
-        defaul_start = metadata["tool"]["config_system"]["defaul_start"]
+        default_start = metadata["tool"]["config_system"]["defaul_start"]
         display_console = metadata["tool"]["config_system"]["display_console"]
 
-    #*  INIT LOGGER AND REQUEST_MAKER
+    # *  INIT LOGGER AND REQUEST_MAKER
     settings = init_settings()
     request_maker = MakeRequests()
-    #* CONST
-    BANNER_MESSAGE = ['W','We','Wel','Welc','Welco','Welcom','Welcome','Welcome ',
-                      'Welcome t','Welcome to','Welcome to ','Welcome to V',
-                      'Welcome to Vi','Welcome to Vir','Welcome to Virg',
-                      'Welcome to Virgi','Welcome to Virgil']
+    # * CONST
+    BANNER_MESSAGE = ['W', 'We', 'Wel', 'Welc', 'Welco', 'Welcom', 'Welcome', 'Welcome ',
+                      'Welcome t', 'Welcome to', 'Welcome to ', 'Welcome to V',
+                      'Welcome to Vi', 'Welcome to Vir', 'Welcome to Virg',
+                      'Welcome to Virgi', 'Welcome to Virgil']
     SYSTEM = platform.system()
     main()

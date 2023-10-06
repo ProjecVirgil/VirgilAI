@@ -5,11 +5,13 @@ from requests_html import HTMLSession
 
 from lib.packages_utility.logger import logging
 
+
 # ---- This file generate a random news by GoogleNews ----
 
 class Newsletter:
     """This class is used to recover a news from google api."""
-    def __init__(self,language,synonyms_news) -> None:
+
+    def __init__(self, language, synonyms_news) -> None:
         """Init the language,logger class and some synonymus.
 
         Args:
@@ -20,7 +22,7 @@ class Newsletter:
         self.url_random = f"https://news.google.com/rss?oc=5&hl={self.lang}&gl={self.lang.upper()}&ceid={self.lang.upper()}:{self.lang}"
         self.synonyms_news = synonyms_news
 
-    def get_topic(self,command) -> None or str:
+    def get_topic(self, command) -> None or str:
         """This function return the topic of the command received as parameter.
 
         Args:
@@ -40,7 +42,7 @@ class Newsletter:
         logging.debug(f" topic choised: {topic}")
         return topic
 
-    def create_news(self,command:str) -> str:
+    def create_news(self, command: str) -> str:
         """This method will be called when you want to retrieve some news about something.
 
         Args:
@@ -49,18 +51,18 @@ class Newsletter:
         Returns:
             str: The news generated
         """
-        session=HTMLSession()
-        news= []
+        session = HTMLSession()
+        news = []
         topic = self.get_topic(command)
 
         if topic is not None:
             url_with_topic = f"https://news.google.com/rss/search?q={topic}&hl=it&gl=IT&ceid=IT:it"
-            request=session.get(url_with_topic)
+            request = session.get(url_with_topic)
             for title in request.html.find('title'):
                 news.append(title.text)
             news_selected = random.choice(news)
         else:
-            request=session.get(self.url_random)
+            request = session.get(self.url_random)
             for title in request.html.find('title'):
                 news.append(title.text)
             news_selected = random.choice(news)

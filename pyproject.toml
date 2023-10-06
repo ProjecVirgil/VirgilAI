@@ -15,9 +15,9 @@ key_path = "setup/key.txt"
 setting_path = "setup/settings.json"
 
 [tool.config_system]
-first_setup = true  #Se è il primo setup allora non chiederà cosa si vuole modificare 
-launch_start = false
-defaul_start = "N" # T (text) or R (voice) N (Lo chiede)
+first_setup = false  #Se è il primo setup allora non chiederà cosa si vuole modificare 
+launch_start = true
+defaul_start = "T" # T (text) or R (voice) N (Lo chiede)
 display_console = true # If the interface is voice do i have to show the console?
 
 [tool.debug]
@@ -43,13 +43,14 @@ speechrecognition = "^3.10.0"
 nltk = "^3.8.1"
 pygame = "^2.5.2"
 yt-dlp = "^2023.9.24"
-gtts = "^2.3.2"
+gtts = "^2.4.0"
 elevenlabs = "^0.2.26"
 geopy = "^2.4.0"
 requests-html = "^0.10.0"
 scipy = "1.10.0"
 tomli = "^2.0.1"
 gensim = "^4.3.2"
+tomlkit = "^0.12.1"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.0.291"

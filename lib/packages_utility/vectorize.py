@@ -2,6 +2,7 @@
 import numpy as np
 from sklearn.base import TransformerMixin
 
+
 def sentence_to_vec(sentence, model):
     """Transform the sentence in vector.
 
@@ -15,12 +16,14 @@ def sentence_to_vec(sentence, model):
     vectors = [model[w] for w in words if w in model]
     return np.mean(vectors, axis=0) if vectors else np.zeros(model.vector_size)
 
+
 class GloVeVectorizer(TransformerMixin):
     """This class is used to convert a list of sentences into their respective vector representations using the pretrained glove word embeddings.
 
     Args:
         TransformerMixin (TransformerMixin): The transformer for the model
     """
+
     def __init__(self, model):
         """Init the model and the size of vector.
 

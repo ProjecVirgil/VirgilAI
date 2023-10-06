@@ -10,16 +10,17 @@ from lib.packages_utility.logger import Logger
 # ---- This file controll the domotic meross ----
 
 
-#Open file whith key api openai
+# Open file whith key api openai
 
-with open("setup/settings.json",encoding="utf8") as f:
+with open("setup/settings.json", encoding="utf8") as f:
     secrets = json.load(f)
     EMAIL = secrets["merrosEmail"]
     PASSWORD = secrets["merrosPassword"]
 
 logger = Logger()
 
-async def main(status:bool):
+
+async def main(status: bool):
     """_summary_.
 
     Args:
@@ -27,7 +28,7 @@ async def main(status:bool):
     """
     print(logger.log(" Funzione di turn main"))
     # Setup the HTTP client API from user-password
-    http_api_client=await MerossHttpClient.async_from_user_password(email=EMAIL, password=PASSWORD)
+    http_api_client = await MerossHttpClient.async_from_user_password(email=EMAIL, password=PASSWORD)
 
     # Setup and start the device manager
     manager = MerossManager(http_client=http_api_client)
@@ -47,7 +48,6 @@ async def main(status:bool):
         # The first time we play with a device, we must update its status
         await dev.async_update()
 
-
         # We can now start playing with that
         if status:
             print(f"Turning on {dev.name}...")
@@ -61,7 +61,7 @@ async def main(status:bool):
     await http_api_client.async_logout()
 
 
-def turn(command:str):
+def turn(command: str):
     """_summary_.
 
     Args:
@@ -75,7 +75,7 @@ def turn(command:str):
         status = False
     else:
         print(logger.log(" Comando non trovato"))
-        status =  None
+        status = None
 
     # Create and run a new event loop for this turn() call
     print(logger.log(" Creazione chiamata"))

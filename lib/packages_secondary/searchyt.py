@@ -4,7 +4,38 @@ import yt_dlp
 from pygame.mixer import music
 
 from lib.packages_utility.logger import logging
+
+
 # ---- This file is for search music and video via yt ----
+
+def search_on_yt(topic: str) -> str | None:
+    """Search a song/video on youtube.
+
+    Args:
+        topic (str): the topic for the search
+
+    Raises:
+        Exception: Not video found
+
+    Returns:
+        str: The link for download
+    """
+    if topic != "None":
+        url = f"https://www.youtube.com/results?q={topic}"
+        count = 0
+        cont = requests.get(url, timeout=10)
+        data = cont.content
+        data = str(data)
+        lst = data.split('"')
+        for i in lst:
+            count += 1
+            if i == "WEB_PAGE_TYPE_WATCH":
+                break
+        if lst[count - 5] == "/results":
+            raise Exception("No Video Found for this Topic!")
+        return f"https://www.youtube.com{lst[count - 5]}"
+    return None
+
 
 class MediaPlayer:
     """This class will be used to play media files.
@@ -12,7 +43,8 @@ class MediaPlayer:
     This class will be used to play media files.like audio,
     video or playlist in the background using pygme mixer library.
     """
-    def __init__(self,synonimus:list) -> None:
+
+    def __init__(self, synonimus: list) -> None:
         """Init the class and the logger class.
 
         Args:
@@ -20,7 +52,7 @@ class MediaPlayer:
         """
         self.synonimus = synonimus
 
-    def get_topic(self,command:str) -> str or None:
+    def get_topic(self, command: str) -> str or None:
         """Get the topic for search on yt.
 
         Args:
@@ -29,6 +61,7 @@ class MediaPlayer:
         Returns:
             str: topic
         """
+        topic = ""
         for word in self.synonimus:
             if word in command:
                 topic = " ".join(command).split(word)[1]
@@ -37,35 +70,7 @@ class MediaPlayer:
             topic = None
         return topic
 
-    def search_on_yt(self,topic:str) -> str:
-        """Search a song/video on youtube.
-
-        Args:
-            topic (str): the topic for the search
-
-        Raises:
-            Exception: Not video found
-
-        Returns:
-            str: The link for download
-        """
-        if topic != "None":
-            url = f"https://www.youtube.com/results?q={topic}"
-            count = 0
-            cont = requests.get(url,timeout=10)
-            data = cont.content
-            data = str(data)
-            lst = data.split('"')
-            for i in lst:
-                count += 1
-                if i == "WEB_PAGE_TYPE_WATCH":
-                    break
-            if lst[count - 5] == "/results":
-                raise Exception("No Video Found for this Topic!")
-            return f"https://www.youtube.com{lst[count - 5]}"
-        return None
-
-    def download(self,url:str):
+    def download(self, url: str):
         """Download the audio from Youtube.
 
         Args:
@@ -93,7 +98,7 @@ class MediaPlayer:
         player_audio.load(file_name)
         player_audio.play()
 
-    def play_music(self,command):
+    def play_music(self, command):
         """Play Music based on command.
 
         Args:
@@ -101,7 +106,7 @@ class MediaPlayer:
         """
         topic = self.get_topic(command)
         logging.debug(f" topic selected: {topic}")
-        url = self.search_on_yt(topic)
+        url = search_on_yt(topic)
         logging.debug(f" url gererater: {url}")
         self.download(url)
         self.play()

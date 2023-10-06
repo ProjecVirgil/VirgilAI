@@ -5,10 +5,12 @@ from lib.packages_utility.logger import logging
 from lib.packages_utility.request import MakeRequests
 from lib.packages_secondary.calendar_rec import Calendar
 
+
 # ----- Calendar Event Function -----
 class EventScheduler:
     """This class is used to schedule calendar events for the user using the VirgilAPI and DB."""
-    def __init__(self,settings):
+
+    def __init__(self, settings):
         """Init the class."""
         self.request_maker = MakeRequests()
         self.calendar = Calendar(settings)
@@ -43,7 +45,7 @@ class EventScheduler:
         logging.info(f" {phrase}")
         return phrase
 
-    def get_date(self,command) -> str:
+    def get_date(self, command) -> str:
         """This function gets a date from the command line.
 
         Args:
@@ -52,19 +54,19 @@ class EventScheduler:
         Returns:
             str: The date recovered
         """
-        preset_date  = self.calendar.recov_preset_date(command)
+        preset_date = self.calendar.recov_preset_date(command)
         if preset_date is None:
             date = self.calendar.recover_date(command)
             try:
-                day,month,year = date.split("-")
+                day, month, year = date.split("-")
             except ValueError:
-                day,month,year = date.split(" ")
-            day,month = self.calendar.clear_number(day,month)
-            date = "-".join([day,month,year])
+                day, month, year = date.split(" ")
+            day, month = clear_number(day, month)
+            date = "-".join([day, month, year])
             return date
         return preset_date
 
-    def recognize_date(self,command) -> tuple:
+    def recognize_date(self, command) -> tuple:
         """Take the data and the event for send the request.
 
         Args:
@@ -77,10 +79,10 @@ class EventScheduler:
 
         for word in words:
             if word in command:
-                with open("connect/command.json",encoding="utf8") as commands:
+                with open("connect/command.json", encoding="utf8") as commands:
                     command_complete = commands.read()
                     event = "".join("".join(command_complete.split(word)[1]).split('":'))[:-7]
-                return word.split(" "),event
+                return word.split(" "), event
 
         date_record = []
         for element in command:
@@ -89,9 +91,9 @@ class EventScheduler:
                 if len(date_record) >= 3:
                     break
         event = " ".join(command).split(date_record[-1])
-        return date_record,event
+        return date_record, event
 
-    def add_events(self,command:str) -> str:
+    def add_events(self, command: str) -> str:
         """Add an event to a specific date.
 
         Args:
@@ -100,7 +102,7 @@ class EventScheduler:
         Returns:
             str: Final phrase to reprocude
         """
-        date,event = self.recognize_date(command)
+        date, event = self.recognize_date(command)
         date = self.get_date(date)
-        self.request_maker.create_events(event,date)
+        self.request_maker.create_events(event, date)
         return self.phrase_events[2]

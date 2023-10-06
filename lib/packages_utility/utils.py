@@ -6,16 +6,18 @@ from math import sin, cos, sqrt, atan2, radians
 from geopy.geocoders import Nominatim
 from lib import Settings
 
+
 # ---- This file convert all the number in word ----
 
 # Because the ElevenLabs TTS read the number only in english
 
 class Utils:
     """A class with utils function."""
+
     def __init__(self) -> None:
         """Init the logger class."""
 
-    def count_number(self,command) -> int:
+    def count_number(self, command) -> int:
         """Count how many numbers are there in a string.
 
         Args:
@@ -29,17 +31,17 @@ class Utils:
         number_find = re.findall(r'\d+', command)
         return len(number_find)
 
-    def clean_buffer(self,data_empty:dict,file_name:str) -> None:
+    def clean_buffer(self, data_empty: dict, file_name: str) -> None:
         """Clean buffer and save it to disk.
 
         Args:
             data_empty (dict): Un templete standard json for restore the file
             file_name (str): the name of file to restore
         """
-        with open(f"connect/{file_name}.json", 'w',encoding="utf8") as commands:
-            json.dump(data_empty,commands)
+        with open(f"connect/{file_name}.json", 'w', encoding="utf8") as commands:
+            json.dump(data_empty, commands)
 
-    def get_coordinates(self,city_name:str) -> tuple:
+    def get_coordinates(self, city_name: str) -> tuple:
         """Get coordinates from city name.
 
         Args:
@@ -56,7 +58,7 @@ class Utils:
 
         return None, None
 
-    def haversine_distance(self,coord1:tuple, coord2:tuple) -> float:
+    def haversine_distance(self, coord1: tuple, coord2: tuple) -> float:
         """Haversine distance between two points on earth.
 
         Args:
@@ -76,13 +78,13 @@ class Utils:
         # Haversine formula
         dlat = lat2 - lat1
         dlon = lon2 - lon1
-        a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
-        c = 2 * atan2(sqrt(a), sqrt(1-a))
+        a = sin(dlat / 2) ** 2 + cos(lat1) * cos(lat2) * sin(dlon / 2) ** 2
+        c = 2 * atan2(sqrt(a), sqrt(1 - a))
         distance = radius_earth * c
 
         return distance
 
-    def number_to_word(self,number) -> str:
+    def number_to_word(self, number) -> str:
         """Convert a number into words.
 
         Args:
@@ -94,7 +96,7 @@ class Utils:
         number = int(number)
         words_up_to_vents = [
             "zero", "uno", "due", "tre", "quattro", "cinque", "sei", "sette",
-            "otto", "nove","dieci", "undici", "dodici", "tredici", "quattordici",
+            "otto", "nove", "dieci", "undici", "dodici", "tredici", "quattordici",
             "quindici", "sedici", "diciassette", "diciotto", "diciannove", "venti"
         ]
 
@@ -164,12 +166,12 @@ def init_settings() -> Settings:
     Returns:
         Settings: Dataclasses
     """
-    with open("setup/settings.json",encoding="utf8") as file_settings:
-        #INIT FILE
+    with open("setup/settings.json", encoding="utf8") as file_settings:
+        # INIT FILE
         settings_file = json.load(file_settings)
         language = settings_file["language"]
-        with open(f'lang/{language}/{language}.json',encoding="utf8") as file_scripts:
-            #INIT FILE
+        with open(f'lang/{language}/{language}.json', encoding="utf8") as file_scripts:
+            # INIT FILE
             script = json.load(file_scripts)
             script_calendar = script["calendar"]
             script_command = script["command"]
@@ -181,38 +183,38 @@ def init_settings() -> Settings:
             script_wheather = script["wheather"]
             script_mediaplayer = script["mediaplayer"]
             return Settings(
-                    language=language,
-                    word_activation=settings_file["wordActivation"].lower(),
-                    volume=settings_file["volume"],
-                    city=settings_file["city"],
-                    operation_timeout=settings_file["operation_timeout"],
-                    dynamic_energy_threshold=settings_file["dynamic_energy_threshold"],
-                    energy_threshold=settings_file["energy_threshold"],
-                    elevenlabs=settings_file["elevenlabs"],
-                    openai=settings_file["openAI"],
-                    merros_email=settings_file["merrosEmail"],
-                    merros_password=settings_file["merrosPassword"],
-                    temperature=settings_file["temperature"],
-                    max_tokens=settings_file["max_tokens"],
-                    phrase_calendar=script_calendar["phrase"],
-                    split_calendar=script_calendar["split"],
-                    months_calendar=script_calendar["month"],
-                    week_calendar=script_calendar["week"],
-                    words_meaning_tomorrow=script_calendar["words_meaning_tomorrow"],
-                    words_meaning_after_tomorrow=script_calendar["words_meaning_after_tomorrow"],
-                    words_meaning_yesterday=script_calendar["words_meaning_yesterday"],
-                    words_meaning_today=script_calendar["words_meaning_today"],
-                    split_command=script_command["split"],
-                    phrase_time=script_time["phrase"],
-                    split_time=script_time["split"],
-                    prompt=script_process["prompt"],
-                    phrase_events=script_events["phrase"],
-                    phrase_output=script_output["phrase"],
-                    split_output=script_output["split"],
-                    synonyms_news=script_news["synonyms"],
-                    phrase_wheather=script_wheather["phrase"],
-                    split_wheather=script_wheather["split"],
-                    wwc_wheather=script_wheather["WWC"],
-                    word_meaning_tomorrow_wheather=script_wheather["word_meaning_tomorrow"],
-                    synonyms_mediaplayer=script_mediaplayer["synonyms"]
-                )
+                language=language,
+                word_activation=settings_file["wordActivation"].lower(),
+                volume=settings_file["volume"],
+                city=settings_file["city"],
+                operation_timeout=settings_file["operation_timeout"],
+                dynamic_energy_threshold=settings_file["dynamic_energy_threshold"],
+                energy_threshold=settings_file["energy_threshold"],
+                elevenlabs=settings_file["elevenlabs"],
+                openai=settings_file["openAI"],
+                merros_email=settings_file["merrosEmail"],
+                merros_password=settings_file["merrosPassword"],
+                temperature=settings_file["temperature"],
+                max_tokens=settings_file["max_tokens"],
+                phrase_calendar=script_calendar["phrase"],
+                split_calendar=script_calendar["split"],
+                months_calendar=script_calendar["month"],
+                week_calendar=script_calendar["week"],
+                words_meaning_tomorrow=script_calendar["words_meaning_tomorrow"],
+                words_meaning_after_tomorrow=script_calendar["words_meaning_after_tomorrow"],
+                words_meaning_yesterday=script_calendar["words_meaning_yesterday"],
+                words_meaning_today=script_calendar["words_meaning_today"],
+                split_command=script_command["split"],
+                phrase_time=script_time["phrase"],
+                split_time=script_time["split"],
+                prompt=script_process["prompt"],
+                phrase_events=script_events["phrase"],
+                phrase_output=script_output["phrase"],
+                split_output=script_output["split"],
+                synonyms_news=script_news["synonyms"],
+                phrase_wheather=script_wheather["phrase"],
+                split_wheather=script_wheather["split"],
+                wwc_wheather=script_wheather["WWC"],
+                word_meaning_tomorrow_wheather=script_wheather["word_meaning_tomorrow"],
+                synonyms_mediaplayer=script_mediaplayer["synonyms"]
+            )
