@@ -2,6 +2,7 @@
 .vscode
 __pycache__
 .ruff_cache
+.idea
 
 # Pytest file
 .pytest_cache
@@ -24,6 +25,8 @@ music.wav
 
 # English model 
 model/model_en.pkl
+
+
 
 
 
