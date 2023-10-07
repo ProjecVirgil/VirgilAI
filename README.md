@@ -12,6 +12,7 @@
 - **[First start](#first-start)**
   - [How to use](#how-to-use)
   - [Possible python bugs](#python-bugs)
+  - [Env bugs](#env-bugs)
 - **[Problem with mic?](#🎙️-guide-to-microphones)**
 - **[Why all this key?](#why-the-key-of-openai-elevenlabs-and-merros❓)**
   - [Generate other key](#🔁-change-the-key)
@@ -243,6 +244,10 @@ Try to using an [venv](https://docs.python.org/3/library/venv.html) **environmen
 - **ElevenLabs**: This key is not mandatory, but it makes the experience more pleasant because ElevenLabs implements a more natural Speech To Text (TTS) and also allows you to choose your own voice. If you can't use the button, Virgil will still work, but with Google's TTS.
  and it's not the best choice 😅.
 - **Meross**: This is **ONLY** required if you can use a domotic Meross, but if you don't have a domotic Meross, don't waste your time ⏲️
+
+### Env bugs
+
+If the setup give error on poetry create a venv environment with  `python -m venv name_of_env` and activate the env with this command `name_of_env\Scripts\activate.bat` (for windows) or `.\name_of_env\bin\activate` (for linux) and run the setup file
 
 ### How to change the voice for TTS ElevenLabs
 
