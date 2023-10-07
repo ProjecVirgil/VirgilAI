@@ -396,10 +396,6 @@ def setup():
 
 def main():
     """Main function."""
-    subprocess.run("poetry install", shell=True, check=True)
-    print(colorama.Style.BRIGHT + colorama.Fore.MAGENTA +
-          pyfiglet.figlet_format("  Virgil", font="doh", width=200), flush=True)
-
     # ------ SETUP -------
     first_setup, _, _, _ = get_data()
     parent_folder = get_path()
@@ -408,6 +404,11 @@ def main():
     if system == "N":
         print("Virgil AI is only supported in Windows and Linux.", flush=True)
         return SystemError
+
+    subprocess.run("poetry install", shell=True, check=True)
+
+    print(colorama.Style.BRIGHT + colorama.Fore.MAGENTA +
+          pyfiglet.figlet_format("  Virgil", font="doh", width=200), flush=True)
 
     cli = windows_function if system == "W" else linux_function
 
@@ -429,3 +430,4 @@ if __name__ == '__main__':
     colorama.init(autoreset=True)
     main()
     subprocess.run("poetry shell", shell=True, check=True)
+
