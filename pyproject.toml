@@ -15,7 +15,7 @@ key_path = "setup/key.txt"
 setting_path = "setup/settings.json"
 
 [tool.config_system]
-first_setup = false  #Se è il primo setup allora non chiederà cosa si vuole modificare 
+first_setup = true  #Se è il primo setup allora non chiederà cosa si vuole modificare 
 launch_start = true
 defaul_start = "T" # T (text) or R (voice) N (Lo chiede)
 display_console = true # If the interface is voice do i have to show the console?
