@@ -3,7 +3,7 @@ import datetime
 
 from lib.packages_utility.logger import logging
 from lib.packages_utility.request import MakeRequests
-from lib.packages_secondary.calendar_rec import Calendar
+from lib.packages_secondary.calendar_rec import Calendar, clear_number
 
 
 # ----- Calendar Event Function -----
