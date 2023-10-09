@@ -16,7 +16,7 @@ setting_path = "setup/settings.json"
 
 [tool.config_system]
 first_setup = true  #Se è il primo setup allora non chiederà cosa si vuole modificare 
-launch_start = true
+launch_start = false
 defaul_start = "T" # T (text) or R (voice) N (Lo chiede)
 display_console = true # If the interface is voice do i have to show the console?
 
@@ -52,8 +52,10 @@ tomli = "^2.0.1"
 gensim = "^4.3.2"
 tomlkit = "^0.12.1"
 
+
 [tool.poetry.group.dev.dependencies]
-ruff = "^0.0.291"
+ruff = "^0.0.292"
+coverage = "^7.3.2"
 
 # ------ CONFIG OF RUFF  --------
 [tool.ruff]
