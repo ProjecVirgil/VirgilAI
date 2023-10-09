@@ -3,7 +3,7 @@ import string
 import sys
 import json
 import time
-from typing import List, Any
+from typing import Any
 
 import openai
 from pygame import mixer
@@ -15,7 +15,7 @@ from lib.packages_utility.logger import logging
 from lib.packages_utility.sound import Audio
 from lib.packages_utility.utils import Utils
 
-from lib.packages_secondary.time import Time
+from lib.packages_secondary.time import Time, diff_time
 from lib.packages_secondary.change_value import VolumeMixer
 from lib.packages_secondary.the_weather import Wheather
 from lib.packages_secondary.calendar_rec import Calendar
@@ -145,64 +145,69 @@ class CommandSelection:
         predictions = self.loaded_model.predict([self.clean(command, "model")])
         command_worked = self.clean(command, "work")
         logging.debug(f"Classes choised by alghorithm is {predictions}")
-        if (self.settings.split_command[0] in command_worked) or (self.settings.split_command[1] in command_worked):
-            off()
-            return
-        if predictions == 'OR':
-            response = self.time.now()
-            return response
-        if self.settings.split_command[6] in command_worked or self.settings.split_command[7] in command_worked or \
-                self.settings.split_command[8] in command_worked:
-            mixer.music.stop()
-            return
-        if predictions == 'VL':
-            response = self.volume_mixer.change(command_worked)
-            if response == "104":
-                print("\nVirgil: You cannot give a value less than 10, you can only give values from 100 to 10",
-                      flush=True)
-                self.audio.create(file=True, namefile="ErrorValueVolume")
-                return None
-            return response
-        if predictions == 'MT':
-            response = self.wheather.recover_weather(command_worked)
-            return response
-        if predictions == 'TM':
-            for i in command_worked:
-                if self.utils.count_number(i) >= 2:
-                    hours, minuts, calculated_hours, calculated_minuts, calculate_seconds = diff_time(i)
-                    time_calculated = f"{calculated_hours} ore {calculated_minuts} minuti {calculate_seconds} secondi".split(
-                        " ")
-                    my_time = self.time.conversion(list(time_calculated))
+        try:
+            if (self.settings.split_command[0] in command_worked) or (self.settings.split_command[1] in command_worked):
+                off()
+                return
+            if predictions == 'OR':
+                response = self.time.now()
+                return response
+            if self.settings.split_command[6] in command_worked or self.settings.split_command[7] in command_worked or \
+                    self.settings.split_command[8] in command_worked:
+                mixer.music.stop()
+                return
+            if predictions == 'VL':
+                response = self.volume_mixer.change(command_worked)
+                if response == "104":
+                    print("\nVirgil: You cannot give a value less than 10, you can only give values from 100 to 10",
+                        flush=True)
+                    self.audio.create(file=True, namefile="ErrorValueVolume")
+                    return None
+                return response
+            if predictions == 'MT':
+                response = self.wheather.recover_weather(command_worked)
+                return response
+            if predictions == 'TM':
+                for i in command_worked:
+                    if self.utils.count_number(i) >= 2:
+                        hours, minuts, calculated_hours, calculated_minuts, calculate_seconds = diff_time(i)
+                        time_calculated = f"{calculated_hours} ore {calculated_minuts} minuti {calculate_seconds} secondi".split(
+                            " ")
+                        my_time = self.time.conversion(list(time_calculated))
+                        return str(my_time)
+                try:
+                    my_time = self.time.conversion(command_worked)
                     return str(my_time)
-            try:
-                my_time = self.time.conversion(command_worked)
-                return str(my_time)
-            except IndexError:
-                print("Please try the command again", flush=True)
-                self.audio.create(file=True, namefile="GenericError")
-                return None
-        if predictions == "GDS":
-            response = self.calendar.get_date(command_worked)
-            return response
-        if predictions == "MC":
-            for i in command_worked:
-                if self.utils.count_number(i) >= 2:
-                    hours, minuts, calculated_hours, calculated_minuts, calculate_seconds = diff_time(i)
-                    logging.info(
-                        f" {self.settings.split_time[1]} {self.utils.number_to_word(hours)} {self.settings.split_time[3]} {self.utils.number_to_word(minuts)} {self.settings.phrase_time[6]} {self.utils.number_to_word(calculated_hours)} {self.utils.number_to_word(calculated_minuts)} {self.utils.number_to_word(calculate_seconds)}")
-                    return f" {self.settings.split_time[1]} {self.utils.number_to_word(hours)} {self.settings.split_time[3]} {self.utils.number_to_word(minuts)} {self.settings.phrase_time[6]} {self.utils.number_to_word(calculated_hours)} {self.settings.phrase_time[1]} {self.utils.number_to_word(calculated_minuts)} {self.settings.phrase_time[2]} {self.utils.number_to_word(calculate_seconds)} {self.settings.phrase_time[3]}"
-            result = self.calendar.diff_date(command_worked)
-            print("Manca giorno")
-            return result
-        if predictions == "NW":
-            response = self.news_letter.create_news(command_worked)
-            return response
-        if predictions == "MU":
-            self.media_player.play_music(command_worked)
+                except IndexError:
+                    logging.error("Please try the command again")
+                    self.audio.create(file=True, namefile="GenericError")
+                    return None
+            if predictions == "GDS":
+                response = self.calendar.get_date(command_worked)
+                return response
+            if predictions == "MC":
+                for i in command_worked:
+                    if self.utils.count_number(i) >= 2:
+                        hours, minuts, calculated_hours, calculated_minuts, calculate_seconds = diff_time(i)
+                        logging.info(
+                            f" {self.settings.split_time[1]} {self.utils.number_to_word(hours)} {self.settings.split_time[3]} {self.utils.number_to_word(minuts)} {self.settings.phrase_time[6]} {self.utils.number_to_word(calculated_hours)} {self.utils.number_to_word(calculated_minuts)} {self.utils.number_to_word(calculate_seconds)}")
+                        return f" {self.settings.split_time[1]} {self.utils.number_to_word(hours)} {self.settings.split_time[3]} {self.utils.number_to_word(minuts)} {self.settings.phrase_time[6]} {self.utils.number_to_word(calculated_hours)} {self.settings.phrase_time[1]} {self.utils.number_to_word(calculated_minuts)} {self.settings.phrase_time[2]} {self.utils.number_to_word(calculate_seconds)} {self.settings.phrase_time[3]}"
+                result = self.calendar.diff_date(command_worked)
+                return result
+            if predictions == "NW":
+                response = self.news_letter.create_news(command_worked)
+                return response
+            if predictions == "MU":
+                self.media_player.play_music(command_worked)
+                return
+            if predictions == "EV":
+                return self.event_scheduler.add_events(command_worked)
+            self.start_prompt.append({"role": "user", "content": "".join(command)})
+        except Exception as error:
+            logging.error("Please try the command again")
+            logging.error(f"ERROR: {error}")
+            self.audio.create(file = True,namefile="ErrorCommand")
             return
-        if predictions == "EV":
-            return self.event_scheduler.add_events(command_worked)
-        self.start_prompt.append({"role": "user", "content": "".join(command)})
         try:
             new_message = self.get_response(messages=self.start_prompt)
         except Exception as error:
