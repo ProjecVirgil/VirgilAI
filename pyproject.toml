@@ -53,7 +53,7 @@ gensim = "^4.3.2"
 tomlkit = "^0.12.1"
 
 [tool.poetry.group.dev.dependencies]
-ruff = "^0.0.291"
+ruff = "^0.0.292"
 
 # ------ CONFIG OF RUFF  --------
 [tool.ruff]
