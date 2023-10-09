@@ -9,11 +9,16 @@ import tomli
 from tomlkit import parse, dumps
 import pyfiglet
 
+
+
+#* --- Global var ---
+system = ""
+
 # * --- CONST -----
 ERROR_MESSAGE = colorama.Fore.RED + colorama.Style.BRIGHT + '\x1b[A' + '''(/) SELECT A VALID CHOISE''' + " " * 100 + '\r'
 MENU_BANNER = colorama.Fore.LIGHTCYAN_EX + colorama.Style.BRIGHT + f'''
 
- - CURRENT SYSTEM: [{platform.system()}]
+ - CURRENT SYSTEM: [{system}]
 ----- [WHAT DO YOU WISH TO MODIFY] -----
 ''' + colorama.Fore.BLUE + '''
 [-1 ] EXIT
@@ -84,8 +89,9 @@ def modify_display(*args, **kwargs):
     """This function is used for modifying the configuration of the display."""
     _, launch_start, defaul_start, display_console = get_data()
     path = get_path()
+
     if defaul_start in ('T', 'N') and display_console is not True:
-        if platform.system() == "Windows":
+        if system == "W":
             os.rename("../launch.pyw", "../launch.py")
             if launch_start:
                 windows_function(path, display=True)
@@ -101,7 +107,7 @@ def modify_display(*args, **kwargs):
             colorama.Fore.RED + colorama.Style.BRIGHT + "\n You can't set the display to False with default startup to Text \n if you can set to display true first set the interface to text or remove the dafault ",
             flush=True)
     else:
-        if platform.system() == "Windows":
+        if system == "W":
             os.rename("../launch.py", "../launch.pyw")
             windows_function(path, display=False)
             update_toml("display_console", not display_console)
@@ -133,7 +139,7 @@ def modify_startup(launch_start, display_console, *args, **kwargs):
         launch_start (_type_): _description_
         display_console(_type): _description_
     """
-    if platform.system() == "Windows":
+    if system == "Windows":
         modify_start_startup_win(launch_start)
     else:
         modify_start_startup_lin(launch_start, display_console)
@@ -272,7 +278,6 @@ def create_task(path_directory):
     """
     with open(f"/home/{os.getlogin()}/.config/autostart/virgil.desktop", "w") as file:
         file.write(f'''
-
 [Desktop Entry]
 Type=Application
 Exec=bash {path_directory}/setup/boot.sh
@@ -348,7 +353,7 @@ def first_start(cli, parent_folder):
         cli (function): _description_
         parent_folder(str): The path for the script
     """
-    print(f"\nCURRENT SYSTEM: [{platform.system()}]", flush=True)
+    print(f"\nCURRENT SYSTEM: [{system}]", flush=True)
     # PASS 1
     choise = take_value("(-) 1. Do you want virgil to be started at system startup? (default no) (Y/N):", ('N', 'Y'))
     if choise == "Y":
@@ -399,6 +404,8 @@ def main():
     # ------ SETUP -------
     first_setup, _, _, _ = get_data()
     parent_folder = get_path()
+
+    global system
     system = check_system()
 
     if system == "N":
@@ -412,8 +419,7 @@ def main():
 
     cli = windows_function if system == "W" else linux_function
 
-    print(colorama.Fore.GREEN + pyfiglet.figlet_format("WELCOME",
-                                                       justify="center", font="digital"), flush=True)
+    print(colorama.Fore.GREEN + pyfiglet.figlet_format("WELCOME", justify="center", font="digital"), flush=True)
     print(MAIN_BANNER, flush=True)
 
     # * ------- END SETUP -----

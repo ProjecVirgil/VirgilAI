@@ -130,7 +130,7 @@ class CommandSelection:
         except IndexError:
             return command
 
-    def send_command(self, command) -> str:
+    def send_command(self, command) -> str | None:
         """Function to process a command received by user.
 
         Args:
@@ -181,7 +181,7 @@ class CommandSelection:
                 except IndexError:
                     logging.error("Please try the command again")
                     self.audio.create(file=True, namefile="GenericError")
-                    return None
+                    return
             if predictions == "GDS":
                 response = self.calendar.get_date(command_worked)
                 return response
