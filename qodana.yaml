@@ -7,7 +7,7 @@ version: "1.0"
 #Specify inspection profile for code analysis
 profile:
   name: qodana.starter
-
+  bootstrap: cd setup; pip install -r requirements.txt; poetry install
 #Enable inspections
 #include:
 #  - name: <SomeEnabledInspectionId>
