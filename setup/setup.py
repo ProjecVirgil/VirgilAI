@@ -45,7 +45,7 @@ def windows_function(path_directory, display: bool):
 
     with open("launch_start.bat", "w", encoding='utf-8') as file:
         file.write(f'''
-cd {path_directory}
+cd /d {path_directory}
 poetry run python {name_file}
 ''')
     source_path = f"{path_directory}\\setup\\launch_start.bat"
