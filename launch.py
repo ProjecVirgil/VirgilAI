@@ -170,7 +170,9 @@ def main():
     install_libraries()
 
     key = create_account() if os.path.getsize(KEY_FILE) == 0 or not os.path.exists(KEY_FILE) else log_in()
-
+    #INIT SETTING
+    settings = init_settings()
+    
     if not os.path.exists("model/model_en.pkl"):
         logging.info("Start the download of english model this operation will take some time, but will only be done "
                      "once ")
@@ -216,11 +218,14 @@ def main():
     thread_3.start()
     logging.info(" OUTPUT THREAD START...")
 
-
+# TODO ADD THE A FUNCTION TO INTERACT WITH GITHUB AND CHECK IF THE UPDATE
+# COPIA CONFRONTA FA PARTIRE UN BASH CHE COPIA O QUALCOSA DI SIMILE
 if __name__ == '__main__':
+    # Update dependes command
+    subprocess.run("poetry install",shell=True,check=True)
+
     script_dir = os.path.dirname(os.path.abspath(__file__))
     os.chdir(script_dir)
-
     toml_path = 'pyproject.toml'
     with open(toml_path, "rb") as file:
         metadata = tomli.load(file)
@@ -231,7 +236,6 @@ if __name__ == '__main__':
         display_console = metadata["tool"]["config_system"]["display_console"]
 
     # *  INIT LOGGER AND REQUEST_MAKER
-    settings = init_settings()
     request_maker = MakeRequests()
     # * CONST
     BANNER_MESSAGE = ['W', 'We', 'Wel', 'Welc', 'Welco', 'Welcom', 'Welcome', 'Welcome ',
