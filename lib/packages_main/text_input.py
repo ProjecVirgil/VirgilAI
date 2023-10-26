@@ -28,7 +28,7 @@ def copy_data(command: str):
 class TextInput:
     """Class that takes a text as an argument and returns it in lowercase, without accents or special characters."""
 
-    def __init__(self, word_activation) -> None:
+    def __init__(self,settings) -> None:
         """Init func.
 
         Args:
@@ -38,8 +38,8 @@ class TextInput:
             None: True
         }
         self.utils = Utils()
-
-        self.word_activation = word_activation
+        self.word_activation = settings.word_activation
+        self.split_command = settings.split_command
 
     def text(self):
         """The main file for recover the command from text."""
@@ -55,7 +55,8 @@ class TextInput:
             if self.word_activation in command:
                 logging.debug(" command speech correctly ")
                 copy_data(command)
-                if "spegniti" in command:
+                logging.log(self.split_command[0])
+                if self.split_command[0] in command:
                     status = False
             else:
                 logging.warning("Remember to use the key word")

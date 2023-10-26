@@ -131,14 +131,12 @@ class CommandSelection:
             return command
 
     def send_command(self, command) -> str | None:
-        """Function to process a command received by user.
+        """Function to process a command received by user and send on process.
 
         Args:
             command (str): command cleaned
-            command (str): command cleaned
 
         Returns:
-            str: The response at the command
             str: The response at the command
         """
         mixer.init()

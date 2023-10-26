@@ -183,7 +183,7 @@ def main():
 
     output = Output(settings)
     process = Process(settings)
-    text_input = TextInput(word_activation=settings.word_activation)
+    text_input = TextInput(settings)
     vocal_input = VocalInput(settings)
     thread_1 = 0
     thread_2 = 0

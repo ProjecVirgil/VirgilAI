@@ -8,7 +8,6 @@ import nltk
 from lib.packages_utility.logger import logging
 from lib.packages_utility.request import MakeRequests
 from lib.packages_utility.utils import Utils
-
 from lib.packages_main.choose_command import CommandSelection
 
 

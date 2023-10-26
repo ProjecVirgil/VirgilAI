@@ -43,6 +43,7 @@ class VocalInput:
         self.listener.dynamic_energy_threshold = bool(settings.dynamic_energy_threshold)
         self.listener.energy_threshold = int(settings.energy_threshold)
         self.word_activation = settings.word_activation
+        self.split_command = settings.split_command
 
     def listening(self):
         """Listens for commands using Google Speech Recognition API.It will return the recognized words or phrases."""
@@ -62,7 +63,7 @@ class VocalInput:
                     logging.debug(f" command rude acquired: {command} ")
                     if self.word_activation in command:
                         copy_data(command)
-                        if "spegniti" in command:
+                        if self.split_command[0] in command:
                             status = False
             except sr.exceptions.WaitTimeoutError:
                 try:
