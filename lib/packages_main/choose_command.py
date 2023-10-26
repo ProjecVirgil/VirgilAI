@@ -92,7 +92,7 @@ class CommandSelection:
         """
         logging.info(" I am creating the answer...")
         response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
+            model="gpt-3.5-turbo-0613",
             messages=messages,
             temperature=float(self.temperature),  # 0.0 - 2.0
             max_tokens=int(self.max_token)
