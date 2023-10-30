@@ -54,7 +54,7 @@ tomlkit = "^0.12.1"
 
 
 [tool.poetry.group.dev.dependencies]
-ruff = "^0.1.1"
+ruff = "^0.1.3"
 coverage = "^7.3.2"
 
 # ------ CONFIG OF RUFF  --------
