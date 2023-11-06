@@ -1,4 +1,4 @@
 tomli==2.0.1
-poetry==1.6.1
+poetry==1.7.0
 colorama==0.4.6
 pyfiglet==1.0.2
