@@ -11,7 +11,7 @@ class MakeRequests:
 
     def __init__(self) -> None:
         """Init file for sett the url and init the logger class."""
-        self.url_base = "https://fastapi-production-cd01.up.railway.app" + "/api"
+        self.url_base = "https://virgilapi-production.up.railway.app" + "/api"
         try:
             with open("setup/key.txt", encoding="utf8") as file_key:
                 self.key_user = file_key.read()
