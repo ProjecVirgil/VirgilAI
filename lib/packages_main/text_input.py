@@ -55,7 +55,6 @@ class TextInput:
             if self.word_activation in command:
                 logging.debug(" command speech correctly ")
                 copy_data(command)
-                logging.log(self.split_command[0])
                 if self.split_command[0] in command:
                     status = False
             else:

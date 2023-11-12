@@ -15,8 +15,8 @@ key_path = "setup/key.txt"
 setting_path = "setup/settings.json"
 
 [tool.config_system]
-first_setup = true  #Se è il primo setup allora non chiederà cosa si vuole modificare 
-launch_start = false
+first_setup = false  #Se è il primo setup allora non chiederà cosa si vuole modificare 
+launch_start = true
 defaul_start = "T" # T (text) or R (voice) N (Lo chiede)
 display_console = true # If the interface is voice do i have to show the console?
 
@@ -26,7 +26,7 @@ logs_file = false
 
 # ------ CONFIG FOR POETRY ------
 [tool.poetry]
-name = "Virgil AI"
+name = "VirgilAI"
 version = "2.2.0"
 description = "Virgil is an advanced virtual assistant that is based on the powerful GPT-3.5 artificial intelligence developed by OpenAI. This virtual assistant is designed to offer a wide range of features and capabilities similar to those of well-known virtual assistants such as Amazon's Alexa."
 authors = ["Retr0100 <dragonfaiver@gmail.com>"]
@@ -54,7 +54,7 @@ tomlkit = "^0.12.2"
 
 
 [tool.poetry.group.dev.dependencies]
-ruff = "^0.1.4"
+ruff = "^0.1.5"
 coverage = "^7.3.2"
 
 # ------ CONFIG OF RUFF  --------
