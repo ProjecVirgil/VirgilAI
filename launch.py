@@ -33,6 +33,7 @@ def check_system():
     if SYSTEM in ('Darwin', 'Linux'):
         return "clear"
     logging.critical(" Unrecognized operating system.Unable to start the corresponding terminal"),
+    sys.exit(1)
     return 404
 
 
