@@ -3,6 +3,7 @@
 __pycache__
 .ruff_cache
 .idea
+env
 
 # Pytest file
 .pytest_cache
