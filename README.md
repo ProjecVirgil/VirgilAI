@@ -82,7 +82,7 @@ Virgilo or Virgil is a virtual assistant like Alexa or Google Home, but integrat
 
 ### Obligatory requirements
 
-- Python 3.11>= Key
+- Python 3.11
 - Key from GPT3.5>=
 
 ## Installation
@@ -90,7 +90,9 @@ Virgilo or Virgil is a virtual assistant like Alexa or Google Home, but integrat
 1. The first part of the installation is to **get** all the files from the repository.
    - Command line ```git clone https://github.com/Retr0100/VirgilApp.git```
    - or download the zip.
-2. Now we need the **api** (for now I am not rich and do not pay for everything) so
+2. Create an enviroment for VirgilAI in the **directory of VirgilAI** with this command ```python -m venv virgil-env``` and activate it with this command ```virgil-env\Scripts\activate``` if the environment does not activate read the [docs of Venv](https://docs.python.org/3/tutorial/venv.html) (if use the classic cmd attach .bat at end of activate)
+
+3. Now we need the **api** (for now I am not rich and do not pay for everything) so
  we need 3 api keys (the keys marked with * **are mandatory** for operation)
    - API for OpenAI and GPT,
           I recommend this [video tutorial](https://www.youtube.com/watch?v=u-LeLPBZr2k) *.
@@ -99,30 +101,15 @@ Virgilo or Virgil is a virtual assistant like Alexa or Google Home, but integrat
    - API for ElevenLabs
        This API is not required, but if you want a [BEST EXPERIENCE](https://elevenlabs.io/speech-synthesis) I recommend you to get it.
 
-3. When you have all the keys/accounts, save them to any file.
+1. When you have all the keys/accounts, save them to any file.
 
 ## 📖 Setup
 
 ### Once you have installed and downloaded the API, you can start the Virgilio setup 🥡
 
- 1. Open a terminal to the VirgilAI/setup directory and run the command ` pip install -r requirements.txt ` This will install some requirements for running the setup file.
+ 1. Open a terminal to the VirgilAI/setup (with the env active) directory and run the command ` pip install -r requirements.txt ` This will install some requirements for running the setup file.
  2. Still in the VirgilAI folder, run the command `python or python3 setup.py`.
  3. Once we have set up the environment through the setup programme, we can run virgilio **BUT BE AWARE THERE ARE SO MANY OTHER THINGS WE CAN SET UP**.
-
-### Poetry Shell
-
-The poetry shell is a shell that allows you to use the dependencies installed via pyproject.toml and setup [(you can find more information here)](https://python-poetry.org/docs/).
-
-If you happen to find yourself with the terminal like this:
-![img](/asset/img_example_terminal.jpg)
-
-It means that in you are using the poetry shell and you have certain **dependencies** installed in the **poetry environment** dedicated to that particular configuration file (ex: pyproject.toml)
-
-**NOTES AND OPERATION**
-
-You can use any command in your operating system as if you were using a normal terminal, such as: ls,cd,mkdir,etc.
-**And for exit from this shell use the command `exit`**
-
 
 ### Guide to **LOCAL** settings
 
@@ -237,6 +224,7 @@ The tool is not **100%** accurate, but it's a good way to get a **starting** ide
 If Python give this error `ImportError: DLL load failed while importing _argkmin: File name or extension too long.`
 
 Try to using an [venv](https://docs.python.org/3/library/venv.html) **environment** to work around the path error, so activate the env and **run everything from there.**
+
 ### Why the key of OpenAI, ElevenLabs and Merros❓
 
 - **Virgil**: The Virgilio configuration key is used to synchronise all online settings...  **DO NOT GIVE THE KEY TO ANYONE OR EXPORT IT TO ANYONE OR YOU WILL GET ALL YOUR KEYS** (OpenAI,Elevenlabs etc)
