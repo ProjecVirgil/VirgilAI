@@ -222,7 +222,7 @@ def main():
 # COPIA CONFRONTA FA PARTIRE UN BASH CHE COPIA O QUALCOSA DI SIMILE
 if __name__ == '__main__':
     # Update dependes command
-    subprocess.run("poetry install",shell=True,check=True)
+    subprocess.run("poetry update",shell=True,check=True)
 
     script_dir = os.path.dirname(os.path.abspath(__file__))
     os.chdir(script_dir)
