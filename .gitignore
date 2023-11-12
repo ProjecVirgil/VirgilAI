@@ -4,6 +4,7 @@ __pycache__
 .ruff_cache
 .idea
 env
+poetry.lock
 
 # Pytest file
 .pytest_cache
