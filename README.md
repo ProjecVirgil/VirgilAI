@@ -292,6 +292,8 @@ The project is made by one person and is still in development, I'm looking for s
 
 For code related issues you can use github directly for other collaborations or alerts write to this email <projectvirgilai@gmail.com>
 
+If you want to support a small developer take a [**special link**](https://www.paypal.me/Retr0jk)
+
 ### Licence
 
 - AGPL-3.0 licence
