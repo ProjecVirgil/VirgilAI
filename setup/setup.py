@@ -12,7 +12,7 @@ import pyfiglet
 
 
 #* --- Global var ---
-system = ""
+system = platform.system()
 
 # * --- CONST -----
 ERROR_MESSAGE = colorama.Fore.RED + colorama.Style.BRIGHT + '\x1b[A' + '''(/) SELECT A VALID CHOISE''' + " " * 100 + '\r'
@@ -46,6 +46,7 @@ def windows_function(path_directory, display: bool):
     with open("launch_start.bat", "w", encoding='utf-8') as file:
         file.write(f'''
 cd /d {path_directory}
+call virgil-env\Scripts\activate.bat
 poetry run python {name_file}
 ''')
     source_path = f"{path_directory}\\setup\\launch_start.bat"
@@ -139,7 +140,7 @@ def modify_startup(launch_start, display_console, *args, **kwargs):
         launch_start (_type_): _description_
         display_console(_type): _description_
     """
-    if system == "Windows":
+    if system == "W":
         modify_start_startup_win(launch_start)
     else:
         modify_start_startup_lin(launch_start, display_console)
