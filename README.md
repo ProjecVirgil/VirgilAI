@@ -1,4 +1,4 @@
-# Virgil AI (Assistent Interface) | Last docs update: 13/11/2023 (day-month-year)
+# Virgil AI (Assistent Interface) | Last docs update: 13/11/2023 (d/m/y)
 
 ## Index
 
