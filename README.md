@@ -1,21 +1,20 @@
-# Virgil AI (Assistent Interface)
+# Virgil AI 🏛️ (Assistent Interface)  | Last docs update: 13/11/2023 (d/m/y)
 
 ## Index
 
 - **[Introduction](#introduction)**
-- **[How Virgil Works](#💻-how-virgilai-works)**
+- **[How Virgil Works](#-how-virgilai-works)**
 - **[Installation](#installation)**
-- **[Setup](#📖-setup)**
-  - [Poetry Shell](#poetry-shell)
+- **[Setup](#-setup)**
   - [Guide to settings](#guide-to-local-settings)
   - [ElevenLabs](#guide-to-elevenlabs)
 - **[First start](#first-start)**
   - [How to use](#how-to-use)
   - [Possible python bugs](#python-bugs)
   - [Env bugs](#env-bugs)
-- **[Problem with mic?](#🎙️-guide-to-microphones)**
-- **[Why all this key?](#why-the-key-of-openai-elevenlabs-and-merros❓)**
-  - [Generate other key](#🔁-change-the-key)
+- **[Problem with mic?](#%EF%B8%8F-guide-to-microphones)**
+- **[Why all this key?](#why-the-key-of-openai-elevenlabs-and-merros)**
+  - [Generate other key](#-change-the-key)
 - **[Security](#security)**
 - **[Notes](#notes)**
 - **[Other](#other)**
@@ -62,7 +61,7 @@ Virgilo or Virgil is a virtual assistant like Alexa or Google Home, but integrat
 
 - You can use it on any linux/windows 🌐
 
-## 💻 How VirgilAI works  
+## 💻 How VirgilAI works
 
 **white text**
 
@@ -271,8 +270,8 @@ This is not a topic we will be exploring in depth at the moment, but each key is
 If you discover a vulnerability in Virgil, please email <projectvirgilai@gmail.com>. All vulnerabilities are reported immediately.
 
 ## Notes
-
-- In this paragraph I will add secondary items or updates released
+### In this paragraph I will add secondary items or updates released
+- Soon the ***[CATONE](https://www.babelmatrix.org/works/it/Dante%2C_Alighieri-1265/La_Divina_Commedia._Purgatorio._Canto_I./en/4208-The_Divine_Comedy.__Purgatorio._Canto_I.) UPDATE*** (Purgatory chant I vv-61 to vv-66) 🗻
 
 ## Other
 
