@@ -58,6 +58,7 @@ class Process:
         self.command_selection = CommandSelection(settings)
 
         self.word_activation = settings.word_activation
+        self.split_command = settings.split_command
 
     def clean_command(self, command: str) -> str:
         """Delete the word activation and strip from the command.
@@ -120,7 +121,7 @@ class Process:
         while True:
             with open("connect/command.json", encoding="utf8") as commands:
                 command = commands.read()
-                if "spegniti" in command:
+                if any(word in command for word in self.split_command):
                     command_to_elaborate = "virgilio spegniti"
                 else:
                     command_to_elaborate = "".join(command.split('":')[0])[7:]

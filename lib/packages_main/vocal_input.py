@@ -67,7 +67,7 @@ class VocalInput:
                             status = False
             except sr.exceptions.WaitTimeoutError:
                 try:
-                    if "spegniti" in command:
+                    if any(word in command for word in self.split_command):
                         status = False
                     else:
                         logging.warning(" Microphone unmuted or something went wrong")

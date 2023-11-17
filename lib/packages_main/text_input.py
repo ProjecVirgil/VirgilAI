@@ -55,7 +55,7 @@ class TextInput:
             if self.word_activation in command:
                 logging.debug(" command speech correctly ")
                 copy_data(command)
-                if self.split_command[0] in command:
+                if any(word in command for word in self.split_command):
                     status = False
             else:
                 logging.warning("Remember to use the key word")
