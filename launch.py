@@ -170,10 +170,12 @@ def main():
     rainbow(command_cleaner)
     install_libraries()
 
+    logging.info(f"PID PROCESS: {os.getpid()}")
+
     key = create_account() if os.path.getsize(KEY_FILE) == 0 or not os.path.exists(KEY_FILE) else log_in()
     #INIT SETTING
     settings = init_settings()
-    
+
     if not os.path.exists("model/model_en.pkl"):
         logging.info("Start the download of english model this operation will take some time, but will only be done "
                      "once ")
@@ -224,7 +226,6 @@ def main():
 if __name__ == '__main__':
     # Update dependes command
     subprocess.run("poetry update",shell=True,check=True)
-
     script_dir = os.path.dirname(os.path.abspath(__file__))
     os.chdir(script_dir)
     toml_path = 'pyproject.toml'
