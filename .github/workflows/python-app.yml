@@ -29,7 +29,6 @@ jobs:
         pip install pytest 
         pip install -r setup/requirements.txt
         poetry install
-        poetry shell
     - name: Test with pytest
       run: |
         pytest
