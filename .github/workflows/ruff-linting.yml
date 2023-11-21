@@ -10,10 +10,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: chartboost/ruff-action@v1
-with:
-  ignore : ["E501"]
-  extend-include : ["*.pyw"]
-  select : ["E","F","N","D","UP","PYI","SLOT","SIM","TD","FIX","W","PL"]
-  exclude : [".git",".git-rewrite",".venv","__pypackages__","venv"]
-  respect-gitignore : true
-  target-version : "py311"
+        with:
+          args: "--select E F N D UP PYI SLOT SIM TD FIX W PL --ignore E501 --respect-gitignore"
+
