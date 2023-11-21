@@ -23,7 +23,6 @@ connect/res.json
 setup/key.txt
 
 # Test with test files
-tests
 trys
 nohup.out
 
