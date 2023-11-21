@@ -16,8 +16,8 @@ class MakeRequests:
             with open("setup/key.txt", encoding="utf8") as file_key:
                 self.key_user = file_key.read()
         except FileNotFoundError:
-            open("setup/key.txt", "w")
-            with open("setup/key.txt", encoding="utf8") as file_key:
+            open("setup/key.txt", "w")  # noqa: SIM115
+            with open("setup/key.txt",encoding="utf8") as file_key:
                 self.key_user = file_key.read()
 
     def create_user(self) -> str:

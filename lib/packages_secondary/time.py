@@ -83,7 +83,7 @@ class Time:
         logging.info(time.strftime("\nVirgil: They are the %H and %M minuts", time_tuple))
         return time_string
 
-    def conversion(self, command) -> int:
+    def conversion(self, command) -> int:  # noqa: PLR0911
         """This function try to take the timer time and convert everything to seconds.
 
         Args:

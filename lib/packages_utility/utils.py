@@ -1,4 +1,5 @@
 """File with some utils function."""
+# ruff: noqa
 import json
 import re
 from math import sin, cos, sqrt, atan2, radians

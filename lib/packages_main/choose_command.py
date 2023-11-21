@@ -130,7 +130,7 @@ class CommandSelection:
         except IndexError:
             return command
 
-    def send_command(self, command) -> str | None:
+    def send_command(self, command) -> str | None:  # noqa: PLR0911, PLR0912, PLR0915
         """Function to process a command received by user and send on process.
 
         Args:
@@ -167,7 +167,7 @@ class CommandSelection:
                 return response
             if predictions == 'TM':
                 for i in command_worked:
-                    if self.utils.count_number(i) >= 2:
+                    if self.utils.count_number(i) >= 2:  # noqa: PLR2004
                         hours, minuts, calculated_hours, calculated_minuts, calculate_seconds = diff_time(i)
                         time_calculated = f"{calculated_hours} ore {calculated_minuts} minuti {calculate_seconds} secondi".split(
                             " ")
@@ -185,7 +185,7 @@ class CommandSelection:
                 return response
             if predictions == "MC":
                 for i in command_worked:
-                    if self.utils.count_number(i) >= 2:
+                    if self.utils.count_number(i) >= 2:  # noqa: PLR2004
                         hours, minuts, calculated_hours, calculated_minuts, calculate_seconds = diff_time(i)
                         logging.info(
                             f" {self.settings.split_time[1]} {self.utils.number_to_word(hours)} {self.settings.split_time[3]} {self.utils.number_to_word(minuts)} {self.settings.phrase_time[6]} {self.utils.number_to_word(calculated_hours)} {self.utils.number_to_word(calculated_minuts)} {self.utils.number_to_word(calculate_seconds)}")

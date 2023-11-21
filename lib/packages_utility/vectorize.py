@@ -34,7 +34,24 @@ class GloVeVectorizer(TransformerMixin):
         self.size = model.vector_size
 
     def fit(self, x, y=None):
+        """Fit the data with the model.
+
+        Args:
+            x (_type_): _description_
+            y (_type_, optional): _description_. Defaults to None.
+
+        Returns:
+            _type_: _description_
+        """
         return self
 
     def transform(self, x):
+        """Vectorize the sentences using the glove model.
+
+        Args:
+            x (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
         return np.array([sentence_to_vec(sentence, self.model) for sentence in x])

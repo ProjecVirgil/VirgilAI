@@ -24,9 +24,9 @@ def get_current_week_days() -> list:
     week_days = [min(today.day + i, days_in_month) for i in range(7)]
     repition = 0
     for i in week_days:
-        if i == 31:
+        if i == 31:  # noqa: PLR2004
             repition += 1
-            if repition >= 2:
+            if repition >= 2:  # noqa: PLR2004
                 week_days[7 - repition + 1] = repition - 1
     return week_days
 
@@ -117,7 +117,7 @@ class Wheather:
         logging.debug(" Default city choose")
         return self.city
 
-    def recover_day(self, command: str) -> tuple:
+    def recover_day(self, command: str) -> tuple:  # noqa: PLR0911
         """This function recovers the day from the user input.
 
         Args:
@@ -154,13 +154,15 @@ class Wheather:
         Returns:
             str: The final generated phrase
         """
+        success_request =  200
+        bad_request = 404
         city = self.recover_city(command)
         day, week_day = self.recover_day(command)
         response = requests.get(self.get_url(city), timeout=8)
         logging.debug(" Response: " + str(response.status_code))
-        if str(response.status_code) != 200:
+        if str(response.status_code) != success_request:
             response = response.json()
-            if day != 404:
+            if day != bad_request:
                 main = str(response["daily"]["weathercode"][day])
                 max_temp = str(int(response["daily"]["temperature_2m_max"][day]))
                 min_temp = str(int(response["daily"]["temperature_2m_min"][day]))

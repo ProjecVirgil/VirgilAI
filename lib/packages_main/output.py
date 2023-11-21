@@ -131,7 +131,7 @@ class Output:
         time.sleep(2)
         sys.exit(0)
 
-    def out(self):
+    def out(self):  # noqa: PLR0912
         """Main function."""
         self.audio.create(file=True, namefile="EntryVirgil")
         time.sleep(5)
