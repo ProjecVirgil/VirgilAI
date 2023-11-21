@@ -66,7 +66,7 @@ class Calendar:
             logging.error("I'm sorry but I couldn't get the date right you can reapply")
             self.audio.create(file=True, namefile="ErrorDate")
         else:
-            if day != 1 or day != 11:
+            if day != 1 or day != 11:  # noqa: PLR2004
                 return f"{self.settings.split_calendar[0]} {self.utils.number_to_word(str(day))} {self.settings.split_calendar[1]} {self.settings.months_calendar[int(month) - 1]} {self.settings.split_calendar[2]} {self.utils.number_to_word(str(year))} {self.settings.split_calendar[3]} {str(self.settings.week_calendar[index_week])}"
             return f"{self.settings.split_calendar[6]}{self.utils.number_to_word(str(day))} {self.settings.split_calendar[1]} {self.settings.months_calendar[int(month) - 1]} {self.settings.split_calendar[2]} {self.utils.number_to_word(str(year))} {self.settings.split_calendar[3]} {str(self.settings.week_calendar[index_week])}"
         return None
@@ -102,7 +102,7 @@ class Calendar:
             str: The date formatted
         """
         count_of_number = self.utils.count_number(sentence)
-        if count_of_number == 2:
+        if count_of_number == 2:  # noqa: PLR2004
             year = sentence[-1]
             month = self.settings.months_calendar.index(sentence[len(sentence) - 2]) + 1
             day = sentence[len(sentence) - 3]

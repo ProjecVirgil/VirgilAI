@@ -12,6 +12,8 @@ class VolumeMixer:
         self.__volume = volume_value
         self.audio = Audio(settings.volume, settings.elevenlabs, settings.language)
         self.utils = Utils()
+        self.MAX = 1.0
+        self.MIN = 0.1
 
     def get_volume(self) -> float or int:
         """Get current value from audio mixer.
@@ -41,7 +43,7 @@ class VolumeMixer:
             return "104"
         try:
             self.__volume = int(self.__volume) / 100
-            if self.__volume < 0.1 or self.__volume > 1.0:
+            if self.__volume < self.MIN or self.__volume > self.MAX:
                 return "104"
             return str(self.__volume)
         except ValueError:

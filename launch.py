@@ -12,7 +12,7 @@ import tomli
 import pyfiglet
 from colorama import Fore, Style
 
-import lib.packages_utility.logger
+import lib.packages_utility.logger  # noqa: F401
 import logging
 from lib.packages_utility.utils import init_settings
 from lib.packages_utility.vectorize import GloVeVectorizer, sentence_to_vec  # noqa: F401
@@ -47,15 +47,15 @@ def print_banner(command_cleaner: str):
     for i in BANNER_MESSAGE:
         subprocess.run(command_cleaner, shell=True, check=False)
         print(Style.BRIGHT + Fore.MAGENTA + pyfiglet.figlet_format(i), flush=True)
-        if counter == 11:
+        if counter == 11:  # noqa: PLR2004
             delay = 0.2
-        elif counter == 12:
+        elif counter == 12: # noqa: PLR2004
             delay = 0.25
-        elif counter == 13:
+        elif counter == 13: # noqa: PLR2004
             delay = 0.3
-        elif counter == 14:
+        elif counter == 14: # noqa: PLR2004
             delay = 0.35
-        elif counter == 15:
+        elif counter == 15: # noqa: PLR2004
             delay = 0.4
         time.sleep(delay)
         counter += 1
@@ -169,10 +169,10 @@ def main():
     print_banner(command_cleaner)
     rainbow(command_cleaner)
     install_libraries()
-
+    
     logging.info(f"PID PROCESS: {os.getpid()}")
-
-    key = create_account() if os.path.getsize(KEY_FILE) == 0 or not os.path.exists(KEY_FILE) else log_in()
+    
+    create_account() if os.path.getsize(KEY_FILE) == 0 or not os.path.exists(KEY_FILE) else log_in()
     #INIT SETTING
     settings = init_settings()
 
@@ -221,7 +221,7 @@ def main():
     thread_3.start()
     logging.info(" OUTPUT THREAD START...")
 
-# TODO ADD THE A FUNCTION TO INTERACT WITH GITHUB AND CHECK IF THE UPDATE
+# TODO ADD THE A FUNCTION TO INTERACT WITH GITHUB AND CHECK IF THE UPDATE  # noqa: TD002, FIX002, TD003, TD004
 # COPIA CONFRONTA FA PARTIRE UN BASH CHE COPIA O QUALCOSA DI SIMILE
 if __name__ == '__main__':
     # Update dependes command

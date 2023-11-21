@@ -88,7 +88,7 @@ class EventScheduler:
         for element in command:
             if element.isdigit() or element in self.settings.months_calendar:
                 date_record.append(element)
-                if len(date_record) >= 3:
+                if len(date_record) >= 3:  # noqa: PLR2004
                     break
         event = " ".join(command).split(date_record[-1])
         return date_record, event
