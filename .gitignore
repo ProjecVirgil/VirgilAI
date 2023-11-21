@@ -3,8 +3,14 @@
 __pycache__
 .ruff_cache
 .idea
-env
+
+#genereted file
 poetry.lock
+boot.sh
+
+#Enviroments
+env
+virgil-env
 
 # Pytest file
 .pytest_cache

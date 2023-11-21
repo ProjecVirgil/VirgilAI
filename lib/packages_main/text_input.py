@@ -32,7 +32,7 @@ class TextInput:
         """Init func.
 
         Args:
-            word_activation (str): The word for the activation of Virgil
+            settings (dataclasses): A class with some settings
         """
         self.data_empty = {
             None: True
