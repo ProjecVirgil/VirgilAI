@@ -46,7 +46,7 @@ def windows_function(path_directory, display: bool):
     with open("launch_start.bat", "w", encoding='utf-8') as file:
         file.write(f'''
 cd /d {path_directory}
-call virgil-env\Scripts\activate.bat
+call virgil-env\\Scripts\activate.bat
 poetry run python {name_file}
 ''')
     source_path = f"{path_directory}\\setup\\launch_start.bat"
@@ -107,7 +107,7 @@ def modify_display(*args, **kwargs):
         print(
             colorama.Fore.RED + colorama.Style.BRIGHT + "\n You can't set the display to False with default startup to Text \n if you can set to display true first set the interface to text or remove the dafault ",
             flush=True)
-    else:
+    else:  # noqa: PLR5501
         if system == "W":
             os.rename("../launch.py", "../launch.pyw")
             windows_function(path, display=False)
@@ -133,7 +133,7 @@ def invalid_choice():
     sys.stdout.flush()
 
 
-def modify_startup(launch_start, display_console, *args, **kwargs):
+def modify_startup(launch_start, display_console, *args, **kwargs):  # noqa: D417
     """Modify startup settings for text and speech interfaces.
 
     Args:
@@ -151,7 +151,7 @@ def exit_setup(*args, **kwargs):
     sys.exit(0)
 
 
-def modify_default_startup(defaul_start, *args, **kwargs):
+def modify_default_startup(defaul_start, *args, **kwargs):  # noqa: D417
     """Modify the default startup.
 
     Args:
@@ -406,7 +406,7 @@ def main():
     first_setup, _, _, _ = get_data()
     parent_folder = get_path()
 
-    global system
+    global system  # noqa: PLW0603
     system = check_system()
 
     if system == "N":
