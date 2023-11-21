@@ -1,8 +1,4 @@
-"""Tool for set the sensibility of MIC.
-
-Returns:
-      _type_: _description_
-"""
+"""Tool for set the sensibility of MIC."""
 import math
 import speech_recognition as sr
 import time
