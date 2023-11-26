@@ -158,7 +158,7 @@ def choise_input():
             logging.warning(" Select a valid choice please")
 
 
-def main():
+def main():  # noqa: PLR0915
     """Main function that will be called when running this script from command line."""
     from lib.packages_main.output import Output
     from lib.packages_main.text_input import TextInput
@@ -169,9 +169,9 @@ def main():
     print_banner(command_cleaner)
     rainbow(command_cleaner)
     install_libraries()
-    
+
     logging.info(f"PID PROCESS: {os.getpid()}")
-    
+
     create_account() if os.path.getsize(KEY_FILE) == 0 or not os.path.exists(KEY_FILE) else log_in()
     #INIT SETTING
     settings = init_settings()
