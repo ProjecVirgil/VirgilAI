@@ -140,7 +140,8 @@ Virgilo or Virgil is a virtual assistant like Alexa or Google Home, but integrat
     "elevenlabs": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", //Key for elevenlabs
     "openAI": "sk-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", //Key for openAI
     "merrosEmail": "email", //Credential for merros                     
-    "merrosPassword": "password", //Credential for merros                          
+    "merrosPassword": "password", //Credential for merros
+    "gpt-version": "gpt-3.5-turbo-0613", // The version for gpt-version                        
     "temperature": "0.9", //Randomness of GPT responses
     "max_tokens": "30" //Max lenght phrase of GPT
 }                                                                                                                      
