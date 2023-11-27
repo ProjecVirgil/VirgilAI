@@ -79,6 +79,7 @@ class CommandSelection:
         self.temperature = settings.temperature
         self.max_token = settings.max_tokens
         self.api_key = settings.openai
+        self.gpt_version = settings.gpt_version
         openai.api_key = self.api_key
 
     def get_response(self, messages: list):
@@ -92,10 +93,10 @@ class CommandSelection:
         """
         logging.info(" I am creating the answer...")
         response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo-0613",
-            messages=messages,
-            temperature=float(self.temperature),  # 0.0 - 2.0
-            max_tokens=int(self.max_token)
+            model= self.gpt_version,
+            messages= messages,
+            temperature= float(self.temperature),  # 0.0 - 2.0
+            max_tokens= int(self.max_token)
         )
         return response.choices[0].message
 
