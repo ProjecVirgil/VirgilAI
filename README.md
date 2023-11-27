@@ -1,6 +1,6 @@
 # Virgil AI 🏛️ (Assistent Interface)  | Last docs update: 27/11/2023 (d/m/y)
 
-## Index
+## Index 📖
 
 - **[Introduction](#introduction)**
 - **[How Virgil Works](#-how-virgilai-works)**
