@@ -80,6 +80,7 @@ class Output:
         self.audio = Audio(settings.volume, settings.elevenlabs, settings.language)
 
         self.lang = settings.language
+        self.split_command = settings.split_command
 
     def timer(self, my_time: int, command: str) -> None:
         """Timer function that runs every 3 seconds.
@@ -139,7 +140,7 @@ class Output:
             try:
                 result, command, is_used = recover_data()
                 if result is not None and is_used is False:
-                    if "spento" in result:
+                    if any(word in result for word in self.split_command):
                         self.shutdown()
                     if "volume" in command:
                         mixer.music.set_volume(float(result))

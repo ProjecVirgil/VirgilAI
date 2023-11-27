@@ -122,7 +122,7 @@ class Process:
             with open("connect/command.json", encoding="utf8") as commands:
                 command = commands.read()
                 if any(word in command for word in self.split_command):
-                    command_to_elaborate = "virgilio spegniti"
+                    command_to_elaborate = f"virgilio {self.split_command[1]}"
                 else:
                     command_to_elaborate = "".join(command.split('":')[0])[7:]
             if "false" in command and command is not None:
