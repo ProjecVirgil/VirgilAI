@@ -39,11 +39,10 @@ class TextInput:
         }
         self.utils = Utils()
         self.word_activation = settings.word_activation
-        self.split_command = settings.split_command
+        self.split_command_exit = [settings.split_command[0],settings.split_command[1]]
 
     def text(self):
         """The main file for recover the command from text."""
-        # command = ""
         logging.info(" start input function")
         self.utils.clean_buffer(data_empty=self.data_empty, file_name="command")
         status = True
@@ -55,8 +54,9 @@ class TextInput:
             if self.word_activation in command:
                 logging.debug(" command speech correctly ")
                 copy_data(command)
-                if any(word in command for word in self.split_command):
+                if any(word in command for word in self.split_command_exit):
                     status = False
             else:
                 logging.warning("Remember to use the key word")
+        logging.info("Shutdown in progress from input-thread")
         sys.exit()

@@ -43,7 +43,8 @@ class VocalInput:
         self.listener.dynamic_energy_threshold = bool(settings.dynamic_energy_threshold)
         self.listener.energy_threshold = int(settings.energy_threshold)
         self.word_activation = settings.word_activation
-        self.split_command = settings.split_command
+        self.split_command_exit = [settings.split_command[0],settings.split_command[1]]
+
 
     def listening(self):
         """Listens for commands using Google Speech Recognition API.It will return the recognized words or phrases."""
@@ -63,11 +64,11 @@ class VocalInput:
                     logging.debug(f" command rude acquired: {command} ")
                     if self.word_activation in command:
                         copy_data(command)
-                        if self.split_command[0] in command:
+                        if any(word in command for word in self.split_command_exit):
                             status = False
             except sr.exceptions.WaitTimeoutError:
                 try:
-                    if any(word in command for word in self.split_command):
+                    if any(word in command for word in self.split_command_exit):
                         status = False
                     else:
                         logging.warning(" Microphone unmuted or something went wrong")

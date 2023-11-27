@@ -58,7 +58,7 @@ class Process:
         self.command_selection = CommandSelection(settings)
 
         self.word_activation = settings.word_activation
-        self.split_command = settings.split_command
+        self.split_command_exit = [settings.split_command[0],settings.split_command[1]]
 
     def clean_command(self, command: str) -> str:
         """Delete the word activation and strip from the command.
@@ -121,8 +121,9 @@ class Process:
         while True:
             with open("connect/command.json", encoding="utf8") as commands:
                 command = commands.read()
-                if any(word in command for word in self.split_command):
-                    command_to_elaborate = f"virgilio {self.split_command[1]}"
+                if any(word in command for word in self.split_command_exit):
+                    command_to_elaborate = f"virgilio {self.split_command_exit[1]}"
+                    logging.info("Shutdown in progress from process-thread 1")
                 else:
                     command_to_elaborate = "".join(command.split('":')[0])[7:]
             if "false" in command and command is not None:
@@ -131,3 +132,4 @@ class Process:
                 update_json_value(command_to_elaborate, True)
             else:
                 pass
+

@@ -80,7 +80,7 @@ class Output:
         self.audio = Audio(settings.volume, settings.elevenlabs, settings.language)
 
         self.lang = settings.language
-        self.split_command = settings.split_command
+        self.split_command_exit = [settings.split_command[0],settings.split_command[1]]
 
     def timer(self, my_time: int, command: str) -> None:
         """Timer function that runs every 3 seconds.
@@ -122,6 +122,7 @@ class Output:
     def shutdown(self) -> None:
         """Function to shut down the programm."""
         logging.info(" shutdown in progress...")
+        logging.info("Shutdown in progress from output-thread")
         self.audio.create(file=True, namefile="FinishVirgil")
         print(Style.BRIGHT + Fore.MAGENTA + pyfiglet.figlet_format("Thanks for using Virgil",
                                                                    font="digital",
@@ -140,7 +141,7 @@ class Output:
             try:
                 result, command, is_used = recover_data()
                 if result is not None and is_used is False:
-                    if any(word in result for word in self.split_command):
+                    if "spento" in command:
                         self.shutdown()
                     if "volume" in command:
                         mixer.music.set_volume(float(result))
@@ -175,3 +176,4 @@ class Output:
                     pass
             except json.decoder.JSONDecodeError:
                 logging.debug("Nothing was found in the json")
+
