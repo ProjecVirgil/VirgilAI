@@ -211,7 +211,7 @@ class CommandSelection:
             new_message = self.get_response(messages=self.start_prompt)
         except Exception as error:
             logging.error(
-                "Unfortunately the key of openAI you entered is invalid or not present if you don't know how to get a key check the guide on github")
+                "The OpenAI key you entered is invalid, not present, or the GPT template you selected is invalid or unavailable for your current plan. If you do not know how to obtain a valid key or select a compatible template, see the guide on GitHub for assistance and more information.")
             logging.error(error)
             self.audio.create(file=True, namefile="ErrorOpenAi")
             return
