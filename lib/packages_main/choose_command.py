@@ -92,13 +92,14 @@ class CommandSelection:
             str: The response at the message from gpt
         """
         logging.info(" I am creating the answer...")
-        response = openai.ChatCompletion.create(
-            model= self.gpt_version,
-            messages= messages,
-            temperature= float(self.temperature),  # 0.0 - 2.0
-            max_tokens= int(self.max_token)
+        response = openai.chat.completions.create(
+            model = self.gpt_version,
+            messages = messages,
+            temperature = float(self.temperature),  # 0.0 - 2.0
+            max_tokens = int(self.max_token)
         )
         return response.choices[0].message
+
 
     def clean(self, command: str, type_model: str) -> str | list[Any]:
         """Function that cleans a command.
@@ -215,6 +216,6 @@ class CommandSelection:
             logging.error(error)
             self.audio.create(file=True, namefile="ErrorOpenAi")
             return
-        print(f"\nVirgilio: {new_message['content']}")
+        print(f"\nVirgilio: {new_message.content}")
         self.start_prompt.append(new_message)
-        return new_message['content']
+        return new_message.content
