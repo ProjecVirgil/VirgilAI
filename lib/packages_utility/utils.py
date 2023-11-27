@@ -196,6 +196,7 @@ def init_settings() -> Settings:
                 merros_email=settings_file["merrosEmail"],
                 merros_password=settings_file["merrosPassword"],
                 temperature=settings_file["temperature"],
+                gpt_version= settings_file["gpt-version"],
                 max_tokens=settings_file["max_tokens"],
                 phrase_calendar=script_calendar["phrase"],
                 split_calendar=script_calendar["split"],

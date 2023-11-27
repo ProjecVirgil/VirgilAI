@@ -21,6 +21,7 @@ class Settings:
     openai: str
     merros_email: str
     merros_password: str
+    gpt_version:str
     temperature: str
     max_tokens: str
 
