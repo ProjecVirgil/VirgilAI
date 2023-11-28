@@ -33,7 +33,7 @@ def choise_input():
         else:
             logging.warning(" Select a valid choice please")
 
-class ThredManager:
+class ThreadManager:
     """This class manages all threads and processes that are running in the background."""
     def __init__(self,settings,default_start:str):
         """Init function.
