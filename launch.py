@@ -11,7 +11,7 @@ import tomli
 import pyfiglet
 from colorama import Fore, Style
 
-from lib.packages_main.manager import ThredManager
+from lib.packages_main.manager import ThreadManager
 import lib.packages_utility.logger  # noqa: F401
 import logging
 from lib.packages_utility.utils import init_settings
@@ -161,7 +161,7 @@ def main():  # noqa: PLR0915
         request_maker.download_model_en()
         logging.info(" Download finish")
 
-    manager = ThredManager(settings,default_start)
+    manager = ThreadManager(settings,default_start)
     manager.init()
     manager.start()
 
