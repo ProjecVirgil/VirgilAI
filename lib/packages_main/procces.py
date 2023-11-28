@@ -1,5 +1,5 @@
 """The procces file for the command."""
-import json
+import queue
 import threading
 
 from colorama import Fore
@@ -13,22 +13,6 @@ from lib.packages_main.choose_command import CommandSelection
 
 # ----- File to elaborate the input  -----
 
-def update_json_value(key: str, new_value: bool) -> None:
-    """This function is responsible for updating the value of a key in the json file.
-
-    Args:
-        key (str): the command
-        new_value (bool): True or false
-    """
-    with open("connect/command.json", encoding="utf8") as file:
-        data = json.load(file)
-    if key in data:
-        data[key] = new_value
-    else:
-        logging.warning(f"The key '{key}' dont exist in the file JSON."),
-    with open("connect/command.json", 'w', encoding="utf8") as file:
-        json.dump(data, file, indent=4)
-
 
 def check_event() -> None:
     """Check if there is an event."""
@@ -40,11 +24,13 @@ def check_event() -> None:
 class Process:
     """This class is responsible for processing the user's command and returning a response from Virgil API and other APIs."""
 
-    def __init__(self, settings) -> None:
-        """Init the class.
+    def __init__(self, settings,command_queue:queue.Queue,result_queue:queue.Queue) -> None:
+        """The process class.
 
         Args:
-            settings (Settings): The dataclasses of settings
+            settings (_type_): _description_
+            command_queue (queue.Queue): _description_
+            result_queue (queue.Queue): _description_
         """
         self.data_empty = {
             "0": [None, None, True]
@@ -54,8 +40,10 @@ class Process:
 
         self.request_maker = MakeRequests()
         self.utils = Utils()
+        self.command_queue = command_queue
+        self.result_queue = result_queue
 
-        self.command_selection = CommandSelection(settings)
+        self.command_selection = CommandSelection(settings,result_queue)
 
         self.word_activation = settings.word_activation
         self.split_command_exit = [settings.split_command[0],settings.split_command[1]]
@@ -84,12 +72,8 @@ class Process:
             command (str): the command to send
         """
         command = self.clean_command(command)
-        res = self.command_selection.send_command(command)
-        with open("connect/res.json", 'w', encoding="utf8") as file:
-            data = {
-                "0": [command, res, False]
-            }
-            json.dump(data, file, indent=4)
+        result = self.command_selection.send_command(command)
+        self.result_queue.put([command, result])
 
     class EventThread(threading.Thread):
         """Class that manage the event of a thread.
@@ -115,21 +99,18 @@ class Process:
     def main(self) -> None:
         """Main method of the program."""
         logging.info(Fore.GREEN + " THE ASSISTENT IS ONLINE  " + Fore.BLUE)
-        self.utils.clean_buffer(data_empty=self.data_empty, file_name="res")
         thread = self.EventThread(logging)
         thread.start()
-        while True:
-            with open("connect/command.json", encoding="utf8") as commands:
-                command = commands.read()
-                if any(word in command for word in self.split_command_exit):
-                    command_to_elaborate = f"virgilio {self.split_command_exit[1]}"
-                    logging.info("Shutdown in progress from process-thread 1")
-                else:
-                    command_to_elaborate = "".join(command.split('":')[0])[7:]
-            if "false" in command and command is not None:
-                logging.debug(f" command processed: {command_to_elaborate}")
-                self.send(command_to_elaborate)
-                update_json_value(command_to_elaborate, True)
+        status = True
+        while status:
+            command = self.command_queue.get()
+            if any(word in command for word in self.split_command_exit):
+                command = f"virgilio {self.split_command_exit[1]}"
+                logging.info("Shutdown in progress from procces thread")
+                status = False
+            if command:
+                logging.debug(f" command processed: {command}")
+                self.send(command)
             else:
                 pass
 

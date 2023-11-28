@@ -1,7 +1,7 @@
 """This module is mutch importante because manage all the class and procces the command."""
+import queue
 import string
 import sys
-import json
 import time
 from typing import Any
 
@@ -25,26 +25,18 @@ from lib.packages_secondary.manage_events import EventScheduler
 
 
 # ---- File for manage all the preset command ----
-def off() -> None:
-    """Function to shutdown all services and close connection with database."""
-    print("\nVirgil: Shutdown in progress...", flush=True)
-    with open("connect/res.json", 'w', encoding="utf8") as file:
-        data = {
-            "0": ["spento", "spento", False]
-        }
-        json.dump(data, file, indent=4)
-    time.sleep(2)
-    sys.exit(0)
+
 
 
 class CommandSelection:
     """This class is used to select a specific function of the assistant."""
 
-    def __init__(self, settings) -> None:
+    def __init__(self, settings,result_queue:queue.Queue) -> None:
         """Init all the settings for manage all classes.
 
         Args:
             settings (Settings): the dataclasses with all settings
+            result_queue (Queue): The queue with results
         """
         self.settings = settings
 
@@ -63,7 +55,7 @@ class CommandSelection:
         self.loaded_model = joblib.load(model_filename)
 
         self.lang = settings.language
-
+        self.result_queue = result_queue
         if self.lang == 'it':
             self.stop_words = set(stopwords.words("italian"))
         else:
@@ -81,6 +73,14 @@ class CommandSelection:
         self.api_key = settings.openai
         self.gpt_version = settings.gpt_version
         openai.api_key = self.api_key
+
+    def off(self) -> None:
+        """Function to shutdown all services and close connection with database."""
+        print("\nVirgil: Shutdown in progress...", flush=True)
+        data = ["spento", "spento"]
+        self.result_queue.put(data)
+        time.sleep(2)
+        sys.exit(0)
 
     def get_response(self, messages: list):
         """Function for communicate whith api GPT-3.5.
@@ -132,7 +132,7 @@ class CommandSelection:
         except IndexError:
             return command
 
-    def send_command(self, command) -> str | None:  # noqa: PLR0911, PLR0912, PLR0915
+    def send_command(self, command:str) -> str | None:  # noqa: PLR0911, PLR0912, PLR0915
         """Function to process a command received by user and send on process.
 
         Args:
@@ -147,7 +147,7 @@ class CommandSelection:
         logging.debug(f"Classes choised by alghorithm is {predictions}")
         try:
             if (self.settings.split_command[0] in command_worked) or (self.settings.split_command[1] in command_worked):
-                off()
+                self.off()
                 return
             if predictions == 'OR':
                 response = self.time.now()
