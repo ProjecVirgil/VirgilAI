@@ -1,5 +1,6 @@
 """Class for manage the output of command."""
 import json
+import queue
 import time
 import threading
 import sys
@@ -48,28 +49,18 @@ def check_reminder() -> bool:
         return True
 
 
-def recover_data() -> tuple:
-    """Function to recover data from a previous session.
 
-    Returns:
-        tuple: The data recovered.
-    """
-    with open("connect/res.json", encoding="utf8") as file:
-        data = json.load(file)
-        res = data["0"][1]
-        command = data["0"][0]
-        is_used = data["0"][2]
-        return res, command, is_used
 
 
 class Output:
     """Output class for the bot to output messages and errors on console or file."""
 
-    def __init__(self, settings) -> None:
+    def __init__(self, settings,result_queue:queue.Queue) -> None:
         """Init all classes for the Output function.
 
         Args:
             settings (Settings): settings dataclasses with all settings
+            result_queue (Queue): The queue with results
         """
         mixer.init()
 
@@ -78,6 +69,7 @@ class Output:
         self.utils = Utils()
         self.event_scheduler = EventScheduler(settings)
         self.audio = Audio(settings.volume, settings.elevenlabs, settings.language)
+        self.result_queue = result_queue
 
         self.lang = settings.language
         self.split_command_exit = [settings.split_command[0],settings.split_command[1]]
@@ -138,10 +130,10 @@ class Output:
         self.audio.create(file=True, namefile="EntryVirgil")
         time.sleep(5)
         while True:
-            try:
-                result, command, is_used = recover_data()
-                if result is not None and is_used is False:
-                    if "spento" in command:
+                data = self.result_queue.get()
+                command,result  = data[0], data[1]
+                if result:
+                    if "spento" in command: #spento is a important word not change PLS
                         self.shutdown()
                     if "volume" in command:
                         mixer.music.set_volume(float(result))
@@ -165,7 +157,7 @@ class Output:
                     else:
                         self.audio.create(result)
                         logging.debug(result)
-                    update_json_value(2, True)
+
 
                     if not check_reminder():
                         logging.info(" send notify for today event")
@@ -174,6 +166,4 @@ class Output:
                         self.audio.create(result)
                 else:
                     pass
-            except json.decoder.JSONDecodeError:
-                logging.debug("Nothing was found in the json")
 
