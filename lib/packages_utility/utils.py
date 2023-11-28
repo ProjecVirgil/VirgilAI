@@ -32,16 +32,6 @@ class Utils:
         number_find = re.findall(r'\d+', command)
         return len(number_find)
 
-    def clean_buffer(self, data_empty: dict, file_name: str) -> None:
-        """Clean buffer and save it to disk.
-
-        Args:
-            data_empty (dict): Un templete standard json for restore the file
-            file_name (str): the name of file to restore
-        """
-        with open(f"connect/{file_name}.json", 'w', encoding="utf8") as commands:
-            json.dump(data_empty, commands)
-
     def get_coordinates(self, city_name: str) -> tuple:
         """Get coordinates from city name.
 

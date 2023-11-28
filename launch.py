@@ -1,6 +1,5 @@
 """summary: The start file."""
 import sys
-import threading
 import time
 import subprocess
 import random
@@ -12,6 +11,7 @@ import tomli
 import pyfiglet
 from colorama import Fore, Style
 
+from lib.packages_main.manager import ThreadManager
 import lib.packages_utility.logger  # noqa: F401
 import logging
 from lib.packages_utility.utils import init_settings
@@ -141,30 +141,9 @@ def log_in() -> str:
     return key
 
 
-def choise_input():
-    """This function is used when you want to choose between the text input or Voice input.
-
-    Returns:
-        str: the type of input
-    """
-    while True:
-        text_or_speech = str(input(
-            Fore.GREEN + Style.BRIGHT + "You want a text interface (T) or recognise interface(R) T/R: " + Style.RESET_ALL)).upper()
-        if text_or_speech == 'T':
-            return 1
-        elif text_or_speech == 'R':
-            return 0
-        else:
-            logging.warning(" Select a valid choice please")
-
 
 def main():  # noqa: PLR0915
     """Main function that will be called when running this script from command line."""
-    from lib.packages_main.output import Output
-    from lib.packages_main.text_input import TextInput
-    from lib.packages_main.vocal_input import VocalInput
-    from lib.packages_main.procces import Process
-
     command_cleaner = check_system()
     print_banner(command_cleaner)
     rainbow(command_cleaner)
@@ -182,49 +161,16 @@ def main():  # noqa: PLR0915
         request_maker.download_model_en()
         logging.info(" Download finish")
 
-    # *INIT ALL PRINCIPLE CLASS
-
-    output = Output(settings)
-    process = Process(settings)
-    text_input = TextInput(settings)
-    vocal_input = VocalInput(settings)
-    thread_1 = 0
-    thread_2 = 0
-    thread_3 = 0
-    if default_start == 'N':
-        text_or_speech = choise_input()
-        if text_or_speech == 1:
-            thread_1 = threading.Thread(target=text_input.text)
-            thread_2 = threading.Thread(target=process.main)
-            thread_3 = threading.Thread(target=output.out)
-        elif text_or_speech == 0:
-            thread_1 = threading.Thread(target=vocal_input.listening)
-            thread_2 = threading.Thread(target=process.main)
-            thread_3 = threading.Thread(target=output.out)
-        else:
-            logging.warning(" Select a valid choice please")
-    elif default_start == 'T':
-        thread_1 = threading.Thread(target=text_input.text)
-        thread_2 = threading.Thread(target=process.main)
-        thread_3 = threading.Thread(target=output.out)
-    else:
-        thread_1 = threading.Thread(target=vocal_input.listening)
-        thread_2 = threading.Thread(target=process.main)
-        thread_3 = threading.Thread(target=output.out)
-
-    logging.info("PROGRAM IN EXECUTION")
-    logging.info(" THE PROGRAMMES WILL START SOON")
-    thread_1.start()
-    logging.info(" INPUT THREAD START...")
-    thread_2.start()
-    logging.info(" PROCESS THREAD START...")
-    thread_3.start()
-    logging.info(" OUTPUT THREAD START...")
+    manager = ThreadManager(settings,default_start)
+    manager.init()
+    manager.start()
 
 # TODO ADD THE A FUNCTION TO INTERACT WITH GITHUB AND CHECK IF THE UPDATE  # noqa: TD002, FIX002, TD003, TD004
 # COPIA CONFRONTA FA PARTIRE UN BASH CHE COPIA O QUALCOSA DI SIMILE
 if __name__ == '__main__':
     # Update dependes command
+
+    #ADD TRY
     subprocess.run("poetry update",shell=True,check=True)
     script_dir = os.path.dirname(os.path.abspath(__file__))
     os.chdir(script_dir)
