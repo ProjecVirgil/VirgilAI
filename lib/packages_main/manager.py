@@ -54,7 +54,6 @@ class ThreadManager:
         """This method initialize all threads."""
         output = Output(self.settings,self.result)
         process = Process(self.settings,self.command,self.result)
-
         if self.default_start == 'N':
             text_or_speech = choise_input()
             if text_or_speech == 1:
@@ -82,5 +81,6 @@ class ThreadManager:
 
     def start(self):
         """This method is used to start the thread of the application."""
-        for thread in self.threads:
+        for i,thread in enumerate(self.threads):
+            logging.info(f"Start thread number: {i}")
             thread.start()
