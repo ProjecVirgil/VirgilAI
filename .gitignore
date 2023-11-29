@@ -11,6 +11,7 @@ boot.sh
 #Enviroments
 env
 virgil-env
+settings.db
 
 # Pytest file
 .pytest_cache
