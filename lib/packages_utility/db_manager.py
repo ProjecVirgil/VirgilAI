@@ -3,12 +3,10 @@ import sqlite3
 
 class DBManager:
     """A class for manage the interaction with db."""
-    def __init__(self,settings) -> None:
+    def __init__(self, settings=None) -> None:
         """Initializes the database connection."""
         self.connection = sqlite3.connect('settings.db')
         self.cursor = self.connection.cursor()
-
-
 
     def init(self):
         """Create the database and tables."""
@@ -29,7 +27,7 @@ CREATE TABLE IF NOT EXISTS settings (
     gpt_version TEXT,
     temperature REAL,
     max_tokens INTEGER,
-    created_at TIMESTAMP
+    created_at TIMESTAMP,
     FOREIGN KEY (keys_id) REFERENCES keys(id)
 );
 '''
@@ -48,3 +46,7 @@ CREATE TABLE IF NOT EXISTS settings (
         self.cursor.execute(CT_TABLE_KEYS)
         self.cursor.execute(CT_TABLE_SETTINGS)
         self.cursor.execute(CT_TABLE_REMINDER)
+
+#TEST
+manager = DBManager()
+manager.init()
