@@ -13,7 +13,7 @@ from colorama import Fore,Style
 from lib.packages_main.output import Output
 from lib.packages_main.text_input import TextInput
 from lib.packages_main.vocal_input import VocalInput
-from lib.packages_main.procces import Process
+from lib.packages_main.process import Process
 
 #! ADD LOGGING
 
