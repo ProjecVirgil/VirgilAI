@@ -161,8 +161,10 @@ def main():  # noqa: PLR0915
         request_maker.download_model_en()
         logging.info(" Download finish")
 
+    logging.info("Threads initialisation")
     manager = ThreadManager(settings,default_start)
     manager.init()
+    logging.info("Threads start")
     manager.start()
 
 # TODO ADD THE A FUNCTION TO INTERACT WITH GITHUB AND CHECK IF THE UPDATE  # noqa: TD002, FIX002, TD003, TD004
