@@ -17,7 +17,7 @@ from lib.packages_main.process import Process
 
 #! ADD LOGGING
 
-def choise_input():
+def choice_input():
     """This function is used when you want to choose between the text input or Voice input.
 
     Returns:
@@ -56,7 +56,7 @@ class ThreadManager:
         process = Process(self.settings,self.command,self.result)
 
         if self.default_start == 'N':
-            text_or_speech = choise_input()
+            text_or_speech = choice_input()
             if text_or_speech == 1:
                 text_input = TextInput(self.settings,self.command)
                 self.threads.append(threading.Thread(target=text_input.text))
