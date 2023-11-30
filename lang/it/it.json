@@ -52,7 +52,7 @@
             "in questo momento", "in questo giorno", "nella giornata in corso"
         ],
         "split":["a","oggi","domani","dopo domani"],
-        "phrase":["Il meteo a","per il","prevede","con una massima di","gradi,una minima di","gradi e una probabilita di precipitazione del","percento"],
+        "phrase":["Il meteo a","per il","prevede","con una massima di","gradi,una minima di","gradi e una probabilità di precipitazione del","percento"],
         "WWC" : {
             "0": "Cielo sereno",
             "1": "Prevalentemente sereno",

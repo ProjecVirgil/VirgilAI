@@ -5,7 +5,6 @@ import subprocess
 import random
 import os
 import platform
-import json
 
 import tomli
 import pyfiglet
@@ -17,6 +16,7 @@ import logging
 from lib.packages_utility.utils import init_settings
 from lib.packages_utility.vectorize import GloVeVectorizer, sentence_to_vec  # noqa: F401
 from lib.packages_utility.request import MakeRequests
+from lib.packages_utility.db_manager import DBManager
 
 
 # ---- This file launch all the file for making Virgilio work  ----
@@ -89,7 +89,7 @@ def install_libraries():
     logging.info("START CHECK THE LIBRARY")
 
 
-def create_account() -> str:
+def create_account():
     """Create a new account with Virgil API.
 
     Returns:
@@ -99,46 +99,41 @@ def create_account() -> str:
     logging.info("I am creating your synchronization key")
     key = request_maker.create_user()
     request_maker.create_user_event(key)
-
     logging.warning(f"KEEP YOUR KEY {key} DON'T GIVE IT TO ANYONE")
-
-    with open(KEY_FILE, 'w', encoding="utf8") as file_key:
-        file_key.write(str(key))
     _ = input(logging.warning(
         'Now download the Virgil app on your Android device, go to the configuration page and enter this code in the appropriate field, once done you will be able to change all Virgil settings remotely, once done press any button: '))
     logging.info("Synchronizing your account settings")
-    user = request_maker.get_user_settings(key)
+    settings_json = request_maker.get_user_settings(key)
+    #INIT SETTING
+    settings = init_settings(settings_json)
 
-    with open(SETTINGS_FILE, 'w', encoding="utf8") as file_setting:
-        json.dump(user, file_setting, indent=4)
-
-    if user == 'User not found':
+    if settings == 'User not found':
         logging.error("User not found")
         logging.error(
             "There is a problem with your key try deleting it and restarting the launcher if the problem persists contact support")
         sys.exit(1)
-    return key
+    db_manager.create_update_user(key,settings)
+    return settings
 
 
-def log_in() -> str:
+def log_in():
     """Log in to an existing account using its private key saved on disk (setup/key.txt).
 
     Returns:
         str: return the key of account created
     """
-    with open(KEY_FILE, encoding="utf8") as file_key:
-        logging.info("I pick up the key for synchronization")
-        key = file_key.readline()
-        logging.info("Synchronizing your account settings")
-        user = request_maker.get_user_settings(key)
-    with open(SETTINGS_FILE, 'w', encoding="utf8") as file_setting:
-        json.dump(user, file_setting, indent=4)
-    if user == 'User not found':
+    logging.info("I pick up the key for synchronization")
+    logging.info("Synchronizing your account settings")
+    key = db_manager.get_key()
+    settings_json = request_maker.get_user_settings(key)
+    if settings_json == 'User not found':
         logging.error("User not found")
         logging.error(
             "There is a problem with your key try deleting it and restarting the launcher if the problem persists contact support"),
         sys.exit(1)
-    return key
+    settings = init_settings(settings_json)
+    db_manager.create_update_user(key,settings)
+    return settings
 
 
 
@@ -149,11 +144,9 @@ def main():  # noqa: PLR0915
     rainbow(command_cleaner)
     install_libraries()
 
-    logging.info(f"PID PROCESS: {os.getpid()}")
 
-    create_account() if os.path.getsize(KEY_FILE) == 0 or not os.path.exists(KEY_FILE) else log_in()
-    #INIT SETTING
-    settings = init_settings()
+    logging.info(f"PID PROCESS: {os.getpid()}")
+    settings = create_account() if not db_manager.get_key() else log_in()
 
     if not os.path.exists("model/model_en.pkl"):
         logging.info("Start the download of english model this operation will take some time, but will only be done "
@@ -187,6 +180,8 @@ if __name__ == '__main__':
 
     # *  INIT LOGGER AND REQUEST_MAKER
     request_maker = MakeRequests()
+    db_manager = DBManager()
+    db_manager.init()
     # * CONST
     BANNER_MESSAGE = ['W', 'We', 'Wel', 'Welc', 'Welco', 'Welcom', 'Welcome', 'Welcome ',
                       'Welcome t', 'Welcome to', 'Welcome to ', 'Welcome to V',

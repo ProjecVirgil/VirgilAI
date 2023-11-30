@@ -13,11 +13,11 @@ from colorama import Fore,Style
 from lib.packages_main.output import Output
 from lib.packages_main.text_input import TextInput
 from lib.packages_main.vocal_input import VocalInput
-from lib.packages_main.procces import Process
+from lib.packages_main.process import Process
 
 #! ADD LOGGING
 
-def choise_input():
+def choice_input():
     """This function is used when you want to choose between the text input or Voice input.
 
     Returns:
@@ -55,7 +55,7 @@ class ThreadManager:
         output = Output(self.settings,self.result)
         process = Process(self.settings,self.command,self.result)
         if self.default_start == 'N':
-            text_or_speech = choise_input()
+            text_or_speech = choice_input()
             if text_or_speech == 1:
                 text_input = TextInput(self.settings,self.command)
                 self.threads.append(threading.Thread(target=text_input.text))
