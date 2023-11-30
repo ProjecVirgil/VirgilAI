@@ -5,6 +5,7 @@ import threading
 from colorama import Fore
 import nltk
 
+from lib.packages_utility.db_manager import DBManager
 from lib.packages_utility.logger import logging
 from lib.packages_utility.request import MakeRequests
 from lib.packages_utility.utils import Utils
@@ -14,11 +15,7 @@ from lib.packages_main.choose_command import CommandSelection
 # ----- File to elaborate the input  -----
 
 
-def check_event() -> None:
-    """Check if there is an event."""
-    logging.debug("update the reminder")
-    with open("connect/reminder.txt", "w", encoding="utf8") as file:
-        file.write("0")
+
 
 
 class Process:
@@ -42,7 +39,6 @@ class Process:
         self.utils = Utils()
         self.command_queue = command_queue
         self.result_queue = result_queue
-
         self.command_selection = CommandSelection(settings,result_queue)
 
         self.word_activation = settings.word_activation
@@ -92,9 +88,16 @@ class Process:
             self.daemon = True
             self.logger = logger
 
+
+        def check_event(self) -> None:
+            """Check if there is an event."""
+            db_manager = DBManager()
+            logging.debug("update the reminder")
+            db_manager.set_reminder(value=0)
+
         def run(self) -> None:
             """Run the function."""
-            check_event()
+            self.check_event()
 
     def main(self) -> None:
         """Main method of the program."""

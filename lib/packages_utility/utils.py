@@ -151,17 +151,14 @@ class Utils:
         return "Unmanaged number"
 
 
-def init_settings() -> Settings:
+def init_settings(settings_json) -> Settings:
     """Initialize settings for all the modules.
 
     Returns:
         Settings: Dataclasses
     """
-    with open("setup/settings.json", encoding="utf8") as file_settings:
-        # INIT FILE
-        settings_file = json.load(file_settings)
-        language = settings_file["language"]
-        with open(f'lang/{language}/{language}.json', encoding="utf8") as file_scripts:
+    language = settings_json["language"]
+    with open(f'lang/{language}/{language}.json', encoding="utf8") as file_scripts:
             # INIT FILE
             script = json.load(file_scripts)
             script_calendar = script["calendar"]
@@ -175,19 +172,19 @@ def init_settings() -> Settings:
             script_mediaplayer = script["mediaplayer"]
             return Settings(
                 language=language,
-                word_activation=settings_file["wordActivation"].lower(),
-                volume=settings_file["volume"],
-                city=settings_file["city"],
-                operation_timeout=settings_file["operation_timeout"],
-                dynamic_energy_threshold=settings_file["dynamic_energy_threshold"],
-                energy_threshold=settings_file["energy_threshold"],
-                elevenlabs=settings_file["elevenlabs"],
-                openai=settings_file["openAI"],
-                merros_email=settings_file["merrosEmail"],
-                merros_password=settings_file["merrosPassword"],
-                temperature=settings_file["temperature"],
-                gpt_version= settings_file["gpt-version"],
-                max_tokens=settings_file["max_tokens"],
+                word_activation=settings_json["wordActivation"].lower(),
+                volume=settings_json["volume"],
+                city=settings_json["city"],
+                operation_timeout=settings_json["operation_timeout"],
+                dynamic_energy_threshold=settings_json["dynamic_energy_threshold"],
+                energy_threshold=settings_json["energy_threshold"],
+                elevenlabs=settings_json["elevenlabs"],
+                openai=settings_json["openAI"],
+                merros_email=settings_json["merrosEmail"],
+                merros_password=settings_json["merrosPassword"],
+                temperature=settings_json["temperature"],
+                gpt_version= settings_json["gpt-version"],
+                max_tokens=settings_json["max_tokens"],
                 phrase_calendar=script_calendar["phrase"],
                 split_calendar=script_calendar["split"],
                 months_calendar=script_calendar["month"],

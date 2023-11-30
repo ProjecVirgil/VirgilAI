@@ -1,5 +1,4 @@
 """Class for manage the output of command."""
-import json
 import queue
 import time
 import threading
@@ -12,42 +11,8 @@ from pygame import mixer
 from lib.packages_utility.sound import Audio
 from lib.packages_utility.logger import logging
 from lib.packages_utility.utils import Utils
-
+from lib.packages_utility.db_manager import DBManager 
 from lib.packages_secondary.manage_events import EventScheduler
-
-
-def update_json_value(key: int, new_value: bool) -> None:
-    """Update a value in settings JSON file with given key name.
-
-    Args:
-        key (str): Command to change value
-        new_value (bool): True/False
-    """
-    # Apri il file JSON e carica i dati
-    with open("connect/res.json", encoding="utf8") as file:
-        data = json.load(file)
-
-    # Modifica il valore desiderato
-    data["0"][key] = new_value
-
-    # Sovrascrivi il file JSON con i dati aggiornati
-    with open("connect/res.json", 'w', encoding="utf8") as file:
-        json.dump(data, file, indent=4)
-
-
-def check_reminder() -> bool:
-    """Check if there is any reminder setted up by user. If so it will send him a message.
-
-    Returns:
-        bool: Rimender send?
-    """
-    with open("connect/reminder.txt", encoding="utf8") as file:
-        if file.read() == "0":
-            with open("connect/reminder.txt", "w", encoding="utf8") as file_to_write:
-                file_to_write.write("1")
-            return False
-        return True
-
 
 
 
@@ -65,7 +30,6 @@ class Output:
         mixer.init()
 
         self.settings = settings
-
         self.utils = Utils()
         self.event_scheduler = EventScheduler(settings)
         self.audio = Audio(settings.volume, settings.elevenlabs, settings.language)
@@ -86,6 +50,19 @@ class Output:
         else:
             time.sleep(my_time)
             self.audio.create(file=True, namefile="timerEndVirgil")
+
+    def check_reminder(self) -> bool:
+        """Check if there is any reminder setted up by user. If so it will send him a message.
+
+        Returns:
+            bool: Reminder send?
+        """
+        logging.info("Check your commitments")
+        self.db_manager = DBManager()
+        if self.db_manager.get_reminder() == 0:
+            self.db_manager.set_reminder(value=1)
+            return False
+        return True
 
     class TimerThread(threading.Thread):
         """Timer thread class to run the timer function and stop when needed.
@@ -159,7 +136,7 @@ class Output:
                         logging.debug(result)
 
 
-                    if not check_reminder():
+                    if not self.check_reminder():
                         logging.info(" send notify for today event")
                         result = self.event_scheduler.send_notify()
                         time.sleep(10)
