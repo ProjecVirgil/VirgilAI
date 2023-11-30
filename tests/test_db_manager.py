@@ -14,8 +14,6 @@ dict = {
     "operation_timeout": "2",
     "dynamic_energy_threshold": "false",
     "energy_threshold": "18",
-    "elevenlabs": "bf688dad150101ef6501fc65d9c002dd",
-    "openAI": "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",
     "merrosEmail": "email",
     "merrosPassword": "password",
     "temperature": "0.9",
