@@ -50,6 +50,7 @@ requests-html = "^0.10.0"
 scipy = "1.11.3"
 tomli = "^2.0.1"
 gensim = "^4.3.2"
+executing = "^2.0.1"
 tomlkit = "^0.12.2"
 
 
