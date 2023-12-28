@@ -10,12 +10,6 @@ requires-python = ">=3.10"
 [project.license]
 file = "LICENSE"
 
-[tool.config_system]
-first_setup = true  #Se è il primo setup allora non chiederà cosa si vuole modificare 
-launch_start = false
-defaul_start = "N" # T (text) or R (voice) N (Lo chiede)
-display_console = true # If the interface is voice do i have to show the console?
-
 [tool.debug]
 level_debug = "info" # (debug,info,warning,error,critical)
 logs_file = false
