@@ -41,7 +41,9 @@ scipy = "1.11.3"
 tomli = "^2.0.1"
 gensim = "^4.3.2"
 tomlkit = "^0.12.2"
-
+plyer = "^2.1.0"
+win10toast = "^0.9"
+winotify = "^1.1.0"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.1.5"
