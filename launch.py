@@ -37,7 +37,6 @@ def check_system():
         return "clear"
     logging.critical(" Unrecognized operating system.Unable to start the corresponding terminal"),
     sys.exit(1)
-    return 404
 
 
 def print_banner(command_cleaner: str):
@@ -52,13 +51,13 @@ def print_banner(command_cleaner: str):
         print(Style.BRIGHT + Fore.MAGENTA + pyfiglet.figlet_format(i), flush=True)
         if counter == 11:  # noqa: PLR2004
             delay = 0.2
-        elif counter == 12: # noqa: PLR2004
+        elif counter == 12:  # noqa: PLR2004
             delay = 0.25
-        elif counter == 13: # noqa: PLR2004
+        elif counter == 13:  # noqa: PLR2004
             delay = 0.3
-        elif counter == 14: # noqa: PLR2004
+        elif counter == 14:  # noqa: PLR2004
             delay = 0.35
-        elif counter == 15: # noqa: PLR2004
+        elif counter == 15:  # noqa: PLR2004
             delay = 0.4
         time.sleep(delay)
         counter += 1
@@ -106,7 +105,7 @@ def create_account():
         'Now download the Virgil app on your Android device, go to the configuration page and enter this code in the appropriate field, once done you will be able to change all Virgil settings remotely, once done press any button: '))
     logging.info("Synchronizing your account settings")
     settings_json = request_maker.get_user_settings(GLOBAL_KEY)
-    #INIT SETTING
+    # INIT SETTING
     settings = init_settings(settings_json)
 
     if settings == 'User not found':
@@ -114,7 +113,7 @@ def create_account():
         logging.error(
             "There is a problem with your key try deleting it and restarting the launcher if the problem persists contact support")
         sys.exit(1)
-    db_manager.create_update_user(GLOBAL_KEY,settings)
+    db_manager.create_update_user(GLOBAL_KEY, settings)
     return settings
 
 
@@ -134,9 +133,8 @@ def log_in():
             "There is a problem with your key try deleting it and restarting the launcher if the problem persists contact support"),
         sys.exit(1)
     settings = init_settings(settings_json)
-    db_manager.create_update_user(key,settings)
+    db_manager.create_update_user(key, settings)
     return settings
-
 
 
 def main():  # noqa: PLR0915
@@ -156,21 +154,23 @@ def main():  # noqa: PLR0915
         logging.info(" Download finish")
 
     logging.info("Threads initialisation")
-    manager = ThreadManager(settings,default_start)
+    manager = ThreadManager(settings, default_start)
     manager.init()
     logging.info("Threads start")
     manager.start()
 
+
 # TODO ADD THE A FUNCTION TO INTERACT WITH GITHUB AND CHECK IF THE UPDATE  # noqa: TD002, FIX002, TD003, TD004
 if __name__ == '__main__':
-    subprocess.run("poetry install",shell=True,check=True)
+    subprocess.run("poetry install", shell=True, check=True)
     script_dir = os.path.dirname(os.path.abspath(__file__))
     os.chdir(script_dir)
 
-    config_path = os.path.join('C:','Users',getpass.getuser(),'AppData','Local','Programs','Virgil-Installer','config.json') 
+    config_path = os.path.join('C:', 'Users', getpass.getuser(), 'AppData', 'Local', 'Programs', 'Virgil-Installer',
+                               'config.json')
     with open(config_path) as file:
         config = json.load(file)
-    #launch_start = config["startup"]
+    # launch_start = config["startup"]
     default_start = config["type_interface"]
     display_console = config["display_console"]
     GLOBAL_KEY = config["key"]
@@ -186,15 +186,17 @@ if __name__ == '__main__':
                       'Welcome to Virgi', 'Welcome to Virgil']
     SYSTEM = platform.system()
 
-    if(SYSTEM == 'Windows'):
-        toast = Notification(app_id="VirgilAI",title="Virgil AI NOTIFY",msg="Virgil AI started correctly without errors",duration='long',icon=os.path.join(os.getcwd(),'assets','img','icon.ico'))
-        toast.set_audio(audio.Mail,loop=False)
+    if SYSTEM == 'Windows':
+        toast = Notification(app_id="VirgilAI", title="Virgil AI NOTIFY",
+                             msg="Virgil AI started correctly without errors", duration='long',
+                             icon=os.path.join(os.getcwd(), 'assets', 'img', 'icon.ico'))
+        toast.set_audio(audio.Mail, loop=False)
         toast.show()
-    else: 
+    else:
         notification.notify(
-        title='Virgil AI NOTIFY',
-        message='Virgil AI started correctly without errors',
-        timeout=10
-    )
+            title='Virgil AI NOTIFY',
+            message='Virgil AI started correctly without errors',
+            timeout=10
+        )
 
     main()
