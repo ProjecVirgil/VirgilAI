@@ -1,12 +1,13 @@
 """summary: The start file."""
+import getpass
 import sys
 import time
 import subprocess
 import random
 import os
 import platform
+import json
 
-import tomli
 import pyfiglet
 from colorama import Fore, Style
 
@@ -97,13 +98,12 @@ def create_account():
 
     """
     logging.info("I am creating your synchronization key")
-    key = request_maker.create_user()
-    request_maker.create_user_event(key)
-    logging.warning(f"KEEP YOUR KEY {key} DON'T GIVE IT TO ANYONE")
+    request_maker.create_user_event(GLOBAL_KEY)
+    logging.warning(f"KEEP YOUR KEY {GLOBAL_KEY} DON'T GIVE IT TO ANYONE")
     _ = input(logging.warning(
         'Now download the Virgil app on your Android device, go to the configuration page and enter this code in the appropriate field, once done you will be able to change all Virgil settings remotely, once done press any button: '))
     logging.info("Synchronizing your account settings")
-    settings_json = request_maker.get_user_settings(key)
+    settings_json = request_maker.get_user_settings(GLOBAL_KEY)
     #INIT SETTING
     settings = init_settings(settings_json)
 
@@ -112,7 +112,7 @@ def create_account():
         logging.error(
             "There is a problem with your key try deleting it and restarting the launcher if the problem persists contact support")
         sys.exit(1)
-    db_manager.create_update_user(key,settings)
+    db_manager.create_update_user(GLOBAL_KEY,settings)
     return settings
 
 
@@ -160,20 +160,17 @@ def main():  # noqa: PLR0915
 
 # TODO ADD THE A FUNCTION TO INTERACT WITH GITHUB AND CHECK IF THE UPDATE  # noqa: TD002, FIX002, TD003, TD004
 if __name__ == '__main__':
-    # Update depends command
-
-    #ADD TRY
     subprocess.run("poetry install",shell=True,check=True)
     script_dir = os.path.dirname(os.path.abspath(__file__))
     os.chdir(script_dir)
-    toml_path = 'pyproject.toml'
-    with open(toml_path, "rb") as file:
-        metadata = tomli.load(file)
-        SETTINGS_FILE = metadata["tool"]["path"]["setting_path"]
-        KEY_FILE = metadata["tool"]["path"]["key_path"]
-        launch_start = metadata["tool"]["config_system"]["launch_start"]
-        default_start = metadata["tool"]["config_system"]["defaul_start"]
-        display_console = metadata["tool"]["config_system"]["display_console"]
+
+    config_path = os.path.join('C:','Users',getpass.getuser(),'AppData','Local','Programs','Virgil-Installer','config.json') 
+    with open(config_path) as file:
+        config = json.load(file)
+    #launch_start = config["startup"]
+    default_start = config["type_interface"]
+    display_console = config["display_console"]
+    GLOBAL_KEY = config["key"]
 
     # *  INIT LOGGER AND REQUEST_MAKER
     request_maker = MakeRequests()
