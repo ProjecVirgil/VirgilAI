@@ -10,6 +10,8 @@ import json
 
 import pyfiglet
 from colorama import Fore, Style
+from plyer import notification
+from winotify import Notification, audio
 
 from lib.packages_main.manager import ThreadManager
 import lib.packages_utility.logger  # noqa: F401
@@ -144,7 +146,6 @@ def main():  # noqa: PLR0915
     rainbow(command_cleaner)
     install_libraries()
 
-
     logging.info(f"PID PROCESS: {os.getpid()}")
     settings = create_account() if not db_manager.get_key() else log_in()
 
@@ -184,4 +185,16 @@ if __name__ == '__main__':
                       'Welcome to Vi', 'Welcome to Vir', 'Welcome to Virg',
                       'Welcome to Virgi', 'Welcome to Virgil']
     SYSTEM = platform.system()
+
+    if(SYSTEM == 'Windows'):
+        toast = Notification(app_id="VirgilAI",title="Virgil AI NOTIFY",msg="Virgil AI started correctly without errors",duration='long',icon=os.path.join(os.getcwd(),'assets','img','icon.ico'))
+        toast.set_audio(audio.Mail,loop=False)
+        toast.show()
+    else: 
+        notification.notify(
+        title='Virgil AI NOTIFY',
+        message='Virgil AI started correctly without errors',
+        timeout=10
+    )
+
     main()
