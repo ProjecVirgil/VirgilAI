@@ -20,26 +20,6 @@ class MakeRequests:
             with open("setup/key.txt",encoding="utf8") as file_key:
                 self.key_user = file_key.read()
 
-    def create_user(self) -> str:
-        """This function creates a user in the database.
-
-        This function creates a user in the database
-        and returns its id if it was created successfully or an error message otherwise.
-
-        Returns:
-            str: Return the result of the request
-        """
-        # USER CREATION
-        url = f'{self.url_base}/createUser'
-        try:
-            request = requests.put(url, timeout=5)
-            user_created = request.json()
-            logging.info("User created Correctly")
-            return user_created["userId"]
-        except requests.RequestException:
-            logging.critical("I can't stable connection check the network")
-            return "User not created"
-
     def get_user_settings(self, key_user) -> str:
         """This function makes a GET request to the API and returns the settings.
 
