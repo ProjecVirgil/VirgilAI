@@ -3,7 +3,7 @@
 [project]
 name = "VirgilAI"
 description = "Virgil is an advanced virtual assistant that is based on the powerful GPT-3.5 artificial intelligence developed by OpenAI. This virtual assistant is designed to offer a wide range of features and capabilities similar to those of well-known virtual assistants such as Amazon's Alexa."
-version = "v2.2.0"
+version = "v3.1.0"
 readme = "README.md"
 requires-python = ">=3.10"
 
