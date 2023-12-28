@@ -1,4 +1,4 @@
-"""Class for print the log (temporany function)."""
+"""Class for print the log."""
 import logging
 from colorama import Fore, Style, init
 import tomli

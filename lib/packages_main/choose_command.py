@@ -1,4 +1,4 @@
-"""This module is mutch importante because manage all the class and procces the command."""
+"""This module is much important because manage all the class and process the command."""
 import queue
 import string
 import sys
@@ -17,7 +17,7 @@ from lib.packages_utility.utils import Utils
 
 from lib.packages_secondary.time import Time, diff_time
 from lib.packages_secondary.change_value import VolumeMixer
-from lib.packages_secondary.the_weather import Wheather
+from lib.packages_secondary.the_weather import Weather
 from lib.packages_secondary.calendar_rec import Calendar
 from lib.packages_secondary.the_news import Newsletter
 from lib.packages_secondary.searchyt import MediaPlayer
@@ -45,7 +45,7 @@ class CommandSelection:
 
         self.volume_mixer = VolumeMixer(volume_value=100, settings=settings)
         self.time = Time(settings)
-        self.wheather = Wheather(settings)
+        self.weather = Weather(settings)
         self.event_scheduler = EventScheduler(settings)
         self.calendar = Calendar(settings)
         self.news_letter = Newsletter(settings.language, settings.synonyms_news)
@@ -83,7 +83,7 @@ class CommandSelection:
         sys.exit(0)
 
     def get_response(self, messages: list):
-        """Function for communicate whith api GPT-3.5.
+        """Function for communicate with api GPT-3.5.
 
         Args:
             messages (list): The contest of conversation
@@ -144,7 +144,7 @@ class CommandSelection:
         mixer.init()
         predictions = self.loaded_model.predict([self.clean(command, "model")])
         command_worked = self.clean(command, "work")
-        logging.debug(f"Classes choised by alghorithm is {predictions}")
+        logging.debug(f"Classes chosen by algorithm is {predictions}")
         try:
             if (self.settings.split_command[0] in command_worked) or (self.settings.split_command[1] in command_worked):
                 self.off()
@@ -165,14 +165,14 @@ class CommandSelection:
                     return None
                 return response
             if predictions == 'MT':
-                response = self.wheather.recover_weather(command_worked)
+                response = self.weather.recover_weather(command_worked)
                 return response
             if predictions == 'TM':
                 for i in command_worked:
                     if self.utils.count_number(i) >= 2:  # noqa: PLR2004
-                        hours, minuts, calculated_hours, calculated_minuts, calculate_seconds = diff_time(i)
-                        time_calculated = f"{calculated_hours} ore {calculated_minuts} minuti {calculate_seconds} secondi".split(
-                            " ")
+                        hours, minutes, calculated_hours, calculated_minutes, calculate_seconds = diff_time(i)
+                        time_calculated = f"{calculated_hours} ore {calculated_minutes} minuti {calculate_seconds} secondi".split(
+                            " ") #TODO CHECK IF MAKE THE DYNAMIC TRANSLATE FOR THE WORDS
                         my_time = self.time.conversion(list(time_calculated))
                         return str(my_time)
                 try:
@@ -188,10 +188,10 @@ class CommandSelection:
             if predictions == "MC":
                 for i in command_worked:
                     if self.utils.count_number(i) >= 2:  # noqa: PLR2004
-                        hours, minuts, calculated_hours, calculated_minuts, calculate_seconds = diff_time(i)
+                        hours, minutes, calculated_hours, calculated_minutes, calculate_seconds = diff_time(i)
                         logging.info(
-                            f" {self.settings.split_time[1]} {self.utils.number_to_word(hours)} {self.settings.split_time[3]} {self.utils.number_to_word(minuts)} {self.settings.phrase_time[6]} {self.utils.number_to_word(calculated_hours)} {self.utils.number_to_word(calculated_minuts)} {self.utils.number_to_word(calculate_seconds)}")
-                        return f" {self.settings.split_time[1]} {self.utils.number_to_word(hours)} {self.settings.split_time[3]} {self.utils.number_to_word(minuts)} {self.settings.phrase_time[6]} {self.utils.number_to_word(calculated_hours)} {self.settings.phrase_time[1]} {self.utils.number_to_word(calculated_minuts)} {self.settings.phrase_time[2]} {self.utils.number_to_word(calculate_seconds)} {self.settings.phrase_time[3]}"
+                            f" {self.settings.split_time[1]} {self.utils.number_to_word(hours)} {self.settings.split_time[3]} {self.utils.number_to_word(minutes)} {self.settings.phrase_time[6]} {self.utils.number_to_word(calculated_hours)} {self.utils.number_to_word(calculated_minutes)} {self.utils.number_to_word(calculate_seconds)}")
+                        return f" {self.settings.split_time[1]} {self.utils.number_to_word(hours)} {self.settings.split_time[3]} {self.utils.number_to_word(minutes)} {self.settings.phrase_time[6]} {self.utils.number_to_word(calculated_hours)} {self.settings.phrase_time[1]} {self.utils.number_to_word(calculated_minutes)} {self.settings.phrase_time[2]} {self.utils.number_to_word(calculate_seconds)} {self.settings.phrase_time[3]}"
                 result = self.calendar.diff_date(command_worked)
                 return result
             if predictions == "NW":
@@ -216,6 +216,6 @@ class CommandSelection:
             logging.error(error)
             self.audio.create(file=True, namefile="ErrorOpenAi")
             return
-        print(f"\nVirgilio: {new_message.content}")
+        print(f"\nVirgil: {new_message.content}")
         self.start_prompt.append(new_message)
         return new_message.content

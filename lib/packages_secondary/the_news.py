@@ -12,7 +12,7 @@ class Newsletter:
     """This class is used to recover a news from google api."""
 
     def __init__(self, language, synonyms_news) -> None:
-        """Init the language,logger class and some synonymus.
+        """Init the language,logger class and some synonymous.
 
         Args:
             language (_type_): _description_
@@ -39,7 +39,7 @@ class Newsletter:
                 break
         if topic == "":
             topic = None
-        logging.debug(f" topic choised: {topic}")
+        logging.debug(f" topic chosen: {topic}")
         return topic
 
     def create_news(self, command: str) -> str:
@@ -67,5 +67,5 @@ class Newsletter:
                 news.append(title.text)
             news_selected = random.choice(news)
 
-        logging.info(f" news choise {news_selected}")
+        logging.info(f" chosen news {news_selected}")
         return news_selected

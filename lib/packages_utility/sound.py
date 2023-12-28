@@ -37,7 +37,7 @@ class Audio:
             music.set_volume(float(self.volume))
             if file:
                 logging.info(f"File reproduce: {namefile}")
-                file = os.path.join(f"asset/{self.language}/{namefile}.mp3")
+                file = os.path.join(f"assets/audio/{self.language}/{namefile}.mp3")
                 music.load(file)
                 music.play()
                 return

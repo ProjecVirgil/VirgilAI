@@ -1,4 +1,4 @@
-"""This file manage the call at the API for the wheather."""
+"""This file manage the call at the API for the weather."""
 import calendar
 import datetime
 
@@ -22,12 +22,12 @@ def get_current_week_days() -> list:
     today = datetime.date.today()
     days_in_month = calendar.monthrange(today.year, today.month)[1]
     week_days = [min(today.day + i, days_in_month) for i in range(7)]
-    repition = 0
+    repetitions = 0
     for i in week_days:
         if i == 31:  # noqa: PLR2004
-            repition += 1
-            if repition >= 2:  # noqa: PLR2004
-                week_days[7 - repition + 1] = repition - 1
+            repetitions += 1
+            if repetitions >= 2:  # noqa: PLR2004
+                week_days[7 - repetitions + 1] = repetitions - 1
     return week_days
 
 
@@ -46,11 +46,11 @@ def is_valid_date(days, command):
     return any(str(i) in command for i in days)
 
 
-class Wheather:
-    """This class manage to get the wheater for a specific day and time."""
+class Weather:
+    """This class manage to get the weather for a specific day and time."""
 
     def __init__(self, settings) -> None:
-        """Init file for the wheather manage.
+        """Init file for the weather manage.
 
         Args:
             settings (Settings): The dataclasses with all the settings
@@ -60,11 +60,11 @@ class Wheather:
 
         self.city = settings.city
         self.lang = settings.language
-        self.split_wheather = settings.split_wheather
-        self.phrase_wheather = settings.phrase_wheather
-        self.wwc_wheather = settings.wwc_wheather
+        self.split_weather = settings.split_weather
+        self.phrase_weather = settings.phrase_weather
+        self.wwc_weather = settings.wwc_weather
 
-    # Init the api wheather
+    # Init the api weather
     def get_url(self, city) -> str:
         """This function init the url with the parameters to call the API weather.
 
@@ -87,7 +87,7 @@ class Wheather:
             command (str): sentence
 
         Returns:
-            str: City chooise if the city not specify
+            str: City choose if the city not specify
         """
         minimum_accuracy = 3
         result_list = []
@@ -96,7 +96,7 @@ class Wheather:
             city = ""
             latitude, longitude = self.utils.get_coordinates(word)
             if latitude is not None and longitude is not None:
-                with open("asset/worldcities.csv", encoding='utf-8') as csvfile:
+                with open("assets/worldcities.csv", encoding='utf-8') as csvfile:
                     csvreader = csv.reader(csvfile, delimiter=';')
                     for row in csvreader:
                         if row[0] == "city":
@@ -112,7 +112,7 @@ class Wheather:
 
         if result_list[0][1] < minimum_accuracy:
             city_correct = result_list[0][0]
-            logging.debug(f" City in the phrase choosen: {city_correct}")
+            logging.debug(f" City in the phrase chosen: {city_correct}")
             return city_correct
         logging.debug(" Default city choose")
         return self.city
@@ -126,12 +126,12 @@ class Wheather:
         Returns:
             tuple: Index of day and the day
         """
-        days = get_current_week_days()  # worka
-        if self.split_wheather[1] in command or str(days[0]) in command:
+        days = get_current_week_days()
+        if self.split_weather[1] in command or str(days[0]) in command:
             return 0, days[0]
-        if self.split_wheather[2] in command or str(days[1]) in command:
+        if self.split_weather[2] in command or str(days[1]) in command:
             return 1, days[1]
-        if self.split_wheather[3] in command or str(days[2]) in command:
+        if self.split_weather[3] in command or str(days[2]) in command:
             return 2, days[2]
         if str(days[3]) in command:
             return 3, days[3]
@@ -146,7 +146,7 @@ class Wheather:
         return 0, days[0]
 
     def recover_weather(self, command: str) -> str:
-        """This function give the wheather by use the user input.
+        """This function give the weather by use the user input.
 
         Args:
             command (str): sentence input
@@ -168,8 +168,8 @@ class Wheather:
                 min_temp = str(int(response["daily"]["temperature_2m_min"][day]))
                 precipitation = str(response["daily"]["precipitation_probability_max"][day])
                 if self.lang != "en":
-                    return f" {self.phrase_wheather[0]} {city} {self.phrase_wheather[1]} {self.utils.number_to_word(str(week_day))} {self.phrase_wheather[2]} {self.wwc_wheather[main]} {self.phrase_wheather[3]} {self.utils.number_to_word(max_temp)} {self.phrase_wheather[4]} {self.utils.number_to_word(min_temp)} {self.phrase_wheather[5]} {self.utils.number_to_word(precipitation)} {self.phrase_wheather[6]}"
-                return f" {self.phrase_wheather[0]} {city} {self.phrase_wheather[1]} {week_day} {self.phrase_wheather[2]} {self.wwc_wheather[main]} {self.phrase_wheather[3]} {max_temp} {self.phrase_wheather[4]} {min_temp} {self.phrase_wheather[5]} {precipitation} {self.phrase_wheather[6]}"
+                    return f" {self.phrase_weather[0]} {city} {self.phrase_weather[1]} {self.utils.number_to_word(str(week_day))} {self.phrase_weather[2]} {self.wwc_weather[main]} {self.phrase_weather[3]} {self.utils.number_to_word(max_temp)} {self.phrase_weather[4]} {self.utils.number_to_word(min_temp)} {self.phrase_weather[5]} {self.utils.number_to_word(precipitation)} {self.phrase_weather[6]}"
+                return f" {self.phrase_weather[0]} {city} {self.phrase_weather[1]} {week_day} {self.phrase_weather[2]} {self.wwc_weather[main]} {self.phrase_weather[3]} {max_temp} {self.phrase_weather[4]} {min_temp} {self.phrase_weather[5]} {precipitation} {self.phrase_weather[6]}"
             self.audio.create(file=True, namefile="ErrorDay")
             return ""
         logging.error(" repeat the request or wait a few minutes")

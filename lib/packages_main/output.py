@@ -11,7 +11,7 @@ from pygame import mixer
 from lib.packages_utility.sound import Audio
 from lib.packages_utility.logger import logging
 from lib.packages_utility.utils import Utils
-from lib.packages_utility.db_manager import DBManager 
+from lib.packages_utility.db_manager import DBManager
 from lib.packages_secondary.manage_events import EventScheduler
 
 
@@ -115,7 +115,7 @@ class Output:
                     if "volume" in command:
                         mixer.music.set_volume(float(result))
                         mixer.music.unload()
-                        mixer.music.load('asset/bipEffectCheckSound.mp3')
+                        mixer.music.load('assets/bipEffectCheckSound.mp3')
                         mixer.music.play()
                         logging.info(f" volume changed correctly to {result * 100}% ")
                     elif "timer" in command or self.settings.split_output[0] in command:

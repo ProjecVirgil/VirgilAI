@@ -29,7 +29,7 @@ class MakeRequests:
         Returns:
             str: Return the result of the request
         """
-        # CREAZIONE USER
+        # USER CREATION
         url = f'{self.url_base}/createUser'
         try:
             request = requests.put(url, timeout=5)
@@ -72,7 +72,7 @@ class MakeRequests:
         value_success = 201
 
         if request.status_code == value_success:
-            logging.info("User calendar created correcly")
+            logging.info("User calendar created correctly")
         else:
             logging.warning("User calendar offline")
 
@@ -100,7 +100,7 @@ class MakeRequests:
         """
         url = f'{self.url_base}/calendar/{self.key_user}/'
         request = requests.get(url, timeout=5)
-        logging.debug(f" reponse: {request.status_code}")
+        logging.debug(f" response: {request.status_code}")
         events = request.json()
         return events
 
@@ -108,7 +108,7 @@ class MakeRequests:
         """Delete the old events."""
         url = f'{self.url_base}/calendar/deleteEvent/{self.key_user}/'
         request = requests.put(url, timeout=5)
-        logging.debug(f" reponse: {request.status_code}")
+        logging.debug(f" response: {request.status_code}")
 
     def download_model_en(self):
         """Download model english."""

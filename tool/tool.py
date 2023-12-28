@@ -15,7 +15,7 @@ def main(language: str):
     Returns:
         _type_: _description_
     """
-    print("SAY A WORD OR PHRASE IN YOUR LANGAGE")
+    print("SAY A WORD OR PHRASE IN YOUR LANGUAGE")
     result_dict = {}
     for i in range(5):
         try:
@@ -35,7 +35,7 @@ if __name__ == "__main__":
     listener.operation_timeout = 2
     listener.dynamic_energy_threshold = True
     language_choose = str(
-        input("Insert your language nation and dialet if is not dialet simple repeate the nation example it-it: "))
+        input("Insert your language nation and dialect if is not dialect simple repeat the nation example it-it: "))
     results = main(language_choose)
     sorted_keys = sorted(results.keys(), key=lambda key: results[key][2])
     sorted_dict = {key: results[key] for key in sorted_keys}

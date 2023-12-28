@@ -1,4 +1,4 @@
-"""The procces file for the command."""
+"""The process file for the command."""
 import queue
 import threading
 
@@ -101,7 +101,7 @@ class Process:
 
     def main(self) -> None:
         """Main method of the program."""
-        logging.info(Fore.GREEN + " THE ASSISTENT IS ONLINE  " + Fore.BLUE)
+        logging.info(Fore.GREEN + " THE ASSISTANT IS ONLINE  " + Fore.BLUE)
         thread = self.EventThread(logging)
         thread.start()
         status = True
@@ -109,7 +109,7 @@ class Process:
             command = self.command_queue.get()
             if any(word in command for word in self.split_command_exit):
                 command = f"virgilio {self.split_command_exit[1]}"
-                logging.info("Shutdown in progress from procces thread")
+                logging.info("Shutdown in progress from process thread")
                 status = False
             if command:
                 logging.debug(f" command processed: {command}")

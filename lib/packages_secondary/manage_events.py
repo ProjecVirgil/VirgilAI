@@ -70,7 +70,7 @@ class EventScheduler:
         """Take the data and the event for send the request.
 
         Args:
-            command (_type_): Sencence
+            command (_type_): Sentence
 
         Returns:
             tuple: Date for the events and the event
@@ -100,7 +100,7 @@ class EventScheduler:
             command (str): sentence input
 
         Returns:
-            str: Final phrase to reprocude
+            str: Final phrase to reproduce
         """
         date, event = self.recognize_date(command)
         date = self.get_date(date)
