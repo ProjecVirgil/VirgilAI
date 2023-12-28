@@ -11,7 +11,7 @@ from pygame import mixer
 from lib.packages_utility.sound import Audio
 from lib.packages_utility.logger import logging
 from lib.packages_utility.utils import Utils
-from lib.packages_utility.db_manager import DBManager 
+from lib.packages_utility.db_manager import DBManager
 from lib.packages_secondary.manage_events import EventScheduler
 
 
@@ -38,18 +38,6 @@ class Output:
         self.lang = settings.language
         self.split_command_exit = [settings.split_command[0],settings.split_command[1]]
 
-    def timer(self, my_time: int, command: str) -> None:
-        """Timer function that runs every 3 seconds.
-
-        Args:
-            my_time (int): The time in second
-            command (_type_): The command
-        """
-        if self.settings.phrase_outputs[0] in command:
-            time.sleep(my_time)
-        else:
-            time.sleep(my_time)
-            self.audio.create(file=True, namefile="timerEndVirgil")
 
     def check_reminder(self) -> bool:
         """Check if there is any reminder setted up by user. If so it will send him a message.
@@ -71,22 +59,37 @@ class Output:
             threading (_type_): _description_
         """
 
-        def __init__(self, interval, command):
+        def __init__(self, interval, command, settings):
             """Init file for the class of Thread.
 
             Args:
                 interval (int): the duration of time.sleep
                 command (_type_): the command
+                settings(Settings): all the settings
             """
             threading.Thread.__init__(self)
             self.interval = interval
             self.daemon = True
             self.command = command
+            self.settings = settings
+            self.audio = Audio(settings.volume, settings.elevenlabs, settings.language)
+
+        def timer(self, my_time: int, command: str) -> None:
+            """Timer function.
+
+            Args:
+                my_time (int): The time in second
+                command (_type_): The command
+            """
+            if self.settings.phrase_output[0] in command:
+                time.sleep(my_time)
+            else:
+                time.sleep(my_time)
+                self.audio.create(file=True, namefile="timerEndVirgil")
 
         def run(self) -> None:
             """Function tu run the timer."""
-            output_instance = Output(settings=self.settings)
-            output_instance.timer(self.interval, self.command)
+            self.timer(self.interval,self.command)
 
     def shutdown(self) -> None:
         """Function to shut down the programm."""
@@ -115,7 +118,7 @@ class Output:
                     if "volume" in command:
                         mixer.music.set_volume(float(result))
                         mixer.music.unload()
-                        mixer.music.load('asset/bipEffectCheckSound.mp3')
+                        mixer.music.load('assets/bipEffectCheckSound.mp3')
                         mixer.music.play()
                         logging.info(f" volume changed correctly to {result * 100}% ")
                     elif "timer" in command or self.settings.split_output[0] in command:
@@ -129,7 +132,7 @@ class Output:
                                     f"{self.settings.phrase_output[0]} {result} {self.settings.phrase_output[1]}")
                         else:
                             self.audio.create(file=True, namefile="ClockImposter")
-                        thread = self.TimerThread(int(result), command)
+                        thread = self.TimerThread(int(result), command,self.settings)
                         thread.start()
                     else:
                         self.audio.create(result)

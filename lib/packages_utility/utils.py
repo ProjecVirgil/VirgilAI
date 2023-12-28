@@ -168,7 +168,7 @@ def init_settings(settings_json) -> Settings:
             script_events = script["events"]
             script_output = script["outputs"]
             script_news = script["news"]
-            script_wheather = script["wheather"]
+            script_weather = script["wheather"]
             script_mediaplayer = script["mediaplayer"]
             return Settings(
                 language=language,
@@ -201,9 +201,9 @@ def init_settings(settings_json) -> Settings:
                 phrase_output=script_output["phrase"],
                 split_output=script_output["split"],
                 synonyms_news=script_news["synonyms"],
-                phrase_wheather=script_wheather["phrase"],
-                split_wheather=script_wheather["split"],
-                wwc_wheather=script_wheather["WWC"],
-                word_meaning_tomorrow_wheather=script_wheather["word_meaning_tomorrow"],
+                phrase_weather=script_weather["phrase"],
+                split_weather=script_weather["split"],
+                wwc_weather=script_weather["WWC"],
+                word_meaning_tomorrow_weather=script_weather["word_meaning_tomorrow"],
                 synonyms_mediaplayer=script_mediaplayer["synonyms"]
             )

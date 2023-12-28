@@ -49,10 +49,10 @@ class Settings:
     split_output: str
     # ----- News -----
     synonyms_news: str
-    # ----- Wheather -----
-    phrase_wheather: str
-    split_wheather: str
-    wwc_wheather: str
-    word_meaning_tomorrow_wheather: str
+    # ----- Weather -----
+    phrase_weather: str
+    split_weather: str
+    wwc_weather: str
+    word_meaning_tomorrow_weather: str
     # ----- MediaPlayer -----
     synonyms_mediaplayer: str

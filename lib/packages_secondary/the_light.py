@@ -7,10 +7,10 @@ from meross_iot.manager import MerossManager
 
 from lib.packages_utility.logger import Logger
 
-# ---- This file controll the domotic meross ----
+# ---- This file control the domotic meross ----
 
 
-# Open file whith key api openai
+# Open file with key api openai
 
 with open("setup/settings.json", encoding="utf8") as f:
     secrets = json.load(f)

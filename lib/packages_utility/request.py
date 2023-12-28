@@ -20,26 +20,6 @@ class MakeRequests:
             with open("setup/key.txt",encoding="utf8") as file_key:
                 self.key_user = file_key.read()
 
-    def create_user(self) -> str:
-        """This function creates a user in the database.
-
-        This function creates a user in the database
-        and returns its id if it was created successfully or an error message otherwise.
-
-        Returns:
-            str: Return the result of the request
-        """
-        # CREAZIONE USER
-        url = f'{self.url_base}/createUser'
-        try:
-            request = requests.put(url, timeout=5)
-            user_created = request.json()
-            logging.info("User created Correctly")
-            return user_created["userId"]
-        except requests.RequestException:
-            logging.critical("I can't stable connection check the network")
-            return "User not created"
-
     def get_user_settings(self, key_user) -> str:
         """This function makes a GET request to the API and returns the settings.
 
@@ -72,7 +52,7 @@ class MakeRequests:
         value_success = 201
 
         if request.status_code == value_success:
-            logging.info("User calendar created correcly")
+            logging.info("User calendar created correctly")
         else:
             logging.warning("User calendar offline")
 
@@ -100,7 +80,7 @@ class MakeRequests:
         """
         url = f'{self.url_base}/calendar/{self.key_user}/'
         request = requests.get(url, timeout=5)
-        logging.debug(f" reponse: {request.status_code}")
+        logging.debug(f" response: {request.status_code}")
         events = request.json()
         return events
 
@@ -108,7 +88,7 @@ class MakeRequests:
         """Delete the old events."""
         url = f'{self.url_base}/calendar/deleteEvent/{self.key_user}/'
         request = requests.put(url, timeout=5)
-        logging.debug(f" reponse: {request.status_code}")
+        logging.debug(f" response: {request.status_code}")
 
     def download_model_en(self):
         """Download model english."""

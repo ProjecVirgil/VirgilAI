@@ -25,7 +25,7 @@ def choice_input():
     """
     while True:
         text_or_speech = str(input(
-            Fore.GREEN + Style.BRIGHT + "You want a text interface (T) or recognise interface(R) T/R: " + Style.RESET_ALL)).upper()
+            Fore.GREEN + Style.BRIGHT + "You want a text interface (T) or recognize interface(R) T/R: " + Style.RESET_ALL)).upper()
         if text_or_speech == 'T':
             return 1
         elif text_or_speech == 'R':

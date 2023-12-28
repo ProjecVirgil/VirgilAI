@@ -44,13 +44,13 @@ class MediaPlayer:
     video or playlist in the background using pygme mixer library.
     """
 
-    def __init__(self, synonimus: list) -> None:
+    def __init__(self, synonymous: list) -> None:
         """Init the class and the logger class.
 
         Args:
-            synonimus (list): a list of synonimus
+            synonymous (list): a list of synonymous
         """
-        self.synonimus = synonimus
+        self.synonymous = synonymous
 
     def get_topic(self, command: str) -> str or None:
         """Get the topic for search on yt.
@@ -62,7 +62,7 @@ class MediaPlayer:
             str: topic
         """
         topic = ""
-        for word in self.synonimus:
+        for word in self.synonymous:
             if word in command:
                 topic = " ".join(command).split(word)[1]
                 break
@@ -107,6 +107,6 @@ class MediaPlayer:
         topic = self.get_topic(command)
         logging.debug(f" topic selected: {topic}")
         url = search_on_yt(topic)
-        logging.debug(f" url gererater: {url}")
+        logging.debug(f" url generated: {url}")
         self.download(url)
         self.play()

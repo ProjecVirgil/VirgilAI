@@ -9,7 +9,7 @@ deal with the various virgil commands such as weather, timer etc.
 [-] searchyt.py
 [-] the_light.py
 [-] the_news.py
-[-] the_wheather.py
+[-] the_weather.py
 [-] time.py
 
 ------ END DOCS ------

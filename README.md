@@ -1,4 +1,4 @@
-# Virgil AI 🏛️ (Assistent Interface)  | Last docs update: 27/11/2023 (d/m/y)
+# Virgil AI 🏛️ (Assistant Interface)  | Last docs update: 27/11/2023 (d/m/y)
 
 ## Index
 
@@ -89,7 +89,7 @@ Virgilo or Virgil is a virtual assistant like Alexa or Google Home, but integrat
 1. The first part of the installation is to **get** all the files from the repository.
    - Command line ```git clone https://github.com/Retr0100/VirgilApp.git```
    - or download the zip.
-2. Create an enviroment for VirgilAI in the **directory of VirgilAI** with this command ```python -m venv virgil-env``` and activate it with this command ```virgil-env\Scripts\activate``` if the environment does not activate read the [docs of Venv](https://docs.python.org/3/tutorial/venv.html) (if use the classic cmd attach .bat at end of activate)
+2. Create an environment for VirgilAI in the **directory of VirgilAI** with this command ```python -m venv virgil-env``` and activate it with this command ```virgil-env\Scripts\activate``` if the environment does not activate read the [docs of Venv](https://docs.python.org/3/tutorial/venv.html) (if use the classic cmd attach .bat at end of activate)
 
 3. Now we need the **api** (for now I am not rich and do not pay for everything) so
  we need 3 api keys (the keys marked with * **are mandatory** for operation)
@@ -118,14 +118,14 @@ Virgilo or Virgil is a virtual assistant like Alexa or Google Home, but integrat
   - **Run without console (background)**: Virgil will start and run in the background without a console (this option is only available when using the voice interface).
 - **Debug settings** (You can also ignore these)
   - Debug level: You can decide which debug level can be displayed on the screen, by default it is set to info (So all logs above and equal to info will be displayed, not recommended at first).
-  - **Write to file**: Scrittura dei logs in un file (Se saranno scritti un in file non verranno visualizzati a schermo)
+  - **Write to file**: Writing logs to a file (if they are written to a file, they will not be displayed on the screen)
 
 ### Guide to **ONLINE** settings
 
 #### Difference between online and local settings
 
-- **Local**: Local settings are obviously not synchronised on each device and need to be set up for each environment, and some settings such as debugging settings can be set directly from code without too much effort.
-- **Online**: Online settings are synchronised on each device, but can only be changed via the APP, which is unfortunately only available for Android.
+- **Local**: Local settings are obviously not synchronized on each device and need to be set up for each environment, and some settings such as debugging settings can be set directly from code without too much effort.
+- **Online**: Online settings are synchronized on each device, but can only be changed via the APP, which is unfortunately only available for Android.
 
 ``` json
 // THE VALUES ON THE JSON ARE THE DEFAULT
@@ -143,7 +143,7 @@ Virgilo or Virgil is a virtual assistant like Alexa or Google Home, but integrat
     "merrosPassword": "password", //Credential for merros
     "gpt-version": "gpt-3.5-turbo-0613", // The version for gpt-version                        
     "temperature": "0.9", //Randomness of GPT responses
-    "max_tokens": "30" //Max lenght phrase of GPT
+    "max_tokens": "30" //Max length phrase of GPT
 }                                                                                                                      
 ```
 
@@ -171,7 +171,7 @@ The first start of Virgilio will be quite important, as it will generate an **IM
 
 - The first start will be **same for all**, without taking into account the settings previously made with the setup.py programme, so once you have taken the key and **saved** it in a file for safety, you will need to restart Virgilio.
 - You can only generate a **MAXIMUM** of 5 keys per machine.
-- The first time you start Virgil immediately after booting, it will be much slower than a normal start. This is because Python, and Virgil in general, is **optimised** so that the more starts it has in a session, the faster it will start.
+- The first time you start Virgil immediately after booting, it will be much slower than a normal start. This is because Python, and Virgil in general, is **optimized** so that the more starts it has in a session, the faster it will start.
 
 ### How to use
 
@@ -179,7 +179,7 @@ The first start of Virgilio will be quite important, as it will generate an **IM
 
 ### **Problem**
 
-**The recogniser tries to recognise speech even when I'm not speaking, or after I've finished speaking.**
+**The recognizer tries to recognize speech even when I'm not speaking, or after I've finished speaking.**
 
 ### Solution
 
@@ -193,7 +193,7 @@ import speech_recognition as sr
 import time
 listener = sr.Recognizer()
 def main(languageChoose:str):
-    print("SAY A WORD OR PHRASE IN YOUR LANGAGE")
+    print("SAY A WORD OR PHRASE IN YOUR LANGUAGE")
     resultDict = {}
     for i in range(5):
         try:
@@ -210,14 +210,14 @@ def main(languageChoose:str):
 if __name__ == "__main__":
     listener.operation_timeout = 2
     listener.dynamic_energy_threshold = True
-    languageChoose = str(input("Insert your language nation and dialet if is not dialet simple repeate the nation example it-it: "))
+    languageChoose = str(input("Insert your language nation and dialect if is not dialect simple repeat the nation example it-it: "))
     results  = main(languageChoose)
     sorted_keys = sorted(results.keys(), key=lambda key: results[key][2])
     sorted_dict = {key: results[key] for key in sorted_keys}
     print(f"Recommended value:  {math.ceil(list(sorted_dict.values())[0][0])}")
 ```
 
-The tool is not **100%** accurate, but it's a good way to get a **starting** idea if you see that Virgil is not accurate enough in recognising when you speak and when you don't try to adjust.
+The tool is not **100%** accurate, but it's a good way to get a **starting** idea if you see that Virgil is not accurate enough in recognizing when you speak and when you don't try to adjust.
 
 ### Python Bugs
 
@@ -227,7 +227,7 @@ Try to using an [venv](https://docs.python.org/3/library/venv.html) **environmen
 
 ### Why the key of OpenAI, ElevenLabs and Merros❓
 
-- **Virgil**: The Virgilio configuration key is used to synchronise all online settings...  **DO NOT GIVE THE KEY TO ANYONE OR EXPORT IT TO ANYONE OR YOU WILL GET ALL YOUR KEYS** (OpenAI,Elevenlabs etc)
+- **Virgil**: The Virgilio configuration key is used to synchronize all online settings...  **DO NOT GIVE THE KEY TO ANYONE OR EXPORT IT TO ANYONE OR YOU WILL GET ALL YOUR KEYS** (OpenAI,Elevenlabs etc)
 - **OpenAI**: This is actually the only mandatory key, as GPT covers 50% of the application, and this is the real **difference** to Alexa and Virgil.
 - **ElevenLabs**: This key is not mandatory, but it makes the experience more pleasant because ElevenLabs implements a more natural Speech To Text (TTS) and also allows you to choose your own voice. If you can't use the button, Virgil will still work, but with Google's TTS.
  and it's not the best choice 😅.
@@ -253,7 +253,7 @@ If the setup give error on poetry create a venv environment with  `python -m ven
                     )
     ```
 
-    And replace the voice with the one you want (if after the TTS dont'work try another voice on whatch a video on YT on how to use default entries).
+    And replace the voice with the one you want (if after the TTS does not work try another voice on watch a video on YT on how to use default entries).
   
 5. Restart Virgil.
 
@@ -267,11 +267,13 @@ If the setup give error on poetry create a venv environment with  `python -m ven
 
 ## Security
 
-This is not a topic we will be exploring in depth at the moment, but each key is managed in a hosting system that encrypts communications and uses various string sanitisation and controls against ddos and other attacks, but I believe that security can never be too much, so...
+This is not a topic we will be exploring in depth at the moment, but each key is managed in a hosting system that encrypts communications and uses various string sanitization and controls against ddos and other attacks, but I believe that security can never be too much, so...
 If you discover a vulnerability in Virgil, please email <projectvirgilai@gmail.com>. All vulnerabilities are reported immediately.
 
 ## Notes
+
 ### In this paragraph I will add secondary items or updates released
+
 - Soon the ***[CATONE](https://www.babelmatrix.org/works/it/Dante%2C_Alighieri-1265/La_Divina_Commedia._Purgatorio._Canto_I./en/4208-The_Divine_Comedy.__Purgatorio._Canto_I.) UPDATE*** (Purgatory chant I vv-61 to vv-66) 🗻
 
 ## Other
@@ -294,7 +296,7 @@ For code related issues you can use github directly for other collaborations or 
 
 If you want to support a small developer take a [**special link**](https://www.paypal.me/Retr0jk)
 
-### Licence
+### License
 
-- AGPL-3.0 licence
+- AGPL-3.0 license
 - [LICENSE FILE](https://github.com/Retr0100/VirgilAI/blob/master/LICENSE)
