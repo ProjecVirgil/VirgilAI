@@ -10,10 +10,6 @@ requires-python = ">=3.10"
 [project.license]
 file = "LICENSE"
 
-[tool.path]
-key_path = "setup/key.txt"
-setting_path = "setup/settings.json"
-
 [tool.config_system]
 first_setup = true  #Se è il primo setup allora non chiederà cosa si vuole modificare 
 launch_start = false
