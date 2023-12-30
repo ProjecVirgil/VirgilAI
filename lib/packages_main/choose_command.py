@@ -77,7 +77,7 @@ class CommandSelection:
     def off(self) -> None:
         """Function to shutdown all services and close connection with database."""
         print("\nVirgil: Shutdown in progress...", flush=True)
-        data = ["spento", "spento"]
+        data = ["shutdown", "shutdown"]
         self.result_queue.put(data)
         time.sleep(2)
         sys.exit(0)
@@ -171,8 +171,8 @@ class CommandSelection:
                 for i in command_worked:
                     if self.utils.count_number(i) >= 2:  # noqa: PLR2004
                         hours, minutes, calculated_hours, calculated_minutes, calculate_seconds = diff_time(i)
-                        time_calculated = f"{calculated_hours} ore {calculated_minutes} minuti {calculate_seconds} secondi".split(
-                            " ") #TODO CHECK IF MAKE THE DYNAMIC TRANSLATE FOR THE WORDS
+                        time_calculated = f"{calculated_hours} hours {calculated_minutes} minutes {calculate_seconds} seconds".split(
+                            " ")
                         my_time = self.time.conversion(list(time_calculated))
                         return str(my_time)
                 try:
