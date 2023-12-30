@@ -153,7 +153,7 @@ def main():  # noqa: PLR0915
         request_maker.download_model_en()
         logging.info(" Download finish")
 
-    logging.info("Threads initialisation")
+    logging.info("Threads initialization")
     manager = ThreadManager(settings, default_start)
     manager.init()
     logging.info("Threads start")
@@ -188,7 +188,7 @@ if __name__ == '__main__':
 
     if SYSTEM == 'Windows':
         toast = Notification(app_id="VirgilAI", title="Virgil AI NOTIFY",
-                             msg="Virgil AI started correctly without errors", duration='long',
+                             msg="Virgil started correctly without errors", duration='long',
                              icon=os.path.join(os.getcwd(), 'assets', 'img', 'icon.ico'))
         toast.set_audio(audio.Mail, loop=False)
         toast.show()
