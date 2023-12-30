@@ -113,7 +113,7 @@ class Output:
                 data = self.result_queue.get()
                 command,result  = data[0], data[1]
                 if result:
-                    if "spento" in command: #spento is a important word not change PLS
+                    if "shutdown" in command:
                         self.shutdown()
                     if "volume" in command:
                         mixer.music.set_volume(float(result))

@@ -14,10 +14,6 @@ from lib.packages_main.choose_command import CommandSelection
 
 # ----- File to elaborate the input  -----
 
-
-
-
-
 class Process:
     """This class is responsible for processing the user's command and returning a response from Virgil API and other APIs."""
 
