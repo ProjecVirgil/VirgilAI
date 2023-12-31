@@ -5,7 +5,7 @@ import threading
 from colorama import Fore
 import nltk
 
-from lib.packages_utility.db_manager import DBManager
+from lib.packages_utility.db_manager import DBManagerSettings
 from lib.packages_utility.logger import logging
 from lib.packages_utility.request import MakeRequests
 from lib.packages_utility.utils import Utils
@@ -36,7 +36,6 @@ class Process:
         self.command_queue = command_queue
         self.result_queue = result_queue
         self.command_selection = CommandSelection(settings,result_queue)
-
         self.word_activation = settings.word_activation
         self.split_command_exit = [settings.split_command[0],settings.split_command[1]]
 
@@ -87,7 +86,7 @@ class Process:
 
         def check_event(self) -> None:
             """Check if there is an event."""
-            db_manager = DBManager()
+            db_manager = DBManagerSettings()
             logging.debug("update the reminder")
             db_manager.set_reminder(value=0)
 
