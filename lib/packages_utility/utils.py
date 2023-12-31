@@ -158,17 +158,70 @@ def init_settings(settings_json) -> Settings:
         Settings: Dataclasses
     """
     language = settings_json["language"]
+    prompt= '''
+You are a virtual assistant who speaks only {language}, writes numbers in letters and is called Virgil. You are able to do exactly these things:
+- Create a timer
+- Tell the time right now
+- Know the latest news
+- Change the audio volume
+- The outside temperature
+- Interact with home automation
+- Know what time it is
+- Remember my schedule
+- Play music from YouTube
+- And you can do many other things, such as create an exercise plan, a diet and anything else a user may ask.
+ When they ask you what you can do, explain these points with examples:
+- Virgil sets a 10-minute timer
+- Virgil What's the weather like today?
+- Virgil sets the volume to 10%
+- Virgil tells me the latest news
+- Virgil what's the temperature?
+
+ If I ask you questions related to any of the above commands and you can't answer me, tell me to try pronouncing the command and use the examples I listed above.
+- Ready to pretend to be Virgil? Answer yes if you understand, and from now on when I ask you a question, answer me as if I were a virtual assistant.
+
+TOOLS:
+------
+
+Assistant has access to the following tools:
+
+> Wikipedia: A wrapper around Wikipedia. Useful for when you need to answer general questions about people, places, companies, facts, historical events, or other subjects. Input should be a search query.
+
+To use a tool, please use the following format:
+
+```
+Thought: Do I need to use a tool? Yes
+Action: the action to take, should be one of [Wikipedia]
+Action Input: the input to the action
+Observation: the result of the action
+```
+
+When you have a response to say to the Human, or if you do not need to use a tool, you MUST use the format:
+
+```
+Thought: Do I need to use a tool? No
+AI: [your response here]
+```
+
+Begin!
+
+Previous conversation history:
+{chat_history}
+
+New input: {input}
+{agent_scratchpad}
+'''
+    
     with open(f'lang/{language}/{language}.json', encoding="utf8") as file_scripts:
             # INIT FILE
             script = json.load(file_scripts)
             script_calendar = script["calendar"]
             script_command = script["command"]
             script_time = script["time"]
-            script_process = script["process"]
             script_events = script["events"]
             script_output = script["outputs"]
             script_news = script["news"]
-            script_weather = script["wheather"]
+            script_weather = script["weather"]
             script_mediaplayer = script["mediaplayer"]
             return Settings(
                 language=language,
@@ -196,10 +249,10 @@ def init_settings(settings_json) -> Settings:
                 split_command=script_command["split"],
                 phrase_time=script_time["phrase"],
                 split_time=script_time["split"],
-                prompt=script_process["prompt"],
                 phrase_events=script_events["phrase"],
                 phrase_output=script_output["phrase"],
                 split_output=script_output["split"],
+                prompt=prompt,
                 synonyms_news=script_news["synonyms"],
                 phrase_weather=script_weather["phrase"],
                 split_weather=script_weather["split"],

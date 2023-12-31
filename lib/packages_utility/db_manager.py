@@ -11,12 +11,13 @@ from lib import Settings
 import lib.packages_utility.logger  # noqa: F401
 import contextlib
 
-class DBManager:
+class DBManagerSettings:
     """A class for manage the interaction with db."""
     def __init__(self) -> None:
         """Initializes the database connection."""
         self.connection = sqlite3.connect('settings.db')
         self.cursor = self.connection.cursor()
+
     def init(self):
         """Create the database and tables."""
         ct_table_settings = '''
@@ -188,3 +189,51 @@ CREATE TABLE IF NOT EXISTS settings (
             self.connection.commit()
         except sqlite3.Error as e:
             logging.error(f"Error during the update of reminder: {e}")
+
+class DBManagerMemory:
+    """Class that handles memory chat database interactions."""
+
+    def __init__(self) -> None:
+        """Initialize a DBManager memory object with an SQLite connection and cursor."""
+        self.connection = sqlite3.connect('memory.db',check_same_thread=False)
+        self.cursor = self.connection.cursor()
+
+    def init(self):
+        """Initialize."""
+        ct_table_messages = '''
+    CREATE TABLE IF NOT EXISTS messages (
+        message_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        HUMAN TEXT,
+        AI TEXT,
+        timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+    '''
+        try:
+            self.cursor.execute(ct_table_messages)
+            self.connection.commit()
+        except sqlite3.Error as error:
+                logging.error(f"Error during the use of memory.db: {error}")
+
+    def get_messages(self):
+        """Return all messages from memory."""
+        query = '''SELECT * FROM messages;'''
+        try:
+            self.cursor.execute(query)
+            messages = self.cursor.fetchall()
+            return messages
+        except sqlite3.Error as error:
+            logging.error(f"Error during the use of memory.db: {error}")
+
+    def add_messages(self,human_messages:str,ai_messages:str):
+        """Add a message to memory."""
+        query = '''
+            INSERT INTO messages (HUMAN, AI)
+            VALUES (?, ?);
+            '''
+        try:
+            self.cursor.execute(query,(human_messages,ai_messages))
+            self.connection.commit()
+        except sqlite3.Error as error:
+            logging.error(f"Error during the use of memory.db: {error}")
+
+

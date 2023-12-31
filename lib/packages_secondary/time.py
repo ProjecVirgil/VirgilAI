@@ -55,7 +55,7 @@ def diff_time(index_time: str) -> tuple:
 class Time:
     """This class is used to return a various things like the Actual time, the time difference and more."""
 
-    def __init__(self, settings):
+    def __init__(self, language,split_time,phrase_time):
         """Init function for the classes.
 
         Args:
@@ -63,9 +63,9 @@ class Time:
         """
         self.utils = Utils()
 
-        self.lang = settings.language
-        self.split_time = settings.split_time
-        self.phrase_time = settings.phrase_time
+        self.lang = language
+        self.split_time = split_time
+        self.phrase_time = phrase_time
 
     def now(self) -> str:
         """Return the current  time.
