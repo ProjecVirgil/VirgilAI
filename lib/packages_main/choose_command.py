@@ -5,7 +5,6 @@ import sys
 import time
 from typing import Any
 
-import openai
 from pygame import mixer
 import joblib
 from nltk.tokenize import word_tokenize
@@ -22,6 +21,7 @@ from lib.packages_secondary.calendar_rec import Calendar
 from lib.packages_secondary.the_news import Newsletter
 from lib.packages_secondary.searchyt import MediaPlayer
 from lib.packages_secondary.manage_events import EventScheduler
+from lib.packages_secondary.llm_models import LLModel
 
 
 # ---- File for manage all the preset command ----
@@ -39,22 +39,22 @@ class CommandSelection:
             result_queue (Queue): The queue with results
         """
         self.settings = settings
+        self.lang = settings.language
 
         self.utils = Utils()
-        self.audio = Audio(settings.volume, settings.elevenlabs, settings.language)
+        self.audio = Audio(settings.volume, settings.elevenlabs, self.lang)
 
         self.volume_mixer = VolumeMixer(volume_value=100, settings=settings)
-        self.time = Time(settings)
+        self.time = Time(self.lang,settings.split_time,settings.phrase_time)
         self.weather = Weather(settings)
         self.event_scheduler = EventScheduler(settings)
         self.calendar = Calendar(settings)
-        self.news_letter = Newsletter(settings.language, settings.synonyms_news)
+        self.news_letter = Newsletter(self.lang, settings.synonyms_news)
         self.media_player = MediaPlayer(settings.synonyms_mediaplayer)
-
-        model_filename = f"model/model_{self.settings.language}.pkl"
+        self.LLM = LLModel(openai_key=self.settings.openai,language=self.lang,gpt_version=settings.gpt_version,max_tokens=settings.max_tokens,prompt=settings.prompt)
+        model_filename = f"model/model_{self.lang}.pkl"
         self.loaded_model = joblib.load(model_filename)
 
-        self.lang = settings.language
         self.result_queue = result_queue
         if self.lang == 'it':
             self.stop_words = set(stopwords.words("italian"))
@@ -65,15 +65,6 @@ class CommandSelection:
         exceptions = ":'"
         self.custom_punctuation = "".join([char for char in original_punctuation if char not in exceptions])
 
-        # Start prompt for GPT-3.5 API
-        self.start_prompt = [
-            {"role": "system", "content": settings.prompt}]
-        self.temperature = settings.temperature
-        self.max_token = settings.max_tokens
-        self.api_key = settings.openai
-        self.gpt_version = settings.gpt_version
-        openai.api_key = self.api_key
-
     def off(self) -> None:
         """Function to shutdown all services and close connection with database."""
         print("\nVirgil: Shutdown in progress...", flush=True)
@@ -81,24 +72,6 @@ class CommandSelection:
         self.result_queue.put(data)
         time.sleep(2)
         sys.exit(0)
-
-    def get_response(self, messages: list):
-        """Function for communicate with api GPT-3.5.
-
-        Args:
-            messages (list): The contest of conversation
-
-        Returns:
-            str: The response at the message from gpt
-        """
-        logging.info(" I am creating the answer...")
-        response = openai.chat.completions.create(
-            model = self.gpt_version,
-            messages = messages,
-            temperature = float(self.temperature),  # 0.0 - 2.0
-            max_tokens = int(self.max_token)
-        )
-        return response.choices[0].message
 
 
     def clean(self, command: str, type_model: str) -> str | list[Any]:
@@ -149,14 +122,14 @@ class CommandSelection:
             if (self.settings.split_command[0] in command_worked) or (self.settings.split_command[1] in command_worked):
                 self.off()
                 return
-            if predictions == 'OR':
+            elif predictions == 'OR':
                 response = self.time.now()
                 return response
-            if self.settings.split_command[6] in command_worked or self.settings.split_command[7] in command_worked or \
+            elif self.settings.split_command[6] in command_worked or self.settings.split_command[7] in command_worked or \
                     self.settings.split_command[8] in command_worked:
                 mixer.music.stop()
                 return
-            if predictions == 'VL':
+            elif predictions == 'VL':
                 response = self.volume_mixer.change(command_worked)
                 if response == "104":
                     print("\nVirgil: You cannot give a value less than 10, you can only give values from 100 to 10",
@@ -164,10 +137,10 @@ class CommandSelection:
                     self.audio.create(file=True, namefile="ErrorValueVolume")
                     return None
                 return response
-            if predictions == 'MT':
+            elif predictions == 'MT':
                 response = self.weather.recover_weather(command_worked)
                 return response
-            if predictions == 'TM':
+            elif predictions == 'TM':
                 for i in command_worked:
                     if self.utils.count_number(i) >= 2:  # noqa: PLR2004
                         hours, minutes, calculated_hours, calculated_minutes, calculate_seconds = diff_time(i)
@@ -182,10 +155,10 @@ class CommandSelection:
                     logging.error("Please try the command again")
                     self.audio.create(file=True, namefile="GenericError")
                     return
-            if predictions == "GDS":
+            elif predictions == "GDS":
                 response = self.calendar.get_date(command_worked)
                 return response
-            if predictions == "MC":
+            elif predictions == "MC":
                 for i in command_worked:
                     if self.utils.count_number(i) >= 2:  # noqa: PLR2004
                         hours, minutes, calculated_hours, calculated_minutes, calculate_seconds = diff_time(i)
@@ -194,28 +167,20 @@ class CommandSelection:
                         return f" {self.settings.split_time[1]} {self.utils.number_to_word(hours)} {self.settings.split_time[3]} {self.utils.number_to_word(minutes)} {self.settings.phrase_time[6]} {self.utils.number_to_word(calculated_hours)} {self.settings.phrase_time[1]} {self.utils.number_to_word(calculated_minutes)} {self.settings.phrase_time[2]} {self.utils.number_to_word(calculate_seconds)} {self.settings.phrase_time[3]}"
                 result = self.calendar.diff_date(command_worked)
                 return result
-            if predictions == "NW":
+            elif predictions == "NW":
                 response = self.news_letter.create_news(command_worked)
                 return response
-            if predictions == "MU":
+            elif predictions == "MU":
                 self.media_player.play_music(command_worked)
                 return
-            if predictions == "EV":
+            elif predictions == "EV":
                 return self.event_scheduler.add_events(command_worked)
-            self.start_prompt.append({"role": "user", "content": "".join(command)})
-        except Exception as error:
-            logging.error("Please try the command again")
-            logging.error(f"ERROR: {error}")
-            self.audio.create(file = True,namefile="ErrorCommand")
-            return
-        try:
-            new_message = self.get_response(messages=self.start_prompt)
-        except Exception as error:
-            logging.error(
-                "The OpenAI key you entered is invalid, not present, or the GPT template you selected is invalid or unavailable for your current plan. If you do not know how to obtain a valid key or select a compatible template, see the guide on GitHub for assistance and more information.")
-            logging.error(error)
-            self.audio.create(file=True, namefile="ErrorOpenAi")
-            return
-        print(f"\nVirgil: {new_message.content}")
-        self.start_prompt.append(new_message)
-        return new_message.content
+            else:
+                result = self.LLM.gen_response("".join(command))
+                logging.info(f"Generated response: {result}")
+                return result
+        except Exception as error: # If an error appears
+                    logging.error("Please try the command again")
+                    logging.error(f"ERROR: {error}")
+                    self.audio.create(file = True,namefile="ErrorCommand")
+                    return
