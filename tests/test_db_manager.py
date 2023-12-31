@@ -1,5 +1,5 @@
 #TEST
-from lib.packages_utility.db_manager import DBManager
+from lib.packages_utility.db_manager import DBManagerSettings
 from lib.packages_utility.utils import init_settings
 
 import lib.packages_utility.logger  # noqa: F401
@@ -22,7 +22,7 @@ dict = {
 }
 settings = init_settings(dict)
 key = secrets.token_hex(20)
-manager = DBManager()
+manager = DBManagerSettings()
 manager.init()
 key_id = manager.create_update_user(key,settings=settings)
 settings = manager.get_user_settings()
