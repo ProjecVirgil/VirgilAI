@@ -19,7 +19,7 @@ import logging
 from lib.packages_utility.utils import init_settings
 from lib.packages_utility.vectorize import GloVeVectorizer, sentence_to_vec  # noqa: F401
 from lib.packages_utility.request import MakeRequests
-from lib.packages_utility.db_manager import DBManager
+from lib.packages_utility.db_manager import DBManagerSettings
 
 
 # ---- This file launch all the file for making Virgilio work  ----
@@ -177,7 +177,7 @@ if __name__ == '__main__':
 
     # *  INIT LOGGER AND REQUEST_MAKER
     request_maker = MakeRequests()
-    db_manager = DBManager()
+    db_manager = DBManagerSettings()
     db_manager.init()
     # * CONST
     BANNER_MESSAGE = ['W', 'We', 'Wel', 'Welc', 'Welco', 'Welcom', 'Welcome', 'Welcome ',
