@@ -5,11 +5,9 @@ import threading
 from colorama import Fore
 import nltk
 
+from lib.packages_main.command_processor import CommandProcessor
 from lib.packages_utility.db_manager import DBManagerSettings
 from lib.packages_utility.logger import logging
-from lib.packages_utility.request import MakeRequests
-from lib.packages_utility.utils import Utils
-from lib.packages_main.choose_command import CommandSelection
 
 
 # ----- File to elaborate the input  -----
@@ -17,13 +15,14 @@ from lib.packages_main.choose_command import CommandSelection
 class Process:
     """This class is responsible for processing the user's command and returning a response from Virgil API and other APIs."""
 
-    def __init__(self, settings,command_queue:queue.Queue,result_queue:queue.Queue) -> None:
+    def __init__(self, settings,command_queue:queue.Queue,result_queue:queue.Queue,class_manager) -> None:
         """The process class.
 
         Args:
             settings (_type_): _description_
             command_queue (queue.Queue): _description_
             result_queue (queue.Queue): _description_
+            class_manager(_type_): _description_
         """
         self.data_empty = {
             "0": [None, None, True]
@@ -31,11 +30,10 @@ class Process:
         nltk.download('punkt')
         nltk.download('stopwords')
 
-        self.request_maker = MakeRequests()
-        self.utils = Utils()
+        self.utils = class_manager.utils
         self.command_queue = command_queue
         self.result_queue = result_queue
-        self.command_selection = CommandSelection(settings,result_queue)
+        self.command_processor = CommandProcessor(settings,result_queue,class_manager)
         self.word_activation = settings.word_activation
         self.split_command_exit = [settings.split_command[0],settings.split_command[1]]
 
@@ -63,7 +61,7 @@ class Process:
             command (str): the command to send
         """
         command = self.clean_command(command)
-        result = self.command_selection.send_command(command)
+        result = self.command_processor.send_command(command)
         self.result_queue.put([command, result])
 
     class EventThread(threading.Thread):
