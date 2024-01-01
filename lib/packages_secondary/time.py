@@ -12,7 +12,6 @@ import datetime
 import time
 
 from lib.packages_utility.logger import logging
-from lib.packages_utility.utils import Utils
 
 
 # ---- This file get the current time and more ----
@@ -55,13 +54,13 @@ def diff_time(index_time: str) -> tuple:
 class Time:
     """This class is used to return a various things like the Actual time, the time difference and more."""
 
-    def __init__(self, language,split_time,phrase_time):
+    def __init__(self, language,split_time,phrase_time,utils):
         """Init function for the classes.
 
         Args:
             settings (Settings): Settings dataclasses for set the settings
         """
-        self.utils = Utils()
+        self.utils = utils
 
         self.lang = language
         self.split_time = split_time
