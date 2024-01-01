@@ -87,8 +87,12 @@ class MediaPlayer:
         }
 
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-            error_code = ydl.download(url)
-            return error_code
+            try:
+                error_code = ydl.download(url)
+                return error_code
+            except Exception as e:
+                logging.error(f"Oh no it seems that ffmpeg is not installed, Install it from this link [https://ffmpeg.org/download.html] and try again - Error : {e}")
+                return error_code
 
     def play(self):
         """Play the music file."""
