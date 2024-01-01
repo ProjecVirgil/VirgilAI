@@ -13,9 +13,8 @@ from colorama import Fore, Style
 from plyer import notification
 from winotify import Notification, audio
 
-from lib.packages_main.manager import ThreadManager
-import lib.packages_utility.logger  # noqa: F401
-import logging
+from lib.packages_utility.manager import ThreadManager
+from lib.packages_utility.logger import logging
 from lib.packages_utility.utils import init_settings
 from lib.packages_utility.vectorize import GloVeVectorizer, sentence_to_vec  # noqa: F401
 from lib.packages_utility.request import MakeRequests
@@ -170,7 +169,7 @@ if __name__ == '__main__':
                                'config.json')
     with open(config_path) as file:
         config = json.load(file)
-    # launch_start = config["startup"]
+
     default_start = config["type_interface"]
     display_console = config["display_console"]
     GLOBAL_KEY = config["key"]
