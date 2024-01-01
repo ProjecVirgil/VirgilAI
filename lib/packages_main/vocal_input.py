@@ -5,8 +5,6 @@ import unicodedata
 import speech_recognition as sr
 
 from lib.packages_utility.logger import logging
-from lib.packages_utility.utils import Utils
-
 
 # ----- File to take the input by the microphone -----
 
@@ -14,7 +12,7 @@ from lib.packages_utility.utils import Utils
 class VocalInput:
     """Class that takes voice inputs from a user and returns them in text format."""
 
-    def __init__(self, settings,command_queue:queue.Queue) -> None:
+    def __init__(self, settings,command_queue:queue.Queue,class_manager) -> None:
         """Init func for some settings.
 
         Args:
@@ -24,7 +22,7 @@ class VocalInput:
         self.data_empty = {
             None: True
         }
-        self.utils = Utils()
+        self.utils = class_manager.utils
         self.listener = sr.Recognizer()
         self.command_queue = command_queue
 
