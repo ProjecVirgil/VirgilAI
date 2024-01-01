@@ -5,9 +5,7 @@ import datetime
 import csv
 import requests
 
-from lib.packages_utility.utils import Utils
 from lib.packages_utility.logger import logging
-from lib.packages_utility.sound import Audio
 
 
 # ---- This file get the Meteo of all week ----
@@ -49,14 +47,16 @@ def is_valid_date(days, command):
 class Weather:
     """This class manage to get the weather for a specific day and time."""
 
-    def __init__(self, settings) -> None:
+    def __init__(self, settings,audio,utils) -> None:
         """Init file for the weather manage.
 
         Args:
             settings (Settings): The dataclasses with all the settings
+            audio (Audio): Audio instance
+            utils (Utils): Utils instance
         """
-        self.audio = Audio(settings.volume, settings.elevenlabs, settings.language)
-        self.utils = Utils()
+        self.audio = audio
+        self.utils = utils
 
         self.city = settings.city
         self.lang = settings.language
@@ -91,24 +91,24 @@ class Weather:
         """
         minimum_accuracy = 3
         result_list = []
-        for word in command:
-            min_distance = 100000000
-            city = ""
-            latitude, longitude = self.utils.get_coordinates(word)
-            if latitude is not None and longitude is not None:
-                with open("assets/worldcities.csv", encoding='utf-8') as csvfile:
-                    csvreader = csv.reader(csvfile, delimiter=';')
-                    for row in csvreader:
-                        if row[0] == "city":
-                            continue
-                        if row[0].lower() == city:
-                            return city
-                        result = self.utils.haversine_distance((latitude, longitude), (float(row[2]), float(row[3])))
-                        if result < min_distance:
-                            min_distance = result
-                            city = row[1]
-                    result_list.append((city, min_distance))
-        result_list = sorted(result_list, key=lambda x: x[1])
+        min_distance = 100000000
+        with open("assets/worldcities.csv", encoding='utf-8') as csvfile:
+            for word in command:
+                city = ""
+                latitude, longitude = self.utils.get_coordinates(word)
+                if latitude is not None and longitude is not None:
+                        csvreader = csv.reader(csvfile, delimiter=';')
+                        for row in csvreader:
+                            if row[0] == "city":
+                                continue
+                            if row[0].lower() == city:
+                                return city
+                            result = self.utils.haversine_distance((latitude, longitude), (float(row[2]), float(row[3])))
+                            if result < min_distance:
+                                min_distance = result
+                                city = row[1]
+                        result_list.append((city, min_distance))
+            result_list = sorted(result_list, key=lambda x: x[1])
 
         if result_list[0][1] < minimum_accuracy:
             city_correct = result_list[0][0]
