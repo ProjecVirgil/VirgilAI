@@ -2,9 +2,6 @@
 from lib.packages_utility.db_manager import DBManagerSettings
 from lib.packages_utility.utils import init_settings
 
-import lib.packages_utility.logger  # noqa: F401
-import logging
-
 import secrets
 dict = {
     "language": "it",
