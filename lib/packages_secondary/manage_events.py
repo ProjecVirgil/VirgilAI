@@ -14,17 +14,19 @@ class EventScheduler:
         """Init the class."""
         self.request_maker = MakeRequests()
         self.calendar = Calendar(settings)
-
-        self.events = self.request_maker.get_events()
+        
+        self.lang = settings.language
+        self.settings = settings
+        self.phrase_events = settings.phrase_events
+        
+        self.events = self.request_maker.get_events(self.settings.key_user)
         self.current_date = datetime.datetime.now().date()
         self.formatted_date = self.current_date.strftime("%d-%m-%Y")
         self.formatted_date = self.formatted_date.split("-")
         self.formatted_date[1] = self.formatted_date[1].replace("0", "")
         self.formatted_date = "-".join(self.formatted_date)
 
-        self.lang = settings.language
-        self.settings = settings
-        self.phrase_events = settings.phrase_events
+
 
     def send_notify(self) -> str:
         """This function sends a notification.
@@ -104,5 +106,5 @@ class EventScheduler:
         """
         date, event = self.recognize_date(command)
         date = self.get_date(date)
-        self.request_maker.create_events(event, date)
+        self.request_maker.create_events(event, date,self.settings,self.settings.key_user)
         return self.phrase_events[2]
