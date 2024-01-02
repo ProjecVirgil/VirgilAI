@@ -160,7 +160,7 @@ class Weather:
         day, week_day = self.recover_day(command)
         response = requests.get(self.get_url(city), timeout=8)
         logging.debug(" Response: " + str(response.status_code))
-        if str(response.status_code) != success_request:
+        if response.status_code != success_request:
             response = response.json()
             if day != bad_request:
                 main = str(response["daily"]["weathercode"][day])
