@@ -39,7 +39,7 @@ class CommandSelector:
         """
         return self.time.now()
 
-    def change_volume(self,input:list[str]) -> str:
+    def change_volume(self,input:list[str]) -> str | None:
         """Changes the volume level of the audio output device.
 
         Args:
@@ -67,7 +67,7 @@ class CommandSelector:
         """
         return self.weather.recover_weather(input)
 
-    def get_timer(self,input:list[str]) -> str:
+    def get_timer(self,input:list[str]) -> str | None:
         """Execute timer related commands.
 
         Args:
@@ -78,7 +78,7 @@ class CommandSelector:
         """
         for i in input:
             if self.utils.count_number(i) >= 2:  # noqa: PLR2004
-                hours, minutes, calculated_hours, calculated_minutes, calculate_seconds = diff_time(i)
+                _, _, calculated_hours, calculated_minutes, calculate_seconds = diff_time(i)
                 time_calculated = f"{calculated_hours} hours {calculated_minutes} minutes {calculate_seconds} seconds".split(
                             " ")
                 my_time = self.time.conversion(list(time_calculated))
@@ -89,7 +89,7 @@ class CommandSelector:
         except IndexError:
                 logging.error("Please try the command again")
                 self.audio.create(file=True, namefile="GenericError")
-                return
+                return None
 
     def get_date(self,input:list[str]) -> str:
         """Execute date related commands.
