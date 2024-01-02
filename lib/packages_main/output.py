@@ -140,6 +140,5 @@ class Output:
                         result = self.event_scheduler.send_notify()
                         time.sleep(10)
                         self.audio.create(result)
-                else:
-                    pass
+
 
