@@ -1,11 +1,9 @@
 """This module is much important because manage all the class and process the command."""
 import queue
-import string
 import sys
 import time
 
 from pygame import mixer
-import joblib
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 
