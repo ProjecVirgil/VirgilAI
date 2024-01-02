@@ -5,9 +5,9 @@ Returns:
 """
 import threading
 import queue
+from dataclasses import dataclass
 
-import logging
-import lib.packages_utility.logger  # noqa: F401
+from lib.packages_utility.logger import logging
 
 from colorama import Fore,Style
 from lib.packages_main.output import Output
@@ -15,7 +15,11 @@ from lib.packages_main.text_input import TextInput
 from lib.packages_main.vocal_input import VocalInput
 from lib.packages_main.process import Process
 
-#! ADD LOGGING
+from lib.packages_utility.sound import Audio
+from lib.packages_utility.utils import Utils
+from lib.packages_utility.db_manager import DBManagerSettings
+from lib.packages_secondary.manage_events import EventScheduler
+from lib.packages_secondary.calendar_rec import Calendar
 
 def choice_input():
     """This function is used when you want to choose between the text input or Voice input.
@@ -32,6 +36,18 @@ def choice_input():
             return 0
         else:
             logging.warning(" Select a valid choice please")
+
+@dataclass(slots=True, frozen=True)
+class ClassManager:
+    """This class manage classes instances and methods.
+
+    Only for some classes
+    """
+    audio:Audio
+    utils:Utils
+    db_manager_settings:DBManagerSettings
+    event_scheduler:EventScheduler
+    calendar:Calendar
 
 class ThreadManager:
     """This class manages all threads and processes that are running in the background."""
@@ -50,31 +66,39 @@ class ThreadManager:
 
         self.threads = []
 
+        self.class_manager = ClassManager(
+            Audio(settings.volume, settings.elevenlabs, settings.language),
+            Utils(),
+            DBManagerSettings(),
+            EventScheduler(self.settings),
+            Calendar(self.settings),
+        )
+
     def init(self):
         """This method initialize all threads."""
-        output = Output(self.settings,self.result)
-        process = Process(self.settings,self.command,self.result)
+        output = Output(self.settings,self.result,self.class_manager)
+        process = Process(self.settings,self.command,self.result,self.class_manager)
         if self.default_start == 'N':
             text_or_speech = choice_input()
             if text_or_speech == 1:
-                text_input = TextInput(self.settings,self.command)
+                text_input = TextInput(self.settings,self.command,self.class_manager)
                 self.threads.append(threading.Thread(target=text_input.text))
                 self.threads.append(threading.Thread(target=process.main))
                 self.threads.append(threading.Thread(target=output.out))
             elif text_or_speech == 0:
-                vocal_input = VocalInput(self.settings,self.command)
+                vocal_input = VocalInput(self.settings,self.command,self.class_manager)
                 self.threads.append(threading.Thread(target=vocal_input.listening))
                 self.threads.append(threading.Thread(target=process.main))
                 self.threads.append(threading.Thread(target=output.out))
             else:
                 logging.warning(" Select a valid choice please")
         elif self.default_start == 'T':
-            text_input = TextInput(self.settings,self.command)
+            text_input = TextInput(self.settings,self.command,self.class_manager)
             self.threads.append(threading.Thread(target=text_input.text))
             self.threads.append(threading.Thread(target=process.main))
             self.threads.append(threading.Thread(target=output.out))
         else:
-            vocal_input = VocalInput(self.settings,self.command)
+            vocal_input = VocalInput(self.settings,self.command,self.class_manager)
             self.threads.append(threading.Thread(target=vocal_input.listening))
             self.threads.append(threading.Thread(target=process.main))
             self.threads.append(threading.Thread(target=output.out))

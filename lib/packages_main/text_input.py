@@ -4,8 +4,6 @@ import unicodedata
 import queue
 
 from lib.packages_utility.logger import logging
-from lib.packages_utility.utils import Utils
-
 
 # ----- File to take the input by the console -----
 
@@ -15,7 +13,7 @@ from lib.packages_utility.utils import Utils
 class TextInput:
     """Class that takes a text as an argument and returns it in lowercase, without accents or special characters."""
 
-    def __init__(self,settings,command_queue:queue.Queue) -> None:
+    def __init__(self,settings,command_queue:queue.Queue,class_manager) -> None:
         """This class is used as a wrapper around the standard input from the user in order to provide an interface that can be easily tested and mocked.
 
         Args:
@@ -25,7 +23,7 @@ class TextInput:
         self.data_empty = {
             None: True
         }
-        self.utils = Utils()
+        self.utils = class_manager.utils
         self.command_queue = command_queue
 
         self.word_activation = settings.word_activation

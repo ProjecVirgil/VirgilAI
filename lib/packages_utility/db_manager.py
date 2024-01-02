@@ -5,11 +5,10 @@ Returns:
 """
 from datetime import datetime
 import sqlite3
-import logging
-from lib import Settings
-
-import lib.packages_utility.logger  # noqa: F401
 import contextlib
+
+from lib import Settings
+from lib.packages_utility.logger import logging
 
 class DBManagerSettings:
     """A class for manage the interaction with db."""

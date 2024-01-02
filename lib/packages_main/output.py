@@ -8,11 +8,8 @@ from colorama import Style, Fore
 import pyfiglet
 from pygame import mixer
 
-from lib.packages_utility.sound import Audio
 from lib.packages_utility.logger import logging
-from lib.packages_utility.utils import Utils
 from lib.packages_utility.db_manager import DBManagerSettings
-from lib.packages_secondary.manage_events import EventScheduler
 
 
 
@@ -20,7 +17,7 @@ from lib.packages_secondary.manage_events import EventScheduler
 class Output:
     """Output class for the bot to output messages and errors on console or file."""
 
-    def __init__(self, settings,result_queue:queue.Queue) -> None:
+    def __init__(self, settings,result_queue:queue.Queue,class_manager) -> None:
         """Init all classes for the Output function.
 
         Args:
@@ -28,11 +25,11 @@ class Output:
             result_queue (Queue): The queue with results
         """
         mixer.init()
-
+        self.class_manager = class_manager
         self.settings = settings
-        self.utils = Utils()
-        self.event_scheduler = EventScheduler(settings)
-        self.audio = Audio(settings.volume, settings.elevenlabs, settings.language)
+        self.utils = self.class_manager.utils
+        self.event_scheduler = self.class_manager.event_scheduler
+        self.audio = self.class_manager.audio
         self.result_queue = result_queue
 
         self.lang = settings.language
@@ -40,7 +37,7 @@ class Output:
 
 
     def check_reminder(self) -> bool:
-        """Check if there is any reminder setted up by user. If so it will send him a message.
+        """Check if there is any reminder set up by user. If so it will send him a message.
 
         Returns:
             bool: Reminder send?
@@ -59,7 +56,7 @@ class Output:
             threading (_type_): _description_
         """
 
-        def __init__(self, interval, command, settings):
+        def __init__(self, interval, command, settings,audio):
             """Init file for the class of Thread.
 
             Args:
@@ -72,7 +69,7 @@ class Output:
             self.daemon = True
             self.command = command
             self.settings = settings
-            self.audio = Audio(settings.volume, settings.elevenlabs, settings.language)
+            self.audio = audio
 
         def timer(self, my_time: int, command: str) -> None:
             """Timer function.
@@ -93,7 +90,6 @@ class Output:
 
     def shutdown(self) -> None:
         """Function to shut down the programm."""
-        logging.info(" shutdown in progress...")
         logging.info("Shutdown in progress from output-thread")
         self.audio.create(file=True, namefile="FinishVirgil")
         print(Style.BRIGHT + Fore.MAGENTA + pyfiglet.figlet_format("Thanks for using Virgil",
@@ -120,9 +116,9 @@ class Output:
                         mixer.music.unload()
                         mixer.music.load('assets/audio/bipEffectCheckSound.mp3')
                         mixer.music.play()
-                        logging.info(f" volume changed correctly to {result * 100}% ")
+                        logging.info(f"Volume changed correctly to {int(result) * 100}% ")
                     elif "timer" in command or self.settings.split_output[0] in command:
-                        logging.debug(f" the timer is started see you in {result} second"),
+                        logging.debug(f"The timer is started see you in {result} second"),
                         if "timer" in command:
                             if self.lang != "en":
                                 self.audio.create(
@@ -132,7 +128,7 @@ class Output:
                                     f"{self.settings.phrase_output[0]} {result} {self.settings.phrase_output[1]}")
                         else:
                             self.audio.create(file=True, namefile="ClockImposter")
-                        thread = self.TimerThread(int(result), command,self.settings)
+                        thread = self.TimerThread(int(result), command,self.settings,self.class_manager.audio)
                         thread.start()
                     else:
                         self.audio.create(result)
@@ -140,7 +136,7 @@ class Output:
 
 
                     if not self.check_reminder():
-                        logging.info(" send notify for today event")
+                        logging.info("Send notify for today event")
                         result = self.event_scheduler.send_notify()
                         time.sleep(10)
                         self.audio.create(result)
