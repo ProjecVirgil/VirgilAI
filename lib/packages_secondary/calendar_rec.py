@@ -171,14 +171,7 @@ class Calendar:
             str: The final phrase which will then be reproduced
         """
         preset_date = self.recov_preset_date(command)
-        if preset_date is None:
-            date = self.recover_date(command)
-        elif self.utils.count_number("".join(command)) > 0:
-            date = self.recover_date(command)
-            date[0] = date[0] + 1
-            date = "-".join(date)
-        else:
-            date = preset_date
+        date = self.recover_date(command) if preset_date is None else preset_date
 
         day, month, year = date.split("-")
         day, month = clear_number(day, month)
@@ -202,15 +195,9 @@ class Calendar:
         Returns:
             str: The final sentence with the correct information
         """
-        preset_date = self.recov_preset_date(command)
+        preset_date = self.recov_preset_date(command) #example: Tomorrow, Today in the command
         if preset_date is None:
             date = self.recover_date(command)
-            output = self.gen_phrase(date)
-            return output
-        if self.utils.count_number("".join(command)) > 0:
-            date = self.recover_date(command)
-            date[0] = date[0] + 1
-            date = "-".join(date)
             output = self.gen_phrase(date)
             return output
         output = self.gen_phrase(preset_date)

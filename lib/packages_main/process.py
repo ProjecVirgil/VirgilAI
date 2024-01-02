@@ -52,7 +52,8 @@ class Process:
             return command
         except IndexError:
             # If command contain only virgil word
-            return command
+            logging.debug(f" command processed: {command} ")
+            return command.strip()
 
     def send(self, command) -> None:
         """Send the command in the process file (choose_command.py) for the elaboration.
@@ -107,6 +108,5 @@ class Process:
             if command:
                 logging.debug(f" command processed: {command}")
                 self.send(command)
-            else:
-                pass
+
 

@@ -22,7 +22,7 @@ class Newsletter:
         self.url_random = f"https://news.google.com/rss?oc=5&hl={self.lang}&gl={self.lang.upper()}&ceid={self.lang.upper()}:{self.lang}"
         self.synonyms_news = synonyms_news
 
-    def get_topic(self, command) -> None or str:
+    def get_topic(self, command) -> None | str:
         """This function return the topic of the command received as parameter.
 
         Args:
