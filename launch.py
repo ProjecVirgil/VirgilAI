@@ -16,7 +16,6 @@ from winotify import Notification, audio
 from lib.packages_utility.manager import ThreadManager
 from lib.packages_utility.logger import logging
 from lib.packages_utility.utils import init_settings
-from lib.packages_utility.vectorize import GloVeVectorizer, sentence_to_vec  # noqa: F401
 from lib.packages_utility.request import MakeRequests
 from lib.packages_utility.db_manager import DBManagerSettings
 
