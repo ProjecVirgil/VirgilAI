@@ -17,7 +17,7 @@ dict = {
     "max_tokens": "1000",
     "gpt-version": "gpt-3.5-turbo-0613"
 }
-settings = init_settings(dict)
+settings = init_settings(dict,"CHIAVE")
 key = secrets.token_hex(20)
 manager = DBManagerSettings()
 manager.init()
