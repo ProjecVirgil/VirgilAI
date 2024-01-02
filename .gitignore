@@ -3,7 +3,8 @@
 __pycache__
 .ruff_cache
 .idea
-
+.scannerwork
+sonar-scanner
 #genereted file
 poetry.lock
 boot.sh
