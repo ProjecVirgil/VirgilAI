@@ -11,7 +11,7 @@ from nltk.corpus import stopwords
 
 from lib.packages_utility.logger import logging
 from lib.packages_utility.command_selector import CommandSelector
-
+from lib.packages_utility.request import MakeRequests
 
 # ---- File for manage all the preset command ----
 
@@ -29,19 +29,17 @@ class CommandProcessor:
             class_manager (ClassManager): This dataclasses manage some classes like utils and audio
         """
         self.settings = settings
-        lang = settings.language
-
         self.audio = class_manager.audio
 
         self.command_selector  = CommandSelector(settings,class_manager)
+        self.request_maker = MakeRequests(settings.language)
+
+        if settings.language == 'it':
+            self.stop_words = set(stopwords.words("italian"))
+        else:
+            self.stop_words = set(stopwords.words("english"))
 
         self.result_queue = result_queue
-
-        self.loaded_model = self.load_model(lang)
-
-        original_punctuation = string.punctuation
-        exceptions = ":'"
-        self.custom_punctuation = "".join([char for char in original_punctuation if char not in exceptions])
 
     def off(self) -> None:
         """Function to shutdown all services and close connection with database."""
@@ -50,20 +48,6 @@ class CommandProcessor:
         self.result_queue.put(data)
         time.sleep(2)
         sys.exit(0)
-
-    def load_model(self,language):
-        """Load language model from file.
-
-        Args:
-            language (_type_): _description_
-        """
-        model_filename = f"model/model_{language}.pkl"
-        loaded_model = joblib.load(model_filename)
-        if language == 'it':
-            self.stop_words = set(stopwords.words("italian"))
-        else:
-            self.stop_words = set(stopwords.words("english"))
-        return loaded_model
 
     def clean(self, command: str, type_model: str) -> str | list[str]:
         """Function that cleans a command.
@@ -77,11 +61,6 @@ class CommandProcessor:
             str: The command cleaned
         """
         try:
-            if type_model == 'model':
-                command = command.lower()
-                command = command.translate(str.maketrans(' ', ' ', self.custom_punctuation))
-                words = command.split()
-                return ' '.join(words)
             if type_model == 'work':
                 filtered_tokens = []
                 tokens = word_tokenize(command.lower().strip())
@@ -103,8 +82,8 @@ class CommandProcessor:
             str: The response at the command
         """
         mixer.init()
-        predict = self.loaded_model.predict([self.clean(command, "model")])[0]
         command_worked = self.clean(command, "work")
+        predict = self.request_maker.get_category(command)
         logging.info(f"Classes chosen by algorithm is {predict}")
 
         table_function = {

@@ -9,6 +9,9 @@ class Settings:
     This is a singleton object that holds all of our
     settings and can be accessed anywhere in the app through this single instance.
     """
+     # ******************** Key ********************
+    key_user: str
+
     # ******************** Setting ********************
     language: str
     word_activation: str

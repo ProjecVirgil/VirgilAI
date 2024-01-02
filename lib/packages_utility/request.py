@@ -1,6 +1,6 @@
 """File to manage all the request at the VirgilAPI."""
 import requests
-
+import re
 from lib.packages_utility.logger import logging
 
 
@@ -9,16 +9,16 @@ from lib.packages_utility.logger import logging
 class MakeRequests:
     """This class is responsible to make all requests of the application."""
 
-    def __init__(self) -> None:
+    def __init__(self,language:str="None") -> None:
         """Init file for sett the url and init the logger class."""
         self.url_base = "https://virgilapi-production.up.railway.app" + "/api"
-        try:
-            with open("setup/key.txt", encoding="utf8") as file_key:
-                self.key_user = file_key.read()
-        except FileNotFoundError:
-            open("setup/key.txt", "w")  # noqa: SIM115
-            with open("setup/key.txt",encoding="utf8") as file_key:
-                self.key_user = file_key.read()
+        self.prompt = f"In the context of the following sentence, answer using only two letters from the options: OR for current time requests, VL for volume changes, MT for weather requests, TM for timer start requests, GDS for day of the week requests, MC for counting days to a specific day, NW for news or latest updates, MU for music start requests, EV for adding events to the calendar, and AL for all other requests. The language the input will be in is {'english' if language == 'en' else 'italian'}"
+        self.headers_model = { #I KNOW THIS KEY IS EXPOSE BUT IS SIMPLE KEY TEST
+                "Content-Type": "application/json",
+                "Authorization": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjNkMjMzOTQ5In0.eyJzdWIiOiI1MGNkMWM1MS0zNmEzLTQwYTItYWJlOS1jYzMzZmUyOGUwZGIiLCJ0eXBlIjoidXNlckFjY2Vzc1Rva2VuIiwidGVuYW50SWQiOiJlZTUwM2I4OS0wYWFkLTRhNzgtYmJlZi0zZGE4OGQ3MWMwNWUiLCJ1c2VySWQiOiJiZjk3Y2M3My0wZTRmLTQ0NTgtOGY4Mi1mODk1YzZhM2JjYmYiLCJyb2xlcyI6WyJGRVRDSC1ST0xFUy1CWS1BUEkiXSwicGVybWlzc2lvbnMiOlsiRkVUQ0gtUEVSTUlTU0lPTlMtQlktQVBJIl0sImF1ZCI6IjNkMjMzOTQ5LWEyZmItNGFiMC1iN2VjLTQ2ZjYyNTVjNTEwZSIsImlzcyI6Imh0dHBzOi8vaWRlbnRpdHkub2N0b21sLmFpIiwiaWF0IjoxNzA0MTkyMjgxfQ.W6JoeyGV5WXjEEhOF7Kk7UHyYua6hr-NAVXahGmSdNRcws7OtKdYb-Aj3f-czNHcJmOGTSEymuHkdAkuMUuHztseInIRWThyZ6rqYawFTaltT_LjGK2wbH2IJb2BZuz3M-_KaogjPBz88-o4lI-grjv_6SYz0Qndy_2E0F9FgLxkh5abu9mAL1SNeg076pDGFy-xaag3tfUbL_XVmjsp-k806ucmTeZt0iCJ_LpYWPjBdn-JZs2QMyNPFUEhT_Sif5pcUYzWtIYD3oBIuhjKnwrDOsxQce0jAGjr9vSv-I1tDw667H2s50PnZGVZ9RDQYT4dQzzQTPVxjQOVvAiCFw"
+            }
+        self.url_model = "https://text.octoai.run/v1/chat/completions"
+
 
     def get_user_settings(self, key_user) -> str:
         """This function makes a GET request to the API and returns the settings.
@@ -56,44 +56,88 @@ class MakeRequests:
         else:
             logging.warning("User calendar offline")
 
-    def create_events(self, event: str, date: str):
+    def create_events(self, event: str, date: str,key_user):
         """This function creates events for the users that are registered on the system.
 
         Args:
             event (str): the events to add
             date (str): the date of events to add
+            key_user (str): the id of the user
         """
         if "None" in date:
             logging.error("Sorry, but there was an error, the request will not be sent")
         else:
-            url = f'{self.url_base}/calendar/createEvent/{self.key_user}/{date}/'
+            url = f'{self.url_base}/calendar/createEvent/{key_user}/{date}/'
             events = [event]
             headers = {'Content-Type': 'application/json'}
             request = requests.put(url, json=events, headers=headers, timeout=5)
             logging.debug(f" response: {request.status_code}")
 
-    def get_events(self) -> str:
+    def get_events(self,key_user) -> str:
         """Get the events of the day.
+
+        Args:
+            key_user (str): the id of the user
 
         Returns:
             list: list of all events
         """
-        url = f'{self.url_base}/calendar/{self.key_user}/'
+        url = f'{self.url_base}/calendar/{key_user}/'
         request = requests.get(url, timeout=5)
         logging.debug(f" response: {request.status_code}")
         events = request.json()
         return events
 
-    def delete_events(self):
+    def delete_events(self,key_user):
         """Delete the old events."""
-        url = f'{self.url_base}/calendar/deleteEvent/{self.key_user}/'
+        url = f'{self.url_base}/calendar/deleteEvent/{key_user}/'
         request = requests.put(url, timeout=5)
         logging.debug(f" response: {request.status_code}")
 
-    def download_model_en(self):
-        """Download model english."""
-        url = "https://filemodelen.s3.eu-north-1.amazonaws.com/model_en.pkl"
-        destination = 'model/model_en.pkl'
-        response = requests.get(url, stream=True, timeout=None)
-        with open(destination, 'wb') as file:
-            file.write(response.content)
+    def clean_output_models(self,input:str) -> str:
+        """This method cleans the output from models and returns a string without special characters or numbers.
+
+        Args:
+            input (str): The input
+
+        Returns:
+            str: The input cleaned
+        """
+        return re.sub('[^a-zA-Z]', '', input.upper().strip())
+
+    def get_category(self,input:str) -> str:
+        """This method is used to find out what category a word belongs to using the trained machine learning model.
+
+        Args:
+            input (str): _description_
+
+        Returns:
+            _type_: _description_
+        """
+        data = {
+                "messages": [
+                    {
+                        "role": "system",
+                        "content": self.prompt
+                    },
+                    {
+                        "role": "user",
+                        "content": input
+                    }
+                ],
+                "model": "mixtral-8x7b-instruct-fp16",
+                "max_tokens": 2,
+                "presence_penalty": 0,
+                "temperature": 0.1,
+                "top_p": 0.9
+            }
+
+        response = requests.post(self.url_model, headers=self.headers_model, json=data).json()
+        logging.debug(f"Response of model: {response}")
+        return  self.clean_output_models(response['choices'][0]['message']['content'])
+
+
+
+# In the context of the following sentence, answer using only two letters from the options: OR for current time requests, VL for volume changes, MT for weather requests, TM for timer start requests, GDS for day of the week requests, MC for counting days to a specific day, NW for news or latest updates, MU for music start requests, EV for adding events to the calendar, and AL for all other requests. Specify the language of the response and ensure that it strictly adheres to only one of these categories.
+
+# Based on the context of the following sentence, respond with only two letters from the following options: OR for current time requests, VL for volume changes, MT for weather requests, TM for timer start requests, GDS for day of the week requests, MC for counting days to a specific day, NW for news or latest updates, MU for music start requests, EV for adding events to the calendar, and AL for everything else.

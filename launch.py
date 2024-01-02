@@ -24,7 +24,7 @@ from lib.packages_utility.db_manager import DBManagerSettings
 # ---- This file launch all the file for making Virgilio work  ----
 
 
-def check_system():
+def check_system_clear():
     """Check if system is windows or linux and return a string with it is name clear command.
 
     Returns:
@@ -105,7 +105,7 @@ def create_account():
     logging.info("Synchronizing your account settings")
     settings_json = request_maker.get_user_settings(GLOBAL_KEY)
     # INIT SETTING
-    settings = init_settings(settings_json)
+    settings = init_settings(settings_json,GLOBAL_KEY)
 
     if settings == 'User not found':
         logging.error("User not found")
@@ -131,27 +131,33 @@ def log_in():
         logging.error(
             "There is a problem with your key try deleting it and restarting the launcher if the problem persists contact support"),
         sys.exit(1)
-    settings = init_settings(settings_json)
+    settings = init_settings(settings_json,key)
     db_manager.create_update_user(key, settings)
     return settings
 
-
+def show_notify():
+    """Show all notifications from user mailbox."""
+    if SYSTEM == 'Windows':
+        toast = Notification(app_id="VirgilAI", title="Virgil AI NOTIFY",
+                             msg="Virgil started correctly without errors", duration='long',
+                             icon=os.path.join(os.getcwd(), 'assets', 'img', 'icon.ico'))
+        toast.set_audio(audio.Mail, loop=False)
+        toast.show()
+    else:
+        notification.notify(
+            title='Virgil AI NOTIFY',
+            message='Virgil AI started correctly without errors',
+            timeout=10
+        )
 def main():  # noqa: PLR0915
     """Main function that will be called when running this script from command line."""
-    command_cleaner = check_system()
+    command_cleaner = check_system_clear()
     print_banner(command_cleaner)
     rainbow(command_cleaner)
     install_libraries()
-
+    logging.info(os.path.join(os.getcwd(), 'assets', 'img', 'icon.ico'))
     logging.info(f"PID PROCESS: {os.getpid()}")
     settings = create_account() if not db_manager.get_key() else log_in()
-
-    if not os.path.exists("model/model_en.pkl"):
-        logging.info("Start the download of english model this operation will take some time, but will only be done "
-                     "once ")
-        request_maker.download_model_en()
-        logging.info(" Download finish")
-
     logging.info("Threads initialization")
     manager = ThreadManager(settings, default_start)
     manager.init()
@@ -164,7 +170,6 @@ if __name__ == '__main__':
     subprocess.run("poetry install", shell=True, check=True)
     script_dir = os.path.dirname(os.path.abspath(__file__))
     os.chdir(script_dir)
-
     config_path = os.path.join('C:', 'Users', getpass.getuser(), 'AppData', 'Local', 'Programs', 'Virgil-Installer',
                                'config.json')
     with open(config_path) as file:
@@ -184,18 +189,5 @@ if __name__ == '__main__':
                       'Welcome to Vi', 'Welcome to Vir', 'Welcome to Virg',
                       'Welcome to Virgi', 'Welcome to Virgil']
     SYSTEM = platform.system()
-
-    if SYSTEM == 'Windows':
-        toast = Notification(app_id="VirgilAI", title="Virgil AI NOTIFY",
-                             msg="Virgil started correctly without errors", duration='long',
-                             icon=os.path.join(os.getcwd(), 'assets', 'img', 'icon.ico'))
-        toast.set_audio(audio.Mail, loop=False)
-        toast.show()
-    else:
-        notification.notify(
-            title='Virgil AI NOTIFY',
-            message='Virgil AI started correctly without errors',
-            timeout=10
-        )
-
+    show_notify()
     main()

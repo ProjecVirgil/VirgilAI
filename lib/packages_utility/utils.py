@@ -151,7 +151,7 @@ class Utils:
         return "Unmanaged number"
 
 
-def init_settings(settings_json) -> Settings:
+def init_settings(settings_json,user_key) -> Settings:
     """Initialize settings for all the modules.
 
     Returns:
@@ -224,6 +224,7 @@ New input: {input}
             script_weather = script["weather"]
             script_mediaplayer = script["mediaplayer"]
             return Settings(
+                key_user=user_key,
                 language=language,
                 word_activation=settings_json["wordActivation"].lower(),
                 volume=settings_json["volume"],
