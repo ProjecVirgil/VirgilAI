@@ -1,6 +1,6 @@
 # Virgil AI 🏛️ (Assistant Interface)  | Last docs update: 03/01/2024 (d/m/y)
 
-## Index
+## Index 📖
 
 - **[Introduction](#introduction)**
 - **[How Virgil Works](#-how-virgilai-works)**
@@ -236,9 +236,14 @@ If you want to support a small developer take a [**special link**](https://www.p
 <a href="https://www.buymeacoffee.com/dragonfaivk"><img align="center" src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" width="150"/></a>
 </div>
 
-
-
 ### License
+=======
+
+<a href="https://www.paypal.com/paypalme/Retr0jk">
+  <img width = 200 align="center" src="https://img.shields.io/badge/PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white" />
+</a>
+</div>
+
 
 - AGPL-3.0 license
 - [LICENSE FILE](https://github.com/Retr0100/VirgilAI/blob/master/LICENSE)
