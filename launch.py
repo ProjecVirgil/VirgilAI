@@ -169,8 +169,8 @@ if __name__ == '__main__':
     subprocess.run("poetry install", shell=True, check=True)
     script_dir = os.path.dirname(os.path.abspath(__file__))
     os.chdir(script_dir)
-    config_path = os.path.join('C:', 'Users', getpass.getuser(), 'AppData', 'Local', 'Programs', 'Virgil-Installer',
-                               'config.json')
+    config_path = os.path.abspath(os.path.join('Users', getpass.getuser(), 'AppData', 'Local', 'Programs', 'Virgil-Installer',
+                               'config.json'))
     with open(config_path) as file:
         config = json.load(file)
 
