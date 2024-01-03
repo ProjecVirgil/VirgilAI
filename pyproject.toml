@@ -3,22 +3,12 @@
 [project]
 name = "VirgilAI"
 description = "Virgil is an advanced virtual assistant that is based on the powerful GPT-3.5 artificial intelligence developed by OpenAI. This virtual assistant is designed to offer a wide range of features and capabilities similar to those of well-known virtual assistants such as Amazon's Alexa."
-version = "v2.2.0"
+version = "v3.1.0"
 readme = "README.md"
 requires-python = ">=3.10"
 
 [project.license]
 file = "LICENSE"
-
-[tool.path]
-key_path = "setup/key.txt"
-setting_path = "setup/settings.json"
-
-[tool.config_system]
-first_setup = true  #Se è il primo setup allora non chiederà cosa si vuole modificare 
-launch_start = false
-defaul_start = "N" # T (text) or R (voice) N (Lo chiede)
-display_console = true # If the interface is voice do i have to show the console?
 
 [tool.debug]
 level_debug = "info" # (debug,info,warning,error,critical)
@@ -27,17 +17,15 @@ logs_file = false
 # ------ CONFIG FOR POETRY ------
 [tool.poetry]
 name = "VirgilAI"
-version = "2.2.0"
+version = "3.1.0"
 description = "Virgil is an advanced virtual assistant that is based on the powerful GPT-3.5 artificial intelligence developed by OpenAI. This virtual assistant is designed to offer a wide range of features and capabilities similar to those of well-known virtual assistants such as Amazon's Alexa."
 authors = ["Retr0100 <dragonfaiver@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
 python = ">=3.10,<3.12"
-scikit-learn = "1.3.2"
 colorama = "^0.4.6"
 pyfiglet = "^1.0.2"
-openai = "^0.28.0"
 requests = "^2.31.0"
 speechrecognition = "^3.10.0"
 nltk = "^3.8.1"
@@ -47,12 +35,15 @@ gtts = "^2.4.0"
 elevenlabs = "^0.2.26"
 geopy = "^2.4.0"
 requests-html = "^0.10.0"
-scipy = "1.11.3"
 tomli = "^2.0.1"
 gensim = "^4.3.2"
 executing = "^2.0.1"
 tomlkit = "^0.12.2"
-
+plyer = "^2.1.0"
+win10toast = "^0.9"
+winotify = "^1.1.0"
+langchain = "^0.0.353"
+openai = "^0.28"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.1.5"

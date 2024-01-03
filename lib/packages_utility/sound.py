@@ -6,7 +6,7 @@ from pygame.mixer import music
 from elevenlabs import generate, save, api
 
 from lib.packages_utility.logger import logging
-
+from lib.packages_utility.utils import Utils
 
 # ---- This file make the TTS ----
 class Audio:
@@ -23,6 +23,37 @@ class Audio:
         self.volume = volume
         self.api_key = elevenlabs
         self.language = language
+        self.utils = Utils()
+
+        self.MAX = 1.0
+        self.MIN = 0.1
+
+    def change(self, command: str) -> str:
+        """Change the volume of Virgil.
+
+        Args:
+            command (str): The input sentence
+
+        Returns:
+            str: Final message after change the volume
+        """
+        if self.utils.count_number(command) >= 1:
+            def search_volume(command):
+                return [x for x in command if x.isdigit()]
+            self.volume = int(search_volume(command)[0])
+        else:
+            logging.error("Sorry there was an error request the command with an appropriate value"),
+            self.create(file=True, namefile="ErrorValueVirgil")
+            return "104"
+        try:
+            self.volume = int(self.volume) / 100
+            if self.volume < self.MIN or self.volume > self.MAX:
+                return "104"
+            return str(self.volume)
+        except ValueError:
+            logging.error("Sorry there was an error request the command with an appropriate value"),
+            self.create(file=True, namefile="ErrorValueVirgil")
+            return "104"
 
     def create(self, text: str = "", file: bool = False, namefile: str = "") -> None:
         """Create a mp3 or wav file with text from tts.
@@ -37,7 +68,7 @@ class Audio:
             music.set_volume(float(self.volume))
             if file:
                 logging.info(f"File reproduce: {namefile}")
-                file = os.path.join(f"asset/{self.language}/{namefile}.mp3")
+                file = os.path.join(f"assets/audio/{self.language}/{namefile}.mp3")
                 music.load(file)
                 music.play()
                 return

@@ -1,7 +1,4 @@
 {
-    "process": {
-        "prompt": "You are a virtual assistant who speaks English and writes numbers in letters named Virgilio. You can do exactly these things:\n- Create a timer\n- Tell the time at this moment\n- Know the latest news\n- Change the volume of your audio\n- The temperature outside\n- Interact with home automation\n- Know what time it is\n- Remember my schedule\n- Then play music from YouTube\n- And you can do a lot of other things like create a workout plan, a diet, and anything else a user might ask for. \n- When they ask you what you can do, you'll explain these points with examples:\n- Virgil sets a 10-minute timer\n- Virgil What's the weather like today? \n- Virgil set the volume to 10 percent\n- Virgil tell me the latest news\n- Virgil what's the temperature? \nIf I ask questions related to any of the above commands and you can't answer me, tell me to try to say the command and use the examples I listed earlier.\n- Ready to pretend to be Virgil? Answer yes if you understand, and from now on when I ask you a question, you answer me as if I were a virtual assistant."
-    },
     "calendar":{
         "month":["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
         "week":["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
@@ -39,7 +36,7 @@
             "anecdote", "fact", "information", "chronicle", "communication", "report", "report",
             "news", "news"]
     },
-    "wheather":{
+    "weather":{
         "word_meaning_tomorrow":[
             "tomorrow", "future", "next", "upcoming", "next", "next", 
             "next day", "day after", "next day", 

@@ -32,16 +32,6 @@ class Utils:
         number_find = re.findall(r'\d+', command)
         return len(number_find)
 
-    def clean_buffer(self, data_empty: dict, file_name: str) -> None:
-        """Clean buffer and save it to disk.
-
-        Args:
-            data_empty (dict): Un templete standard json for restore the file
-            file_name (str): the name of file to restore
-        """
-        with open(f"connect/{file_name}.json", 'w', encoding="utf8") as commands:
-            json.dump(data_empty, commands)
-
     def get_coordinates(self, city_name: str) -> tuple:
         """Get coordinates from city name.
 
@@ -161,42 +151,94 @@ class Utils:
         return "Unmanaged number"
 
 
-def init_settings() -> Settings:
+def init_settings(settings_json,user_key) -> Settings:
     """Initialize settings for all the modules.
 
     Returns:
         Settings: Dataclasses
     """
-    with open("setup/settings.json", encoding="utf8") as file_settings:
-        # INIT FILE
-        settings_file = json.load(file_settings)
-        language = settings_file["language"]
-        with open(f'lang/{language}/{language}.json', encoding="utf8") as file_scripts:
+    language = settings_json["language"]
+    prompt= '''
+You are a virtual assistant who speaks only {language}, writes numbers in letters and is called Virgil. You are able to do exactly these things:
+- Create a timer
+- Tell the time right now
+- Know the latest news
+- Change the audio volume
+- The outside temperature
+- Interact with home automation
+- Know what time it is
+- Remember my schedule
+- Play music from YouTube
+- And you can do many other things, such as create an exercise plan, a diet and anything else a user may ask.
+ When they ask you what you can do, explain these points with examples:
+- Virgil sets a 10-minute timer
+- Virgil What's the weather like today?
+- Virgil sets the volume to 10%
+- Virgil tells me the latest news
+- Virgil what's the temperature?
+
+ If I ask you questions related to any of the above commands and you can't answer me, tell me to try pronouncing the command and use the examples I listed above.
+- Ready to pretend to be Virgil? Answer yes if you understand, and from now on when I ask you a question, answer me as if I were a virtual assistant.
+
+TOOLS:
+------
+
+Assistant has access to the following tools:
+
+> Wikipedia: A wrapper around Wikipedia. Useful for when you need to answer general questions about people, places, companies, facts, historical events, or other subjects. Input should be a search query.
+
+To use a tool, please use the following format:
+
+```
+Thought: Do I need to use a tool? Yes
+Action: the action to take, should be one of [Wikipedia]
+Action Input: the input to the action
+Observation: the result of the action
+```
+
+When you have a response to say to the Human, or if you do not need to use a tool, you MUST use the format:
+
+```
+Thought: Do I need to use a tool? No
+AI: [your response here]
+```
+
+Begin!
+
+Previous conversation history:
+{chat_history}
+
+New input: {input}
+{agent_scratchpad}
+'''
+    
+    with open(f'lang/{language}/{language}.json', encoding="utf8") as file_scripts:
             # INIT FILE
             script = json.load(file_scripts)
             script_calendar = script["calendar"]
             script_command = script["command"]
             script_time = script["time"]
-            script_process = script["process"]
             script_events = script["events"]
             script_output = script["outputs"]
             script_news = script["news"]
-            script_wheather = script["wheather"]
+            script_weather = script["weather"]
             script_mediaplayer = script["mediaplayer"]
             return Settings(
+                key_user=user_key,
                 language=language,
-                word_activation=settings_file["wordActivation"].lower(),
-                volume=settings_file["volume"],
-                city=settings_file["city"],
-                operation_timeout=settings_file["operation_timeout"],
-                dynamic_energy_threshold=settings_file["dynamic_energy_threshold"],
-                energy_threshold=settings_file["energy_threshold"],
-                elevenlabs=settings_file["elevenlabs"],
-                openai=settings_file["openAI"],
-                merros_email=settings_file["merrosEmail"],
-                merros_password=settings_file["merrosPassword"],
-                temperature=settings_file["temperature"],
-                max_tokens=settings_file["max_tokens"],
+                word_activation=settings_json["wordActivation"].lower(),
+                volume=settings_json["volume"],
+                city=settings_json["city"],
+                operation_timeout=settings_json["operation_timeout"],
+                dynamic_energy_threshold=settings_json["dynamic_energy_threshold"],
+                energy_threshold=settings_json["energy_threshold"],
+                elevenlabs=settings_json["elevenlabs"],
+                openai=settings_json["openAI"],
+                merros_email=settings_json["merrosEmail"],
+                merros_password=settings_json["merrosPassword"],
+                temperature=settings_json["temperature"],
+                gpt_version= settings_json["gpt-version"],
+                max_tokens=settings_json["max_tokens"],
                 phrase_calendar=script_calendar["phrase"],
                 split_calendar=script_calendar["split"],
                 months_calendar=script_calendar["month"],
@@ -208,14 +250,14 @@ def init_settings() -> Settings:
                 split_command=script_command["split"],
                 phrase_time=script_time["phrase"],
                 split_time=script_time["split"],
-                prompt=script_process["prompt"],
                 phrase_events=script_events["phrase"],
                 phrase_output=script_output["phrase"],
                 split_output=script_output["split"],
+                prompt=prompt,
                 synonyms_news=script_news["synonyms"],
-                phrase_wheather=script_wheather["phrase"],
-                split_wheather=script_wheather["split"],
-                wwc_wheather=script_wheather["WWC"],
-                word_meaning_tomorrow_wheather=script_wheather["word_meaning_tomorrow"],
+                phrase_weather=script_weather["phrase"],
+                split_weather=script_weather["split"],
+                wwc_weather=script_weather["WWC"],
+                word_meaning_tomorrow_weather=script_weather["word_meaning_tomorrow"],
                 synonyms_mediaplayer=script_mediaplayer["synonyms"]
             )

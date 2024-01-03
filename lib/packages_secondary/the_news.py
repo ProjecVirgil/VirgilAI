@@ -12,7 +12,7 @@ class Newsletter:
     """This class is used to recover a news from google api."""
 
     def __init__(self, language, synonyms_news) -> None:
-        """Init the language,logger class and some synonymus.
+        """Init the language,logger class and some synonymous.
 
         Args:
             language (_type_): _description_
@@ -22,7 +22,7 @@ class Newsletter:
         self.url_random = f"https://news.google.com/rss?oc=5&hl={self.lang}&gl={self.lang.upper()}&ceid={self.lang.upper()}:{self.lang}"
         self.synonyms_news = synonyms_news
 
-    def get_topic(self, command) -> None or str:
+    def get_topic(self, command) -> None | str:
         """This function return the topic of the command received as parameter.
 
         Args:
@@ -39,7 +39,7 @@ class Newsletter:
                 break
         if topic == "":
             topic = None
-        logging.debug(f" topic choised: {topic}")
+        logging.debug(f" topic chosen: {topic}")
         return topic
 
     def create_news(self, command: str) -> str:
@@ -67,5 +67,5 @@ class Newsletter:
                 news.append(title.text)
             news_selected = random.choice(news)
 
-        logging.info(f" news choise {news_selected}")
+        logging.info(f" chosen news {news_selected}")
         return news_selected

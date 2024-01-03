@@ -9,6 +9,9 @@ class Settings:
     This is a singleton object that holds all of our
     settings and can be accessed anywhere in the app through this single instance.
     """
+     # ******************** Key ********************
+    key_user: str
+
     # ******************** Setting ********************
     language: str
     word_activation: str
@@ -21,6 +24,7 @@ class Settings:
     openai: str
     merros_email: str
     merros_password: str
+    gpt_version:str
     temperature: str
     max_tokens: str
 
@@ -48,10 +52,10 @@ class Settings:
     split_output: str
     # ----- News -----
     synonyms_news: str
-    # ----- Wheather -----
-    phrase_wheather: str
-    split_wheather: str
-    wwc_wheather: str
-    word_meaning_tomorrow_wheather: str
+    # ----- Weather -----
+    phrase_weather: str
+    split_weather: str
+    wwc_weather: str
+    word_meaning_tomorrow_weather: str
     # ----- MediaPlayer -----
     synonyms_mediaplayer: str

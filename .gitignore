@@ -3,7 +3,8 @@
 __pycache__
 .ruff_cache
 .idea
-
+.scannerwork
+sonar-scanner
 #genereted file
 poetry.lock
 boot.sh
@@ -11,6 +12,8 @@ boot.sh
 #Enviroments
 env
 virgil-env
+settings.db
+memory.db
 
 # Pytest file
 .pytest_cache

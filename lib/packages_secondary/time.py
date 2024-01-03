@@ -12,7 +12,6 @@ import datetime
 import time
 
 from lib.packages_utility.logger import logging
-from lib.packages_utility.utils import Utils
 
 
 # ---- This file get the current time and more ----
@@ -31,41 +30,44 @@ def diff_time(index_time: str) -> tuple:
     try:
         query_splitted = index_time.split(":")
         hours = query_splitted[0]
-        minuts = query_splitted[1]
+        minutes = query_splitted[1]
     except ValueError:
         query_splitted = index_time.split(" e ")
         hours = query_splitted[0]
-        minuts = query_splitted[1]
+        minutes = query_splitted[1]
 
-    time_string = f"{hours}:{minuts}"
+    time_string = f"{hours}:{minutes}"
 
     time_formatted = datetime.datetime.strptime(time_string, "%H:%M").time()
 
-    data_corrente = datetime.datetime.combine(datetime.date.today(), current_time)
-    data_specificata = datetime.datetime.combine(datetime.date.today(), time_formatted)
+    current_date = datetime.datetime.combine(datetime.date.today(), current_time)
+    specify_date = datetime.datetime.combine(datetime.date.today(), time_formatted)
 
-    diff_time = data_specificata - data_corrente
+    diff_time = specify_date - current_date
 
     calculated_hours, rest = divmod(diff_time.seconds, 3600)
-    calculated_minuts, calculate_seconds = divmod(rest, 60)
+    calculated_minutes, calculate_seconds = divmod(rest, 60)
 
-    return hours, minuts, calculated_hours, calculated_minuts, calculate_seconds
+    return hours, minutes, calculated_hours, calculated_minutes, calculate_seconds
 
 
 class Time:
     """This class is used to return a various things like the Actual time, the time difference and more."""
 
-    def __init__(self, settings):
-        """Init function for the classes.
+    def __init__(self, language,split_time,phrase_time,utils):
+        """Constructor for the class Time.
 
         Args:
-            settings (Settings): Settings dataclasses for set the settings
+            language (str): The language
+            split_time (list): A list of word from settings
+            phrase_time (list): A list of word from settings
+            utils (Utils): A utils instance
         """
-        self.utils = Utils()
+        self.utils = utils
 
-        self.lang = settings.language
-        self.split_time = settings.split_time
-        self.phrase_time = settings.phrase_time
+        self.lang = language
+        self.split_time = split_time
+        self.phrase_time = phrase_time
 
     def now(self) -> str:
         """Return the current  time.
@@ -75,12 +77,12 @@ class Time:
         """
         time_tuple = time.localtime()  # get struct_time
         hours = time.strftime('%H', time_tuple)
-        minuts = time.strftime('%M', time_tuple)
+        minutes = time.strftime('%M', time_tuple)
         if self.lang != "en":
             hours = self.utils.number_to_word(hours)
-            minuts = self.utils.number_to_word(minuts)
-        time_string = f"{self.phrase_time[4]} {str(hours)} {self.split_time[3]} {str(minuts)}  {self.split_time[11]}"
-        logging.info(time.strftime("\nVirgil: They are the %H and %M minuts", time_tuple))
+            minutes = self.utils.number_to_word(minutes)
+        time_string = f"{self.phrase_time[4]} {str(hours)} {self.split_time[3]} {str(minutes)}  {self.split_time[11]}"
+        logging.info(time.strftime("\nVirgil: They are the %H and %M minutes", time_tuple))
         return time_string
 
     def conversion(self, command) -> int:  # noqa: PLR0911
