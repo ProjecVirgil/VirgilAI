@@ -237,13 +237,6 @@ If you want to support a small developer take a [**special link**](https://www.p
 </div>
 
 ### License
-=======
-
-<a href="https://www.paypal.com/paypalme/Retr0jk">
-  <img width = 200 align="center" src="https://img.shields.io/badge/PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white" />
-</a>
-</div>
-
 
 - AGPL-3.0 license
 - [LICENSE FILE](https://github.com/Retr0100/VirgilAI/blob/master/LICENSE)
