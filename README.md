@@ -1,26 +1,22 @@
-# Virgil AI 🏛️ (Assistant Interface)  | Last docs update: 27/11/2023 (d/m/y)
+# Virgil AI 🏛️ (Assistant Interface)  | Last docs update: 03/01/2024 (d/m/y)
 
 ## Index
 
 - **[Introduction](#introduction)**
 - **[How Virgil Works](#-how-virgilai-works)**
 - **[Installation](#installation)**
-- **[Setup](#-setup)**
-  - [Guide to settings](#guide-to-local-settings)
   - [ElevenLabs](#guide-to-elevenlabs)
 - **[First start](#first-start)**
   - [How to use](#how-to-use)
-  - [Possible python bugs](#python-bugs)
-  - [Env bugs](#env-bugs)
 - **[Problem with mic?](#%EF%B8%8F-guide-to-microphones)**
 - **[Why all this key?](#why-the-key-of-openai-elevenlabs-and-merros)**
   - [Generate other key](#-change-the-key)
 - **[Security](#security)**
-- **[Notes](#notes)**
+- **[Notes](#notes-and-updates)**
 - **[Other](#other)**
   - [App](#mobile-app)
   - [Websites](#website)
-  - [Model of ML](#analysis-of-ml)
+  - [Virgil Installer](#virgil-installer)
 - **[Credits](#credits)**
   - [Contact me](#contact-me)
 
@@ -35,7 +31,7 @@
 
 Created in principle with [python3.11](https://www.python.org/downloads/) and various libraries such as [SpeechRecognition](https://pypi.org/project/SpeechRecognition/) and [TTS library](https://pypi.org/project/gTTS/).
 
-Virgilo or Virgil is a virtual assistant like Alexa or Google Home, but integrated with an AI (GPT-3.5 turbo).Designed to give the user the ability to use it and do what they want with it, from putting it on a rasperry and using it as alexa to integrating it with their device whether it's linux or windows. With the possibility to set your own settings according to your needs, from where and when you want.
+Virgilo or Virgil is a virtual assistant like Alexa or Google Home, but integrated with an AI (powered by openai).Designed to give the user the ability to use it and do what they want with it, from putting it on a rasperry and using it as alexa to integrating it with their device whether it's linux or windows. With the possibility to set your own settings according to your needs, from where and when you want.
 
 ### 🔑 Key features
 
@@ -68,13 +64,13 @@ Virgilo or Virgil is a virtual assistant like Alexa or Google Home, but integrat
 ### Example of communication with API and APP
 
 <p align="center">
- <img src="asset/exampleVirgil.svg" alt="Markdownify" width ="80%" >
+ <img src="assets/img/exampleVirgil.svg" alt="Markdownify" width ="80%" >
 </p>
 
 ### Structure of Virgil
 
 <p align="center">
- <img src="asset/HowVirgilWorks.svg" alt="Markdownify" width ="80%" >
+ <img src="assets/img/HowVirgilWorks.svg" alt="Markdownify" width ="80%" >
 </p>
 
 ## 📋 Installation
@@ -86,71 +82,25 @@ Virgilo or Virgil is a virtual assistant like Alexa or Google Home, but integrat
 
 ## Installation
 
-1. The first part of the installation is to **get** all the files from the repository.
-   - Command line ```git clone https://github.com/Retr0100/VirgilApp.git```
-   - or download the zip.
-2. Create an environment for VirgilAI in the **directory of VirgilAI** with this command ```python -m venv virgil-env``` and activate it with this command ```virgil-env\Scripts\activate``` if the environment does not activate read the [docs of Venv](https://docs.python.org/3/tutorial/venv.html) (if use the classic cmd attach .bat at end of activate)
+1. The first part of the installation is to **get** the installer with this [link](https://github.com/ProjecVirgil/VirgilInstaller/releases/) and follow the instructions (it will be easy, don't worry and ***remember to save the key***).
+
+2. Install the [App](https://github.com/ProjecVirgil/VirgilApp) to configure your Virgil.
 
 3. Now we need the **api** (for now I am not rich and do not pay for everything) so
- we need 3 api keys (the keys marked with * **are mandatory** for operation)
+ we need 3 api keys (the keys marked with * ** are mandatory for operation)
    - API for OpenAI and GPT,
-          I recommend this [video tutorial](https://www.youtube.com/watch?v=u-LeLPBZr2k) *.
+          I recommend this [video tutorial](https://www.youtube.com/watch?v=u-LeLPBZr2k).
    - API for Merros (domotic socket),
-          just create a [Merros account](https://www.meross.com/en-gc) and enter the credentials
+          just create a [Merros account](https://www.meross.com/en-gc) and enter your credentials (key not obligatory as Merros function is disabled)
    - API for ElevenLabs
        This API is not required, but if you want a [BEST EXPERIENCE](https://elevenlabs.io/speech-synthesis) I recommend you to get it.
 
 1. When you have all the keys/accounts, save them to any file.
 
-## 📖 Setup
-
-### Once you have installed and downloaded the API, you can start the Virgilio setup 🥡
-
- 1. Open a terminal to the VirgilAI/setup (with the env active) directory and run the command ` pip install -r requirements.txt ` This will install some requirements for running the setup file.
- 2. Still in the VirgilAI folder, run the command `python or python3 setup.py`.
- 3. Once we have set up the environment through the setup programme, we can run virgilio **BUT BE AWARE THERE ARE SO MANY OTHER THINGS WE CAN SET UP**.
-
-### Guide to **LOCAL** settings
-
-- Virgil Settings
-  - **Startup**: The program will be started every time the PC is started.
-  - **Default interface type**: You can choose whether to start virgilio with a text or voice interface by default (if you do not wish to set a default interface, you will be asked each time).
-  - **Run without console (background)**: Virgil will start and run in the background without a console (this option is only available when using the voice interface).
-- **Debug settings** (You can also ignore these)
-  - Debug level: You can decide which debug level can be displayed on the screen, by default it is set to info (So all logs above and equal to info will be displayed, not recommended at first).
-  - **Write to file**: Writing logs to a file (if they are written to a file, they will not be displayed on the screen)
-
-### Guide to **ONLINE** settings
-
-#### Difference between online and local settings
-
-- **Local**: Local settings are obviously not synchronized on each device and need to be set up for each environment, and some settings such as debugging settings can be set directly from code without too much effort.
-- **Online**: Online settings are synchronized on each device, but can only be changed via the APP, which is unfortunately only available for Android.
-
-``` json
-// THE VALUES ON THE JSON ARE THE DEFAULT
-{
-    "language": "it", //The launguage for now is useless sorry
-    "wordActivation": "Virgilio", //The word on Virgil can Activate
-    "volume": "100.0", // Set the start volume of Virgil
-    "city": "Salerno", // City default for the Meteo
-    "operation_timeout": "3", // Listening time if you don't talk
-    "dynamic_energy_threshold": "true", // Automatic and dynamic microphone sensitivity
-    "energy_threshold": "3500", //Sensitivy of microphone
-    "elevenlabs": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", //Key for elevenlabs
-    "openAI": "sk-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", //Key for openAI
-    "merrosEmail": "email", //Credential for merros                     
-    "merrosPassword": "password", //Credential for merros
-    "gpt-version": "gpt-3.5-turbo-0613", // The version for gpt-version                        
-    "temperature": "0.9", //Randomness of GPT responses
-    "max_tokens": "30" //Max length phrase of GPT
-}                                                                                                                      
-```
-
 ### Guide to ElevenLabs
 
 Elevenlabs is a service to reproduce tts by deeplearning and the key is free but is necessary an account but the tokens are very few...
-**But is there a trick to have **UNLIMITED** accounts with the same email?**
+**But is there a trick to have **UNLIMITED** accounts with the same email**
 
 **Explanation:**
 
@@ -165,13 +115,7 @@ Email with dots added: `example.@gmail.com` or `e.xample@gmail.com`.
 
 ## First start
 
-The first start of Virgilio will be quite important, as it will generate an **IMPORTANT** key for configuring Virgilio via the APP.
-
-**Important notes:**.
-
-- The first start will be **same for all**, without taking into account the settings previously made with the setup.py programme, so once you have taken the key and **saved** it in a file for safety, you will need to restart Virgilio.
-- You can only generate a **MAXIMUM** of 5 keys per machine.
-- The first time you start Virgil immediately after booting, it will be much slower than a normal start. This is because Python, and Virgil in general, is **optimized** so that the more starts it has in a session, the faster it will start.
+The first time you start Virgil immediately after booting, it will be much slower than a normal start. This is because Python, and Virgil in general, is **optimized** so that the more starts it has in a session, the faster it will start.
 
 ### How to use
 
@@ -219,12 +163,6 @@ if __name__ == "__main__":
 
 The tool is not **100%** accurate, but it's a good way to get a **starting** idea if you see that Virgil is not accurate enough in recognizing when you speak and when you don't try to adjust.
 
-### Python Bugs
-
-If Python give this error `ImportError: DLL load failed while importing _argkmin: File name or extension too long.`
-
-Try to using an [venv](https://docs.python.org/3/library/venv.html) **environment** to work around the path error, so activate the env and **run everything from there.**
-
 ### Why the key of OpenAI, ElevenLabs and Merros❓
 
 - **Virgil**: The Virgilio configuration key is used to synchronize all online settings...  **DO NOT GIVE THE KEY TO ANYONE OR EXPORT IT TO ANYONE OR YOU WILL GET ALL YOUR KEYS** (OpenAI,Elevenlabs etc)
@@ -233,13 +171,9 @@ Try to using an [venv](https://docs.python.org/3/library/venv.html) **environmen
  and it's not the best choice 😅.
 - **Meross**: This is **ONLY** required if you can use a domotic Meross, but if you don't have a domotic Meross, don't waste your time ⏲️
 
-### Env bugs
-
-If the setup give error on poetry create a venv environment with  `python -m venv name_of_env` and activate the env with this command `name_of_env\Scripts\activate.bat` (for windows) or `.\name_of_env\bin\activate` (for linux) and run the setup file
-
 ### How to change the voice for TTS ElevenLabs
 
-1. Go to this file ```lib/sound.py```
+1. Go to this file ```lib/packages_utility/sound.py```
 2. Go to the [ElevenLabs](https://elevenlabs.io/speech-synthesis) website and create an account (you should already have one)
 3. Explore the default voice and choose one
 4. Now go to this part of the ``sound.py`` file
@@ -257,24 +191,23 @@ If the setup give error on poetry create a venv environment with  `python -m ven
   
 5. Restart Virgil.
 
+
 **WARNING!!:** To save ElevenLabs tokens and increase efficiency, many phrases are pre-recorded, so there will be a difference between the voice you type and the pre-recorded voice.
 
 ### 🔁 Change the key
 
-> Go into the directory, call setup and find key.txt (remember the key is a hexadecimal string of 32 characters), delete it and restart Virgil.
-
-**WARNING!!:** You can only generate 5 keys for device (sorry this is for limiter the spam)
+> For change the key you can re-run the installer and modify the parameter of key in the menu
 
 ## Security
 
 This is not a topic we will be exploring in depth at the moment, but each key is managed in a hosting system that encrypts communications and uses various string sanitization and controls against ddos and other attacks, but I believe that security can never be too much, so...
 If you discover a vulnerability in Virgil, please email <projectvirgilai@gmail.com>. All vulnerabilities are reported immediately.
 
-## Notes
+## Notes and Updates
 
 ### In this paragraph I will add secondary items or updates released
 
-- Soon the ***[CATONE](https://www.babelmatrix.org/works/it/Dante%2C_Alighieri-1265/La_Divina_Commedia._Purgatorio._Canto_I./en/4208-The_Divine_Comedy.__Purgatorio._Canto_I.) UPDATE*** (Purgatory chant I vv-61 to vv-66) 🗻
+- The **CATONE UPDATE** is here and brings many new features
 
 ## Other
 
@@ -284,7 +217,7 @@ As mentioned above, VirgililAI is part of a larger project that includes an app,
 
 ### [Mobile APP](https://github.com/Retr0100/VirgilApp)
 
-### [Analysis of ML](https://github.com/Retr0100/VirgilML)
+### [Virgil Installer](https://github.com/Retr0100/VirgilInstaller)
 
 ## Credits
 
@@ -294,7 +227,16 @@ The project is made by one person and is still in development, I'm looking for s
 
 For code related issues you can use github directly for other collaborations or alerts write to this email <projectvirgilai@gmail.com>
 
-If you want to support a small developer take a [**special link**](https://www.paypal.me/Retr0jk)
+If you want to support a small developer take a [**special link**](https://www.paypal.me/Retr0jk) (pls i need coffee)
+
+<div style="display: inline_block"><br>
+<a href="https://www.paypal.com/paypalme/Retr0jk">
+  <img width = 200 align="center" src="https://img.shields.io/badge/PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white" />
+</a>
+<a href="https://www.buymeacoffee.com/dragonfaivk"><img align="center" src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" width="150"/></a>
+</div>
+
+
 
 ### License
 
