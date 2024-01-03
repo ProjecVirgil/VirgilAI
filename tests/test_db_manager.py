@@ -1,4 +1,4 @@
-#TEST
+"""Simple test file."""
 from lib.packages_utility.db_manager import DBManagerSettings
 from lib.packages_utility.utils import init_settings
 

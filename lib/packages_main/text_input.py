@@ -19,6 +19,7 @@ class TextInput:
         Args:
             settings (_type_): _description_
             command_queue (queue.Queue): _description_
+            class_manager(ClassManager): A class for manage other classes
         """
         self.data_empty = {
             None: True

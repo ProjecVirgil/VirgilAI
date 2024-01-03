@@ -55,10 +55,13 @@ class Time:
     """This class is used to return a various things like the Actual time, the time difference and more."""
 
     def __init__(self, language,split_time,phrase_time,utils):
-        """Init function for the classes.
+        """Constructor for the class Time.
 
         Args:
-            settings (Settings): Settings dataclasses for set the settings
+            language (str): The language
+            split_time (list): A list of word from settings
+            phrase_time (list): A list of word from settings
+            utils (Utils): A utils instance
         """
         self.utils = utils
 

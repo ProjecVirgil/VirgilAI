@@ -23,6 +23,7 @@ class Output:
         Args:
             settings (Settings): settings dataclasses with all settings
             result_queue (Queue): The queue with results
+            class_manager(ClassManager): A class for manage other classes
         """
         mixer.init()
         self.class_manager = class_manager

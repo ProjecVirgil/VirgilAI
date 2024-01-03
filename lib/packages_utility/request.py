@@ -135,9 +135,3 @@ class MakeRequests:
         response = requests.post(self.url_model, headers=self.headers_model, json=data).json()
         logging.debug(f"Response of model: {response}")
         return  self.clean_output_models(response['choices'][0]['message']['content'])
-
-
-
-# In the context of the following sentence, answer using only two letters from the options: OR for current time requests, VL for volume changes, MT for weather requests, TM for timer start requests, GDS for day of the week requests, MC for counting days to a specific day, NW for news or latest updates, MU for music start requests, EV for adding events to the calendar, and AL for all other requests. Specify the language of the response and ensure that it strictly adheres to only one of these categories.
-
-# Based on the context of the following sentence, respond with only two letters from the following options: OR for current time requests, VL for volume changes, MT for weather requests, TM for timer start requests, GDS for day of the week requests, MC for counting days to a specific day, NW for news or latest updates, MU for music start requests, EV for adding events to the calendar, and AL for everything else.

@@ -14,11 +14,11 @@ class EventScheduler:
         """Init the class."""
         self.request_maker = MakeRequests()
         self.calendar = Calendar(settings)
-        
+
         self.lang = settings.language
         self.settings = settings
         self.phrase_events = settings.phrase_events
-        
+
         self.events = self.request_maker.get_events(self.settings.key_user)
         self.current_date = datetime.datetime.now().date()
         self.formatted_date = self.current_date.strftime("%d-%m-%Y")

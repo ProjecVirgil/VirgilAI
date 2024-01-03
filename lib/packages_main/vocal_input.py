@@ -18,6 +18,7 @@ class VocalInput:
         Args:
             settings (Settings): settings dataclasses
             command_queue:(Queue): The command queue for thread
+            class_manager(ClassManager): A class for manage other classes
         """
         self.data_empty = {
             None: True
