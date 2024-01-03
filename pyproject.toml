@@ -23,7 +23,7 @@ authors = ["Retr0100 <dragonfaiver@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = ">=3.10,<3.12"
+python = ">=3.11,<3.12"
 colorama = "^0.4.6"
 pyfiglet = "^1.0.2"
 requests = "^2.31.0"
@@ -42,7 +42,7 @@ tomlkit = "^0.12.2"
 plyer = "^2.1.0"
 win10toast = "^0.9"
 winotify = "^1.1.0"
-langchain = "^0.0.353"
+langchain = "^0.0.354"
 openai = "^0.28"
 
 [tool.poetry.group.dev.dependencies]
