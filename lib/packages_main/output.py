@@ -61,9 +61,10 @@ class Output:
             """Init file for the class of Thread.
 
             Args:
-                interval (int): the duration of time.sleep
-                command (_type_): the command
-                settings(Settings): all the settings
+                interval (int): The duration of time.sleep
+                command (_type_): The command
+                settings(Settings): All the settings
+                audio(Audio): An audio instance
             """
             threading.Thread.__init__(self)
             self.interval = interval
