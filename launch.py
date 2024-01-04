@@ -166,7 +166,7 @@ def main():  # noqa: PLR0915
 
 # TODO ADD THE A FUNCTION TO INTERACT WITH GITHUB AND CHECK IF THE UPDATE  # noqa: TD002, FIX002, TD003, TD004
 if __name__ == '__main__':
-    subprocess.run("poetry install", shell=True, check=True)
+    subprocess.run("poetry install --no-dev", shell=True, check=True)
     script_dir = os.path.dirname(os.path.abspath(__file__))
     os.chdir(script_dir)
     config_path = os.path.join('C:\\', 'Users', getpass.getuser(), 'AppData', 'Local', 'Programs', 'Virgil-Installer', 'config.json')
