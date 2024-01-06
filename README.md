@@ -33,6 +33,13 @@ Created in principle with [python3.11](https://www.python.org/downloads/) and va
 
 Virgilo or Virgil is a virtual assistant like Alexa or Google Home, but integrated with an AI (powered by openai).Designed to give the user the ability to use it and do what they want with it, from putting it on a rasperry and using it as alexa to integrating it with their device whether it's linux or windows. With the possibility to set your own settings according to your needs, from where and when you want.
 
+### Installation Tutorial + Small demo
+
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=x8u6xxtjBZA" target="_blank">
+ <img src="http://img.youtube.com/vi/x8u6xxtjBZA/maxresdefault.jpg" alt="Watch the video" width="540" border="10" />
+</a>
+
+
 ### 🔑 Key features
 
 **You can ask many questions on Virgilio, like us:**.
