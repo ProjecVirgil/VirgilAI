@@ -39,7 +39,6 @@ Virgilo or Virgil is a virtual assistant like Alexa or Google Home, but integrat
  <img src="http://img.youtube.com/vi/x8u6xxtjBZA/maxresdefault.jpg" alt="Watch the video" width="540" border="10" />
 </a>
 
-
 ### 🔑 Key features
 
 **You can ask many questions on Virgilio, like us:**.
@@ -89,6 +88,8 @@ Virgilo or Virgil is a virtual assistant like Alexa or Google Home, but integrat
 
 ## Installation
 
+### Windows
+
 1. The first part of the installation is to **get** the installer with this [link](https://github.com/ProjecVirgil/VirgilInstaller/releases/) and follow the instructions (it will be easy, don't worry and ***remember to save the key***).
 
 2. Install the [App](https://github.com/ProjecVirgil/VirgilApp) to configure your Virgil.
@@ -101,8 +102,11 @@ Virgilo or Virgil is a virtual assistant like Alexa or Google Home, but integrat
           just create a [Merros account](https://www.meross.com/en-gc) and enter your credentials (key not obligatory as Merros function is disabled)
    - API for ElevenLabs
        This API is not required, but if you want a [BEST EXPERIENCE](https://elevenlabs.io/speech-synthesis) I recommend you to get it.
+4. When you have all the keys/accounts, save them to any file.
 
-1. When you have all the keys/accounts, save them to any file.
+### Linux
+
+Not yet available (sorry)
 
 ### Guide to ElevenLabs
 
@@ -197,7 +201,6 @@ The tool is not **100%** accurate, but it's a good way to get a **starting** ide
     And replace the voice with the one you want (if after the TTS does not work try another voice on watch a video on YT on how to use default entries).
   
 5. Restart Virgil.
-
 
 **WARNING!!:** To save ElevenLabs tokens and increase efficiency, many phrases are pre-recorded, so there will be a difference between the voice you type and the pre-recorded voice.
 
