@@ -54,7 +54,7 @@ class VocalInput:
         while status:
             try:
                 with sr.Microphone() as source:
-                    logging.debug(" I'm hearing...")
+                    logging.info(" I'm hearing...")
                     voice = self.listener.listen(source, 5, 15)
                     command = self.listener.recognize_google(voice, language='it-it')
                     command = command.lower()
@@ -65,7 +65,8 @@ class VocalInput:
                         self.copy_data(command)
                         if any(word in command for word in self.split_command_exit):
                             status = False
-            except sr.exceptions.WaitTimeoutError:
+            except Exception as e:
+                print(e)
                 try:
                     if any(word in command for word in self.split_command_exit):
                         status = False
