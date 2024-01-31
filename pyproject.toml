@@ -45,6 +45,7 @@ winotify = "^1.1.0"
 langchain = "^0.0.354"
 openai = "^0.28"
 wikipedia = "^1.4.0"
+pyaudio = "^0.2.14"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.1.5"
