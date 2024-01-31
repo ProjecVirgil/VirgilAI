@@ -3,9 +3,9 @@
 [project]
 name = "VirgilAI"
 description = "Virgil is an advanced virtual assistant that is based on the powerful GPT-3.5 artificial intelligence developed by OpenAI. This virtual assistant is designed to offer a wide range of features and capabilities similar to those of well-known virtual assistants such as Amazon's Alexa."
-version = "v3.1.0"
+version = "v4.0.2"
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 
 [project.license]
 file = "LICENSE"
@@ -17,7 +17,7 @@ logs_file = false
 # ------ CONFIG FOR POETRY ------
 [tool.poetry]
 name = "VirgilAI"
-version = "3.1.0"
+version = "4.0.2"
 description = "Virgil is an advanced virtual assistant that is based on the powerful GPT-3.5 artificial intelligence developed by OpenAI. This virtual assistant is designed to offer a wide range of features and capabilities similar to those of well-known virtual assistants such as Amazon's Alexa."
 authors = ["Retr0100 <dragonfaiver@gmail.com>"]
 readme = "README.md"
