@@ -160,7 +160,7 @@ class Weather:
         day, week_day = self.recover_day(command)
         response = requests.get(self.get_url(city), timeout=8)
         logging.debug(" Response: " + str(response.status_code))
-        if response.status_code != success_request:
+        if response.status_code == success_request:
             response = response.json()
             if day != bad_request:
                 main = str(response["daily"]["weathercode"][day])
@@ -172,6 +172,6 @@ class Weather:
                 return f" {self.phrase_weather[0]} {city} {self.phrase_weather[1]} {week_day} {self.phrase_weather[2]} {self.wwc_weather[main]} {self.phrase_weather[3]} {max_temp} {self.phrase_weather[4]} {min_temp} {self.phrase_weather[5]} {precipitation} {self.phrase_weather[6]}"
             self.audio.create(file=True, namefile="ErrorDay")
             return ""
-        logging.error(" repeat the request or wait a few minutes")
+        logging.error(" Repeat the request or wait a few minutes")
         self.audio.create(file=True, namefile="ErrorMeteo")
         return ""
