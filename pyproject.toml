@@ -48,7 +48,7 @@ wikipedia = "^1.4.0"
 pyaudio = "^0.2.14"
 
 [tool.poetry.group.dev.dependencies]
-ruff = "^0.1.5"
+ruff = "^0.2.0"
 coverage = "^7.3.2"
 
 # ------ CONFIG OF RUFF  --------
