@@ -43,7 +43,7 @@ plyer = "^2.1.0"
 win10toast = "^0.9"
 winotify = "^1.1.0"
 langchain = "^0.0.354"
-openai = "^0.28"
+openai = "^1.12"
 wikipedia = "^1.4.0"
 pyaudio = "^0.2.14"
 
