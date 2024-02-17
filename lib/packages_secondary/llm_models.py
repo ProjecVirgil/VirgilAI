@@ -5,9 +5,9 @@ Returns:
 """
 import os
 
-from langchain.llms import OpenAI
+from langchain_openai import OpenAI
 from langchain.memory import ConversationSummaryMemory,ChatMessageHistory
-from langchain.agents import load_tools,initialize_agent,AgentType
+from langchain.agents import load_tools,create_react_agent,initialize_agent,AgentType
 
 from lib.packages_utility.logger import logging
 from lib.packages_utility.db_manager import DBManagerMemory
@@ -45,6 +45,12 @@ class LLModel:
         handle_parsing_errors=True,
         memory=self.memory
         )
+        # self.agent = create_react_agent(
+        #     llm=llm,
+        #     tools=tools,
+        #     memory=self.memory,
+        #     handle_parsing_errors=True,
+        # )
         self.agent.agent.llm_chain.prompt.template = self.prompt
 
     def load_history(self):

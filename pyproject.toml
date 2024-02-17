@@ -23,7 +23,7 @@ authors = ["Retr0100 <dragonfaiver@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = ">=3.11,<3.12"
+python = ">=3.11,<=3.12.2"
 colorama = "^0.4.6"
 pyfiglet = "^1.0.2"
 requests = "^2.31.0"
@@ -42,13 +42,14 @@ tomlkit = "^0.12.2"
 plyer = "^2.1.0"
 win10toast = "^0.9"
 winotify = "^1.1.0"
-langchain = "^0.0.354"
-openai = "^0.28"
+langchain = "^0.1.7"
+openai = "^1.12.0"
 wikipedia = "^1.4.0"
 pyaudio = "^0.2.14"
+langchain-openai = "^0.0.6"
 
 [tool.poetry.group.dev.dependencies]
-ruff = "^0.1.5"
+ruff = "^0.2.1"
 coverage = "^7.3.2"
 
 # ------ CONFIG OF RUFF  --------
